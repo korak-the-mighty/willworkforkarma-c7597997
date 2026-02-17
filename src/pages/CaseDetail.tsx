@@ -1,28 +1,32 @@
 import { useParams, Navigate } from "react-router-dom";
 import Layout from "@/components/Layout";
-import CaseSection from "@/components/CaseSection";
-import CaseFacts from "@/components/CaseFacts";
-import CaseHighlights from "@/components/CaseHighlights";
-import CaseGallery from "@/components/CaseGallery";
-import CasePullQuote from "@/components/CasePullQuote";
-import PlaceholderCover from "@/components/PlaceholderCover";
+import CaseHeroMedia from "@/components/CaseHeroMedia";
+import CaseSpecSheet from "@/components/CaseSpecSheet";
+import CaseHook from "@/components/CaseHook";
+import CaseBamStatement from "@/components/CaseBamStatement";
+import CaseModule from "@/components/CaseModule";
+import CaseMediaGrid from "@/components/CaseMediaGrid";
+import CaseOutcome from "@/components/CaseOutcome";
+import CaseWhyMe from "@/components/CaseWhyMe";
 import { cases } from "@/data/cases";
 
 const CaseDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const caseData = cases.find((c) => c.slug === slug);
+  const caseIndex = cases.findIndex((c) => c.slug === slug);
+  const caseData = cases[caseIndex];
 
   if (!caseData) return <Navigate to="/work" replace />;
 
-  const situation = caseData.sections.find((s) => s.heading.toLowerCase() === "situation");
-  const approach = caseData.sections.find((s) => s.heading.toLowerCase() === "approach");
-  const outcome = caseData.sections.find((s) => s.heading.toLowerCase() === "outcome");
+  const nextCase = cases[caseIndex + 1] || cases[0];
+  const nextCaseLink = nextCase && nextCase.slug !== caseData.slug
+    ? { slug: nextCase.slug, title: nextCase.title }
+    : null;
 
   return (
     <Layout>
       <article>
         {/* Header */}
-        <header className="space-y-4 mb-6">
+        <header className="space-y-4 mb-8">
           <div className="flex items-baseline gap-4">
             <h1 className="font-serif text-4xl md:text-5xl tracking-tight">
               {caseData.title}
@@ -36,50 +40,45 @@ const CaseDetail = () => {
               </span>
             ))}
           </div>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {caseData.summary}
-          </p>
         </header>
 
-        {/* Full-width cover */}
-        <div className="my-12 -mx-6 md:-mx-12 lg:-mx-24">
-          <PlaceholderCover aspectRatio="21/9" />
+        {/* Hero */}
+        <CaseHeroMedia heroMedia={caseData.heroMedia} />
+
+        {/* Spec Sheet */}
+        <div className="mt-12">
+          <CaseSpecSheet
+            client={caseData.client}
+            year={caseData.year}
+            role={caseData.facts.role}
+            team={caseData.facts.team}
+            timeline={caseData.facts.timeline}
+            output={caseData.facts.output}
+          />
         </div>
 
-        {/* Facts */}
-        <CaseFacts facts={caseData.facts} />
+        {/* Hook */}
+        <CaseHook problem={caseData.problem} />
 
-        {/* Situation */}
-        <div className="space-y-12 mt-16">
-          {situation && <CaseSection section={situation} />}
+        {/* BAM */}
+        <CaseBamStatement statement={caseData.decision} />
+
+        {/* Modules */}
+        {caseData.modules.map((mod, i) => (
+          <CaseModule key={i} module={mod} index={i} />
+        ))}
+
+        {/* Output Gallery */}
+        <div className="py-12">
+          <CaseMediaGrid count={4} />
         </div>
 
-        {/* Full-width image slot */}
-        <div className="my-12 -mx-6 md:-mx-12 lg:-mx-24">
-          <PlaceholderCover aspectRatio="2/1" />
-        </div>
+        {/* Outcomes */}
+        <CaseOutcome outcomes={caseData.outcomes} />
 
-        {/* Approach */}
-        <div className="space-y-12">
-          {approach && <CaseSection section={approach} />}
-        </div>
-
-        {/* Pull Quote */}
-        <CasePullQuote quote={caseData.pullQuote} />
-
-        {/* Gallery */}
-        <div className="my-12 -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24">
-          <CaseGallery />
-        </div>
-
-        {/* Outcome */}
-        <div className="space-y-12">
-          {outcome && <CaseSection section={outcome} />}
-        </div>
-
-        {/* Highlights at end */}
-        <div className="mt-16">
-          <CaseHighlights highlights={caseData.highlights} />
+        {/* Why Me */}
+        <div className="mt-8">
+          <CaseWhyMe text={caseData.whyMe} nextCase={nextCaseLink} />
         </div>
       </article>
     </Layout>
