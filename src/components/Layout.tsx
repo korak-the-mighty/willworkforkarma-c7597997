@@ -4,7 +4,7 @@ import { NavLink } from "@/components/NavLink";
 const Header = () => (
   <header className="border-b border-border">
     <div className="mx-auto flex max-w-4xl items-baseline justify-between px-6 py-6">
-      <Link to="/" className="font-serif text-lg tracking-tight">
+      <Link to="/" className="font-heading text-lg tracking-tight">
         Willworkforkarma
       </Link>
       <nav className="flex gap-8 text-sm">
