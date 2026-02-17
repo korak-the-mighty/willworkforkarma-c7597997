@@ -1,106 +1,140 @@
 
 
-# Visual Weight & Credibility — Implementation Plan
+# Layout-Driven Confidence — Refactoring for Visual Hierarchy and Pacing
 
-The site currently reads like a text blog. This plan adds visual storytelling, structured credibility signals, and stronger hierarchy while keeping the calm, monochrome editorial tone.
-
----
-
-## 1. Replace Placeholder Images with Editorial Cover Visuals
-
-Create SVG-based cover images directly in the components — abstract, textural, minimal visuals generated with CSS/SVG so they feel designed, not stock.
-
-- **SHARE cover**: A typographic/grid composition — overlapping letterforms or a structured grid pattern in warm grays
-- **MAN cover**: A material/texture feel — subtle grain, a diagonal cut, or a workshop-inspired abstract shape
-- **Gallery images** (6 total, 3 per case): Simple geometric/textural compositions — gradients, grain overlays, paper textures
-
-These will be built as React components or inline SVGs so they render cleanly without external image dependencies.
+This refactor restructures the site through layout, spacing, and typographic hierarchy rather than adding content. The goal: every element earns its space.
 
 ---
 
-## 2. Data Model Updates (`src/data/cases.ts`)
+## Data Model Changes (`src/data/cases.ts`)
 
-Extend the `Case` interface with:
+Add a `pullQuote` field to each case — a single short, declarative sentence that captures the key decision or insight. This powers the typographic "BAM" moments on case pages.
 
-- `facts`: object with `role`, `scope`, `team`, `timeline`, `output` (all strings)
-- `highlights`: array of 3 short strings (key decisions/results)
-- `gallery`: array of image paths (placeholder SVGs for now)
+```text
+Case interface additions:
+  pullQuote: string   // e.g., "The real problem wasn't communication. It was silence."
+```
 
-Break existing long paragraph text in sections into shorter chunks (2-3 sentences each, stored as string but rendered with paragraph breaks).
-
----
-
-## 3. Home Page (`src/pages/Index.tsx`)
-
-**Hero section redesign:**
-- Split layout: text on left, a large abstract typographic visual on the right (or a full-width visual strip above the text)
-- The strong statement stays, but gets bigger presence
-- Add one personality line underneath: something slightly sharp, honest, non-corporate (e.g., *"No decks about decks. No frameworks for frameworks."*)
-
-**Case preview cards:**
-- Show the new cover visuals prominently
-- Stronger visual hierarchy
+Example values:
+- SHARE: "Five decks. Five stories. Zero conviction."
+- MAN: "He didn't need a brand. He needed to be seen."
 
 ---
 
-## 4. Work Page (`src/pages/Work.tsx`)
+## Layout Container (`src/components/Layout.tsx`)
 
-**Stronger card layout:**
-- Each card gets a more defined structure: cover image takes up more visual space
-- Add a subtle hover state: slight image opacity shift + text color change
-- Tags become more visible
-- Overall feel shifts from "blog list" to "portfolio grid"
+Widen the content column from `max-w-3xl` to `max-w-4xl` to give visuals and typography more room to breathe. Case detail pages will break out of this column for full-width image slots.
 
 ---
 
-## 5. Case Detail Page (`src/pages/CaseDetail.tsx`)
+## Home Page (`src/pages/Index.tsx`)
 
-**Case Facts strip** (new component `CaseFacts`):
-- Placed after the header/summary, before the cover image
-- Horizontal strip showing: Role | Scope | Team | Timeline | Output
-- Small text, uppercase labels, clean grid layout
-- Subtle border top/bottom for separation
+**Hero overhaul:**
+- Remove the `HeroVisual` SVG component entirely — it competes with the statement
+- Make the hero statement significantly larger (`text-5xl md:text-7xl`) and give it massive vertical breathing room (`py-24 md:py-36`)
+- Present the three supporting lines (strategy, narrative, brand) as a structured list with tracking, not a paragraph — each on its own line, separated by subtle spacing
+- The personality line ("No decks about decks...") stays, styled smaller and spaced away from the statement
 
-**Highlights block** (new component `CaseHighlights`):
-- Placed after the summary, before the facts strip
-- 3 concise bullet points — key decisions or results
-- Styled as a minimal bulleted list with slightly bolder text
-
-**Gallery block** (new component `CaseGallery`):
-- Placed between Approach and Outcome sections
-- 2-3 placeholder images in a simple grid (2-column or staggered)
-- Abstract/textural SVG placeholders matching the editorial tone
-
-**Section text:**
-- Break long paragraphs into shorter chunks within the existing section component
-- Update the case data text to include line breaks between shorter paragraphs
+**Selected work section:**
+- Remove the "Selected work" label — it's unnecessary
+- Increase spacing between case cards (`space-y-24` or more)
 
 ---
 
-## 6. New Components
+## Work Page (`src/pages/Work.tsx`)
 
-| Component | Purpose |
-|-----------|---------|
-| `CaseFacts` | Horizontal metadata strip (role, scope, team, timeline, output) |
-| `CaseHighlights` | 3-bullet summary of key decisions/results |
-| `CaseGallery` | 2-3 image grid between narrative sections |
-| `PlaceholderCover` | SVG-based abstract cover visual (per-case variant) |
+**Gallery treatment:**
+- Remove the "Work" heading — the page speaks for itself
+- Dramatically increase spacing between cards (`space-y-32`) so each case breathes as its own moment
+- Each card gets more vertical weight: cover image is taller (aspect ratio shift from 16:9 toward 3:2)
 
 ---
 
-## 7. File Changes Summary
+## Case Card (`src/components/CaseCard.tsx`)
+
+- Lead with the visual: cover image gets more prominence, taller aspect ratio
+- Title gets larger (`text-3xl`)
+- Summary becomes a single line or two max — trim display, not data
+- Tags move closer to title, year stays aligned right
+- Hover: image opacity shift stays, add subtle translateY on the text block
+
+---
+
+## Case Detail Page (`src/pages/CaseDetail.tsx`)
+
+This is the biggest structural change — rethinking the vertical rhythm of the entire page.
+
+**New layout flow:**
+
+```text
+1. Title + Year + Tags (compact header)
+2. Summary (one or two lines, muted)
+3. Full-width cover image slot (breaks out of content column)
+4. Case Facts strip
+5. --- breathing space ---
+6. SITUATION section
+7. --- full-width image slot (placeholder for real images) ---
+8. APPROACH section
+9. Pull Quote — large typographic "BAM" moment
+10. --- gallery grid (2-3 images) ---
+11. OUTCOME section
+12. Highlights (moved to end, as proof/results)
+```
+
+Key changes:
+- Cover image and gallery images break out of the `max-w-4xl` column to full viewport width using negative margins
+- Pull quote rendered at `text-3xl md:text-5xl` in serif, centered, with generous vertical padding — this is the "BAM" moment
+- Highlights move from top to bottom (after Outcome) — they're the proof, not the preview
+- Each narrative section gets more internal spacing and shorter text blocks
+
+---
+
+## Case Section (`src/components/CaseSection.tsx`)
+
+- Section heading becomes larger (`text-2xl md:text-3xl`) with more top padding
+- Text rendered as individual paragraphs (split on `\n\n`) with spacing between them, not as one block with `whitespace-pre-line`
+- Each paragraph is a short, declarative block — the data already has line breaks, just style them with more vertical rhythm
+- Optional image slot after text, full-width
+
+---
+
+## New Component: `CasePullQuote`
+
+A simple component that renders a single statement at large typographic scale:
+- Serif font, `text-3xl md:text-5xl`, centered
+- Generous vertical padding (`py-16 md:py-24`)
+- Subtle top/bottom border or just whitespace for separation
+- Near-black text, nothing decorative
+
+---
+
+## Image Slots (`PlaceholderCover` + `CaseGallery`)
+
+- Replace SVG-generated graphics with simple neutral placeholder containers (`bg-muted` with no SVG content) — the instruction says "assume real images will be provided" and "do not generate graphics"
+- Cover image slot: full-width, aspect-ratio `2:1` or `21:9` for cinematic feel
+- Gallery slots: maintain 2+1 grid but with neutral `bg-muted` backgrounds only
+- Add a between-sections full-width image slot (new) for rhythm between Situation and Approach
+
+---
+
+## `HeroVisual` Component
+
+Delete this component. It's no longer used after the hero redesign.
+
+---
+
+## Summary of File Changes
 
 | File | Change |
 |------|--------|
-| `src/data/cases.ts` | Add `facts`, `highlights`, `gallery` fields; break long text into shorter paragraphs |
-| `src/pages/Index.tsx` | Hero redesign with visual element + personality line |
-| `src/pages/Work.tsx` | Stronger card layout with hover states |
-| `src/pages/CaseDetail.tsx` | Add CaseFacts, CaseHighlights, CaseGallery blocks |
-| `src/components/CaseCard.tsx` | Enhanced card with stronger visual hierarchy and hover |
-| `src/components/CaseFacts.tsx` | New — horizontal metadata strip |
-| `src/components/CaseHighlights.tsx` | New — 3-bullet key results |
-| `src/components/CaseGallery.tsx` | New — image grid for case pages |
-| `src/components/PlaceholderCover.tsx` | New — SVG-based editorial cover visuals |
-| `src/index.css` | Minor additions for hover transitions |
-
-All changes stay within the near-monochrome palette and editorial tone. No loud colors, no decorative animation, no external image dependencies.
+| `src/data/cases.ts` | Add `pullQuote` field to interface and both cases |
+| `src/components/Layout.tsx` | Widen content column to `max-w-4xl` |
+| `src/pages/Index.tsx` | Larger hero, structured supporting lines, remove HeroVisual, more card spacing |
+| `src/pages/Work.tsx` | Remove heading, increase card spacing, gallery feel |
+| `src/pages/CaseDetail.tsx` | Reorder blocks, add pull quote, full-width image slots, move highlights to end |
+| `src/components/CaseSection.tsx` | Larger headings, split paragraphs, more vertical rhythm |
+| `src/components/CaseCard.tsx` | Larger title, taller cover, refined hover |
+| `src/components/CasePullQuote.tsx` | New — large typographic statement component |
+| `src/components/PlaceholderCover.tsx` | Replace SVGs with neutral `bg-muted` containers |
+| `src/components/CaseGallery.tsx` | Replace SVGs with neutral placeholders |
+| `src/components/HeroVisual.tsx` | Delete |
