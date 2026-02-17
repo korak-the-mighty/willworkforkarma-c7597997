@@ -25,6 +25,13 @@ export interface CaseHeroMedia {
   poster?: string;
 }
 
+export interface CaseTheme {
+  bg: string;
+  fg: string;
+  muted: string;
+  accent: string;
+}
+
 export interface Case {
   slug: string;
   title: string;
@@ -47,6 +54,7 @@ export interface Case {
   heroMedia: CaseHeroMedia;
   modules: CaseModule[];
   outcomes: string[];
+  theme: CaseTheme;
 }
 
 export const cases: Case[] = [
@@ -119,6 +127,12 @@ export const cases: Case[] = [
         text: "Leadership stopped asking what the team did. The quarterly page became a reference point — cited in board materials, shared with new hires, used by the team itself to make decisions about what to take on.\n\nThe format lasted three years with minimal changes.\n\nThe real outcome wasn't a document; it was clarity.",
       },
     ],
+    theme: {
+      bg: "215 25% 10%",
+      fg: "210 15% 88%",
+      muted: "215 15% 18%",
+      accent: "210 20% 50%",
+    },
   },
   {
     slug: "man",
@@ -189,5 +203,11 @@ export const cases: Case[] = [
         text: "The identity opened doors he'd been knocking on for years. Two architecture firms reached out within the first month of the site going live.\n\nMore importantly, he said it felt like him — not a costume, not an aspiration, just an honest representation.\n\nThat's the only metric that matters for work like this.",
       },
     ],
+    theme: {
+      bg: "30 15% 10%",
+      fg: "35 15% 88%",
+      muted: "30 10% 18%",
+      accent: "30 20% 50%",
+    },
   },
 ];
