@@ -1,110 +1,73 @@
 
 
-# Phase 1 Frame — Implementation
+# Emergency Stabilization Pass (Adjusted)
 
-Three adjustments to the approved plan per your remarks, then execute.
-
----
-
-## Remarks Applied
-
-1. **Hero image**: Use the uploaded portrait (`HenrikLehtikangas-hero2026.webp`) as the real hero image, not a placeholder. Copy to `src/assets/` and import in the homepage component.
-2. **Vertical editorial layout on ALL cases**: Apply the vertical-only module/hook layout to both SHARE and MAN. No side-by-side `grid-cols-2` anywhere in case pages.
-3. **No new fonts**: Keep Switzer for headings and Inter for body. No serif introduction. Replace any remaining `font-serif` references with `font-heading`.
+Two amendments applied to the approved plan before implementation.
 
 ---
 
-## 1. Copy Hero Image
+## Amendments
 
-Copy `user-uploads://HenrikLehtikangas-hero2026.webp` to `src/assets/HenrikLehtikangas-hero2026.webp`.
-
----
-
-## 2. Homepage Rewrite (`src/pages/Index.tsx`)
-
-Replace entirely with four sections:
-
-### Section 1 — Full-Width Hero
-- Full-bleed breakout (`relative left-1/2 -ml-[50vw] w-screen`), `h-[85vh]`
-- Real image via `import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp"`, rendered as `<img>` with `object-cover`
-- H1: "I push vision, clarity and creative confidence." — left-aligned, bottom-left, large type (`text-4xl md:text-6xl lg:text-7xl font-heading`)
-- Subtle `bg-black/20` overlay div for legibility
-- No buttons, no supporting lines, no capability list
-
-### Section 2 — Statement + Work Flow
-- Three statements, each centered, large type (`text-3xl md:text-4xl lg:text-5xl font-heading`), generous padding (`py-20 md:py-32`)
-- Between/after statements: project preview cards (image placeholder `aspect-[16/9] bg-muted`, title, tags, year) linking to case pages
-- Exact copy:
-  1. "I help clients and teams see what actually matters."
-  2. "I turn complexity into clear direction and action."
-  3. "I inspire and lead creative work with relentless passion."
-- Flow: Statement 1 > Project 1 (SHARE) > Statement 2 > Project 2 (MAN) > Statement 3
-
-### Section 3 — About
-- Circular placeholder (`rounded-full bg-muted w-40 h-40`)
-- `[ABOUT TEXT — to be written later]`
-- `[KARMA LINE — to be written later]`
-
-### Section 4 — Contact
-- WhatsApp: `https://wa.me/4915141655661`
-- Email: `[EMAIL]`
-- LinkedIn: `[LINKEDIN URL]`
-- No forms
+1. **Hero object-position**: Use `object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]` (smallest screens shift image up more to protect the head).
+2. **No About/Contact typography changes**: Remove `About.tsx` and `Contact.tsx` from this pass entirely.
 
 ---
 
-## 3. Case Detail — Header Update (`src/pages/CaseDetail.tsx`)
+## 1. Hero Fix (`src/pages/Index.tsx`)
 
-Add placeholders after the title block:
-- `[CASE HEADLINE]` as a subheading
-- `[CASE INTRO PARAGRAPH]` as muted text
+- Change `h-[85vh]` to `min-h-[85vh]`
+- Image: add `object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]`
+- Center H1 both horizontally and vertically: replace `flex items-end` with `flex items-center justify-center`
+- H1: `text-center max-w-4xl mx-auto px-6`, scale to `text-5xl md:text-7xl lg:text-8xl font-semibold`
+- Keep overlay `bg-black/20`, keep exact copy unchanged
 
-Everything else in CaseDetail stays as-is (it already uses the vertical component flow).
+## 2. Statement + Work Module Rhythm (`src/pages/Index.tsx`)
 
----
+- Statements: scale to `text-4xl md:text-5xl lg:text-6xl`, add `leading-[1.1]`
+- Reduce statement padding from `py-20 md:py-32` to `py-14 md:py-20`
+- Cap project thumbnail height with `max-h-[50vh]`
+- Add `mb-6` on preview wrapper for spacing
+- WhatsApp link: add `target="_blank" rel="noopener noreferrer"`
 
-## 4. CaseHook — Vertical Only (`src/components/CaseHook.tsx`)
+## 3. Case Page Editorial Rhythm
 
-Remove `grid md:grid-cols-2`. Stack vertically:
-- Problem text paragraphs
-- Spacing (`mt-8 md:mt-12`)
-- Full-width image placeholder (`aspect-[16/9] bg-muted`)
+### CaseModule (`src/components/CaseModule.tsx`)
+- Increase outer padding: `py-16 md:py-20`
+- Increase inner gap: `space-y-12 md:space-y-16`
+- Add `pt-4` to text blocks, `mb-4` after text before media
+- Body text: `text-base md:text-lg leading-relaxed`
 
----
+### CaseHook (`src/components/CaseHook.tsx`)
+- Increase padding: `py-20 md:py-28`
+- Increase gap: `space-y-12 md:space-y-16`
 
-## 5. CaseModule — Vertical Only (`src/components/CaseModule.tsx`)
+### CaseDetail header (`src/pages/CaseDetail.tsx`)
+- Title: `text-5xl md:text-6xl`
+- Headline placeholder: `text-3xl md:text-4xl`
+- Intro paragraph: add `max-w-2xl`
 
-Remove `grid md:grid-cols-2` two-column layout. Replace with vertical stack:
-- For `strategy`/`execution`: title, then text paragraphs, then full-width media placeholder — all stacked
-- Alternate visual order: odd-index = text first, even-index = image first
-- `break` type stays as full-bleed placeholder
-- All image placeholders: `aspect-[16/9] bg-muted w-full`
+## 4. Global "Why Karma" Module (`src/components/Layout.tsx`)
 
----
+Replace footer content with:
+- **Karma module**: eyebrow "WHY KARMA", placeholder body `[WHY KARMA TEXT -- to be written later]`, "Get in touch" link to `/contact`
+- **Closing line**: "Good work comes back around." below a `border-t`
 
-## 6. CaseCard — Fix `font-serif` (`src/components/CaseCard.tsx`)
+## 5. Link Fixes (`src/pages/Index.tsx`)
 
-Replace `font-serif` with `font-heading` on the title `<h3>`.
-
----
-
-## 7. Layout — Fix `font-serif` (`src/components/Layout.tsx`)
-
-Replace `font-serif` with `font-heading` on the site name link.
+- WhatsApp: `target="_blank" rel="noopener noreferrer"`
+- Confirm project preview links work correctly
 
 ---
 
 ## Files Summary
 
-| File | Action |
-|------|--------|
-| `src/assets/HenrikLehtikangas-hero2026.webp` | Copy from upload |
-| `src/pages/Index.tsx` | Full rewrite — 4 sections |
-| `src/components/CaseHook.tsx` | Rewrite — vertical stack |
-| `src/components/CaseModule.tsx` | Rewrite — vertical editorial flow |
-| `src/pages/CaseDetail.tsx` | Add headline/intro placeholders |
-| `src/components/CaseCard.tsx` | `font-serif` to `font-heading` |
-| `src/components/Layout.tsx` | `font-serif` to `font-heading` |
+| File | Changes |
+|------|---------|
+| `src/pages/Index.tsx` | Hero centering, object-position, type scale; statement rhythm; WhatsApp target |
+| `src/components/CaseModule.tsx` | Spacing tokens, text size |
+| `src/components/CaseHook.tsx` | Spacing tokens |
+| `src/pages/CaseDetail.tsx` | Header type scale, intro max-width |
+| `src/components/Layout.tsx` | Replace footer with karma module + closing line |
 
-No data model changes. No copy changes beyond specified placeholders. No new fonts.
+No changes to `About.tsx` or `Contact.tsx` in this pass.
 
