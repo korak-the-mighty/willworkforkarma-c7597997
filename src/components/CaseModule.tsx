@@ -11,35 +11,48 @@ const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
 const CaseModule = ({ module, index }: CaseModuleProps) => {
   if (module.type === "break") {
     return (
-      <div className={`${FULL_BLEED} h-[40vh] md:h-[60vh] bg-muted my-12`} />
+      <div className={`${FULL_BLEED} my-12`}>
+        <div className="aspect-[16/9] bg-muted w-full" />
+      </div>
     );
   }
 
-  const flip = index % 2 === 1;
   const paragraphs = module.text?.split(/\n+/).filter(Boolean) || [];
   const hasMedia = module.media.length > 0;
+  const imageFirst = index % 2 === 0;
+
+  const textBlock = (
+    <div className="space-y-4">
+      {paragraphs.map((p, i) => (
+        <p key={i} className="leading-relaxed">{p}</p>
+      ))}
+    </div>
+  );
+
+  const mediaBlock = hasMedia ? (
+    <CaseMediaGrid items={module.media.map((src) => ({ src }))} count={module.media.length} />
+  ) : (
+    <div className="aspect-[16/9] bg-muted w-full" />
+  );
 
   return (
-    <div className="py-12 space-y-8">
+    <div className="py-12 space-y-8 md:space-y-12">
       {module.title && (
         <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           {module.title}
         </h3>
       )}
-      <div className={`grid gap-8 md:grid-cols-2 md:gap-12 ${flip ? "direction-rtl" : ""}`}>
-        <div className={`space-y-4 ${flip ? "md:order-2" : ""}`}>
-          {paragraphs.map((p, i) => (
-            <p key={i} className="leading-relaxed">{p}</p>
-          ))}
-        </div>
-        {hasMedia ? (
-          <div className={flip ? "md:order-1" : ""}>
-            <CaseMediaGrid items={module.media.map((src) => ({ src }))} count={module.media.length} />
-          </div>
-        ) : (
-          <div className={`aspect-[4/3] bg-muted ${flip ? "md:order-1" : ""}`} />
-        )}
-      </div>
+      {imageFirst ? (
+        <>
+          {mediaBlock}
+          {textBlock}
+        </>
+      ) : (
+        <>
+          {textBlock}
+          {mediaBlock}
+        </>
+      )}
     </div>
   );
 };

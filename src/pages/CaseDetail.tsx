@@ -49,6 +49,8 @@ const CaseDetail = () => {
               </span>
             ))}
           </div>
+          <h2 className="font-heading text-2xl md:text-3xl tracking-tight mt-6">[CASE HEADLINE]</h2>
+          <p className="text-muted-foreground leading-relaxed mt-4">[CASE INTRO PARAGRAPH]</p>
         </header>
 
         {/* Hero */}

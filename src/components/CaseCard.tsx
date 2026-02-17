@@ -14,7 +14,7 @@ const CaseCard = ({ caseData }: CaseCardProps) => (
       </div>
       <div className="space-y-2 transition-transform duration-300 group-hover:-translate-y-0.5">
         <div className="flex items-baseline justify-between">
-          <h3 className="font-serif text-3xl tracking-tight transition-colors duration-300 group-hover:text-muted-foreground">
+          <h3 className="font-heading text-3xl tracking-tight transition-colors duration-300 group-hover:text-muted-foreground">
             {caseData.title}
           </h3>
           <span className="text-sm text-muted-foreground">{caseData.year}</span>
