@@ -1,77 +1,110 @@
 
 
-# Typography + Dark Mode Default + Per-Project Themes
+# Phase 1 Frame — Implementation
 
-Three identity-level changes: swap headline font to Switzer, default to dark mode, and allow case pages to override theme colors per project.
-
----
-
-## 1. Font Swap: Instrument Serif to Switzer
-
-**`src/index.css`**
-- Replace the Google Fonts `@import` line: remove `Instrument+Serif`, add Switzer via the Fontshare CDN (`https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap`). Keep Inter as-is.
-- Update the heading rule from `font-family: 'Instrument Serif', serif` to `font-family: 'Switzer', sans-serif` with `font-weight: 500`.
-
-**`tailwind.config.ts`**
-- Add `fontFamily` to the `extend` block:
-  - `heading: ['Switzer', 'sans-serif']`
-  - `body: ['Inter', 'sans-serif']`
-- This enables `font-heading` and `font-body` utility classes throughout the project.
-
-**Component references**: Any `font-serif` classes on headings (e.g., in `CaseDetail.tsx` header, `CaseBamStatement`, `CaseWhyMe`) will be updated to `font-heading` so they pick up Switzer instead of Instrument Serif.
+Three adjustments to the approved plan per your remarks, then execute.
 
 ---
 
-## 2. Dark Mode as Default
+## Remarks Applied
 
-**`index.html`**
-- Add `class="dark"` to the `<html>` tag. This activates the existing `.dark` CSS variable set site-wide with zero component changes needed.
-
-That's it. The dark token set already exists in `index.css`. All `hsl(var(--...))` references automatically resolve to dark values.
+1. **Hero image**: Use the uploaded portrait (`HenrikLehtikangas-hero2026.webp`) as the real hero image, not a placeholder. Copy to `src/assets/` and import in the homepage component.
+2. **Vertical editorial layout on ALL cases**: Apply the vertical-only module/hook layout to both SHARE and MAN. No side-by-side `grid-cols-2` anywhere in case pages.
+3. **No new fonts**: Keep Switzer for headings and Inter for body. No serif introduction. Replace any remaining `font-serif` references with `font-heading`.
 
 ---
 
-## 3. Per-Project Background Themes on Case Pages
+## 1. Copy Hero Image
 
-**Data model (`src/data/cases.ts`)**
-- Add a `theme` field to the `Case` interface:
-  ```
-  theme: {
-    bg: string;      // HSL values, e.g. "220 20% 12%"
-    fg: string;
-    muted: string;
-    accent: string;
-  }
-  ```
-- Add theme values for each case:
-  - SHARE: a cool blue-dark tone (e.g., `bg: "215 25% 10%"`, `fg: "210 15% 88%"`, etc.)
-  - MAN: a warm brown-dark tone (e.g., `bg: "30 15% 10%"`, `fg: "35 15% 88%"`, etc.)
+Copy `user-uploads://HenrikLehtikangas-hero2026.webp` to `src/assets/HenrikLehtikangas-hero2026.webp`.
 
-**`src/pages/CaseDetail.tsx`**
-- Wrap the `<article>` (or a parent div) with inline `style` that sets CSS custom properties from the case's `theme` object:
-  ```tsx
-  style={{
-    '--background': caseData.theme.bg,
-    '--foreground': caseData.theme.fg,
-    '--muted': caseData.theme.muted,
-    '--accent': caseData.theme.accent,
-  } as React.CSSProperties}
-  ```
-- This overrides the dark-mode defaults only within the case page scope. All existing `bg-background`, `text-foreground`, `text-muted-foreground` classes automatically pick up the per-project colors. No component changes needed beyond this wrapper.
+---
+
+## 2. Homepage Rewrite (`src/pages/Index.tsx`)
+
+Replace entirely with four sections:
+
+### Section 1 — Full-Width Hero
+- Full-bleed breakout (`relative left-1/2 -ml-[50vw] w-screen`), `h-[85vh]`
+- Real image via `import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp"`, rendered as `<img>` with `object-cover`
+- H1: "I push vision, clarity and creative confidence." — left-aligned, bottom-left, large type (`text-4xl md:text-6xl lg:text-7xl font-heading`)
+- Subtle `bg-black/20` overlay div for legibility
+- No buttons, no supporting lines, no capability list
+
+### Section 2 — Statement + Work Flow
+- Three statements, each centered, large type (`text-3xl md:text-4xl lg:text-5xl font-heading`), generous padding (`py-20 md:py-32`)
+- Between/after statements: project preview cards (image placeholder `aspect-[16/9] bg-muted`, title, tags, year) linking to case pages
+- Exact copy:
+  1. "I help clients and teams see what actually matters."
+  2. "I turn complexity into clear direction and action."
+  3. "I inspire and lead creative work with relentless passion."
+- Flow: Statement 1 > Project 1 (SHARE) > Statement 2 > Project 2 (MAN) > Statement 3
+
+### Section 3 — About
+- Circular placeholder (`rounded-full bg-muted w-40 h-40`)
+- `[ABOUT TEXT — to be written later]`
+- `[KARMA LINE — to be written later]`
+
+### Section 4 — Contact
+- WhatsApp: `https://wa.me/4915141655661`
+- Email: `[EMAIL]`
+- LinkedIn: `[LINKEDIN URL]`
+- No forms
+
+---
+
+## 3. Case Detail — Header Update (`src/pages/CaseDetail.tsx`)
+
+Add placeholders after the title block:
+- `[CASE HEADLINE]` as a subheading
+- `[CASE INTRO PARAGRAPH]` as muted text
+
+Everything else in CaseDetail stays as-is (it already uses the vertical component flow).
+
+---
+
+## 4. CaseHook — Vertical Only (`src/components/CaseHook.tsx`)
+
+Remove `grid md:grid-cols-2`. Stack vertically:
+- Problem text paragraphs
+- Spacing (`mt-8 md:mt-12`)
+- Full-width image placeholder (`aspect-[16/9] bg-muted`)
+
+---
+
+## 5. CaseModule — Vertical Only (`src/components/CaseModule.tsx`)
+
+Remove `grid md:grid-cols-2` two-column layout. Replace with vertical stack:
+- For `strategy`/`execution`: title, then text paragraphs, then full-width media placeholder — all stacked
+- Alternate visual order: odd-index = text first, even-index = image first
+- `break` type stays as full-bleed placeholder
+- All image placeholders: `aspect-[16/9] bg-muted w-full`
+
+---
+
+## 6. CaseCard — Fix `font-serif` (`src/components/CaseCard.tsx`)
+
+Replace `font-serif` with `font-heading` on the title `<h3>`.
+
+---
+
+## 7. Layout — Fix `font-serif` (`src/components/Layout.tsx`)
+
+Replace `font-serif` with `font-heading` on the site name link.
 
 ---
 
 ## Files Summary
 
-| File | Change |
+| File | Action |
 |------|--------|
-| `index.html` | Add `class="dark"` to `<html>` |
-| `src/index.css` | Swap Instrument Serif import for Switzer (Fontshare CDN); update heading font-family |
-| `tailwind.config.ts` | Add `fontFamily.heading` and `fontFamily.body` to extend |
-| `src/data/cases.ts` | Add `theme` field to `Case` interface + values for SHARE and MAN |
-| `src/pages/CaseDetail.tsx` | Apply per-case CSS variables via inline `style` on wrapper element |
-| `src/components/CaseBamStatement.tsx` | Replace `font-serif` with `font-heading` |
-| `src/components/CaseWhyMe.tsx` | Replace `font-serif` with `font-heading` (if present) |
+| `src/assets/HenrikLehtikangas-hero2026.webp` | Copy from upload |
+| `src/pages/Index.tsx` | Full rewrite — 4 sections |
+| `src/components/CaseHook.tsx` | Rewrite — vertical stack |
+| `src/components/CaseModule.tsx` | Rewrite — vertical editorial flow |
+| `src/pages/CaseDetail.tsx` | Add headline/intro placeholders |
+| `src/components/CaseCard.tsx` | `font-serif` to `font-heading` |
+| `src/components/Layout.tsx` | `font-serif` to `font-heading` |
 
-No layout changes. No copy changes. No generated graphics.
+No data model changes. No copy changes beyond specified placeholders. No new fonts.
 
