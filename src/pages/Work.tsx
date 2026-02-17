@@ -7,7 +7,7 @@ const Work = () => (
     <section className="mb-12">
       <h1 className="font-serif text-4xl tracking-tight">Work</h1>
     </section>
-    <div className="space-y-16">
+    <div className="space-y-20">
       {cases.map((c) => (
         <CaseCard key={c.slug} caseData={c} />
       ))}
