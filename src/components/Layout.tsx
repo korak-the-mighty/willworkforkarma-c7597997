@@ -3,7 +3,7 @@ import { NavLink } from "@/components/NavLink";
 
 const Header = () => (
   <header className="border-b border-border">
-    <div className="mx-auto flex max-w-3xl items-baseline justify-between px-6 py-6">
+    <div className="mx-auto flex max-w-4xl items-baseline justify-between px-6 py-6">
       <Link to="/" className="font-serif text-lg tracking-tight">
         Willworkforkarma
       </Link>
@@ -36,7 +36,7 @@ const Header = () => (
 
 const Footer = () => (
   <footer className="border-t border-border">
-    <div className="mx-auto max-w-3xl px-6 py-8">
+    <div className="mx-auto max-w-4xl px-6 py-8">
       <p className="text-sm text-muted-foreground">
         Good work comes back around.
       </p>
@@ -52,7 +52,7 @@ const Layout = ({ children }: LayoutProps) => (
   <div className="flex min-h-screen flex-col">
     <Header />
     <main className="flex-1">
-      <div className="mx-auto max-w-3xl px-6 py-16 md:py-24">
+      <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
         {children}
       </div>
     </main>
