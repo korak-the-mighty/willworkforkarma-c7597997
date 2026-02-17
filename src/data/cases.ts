@@ -23,6 +23,7 @@ export interface Case {
   facts: CaseFacts;
   highlights: string[];
   gallery: string[];
+  pullQuote: string;
   sections: CaseSection[];
 }
 
@@ -49,6 +50,7 @@ export const cases: Case[] = [
       "Survived three years with minimal changes — outlasted two reorgs",
     ],
     gallery: [],
+    pullQuote: "Five decks. Five stories. Zero conviction.",
     sections: [
       {
         heading: "Situation",
@@ -86,6 +88,7 @@ export const cases: Case[] = [
       "The client said it felt like him — not a costume, not an aspiration",
     ],
     gallery: [],
+    pullQuote: "He didn't need a brand. He needed to be seen.",
     sections: [
       {
         heading: "Situation",

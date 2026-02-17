@@ -4,10 +4,7 @@ import { cases } from "@/data/cases";
 
 const Work = () => (
   <Layout>
-    <section className="mb-12">
-      <h1 className="font-serif text-4xl tracking-tight">Work</h1>
-    </section>
-    <div className="space-y-20">
+    <div className="space-y-32">
       {cases.map((c) => (
         <CaseCard key={c.slug} caseData={c} />
       ))}
