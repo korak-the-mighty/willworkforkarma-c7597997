@@ -22,9 +22,9 @@ const CaseModule = ({ module, index }: CaseModuleProps) => {
   const imageFirst = index % 2 === 0;
 
   const textBlock = (
-    <div className="space-y-4">
+    <div className="space-y-4 pt-4 mb-4">
       {paragraphs.map((p, i) => (
-        <p key={i} className="leading-relaxed">{p}</p>
+        <p key={i} className="text-base md:text-lg leading-relaxed">{p}</p>
       ))}
     </div>
   );
@@ -36,7 +36,7 @@ const CaseModule = ({ module, index }: CaseModuleProps) => {
   );
 
   return (
-    <div className="py-12 space-y-8 md:space-y-12">
+    <div className="py-16 md:py-20 space-y-12 md:space-y-16">
       {module.title && (
         <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           {module.title}

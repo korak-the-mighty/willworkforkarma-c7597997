@@ -37,20 +37,20 @@ const CaseDetail = () => {
         {/* Header */}
         <header className="space-y-4 mb-8">
           <div className="flex items-baseline gap-4">
-            <h1 className="font-heading text-4xl md:text-5xl tracking-tight">
-              {caseData.title}
-            </h1>
-            <span className="text-sm text-muted-foreground">{caseData.year}</span>
-          </div>
-          <div className="flex flex-wrap gap-x-4 gap-y-1">
-            {caseData.tags.map((tag) => (
-              <span key={tag} className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                {tag}
-              </span>
-            ))}
-          </div>
-          <h2 className="font-heading text-2xl md:text-3xl tracking-tight mt-6">[CASE HEADLINE]</h2>
-          <p className="text-muted-foreground leading-relaxed mt-4">[CASE INTRO PARAGRAPH]</p>
+          <h1 className="font-heading text-5xl md:text-6xl tracking-tight">
+            {caseData.title}
+          </h1>
+          <span className="text-sm text-muted-foreground">{caseData.year}</span>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {caseData.tags.map((tag) => (
+            <span key={tag} className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+              {tag}
+            </span>
+          ))}
+        </div>
+        <h2 className="font-heading text-3xl md:text-4xl tracking-tight mt-6">[CASE HEADLINE]</h2>
+        <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">[CASE INTRO PARAGRAPH]</p>
         </header>
 
         {/* Hero */}
