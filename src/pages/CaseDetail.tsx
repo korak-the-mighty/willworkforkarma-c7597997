@@ -24,11 +24,20 @@ const CaseDetail = () => {
 
   return (
     <Layout>
+      <div
+        style={{
+          '--background': caseData.theme.bg,
+          '--foreground': caseData.theme.fg,
+          '--muted': caseData.theme.muted,
+          '--accent': caseData.theme.accent,
+        } as React.CSSProperties}
+        className="bg-background text-foreground"
+      >
       <article>
         {/* Header */}
         <header className="space-y-4 mb-8">
           <div className="flex items-baseline gap-4">
-            <h1 className="font-serif text-4xl md:text-5xl tracking-tight">
+            <h1 className="font-heading text-4xl md:text-5xl tracking-tight">
               {caseData.title}
             </h1>
             <span className="text-sm text-muted-foreground">{caseData.year}</span>
@@ -81,6 +90,7 @@ const CaseDetail = () => {
           <CaseWhyMe text={caseData.whyMe} nextCase={nextCaseLink} />
         </div>
       </article>
+      </div>
     </Layout>
   );
 };
