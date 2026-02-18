@@ -1,35 +1,21 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { NavLink } from "@/components/NavLink";
+import { Menu } from "lucide-react";
+import OverlayMenu from "@/components/OverlayMenu";
 
-const Header = () => (
-  <header className="border-b border-border">
-    <div className="mx-auto flex max-w-4xl items-baseline justify-between px-6 py-6">
+const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
+  <header className="absolute top-0 left-0 right-0 z-40">
+    <div className="flex items-center justify-between px-6 py-6">
       <Link to="/" className="font-heading text-lg tracking-tight">
         Willworkforkarma
       </Link>
-      <nav className="flex gap-8 text-sm">
-        <NavLink
-          to="/work"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-          activeClassName="text-foreground"
-        >
-          Work
-        </NavLink>
-        <NavLink
-          to="/about"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-          activeClassName="text-foreground"
-        >
-          About
-        </NavLink>
-        <NavLink
-          to="/contact"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-          activeClassName="text-foreground"
-        >
-          Contact
-        </NavLink>
-      </nav>
+      <button
+        onClick={onMenuOpen}
+        className="text-foreground hover:text-muted-foreground transition-colors"
+        aria-label="Open menu"
+      >
+        <Menu size={24} />
+      </button>
     </div>
   </header>
 );
@@ -51,18 +37,23 @@ interface LayoutProps {
   fullWidth?: boolean;
 }
 
-const Layout = ({ children, fullWidth = false }: LayoutProps) => (
-  <div className="flex min-h-screen flex-col">
-    <Header />
-    <main className="flex-1">
-      {fullWidth ? children : (
-        <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-          {children}
-        </div>
-      )}
-    </main>
-    <Footer />
-  </div>
-);
+const Layout = ({ children, fullWidth = false }: LayoutProps) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header onMenuOpen={() => setMenuOpen(true)} />
+      <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <main className="flex-1">
+        {fullWidth ? children : (
+          <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
+            {children}
+          </div>
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default Layout;
