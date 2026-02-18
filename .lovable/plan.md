@@ -1,96 +1,77 @@
 
 
-# Homepage Reset — Scene-Based Storytelling
+# Homepage Rebuild — Fixed Structure
 
-A structural reset that removes the current "statement-evidence alternation" pattern and replaces it with a cinematic scene system where each section feels like a distinct moment.
+Replacing the current homepage with exactly the 8-block structure specified. Nothing added, nothing invented.
 
 ---
 
-## What changes
+## Changes to `src/pages/Index.tsx`
 
-### Current problems
-- The Act + Evidence pattern creates a repetitive rhythm (statement, grey slab, statement, grey slab, statement) that feels like a template, not a story.
-- Henrik Moment and Karma Module are thin placeholder sections that break momentum.
-- The footer has a full "Why Karma" block that duplicates homepage content.
-- Project blocks are grey `aspect-[16/9]` rectangles — they don't feel like scenes.
+Full rewrite. The page becomes exactly these blocks in order:
 
-### New structure (5 scenes + footer)
+### 1. HERO
+- `min-h-screen`, full-width, full-bleed image (existing hero image)
+- Existing copy centered: "I push vision, clarity and creative confidence."
+- No changes to overlay or image positioning
+- **Unchanged from current**
 
-**Scene 1 — Hero**
-- `min-h-screen`, full-bleed image, `bg-black/20` overlay
-- H1 centered horizontally and vertically, calm weight
-- Copy unchanged: "I push vision, clarity and creative confidence."
-- No changes to image positioning logic
+### 2. STATEMENT 1
+- Full-width, centered, `py-24 md:py-32 px-6`
+- One line: `[STATEMENT 1 — to be written later]`
+- `text-2xl md:text-4xl font-heading tracking-tight`
+- No body text, no sub-copy
 
-**Scene 2 — Context**
-- Full-width section, vertically centered content
-- Part A: One large statement (`text-3xl md:text-5xl lg:text-6xl font-heading`, centered)
-- Part B: Below it, a restrained text block (2-4 lines, `max-w-2xl mx-auto`, `text-base md:text-lg text-muted-foreground`, centered)
-- Both parts are placeholder copy for now:
-  - A: `[CONTEXT STATEMENT — to be written later]`
-  - B: `[CONTEXT BODY — 2-4 lines, to be written later]`
-- Generous padding: `py-24 md:py-32`
+### 3. WORK BANNER: SHARE
+- Full-width, `bg-muted`, clickable link to `/work/share`
+- Shows: project name (SHARE), role (Strategy Lead), year (2023), one short line (the `summary` from data)
+- Not `min-h-[70vh]` — just enough height to feel substantial: `py-16 md:py-24 px-8 md:px-16`
+- Title large, meta small and muted
 
-**Scene 3 — Project: SHARE**
-- Full-width scene, `min-h-[70vh]`, `bg-muted` background (whole section, not a small card)
-- Content positioned inside the scene: large project title (`text-4xl md:text-6xl font-heading`), subtle metadata (year, role) in small muted text
-- Entire section is a clickable `Link` to `/work/share`
-- Feels like entering a room, not looking at a thumbnail
+### 4. STATEMENT 2
+- Same treatment as Statement 1
+- `[STATEMENT 2 — to be written later]`
 
-**Scene 4 — Project: MAN**
-- Same structure as Scene 3 but for the second case
+### 5. WORK BANNER: MAN
+- Same structure as SHARE banner
 - Links to `/work/man`
 
-**Scene 5 — Closing Statement**
-- Full-width, centered, one sentence
-- Placeholder: `[CLOSING STATEMENT — to be written later]`
-- `text-2xl md:text-4xl font-heading`, generous padding `py-24 md:py-32`
+### 6. STATEMENT 3
+- Same treatment as Statement 1
+- `[STATEMENT 3 — to be written later]`
 
-**Footer (Layout.tsx)**
-- Strip down to minimal: just the closing line "Good work comes back around."
-- Remove the "Why Karma" eyebrow, placeholder body, and "Get in touch" link
-- Simple `border-t`, small padding, one line of muted text
+### 7. ABOUT
+- Minimal, human section
+- Not full viewport height — just `py-16 md:py-24 px-6 text-center`
+- One or two lines of placeholder text: `[ABOUT — to be written later]`
+- Small, restrained type: `text-base md:text-lg text-muted-foreground max-w-xl mx-auto`
 
-### Removed from homepage
-- The three interleaved statements (moved to a single Context section)
-- Henrik Moment section (does not serve the story path)
-- Karma Module section (does not serve the story path)
-- `ProjectEvidence` component (replaced by full-scene project blocks)
+### 8. FOOTER
+- Already handled by Layout.tsx — simple, one closing line
+- **No changes needed**
 
 ---
 
-## Files
+## Removed from current homepage
+- "Context" section with statement + body text pair (replaced by clean Statement 1)
+- `min-h-[70vh]` on project blocks (replaced by padded banners)
+- "Closing Statement" scene (replaced by Statement 3 + About)
 
-| File | Action |
-|------|--------|
-| `src/pages/Index.tsx` | Full rewrite — 5 scenes |
-| `src/components/Layout.tsx` | Simplify footer to closing line only |
+## No changes to
+- `src/components/Layout.tsx` — footer and header stay as they are
+- Data files
+- Any other pages
 
 ---
 
-## Technical details
+## Technical: WorkBanner component
 
-**Project scene component** (inline in Index.tsx):
 ```text
-Props: slug, title, year, role
-- Link wrapper (block, full width)
-- min-h-[70vh] bg-muted flex items-end
-- Content in bottom-left: p-8 md:p-16
+Props: slug, title, year, role, summary
+- Link wrapper, group, block, w-full
+- bg-muted py-16 md:py-24 px-8 md:px-16
 - Title: text-4xl md:text-6xl font-heading tracking-tight
-- Meta: text-sm text-muted-foreground mt-2, opacity transition on hover
-- group class on Link for hover effects
+- Meta line: text-sm text-muted-foreground mt-2 — "2023 · Strategy Lead"
+- Summary: text-base text-muted-foreground mt-4 max-w-2xl
+- Hover: title color shifts via group-hover
 ```
-
-**Footer simplification**:
-```text
-<footer>
-  <div className="border-t border-border">
-    <div className="mx-auto max-w-4xl px-6 py-8">
-      <p className="text-sm text-muted-foreground">
-        Good work comes back around.
-      </p>
-    </div>
-  </div>
-</footer>
-```
-
