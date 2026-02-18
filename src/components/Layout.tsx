@@ -21,12 +21,20 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
 );
 
 const Footer = () => (
-  <footer>
-    <div className="border-t border-border">
-      <div className="mx-auto max-w-4xl px-6 py-8">
-        <p className="text-sm text-muted-foreground">
-          Good work comes back around.
+  <footer className="border-t border-border">
+    <div className="mx-auto max-w-7xl px-6 md:px-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
+        <p className="font-heading text-lg md:text-xl tracking-tight">
+          I'm available for work. Let's talk.
         </p>
+        <div className="flex gap-8 text-sm">
+          <Link to="/work" className="text-muted-foreground hover:text-foreground transition-colors">Work</Link>
+          <Link to="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
+          <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
+        </div>
+      </div>
+      <div className="pb-8">
+        <p className="text-sm text-muted-foreground">Privacy Policy</p>
       </div>
     </div>
   </footer>

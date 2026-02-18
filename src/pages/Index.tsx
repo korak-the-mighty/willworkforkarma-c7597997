@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
+import profileImg from "@/assets/HenrikLehtikangas-profile_picture.webp";
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -12,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section className="py-24 md:py-32 px-6 text-center">
+  <section className="py-32 md:py-40 px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -86,19 +87,19 @@ const Index = () => (
     </Link>
 
     {/* ── 3. STATEMENT 1 ── */}
-    <Statement>[Statement 1 — to be written]</Statement>
+    <Statement>I help clients and teams see what actually matters.</Statement>
 
     {/* ── 4. SHARE ── */}
     <EditorialCase slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
 
     {/* ── 5. STATEMENT 2 ── */}
-    <Statement>[Statement 2 — to be written]</Statement>
+    <Statement>I turn complexity into clear direction and action.</Statement>
 
     {/* ── 6. MAN ── */}
     <EditorialCase slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
 
     {/* ── 7. STATEMENT 3 ── */}
-    <Statement>[Statement 3 — to be written]</Statement>
+    <Statement>I inspire and lead creative work with relentless passion.</Statement>
 
     {/* ── 8. BMW ── */}
     <EditorialCase slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
@@ -114,22 +115,46 @@ const Index = () => (
     </section>
 
     {/* ── 11. ABOUT ── */}
-    <section className="py-24 md:py-32 px-6 text-center space-y-8">
-      <div className="w-32 h-32 rounded-full bg-muted mx-auto" />
-      <h2 className="font-heading text-2xl md:text-3xl tracking-tight">About</h2>
-      <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
-        [Creative-led about copy — to be written]
-      </p>
-      <div className="flex justify-center gap-4 flex-wrap pt-4">
-        <Blob label="Brand" />
-        <Blob label="Product" />
-        <Blob label="Campaign" />
+    <section className="py-24 md:py-32 px-6 md:px-16">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+        {/* Left — Portrait + Blobs */}
+        <div className="relative flex flex-col items-center md:items-start">
+          <div className="w-64 md:w-80 rounded-full overflow-hidden">
+            <img src={profileImg} alt="Henrik Lehtikangas" className="w-full h-auto aspect-square object-cover" />
+          </div>
+          <div className="flex gap-3 flex-wrap mt-6 md:mt-8 justify-center md:justify-start">
+            <Blob label="Brand" />
+            <Blob label="Product" />
+            <Blob label="Campaign" />
+          </div>
+        </div>
+        {/* Right — Copy */}
+        <div className="space-y-6">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight">Henrik</h2>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            I'm a creative director working through vision, taste, and clarity.
+            I help teams see what actually matters — and turn that into work that feels confident, intentional, and real.
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            That can mean creating a new brand, sharpening a creative team's focus, building a pragmatic, pixel-precise product, or running wild with campaign ideas — always in service of something clear and meaningful.
+          </p>
+          <div className="flex gap-8 pt-2">
+            <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
+            <Link to="/contact" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">Contact me</Link>
+          </div>
+        </div>
       </div>
     </section>
 
     {/* ── 12. KARMA ── */}
-    <section className="py-16 md:py-24 px-6 text-center">
-      <p className="text-sm text-muted-foreground">Good work comes back around.</p>
+    <section className="py-16 md:py-24 px-6 md:px-8">
+      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
+        <p>I try to be decent, curious, and honest.</p>
+        <p>I care deeply about the work — and the people doing it.</p>
+        <p>Somehow, that keeps coming back.</p>
+        <p className="py-4">———</p>
+        <p>That's why I work for karma.</p>
+      </div>
     </section>
   </Layout>
 );
