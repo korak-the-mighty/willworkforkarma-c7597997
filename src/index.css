@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
 
 @tailwind base;
@@ -36,6 +36,9 @@
     --ring: 220 15% 10%;
 
     --radius: 0.25rem;
+
+    --rose-blob: 350 30% 80%;
+    --rose-blob-foreground: 350 30% 25%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -76,6 +79,9 @@
     --input: 220 10% 18%;
     --ring: 40 15% 90%;
 
+    --rose-blob: 350 20% 35%;
+    --rose-blob-foreground: 350 20% 75%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -99,7 +105,39 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Switzer', sans-serif;
+    font-family: 'Clash Display', sans-serif;
     font-weight: 500;
+  }
+}
+
+/* Arrow link hover with micro-bounce */
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+.arrow-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.arrow-link::before {
+  content: '\2192';
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+.arrow-link:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+  animation: arrow-bounce 400ms ease 260ms 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow-link:hover::before {
+    animation: none;
   }
 }

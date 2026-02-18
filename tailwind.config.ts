@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Switzer', 'sans-serif'],
+        heading: ['Clash Display', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
       colors: {
