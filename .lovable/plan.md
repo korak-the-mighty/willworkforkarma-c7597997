@@ -1,202 +1,110 @@
 
+# Homepage Content Lock + Refinement Pass
 
-# Master Homepage Update — Implementation Plan
-
-A comprehensive overhaul: new typography, cinematic homepage flow, editorial case layouts, full-screen overlay menu, about section with blobs, and global interaction patterns.
-
----
-
-## Scope Summary
-
-| Area | What happens |
-|------|-------------|
-| Typography | Clash Display replaces Switzer for all headings |
-| Header | Inline nav removed, burger icon added, full-screen overlay menu |
-| Hero | Attribution line added below headline |
-| ABB E-mobility | New hero project section after hero, `min-h-[70vh]`, immersive |
-| Case sequence | Alternating editorial layouts with image-edge alignment and viewport-centered overlapping titles |
-| Statements | Clash Display, large, generous spacing, chapter-break feel |
-| About | Circular portrait, creative copy placeholder, three muted-rose territory blobs |
-| "See all" link | Subtle arrow-link after last case |
-| Arrow hover | Global `.arrow-link` class with micro-bounce |
-| Image treatment | All case images darkened by default, brighten on hover |
-| New cases | ABB, BMW, DRIVELOG added to data with dummy content |
-| Footer | No changes — stays minimal |
+Precision tuning — no structural changes. Locking all copy, updating the About and Karma sections to match reference layouts, adjusting statement spacing, and redesigning the footer.
 
 ---
 
-## File Changes
+## Changes
 
-### 1. `src/index.css`
-- Replace Switzer font import with Clash Display from Fontshare
-- Update `h1-h6` font-family rule to `'Clash Display'`
-- Add `.arrow-link` class with `::before` pseudo-element arrow, micro-bounce keyframe, and `prefers-reduced-motion` handling
-- Add custom CSS variable `--rose-blob` for the muted rose blob color (HSL value like `350 30% 80%` for light, `350 20% 35%` for dark)
+### 1. `src/pages/Index.tsx` — Full content lock + About/Karma redesign
 
-### 2. `tailwind.config.ts`
-- Change `fontFamily.heading` from `['Switzer', 'sans-serif']` to `['Clash Display', 'sans-serif']`
+**Copy replacements (exact text locked):**
+- Statement 1: "I help clients and teams see what actually matters."
+- Statement 2: "I turn complexity into clear direction and action."
+- Statement 3: "I inspire and lead creative work with relentless passion."
 
-### 3. `src/data/cases.ts`
-- Add `subline` and `area` optional fields to `Case` interface
-- Add three new case entries with dummy content:
-  - **ABB E-mobility** (index 0): slug `abb-emobility`, year 2024, area "Brand & Digital", role "Creative Lead"
-  - **BMW** (after MAN): slug `bmw`, year 2021, area "Campaign"
-  - **DRIVELOG** (last): slug `drivelog`, year 2020, area "Product"
-- Existing SHARE and MAN cases get `subline` and `area` fields added
-- All cases get proper dummy content for all required fields (problem, decision, modules, outcomes, etc.)
+**ABB hover data update** (in `src/data/cases.ts`):
+- subline: "Charging infrastructure reimagined for scale and clarity."
+- area: "Brand & Digital Product"
 
-### 4. `src/components/Layout.tsx`
-- Remove inline `<nav>` with Work/About/Contact links from Header
-- Add a burger icon (three-line SVG) positioned top-right
-- Add `useState` for overlay menu open/close
-- Import and render new `OverlayMenu` component
-- Footer unchanged
+**SHARE data update:**
+- subline: "A platform designed to simplify mobility experiences."
+- area: "Digital Product"
 
-### 5. `src/components/OverlayMenu.tsx` (new)
-- Full-screen fixed overlay, `bg-[#01031A]`, `z-50`
-- Fade-in animation (opacity 0 to 1, 300ms)
-- Left side: large typographic links (Work, About, Contact) using `font-heading text-5xl md:text-7xl text-white`, each with `.arrow-link` class
-- Right side: small circular portrait placeholder (`w-24 h-24 rounded-full bg-white/10`) + contact info (email, LinkedIn) in small muted text
-- Close button (X) top-right
-- Mobile: stacked layout (links on top, contact below)
-- Links close the menu on click via `onClick` handler
+**MAN data update:**
+- subline: "A focused digital presence for a global transport brand."
+- area: "Brand & Digital"
 
-### 6. `src/components/EditorialCase.tsx` (new)
-- Props: `slug`, `title`, `year`, `area`, `subline`, `imageAlign: "left" | "right"`
-- Wraps in a `Link` to `/work/{slug}` with `group` class
-- Layout: relative container, full-width
-- Image side: a `div` that is `absolute` on the left or right edge of the viewport (50% width), using `brightness-75` default, `group-hover:brightness-100` transition 300ms. No zoom, no parallax.
-- Case title: `absolute` positioned, centered across the full viewport width (`left-0 right-0 text-center`), vertically centered, `z-10`. Uses `font-heading text-5xl md:text-7xl lg:text-8xl tracking-tight`. Strong editorial overlap — the title visually cuts across the image.
-- Default state: only title visible
-- Desktop hover: subline, area, year fade in (`opacity-0 group-hover:opacity-100 transition-opacity duration-300`)
-- Mobile: stacked vertically — image full width, info below, always visible (no hover)
-- Min height: `min-h-[60vh] md:min-h-[70vh]`
+**BMW data update:**
+- subline: "Campaign thinking grounded in clarity and craft."
+- area: "Campaign" (unchanged)
 
-### 7. `src/pages/Index.tsx` (full rewrite)
-Structure in exact order:
+**DRIVELOG data update:**
+- subline: "From idea to product — a pragmatic mobility solution."
+- area: "Product" (simplified)
 
-```text
-1. HERO (unchanged except add attribution line)
-   - "-- Henrik Lehtikangas" below H1
-   - text-sm md:text-base text-white/60 mt-6 tracking-widest
+**Statement spacing increase:**
+- Change from `py-24 md:py-32` to `py-32 md:py-40`
 
-2. HERO PROJECT: ABB E-mobility
-   - Full-width Link, min-h-[70vh], bg-muted, relative
-   - Dark overlay by default (bg-black/40)
-   - group-hover: overlay lightens (bg-black/20)
-   - Title bottom-left: text-4xl md:text-6xl font-heading text-white
-   - Desktop hover: subline/area/year fade in
-   - Mobile: info visible below
+**About section redesign** (matches reference image layout):
+- Two-column layout on desktop: left side has portrait image with blobs overlapping below/around it; right side has "Henrik" H2, body copy, and "More about me" / "Contact me" arrow-links
+- Mobile: stacked vertically
+- Profile image: imported from `src/assets/HenrikLehtikangas-profile_picture.webp`
+- Blobs positioned organically near the portrait (not centered in a row)
 
-3. STATEMENT 1
-   - H2, font-heading, text-2xl md:text-4xl lg:text-5xl
-   - Centered, py-24 md:py-32
-   - Placeholder text
+**Karma block redesign** (matches reference):
+- Left-aligned text (not centered), within a max-width container
+- Three lines: "I try to be decent, curious, and honest." / "I care deeply about the work — and the people doing it." / "Somehow, that keeps coming back."
+- A separator dash
+- "That's why I work for karma."
+- Clean spacing above and below
 
-4. SHARE (EditorialCase, imageAlign="right")
+### 2. `src/data/cases.ts` — Update sublines and areas
 
-5. STATEMENT 2
+Lock the subline and area fields to the exact values specified above for all five cases.
 
-6. MAN (EditorialCase, imageAlign="left")
+### 3. `src/components/Layout.tsx` — Footer redesign
 
-7. STATEMENT 3
+Replace the current minimal footer with the reference layout:
+- Top row: left side "I'm available for work. Let's talk." (font-heading), right side "Work / About / Contact" links
+- Bottom row: left side "Privacy Policy" link
+- Border-top separator
+- Proper horizontal padding matching the site
 
-8. BMW (EditorialCase, imageAlign="right")
+### 4. Copy profile image to project
 
-9. DRIVELOG (EditorialCase, imageAlign="left")
+Copy `user-uploads://HenrikLehtikangas-profile_picture.webp` to `src/assets/HenrikLehtikangas-profile_picture.webp` and import it in Index.tsx.
 
-10. "See all of my work" arrow-link
-    - Centered, py-16 md:py-24
-    - Link to /work with arrow-link class
+### 5. Image treatment confirmation
 
-11. ABOUT section
-    - Circular portrait placeholder (w-32 h-32 rounded-full bg-muted mx-auto)
-    - H2 title
-    - Creative copy placeholder
-    - Three blobs: "Brand", "Product", "Campaign"
-      - Custom muted rose: bg-[hsl(350,30%,80%)] / dark mode aware
-      - rounded-full px-6 py-3 text-sm font-heading
-      - Hover: translateY(-3px), scale(1.02), brightness, shadow
-      - Transition: 260ms cubic-bezier(.2,.8,.2,1)
-    - Blobs are not interactive (no click handlers)
-
-12. KARMA block placeholder (one line, keep it clean)
-```
-
-### 8. `src/components/CaseHeroMedia.tsx`
-- Add `brightness-75` default filter and `hover:brightness-100` transition
-
-### 9. `src/components/CaseCard.tsx`
-- Add image darkening treatment to the PlaceholderCover wrapper
+No changes needed — `brightness-75` default with `group-hover:brightness-100` is already applied across `EditorialCase.tsx`, `CaseHeroMedia.tsx`, and `CaseCard.tsx`.
 
 ---
 
 ## Technical Details
 
-### Clash Display import
+### About section layout (desktop)
 ```text
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap');
+Grid: grid-cols-1 md:grid-cols-2, gap-12 md:gap-16
+Left column:
+  - Relative container
+  - Portrait: w-64 md:w-80 rounded-full overflow-hidden
+  - Blobs: positioned with relative offsets below/beside portrait
+Right column:
+  - H2 "Henrik" — font-heading text-4xl md:text-5xl
+  - Body copy — text-base text-muted-foreground leading-relaxed max-w-lg
+  - Links row: "More about me" and "Contact me" as arrow-links
 ```
 
-### Arrow link micro-bounce
+### Karma block layout
 ```text
-@keyframes arrow-bounce {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(3px); }
-}
-.arrow-link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-.arrow-link::before {
-  content: '\2192';
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 260ms ease, transform 260ms ease;
-}
-.arrow-link:hover::before {
-  opacity: 1;
-  transform: translateX(0);
-  animation: arrow-bounce 400ms ease 260ms 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .arrow-link:hover::before { animation: none; }
-}
+Container: max-w-4xl mx-auto px-6 md:px-8, py-16 md:py-24
+Text: text-base md:text-lg text-foreground, leading-relaxed
+  Line 1: I try to be decent, curious, and honest.
+  Line 2: I care deeply about the work — and the people doing it.
+  Line 3: Somehow, that keeps coming back.
+  Separator: — (em dash on its own line, py-4)
+  Closing: That's why I work for karma.
+Alignment: text-left (not centered)
 ```
 
-### EditorialCase overlap positioning
+### Footer layout
 ```text
-Container: relative, min-h-[60vh] md:min-h-[70vh], overflow-hidden
-Image div: absolute, top-0 bottom-0, w-1/2
-  - imageAlign="right": right-0
-  - imageAlign="left": left-0
-  - bg-muted brightness-75 group-hover:brightness-100 transition duration-300
-Title: absolute, inset-x-0, top-1/2 -translate-y-1/2, text-center, z-10
-  - font-heading text-5xl md:text-7xl lg:text-8xl
-  - NOT constrained to any container — spans full viewport
-Mobile: position static, image full width, title below
+Container: border-t border-border
+Inner: max-w-7xl mx-auto px-6 md:px-8
+Row 1 (py-8): flex justify-between items-start
+  Left: "I'm available for work. Let's talk." — font-heading text-lg md:text-xl
+  Right: flex gap-8, Links (Work, About, Contact) — text-sm
+Row 2 (pb-8): "Privacy Policy" — text-sm text-muted-foreground
 ```
-
-### About blob styling
-```text
-Inline style or Tailwind arbitrary value for muted rose:
-bg-[hsl(350,25%,82%)] text-[hsl(350,30%,25%)]
-dark:bg-[hsl(350,15%,30%)] dark:text-[hsl(350,20%,75%)]
-Hover: transform: translateY(-3px) scale(1.02)
-       filter: brightness(1.05)
-       box-shadow: 0 4px 12px rgba(0,0,0,0.08)
-       transition: all 260ms cubic-bezier(.2,.8,.2,1)
-```
-
-### Overlay menu fade
-```text
-Wrapper: fixed inset-0 z-50 bg-[#01031A]
-Animation: animate-in fade-in duration-300 (from tailwindcss-animate)
-Close: onClick sets state to false
-Layout: flex flex-col md:flex-row, md:items-center
-  Left: flex-1, large links stacked vertically
-  Right: md:w-80, portrait + contact info
-```
-
