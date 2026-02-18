@@ -23,7 +23,7 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 /* ─── About blob ─── */
 const Blob = ({ label }: { label: string }) => (
   <span
-    className="inline-block rounded-full px-6 py-3 text-sm font-heading bg-[hsl(var(--rose-blob))] text-[hsl(var(--rose-blob-foreground))] transition-all select-none"
+    className="inline-block rounded-full px-6 py-3 text-sm font-heading bg-[hsl(var(--rose-blob))] text-[hsl(var(--rose-blob-foreground))] transition-all select-none cursor-default"
     style={{ transitionDuration: "260ms", transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)" }}
     onMouseEnter={(e) => {
       const el = e.currentTarget;
@@ -67,12 +67,12 @@ const Index = () => (
     <Link to={`/work/${abb.slug}`} className="group block relative w-full">
       <div className="relative min-h-[70vh] bg-muted overflow-hidden">
         <div className="absolute inset-0 bg-black/40 transition-colors duration-300 group-hover:bg-black/20" />
-        <div className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-16">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
           <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
             {abb.title}
           </h2>
           {/* Desktop hover reveal */}
-          <div className="hidden md:flex mt-4 gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="hidden md:flex mt-4 gap-4 justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
             {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
             <span className="text-sm text-white/50">{abb.year}</span>
