@@ -36,13 +36,6 @@ const Header = () => (
 
 const Footer = () => (
   <footer>
-    <div className="mx-auto max-w-4xl px-6 py-16 md:py-20">
-      <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Why Karma</p>
-      <p className="text-muted-foreground mt-4">[WHY KARMA TEXT — to be written later]</p>
-      <Link to="/contact" className="inline-block mt-6 text-sm underline underline-offset-4 text-muted-foreground hover:text-foreground transition-colors">
-        Get in touch
-      </Link>
-    </div>
     <div className="border-t border-border">
       <div className="mx-auto max-w-4xl px-6 py-8">
         <p className="text-sm text-muted-foreground">
