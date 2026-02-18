@@ -1,117 +1,96 @@
 
 
-# Homepage Reframe — Full-Width Storytelling System
+# Homepage Reset — Scene-Based Storytelling
 
-This is a fundamental reset of the homepage from a contained portfolio layout to a full-viewport guided walk.
-
----
-
-## What Changes
-
-### 1. Layout System for Homepage
-
-The current `Layout` component wraps all content in `max-w-4xl px-6`. The homepage needs to break free entirely.
-
-**Approach**: Add a `fullWidth` prop to `Layout`. When true, the `<main>` wrapper removes the constraining container, letting the homepage own the viewport. The header and footer remain unchanged.
-
-**File**: `src/components/Layout.tsx`
-- Add optional `fullWidth` boolean prop
-- When `fullWidth={true}`, render `<main>` children without the `max-w-4xl px-6 py-16` wrapper
+A structural reset that removes the current "statement-evidence alternation" pattern and replaces it with a cinematic scene system where each section feels like a distinct moment.
 
 ---
 
-### 2. Homepage Complete Rewrite (`src/pages/Index.tsx`)
+## What changes
 
-Replace everything with four sections, all full-width:
+### Current problems
+- The Act + Evidence pattern creates a repetitive rhythm (statement, grey slab, statement, grey slab, statement) that feels like a template, not a story.
+- Henrik Moment and Karma Module are thin placeholder sections that break momentum.
+- The footer has a full "Why Karma" block that duplicates homepage content.
+- Project blocks are grey `aspect-[16/9]` rectangles — they don't feel like scenes.
 
-#### Section 1 — Hero (Stage)
-- `h-screen` (100vh), starts directly under nav
-- Full-bleed image (`HenrikLehtikangas-hero2026.webp`), `object-cover`
-- Responsive `object-position`: `object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]`
-- Subtle overlay `bg-black/20`
-- H1 centered horizontally and vertically
-- Type: `text-4xl md:text-6xl lg:text-7xl font-heading font-medium tracking-tight text-white`
-- Calm weight (`font-medium`, not `font-semibold/bold`) — confident, not shouting
-- No subline, no buttons, no additional text
+### New structure (5 scenes + footer)
 
-#### Section 2 — Act + Evidence Flow (repeating pattern)
-Each act = statement + project. Three acts total.
+**Scene 1 — Hero**
+- `min-h-screen`, full-bleed image, `bg-black/20` overlay
+- H1 centered horizontally and vertically, calm weight
+- Copy unchanged: "I push vision, clarity and creative confidence."
+- No changes to image positioning logic
 
-**Statement blocks**:
-- Full-width, centered
-- `text-3xl md:text-4xl lg:text-5xl font-heading` (smaller than hero)
-- `leading-[1.15]`
-- Generous padding: `py-24 md:py-32 lg:py-40`
-- No `max-w` container — text floats in full viewport width with just `px-6`
+**Scene 2 — Context**
+- Full-width section, vertically centered content
+- Part A: One large statement (`text-3xl md:text-5xl lg:text-6xl font-heading`, centered)
+- Part B: Below it, a restrained text block (2-4 lines, `max-w-2xl mx-auto`, `text-base md:text-lg text-muted-foreground`, centered)
+- Both parts are placeholder copy for now:
+  - A: `[CONTEXT STATEMENT — to be written later]`
+  - B: `[CONTEXT BODY — 2-4 lines, to be written later]`
+- Generous padding: `py-24 md:py-32`
 
-**Project blocks** (Evidence):
-- Full-bleed image placeholder (`w-screen`, `aspect-[16/9]`, `bg-muted`)
-- Title overlaid on the image: positioned bottom-left with padding, white text, `text-3xl md:text-4xl font-heading`
-- Meta (year, role from `facts.role`) shown as small secondary text
-- Desktop hover: meta fades in (opacity transition), title stays visible
-- Mobile: meta always visible, small
-- Entire block is a `Link` to `/work/{slug}` — fully clickable
-- Projects alternate composition: first project title bottom-left, second title bottom-right
-- No cards, no separate text blocks below the image
+**Scene 3 — Project: SHARE**
+- Full-width scene, `min-h-[70vh]`, `bg-muted` background (whole section, not a small card)
+- Content positioned inside the scene: large project title (`text-4xl md:text-6xl font-heading`), subtle metadata (year, role) in small muted text
+- Entire section is a clickable `Link` to `/work/share`
+- Feels like entering a room, not looking at a thumbnail
 
-**Flow**: Statement 1 -> Project SHARE -> Statement 2 -> Project MAN -> Statement 3
+**Scene 4 — Project: MAN**
+- Same structure as Scene 3 but for the second case
+- Links to `/work/man`
 
-#### Section 3 — Henrik Moment (Human Beat)
-- Full-width section, content centered
-- Small portrait placeholder: `w-24 h-24 rounded-full bg-muted mx-auto`
-- One or two short placeholder lines: `[HENRIK MOMENT — to be written later]`
-- Not dominant — presence, not biography
-- Calm spacing: `py-20 md:py-28`
+**Scene 5 — Closing Statement**
+- Full-width, centered, one sentence
+- Placeholder: `[CLOSING STATEMENT — to be written later]`
+- `text-2xl md:text-4xl font-heading`, generous padding `py-24 md:py-32`
 
-#### Section 4 — Karma Module (Epilogue)
-- Full-width, calm background
-- One short paragraph placeholder: `[WHY KARMA — to be written later]`
-- Centered, generous padding
-- No "Get in touch" link here (that lives in the footer already)
-- No footer clutter
+**Footer (Layout.tsx)**
+- Strip down to minimal: just the closing line "Good work comes back around."
+- Remove the "Why Karma" eyebrow, placeholder body, and "Get in touch" link
+- Simple `border-t`, small padding, one line of muted text
 
-**Removed from homepage**:
-- Section 3 (About with circular portrait + about text + karma line) — replaced by Henrik Moment
-- Section 4 (Contact with WhatsApp/email/LinkedIn) — removed, contact lives on its own page and in footer
+### Removed from homepage
+- The three interleaved statements (moved to a single Context section)
+- Henrik Moment section (does not serve the story path)
+- Karma Module section (does not serve the story path)
+- `ProjectEvidence` component (replaced by full-scene project blocks)
 
 ---
 
-### 3. Footer Adjustment (`src/components/Layout.tsx`)
-
-The existing Karma module in the footer stays as-is for non-homepage pages. On the homepage, the Karma Module (Section 4) serves as the page-level epilogue, and the footer's "Good work comes back around." closing line still appears below.
-
-No structural footer changes needed.
-
----
-
-## Files Summary
+## Files
 
 | File | Action |
 |------|--------|
-| `src/pages/Index.tsx` | Full rewrite — 4 sections, all full-width, no containers |
-| `src/components/Layout.tsx` | Add `fullWidth` prop to remove main container for homepage |
-
-No data model changes. No new files. No font changes.
+| `src/pages/Index.tsx` | Full rewrite — 5 scenes |
+| `src/components/Layout.tsx` | Simplify footer to closing line only |
 
 ---
 
-## Technical Details
+## Technical details
 
-**ProjectEvidence component** (inline in Index.tsx):
-```
-Props: slug, title, year, role, align ("left" | "right")
-- Full-bleed Link wrapper
-- aspect-[16/9] bg-muted relative overflow-hidden
-- Title: absolute bottom-left or bottom-right, white, large
-- Meta: absolute, small, opacity-0 group-hover:opacity-100 on desktop
-- Mobile: meta opacity-100 always (via md:opacity-0 md:group-hover:opacity-100)
+**Project scene component** (inline in Index.tsx):
+```text
+Props: slug, title, year, role
+- Link wrapper (block, full width)
+- min-h-[70vh] bg-muted flex items-end
+- Content in bottom-left: p-8 md:p-16
+- Title: text-4xl md:text-6xl font-heading tracking-tight
+- Meta: text-sm text-muted-foreground mt-2, opacity transition on hover
+- group class on Link for hover effects
 ```
 
-**Layout fullWidth prop**:
-```
-When fullWidth=true:
-  <main className="flex-1">{children}</main>
-When fullWidth=false (default):
-  <main className="flex-1"><div className="mx-auto max-w-4xl px-6 py-16 md:py-24">{children}</div></main>
+**Footer simplification**:
+```text
+<footer>
+  <div className="border-t border-border">
+    <div className="mx-auto max-w-4xl px-6 py-8">
+      <p className="text-sm text-muted-foreground">
+        Good work comes back around.
+      </p>
+    </div>
+  </div>
+</footer>
 ```
 
