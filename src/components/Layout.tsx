@@ -55,15 +55,18 @@ const Footer = () => (
 
 interface LayoutProps {
   children: React.ReactNode;
+  fullWidth?: boolean;
 }
 
-const Layout = ({ children }: LayoutProps) => (
+const Layout = ({ children, fullWidth = false }: LayoutProps) => (
   <div className="flex min-h-screen flex-col">
     <Header />
     <main className="flex-1">
-      <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
-        {children}
-      </div>
+      {fullWidth ? children : (
+        <div className="mx-auto max-w-4xl px-6 py-16 md:py-24">
+          {children}
+        </div>
+      )}
     </main>
     <Footer />
   </div>
