@@ -3,34 +3,43 @@ import Layout from "@/components/Layout";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
 
-const ProjectScene = ({
+const WorkBanner = ({
   slug,
   title,
   year,
   role,
+  summary,
 }: {
   slug: string;
   title: string;
   year: number;
   role: string;
+  summary: string;
 }) => (
-  <Link to={`/work/${slug}`} className="group block w-full">
-    <div className="min-h-[70vh] bg-muted flex items-end">
-      <div className="p-8 md:p-16">
-        <h3 className="font-heading text-4xl md:text-6xl tracking-tight transition-colors duration-300 group-hover:text-muted-foreground">
-          {title}
-        </h3>
-        <p className="text-sm text-muted-foreground mt-2 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100">
-          {year} · {role}
-        </p>
-      </div>
-    </div>
+  <Link to={`/work/${slug}`} className="group block w-full bg-muted py-16 md:py-24 px-8 md:px-16">
+    <h2 className="font-heading text-4xl md:text-6xl tracking-tight transition-colors duration-300 group-hover:text-muted-foreground">
+      {title}
+    </h2>
+    <p className="text-sm text-muted-foreground mt-2">
+      {year} · {role}
+    </p>
+    <p className="text-base text-muted-foreground mt-4 max-w-2xl">
+      {summary}
+    </p>
   </Link>
+);
+
+const Statement = ({ children }: { children: React.ReactNode }) => (
+  <section className="py-24 md:py-32 px-6 text-center">
+    <p className="font-heading text-2xl md:text-4xl tracking-tight">
+      {children}
+    </p>
+  </section>
 );
 
 const Index = () => (
   <Layout fullWidth>
-    {/* Scene 1 — Hero */}
+    {/* HERO */}
     <section className="relative min-h-screen w-full">
       <img
         src={heroImg}
@@ -46,36 +55,37 @@ const Index = () => (
       </div>
     </section>
 
-    {/* Scene 2 — Context */}
-    <section className="py-24 md:py-32 px-6 text-center">
-      <p className="font-heading text-3xl md:text-5xl lg:text-6xl leading-[1.15]">
-        [CONTEXT STATEMENT — to be written later]
-      </p>
-      <p className="max-w-2xl mx-auto text-base md:text-lg text-muted-foreground mt-8 leading-relaxed">
-        [CONTEXT BODY — 2-4 lines, to be written later]
-      </p>
-    </section>
+    {/* STATEMENT 1 */}
+    <Statement>[STATEMENT 1 — to be written later]</Statement>
 
-    {/* Scene 3 — Project: SHARE */}
-    <ProjectScene
+    {/* WORK BANNER: SHARE */}
+    <WorkBanner
       slug={cases[0].slug}
       title={cases[0].title}
       year={cases[0].year}
       role={cases[0].facts.role}
+      summary={cases[0].summary}
     />
 
-    {/* Scene 4 — Project: MAN */}
-    <ProjectScene
+    {/* STATEMENT 2 */}
+    <Statement>[STATEMENT 2 — to be written later]</Statement>
+
+    {/* WORK BANNER: MAN */}
+    <WorkBanner
       slug={cases[1].slug}
       title={cases[1].title}
       year={cases[1].year}
       role={cases[1].facts.role}
+      summary={cases[1].summary}
     />
 
-    {/* Scene 5 — Closing Statement */}
-    <section className="py-24 md:py-32 px-6 text-center">
-      <p className="font-heading text-2xl md:text-4xl tracking-tight">
-        [CLOSING STATEMENT — to be written later]
+    {/* STATEMENT 3 */}
+    <Statement>[STATEMENT 3 — to be written later]</Statement>
+
+    {/* ABOUT */}
+    <section className="py-16 md:py-24 px-6 text-center">
+      <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
+        [ABOUT — to be written later]
       </p>
     </section>
   </Layout>
