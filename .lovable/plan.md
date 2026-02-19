@@ -1,68 +1,172 @@
 
 
-# Refinement Pass — Homepage Adjustments
+# ABB E-mobility — Bespoke Case Page
 
-Four precise corrections. No structural changes.
+A dedicated editorial case page for ABB E-mobility, built as a standalone page component rather than using the generic CaseDetail template. The page follows a cinematic narrative scroll with two-column asymmetric layouts and half-bleed media.
 
 ---
 
-## Changes
+## Approach
 
-### 1. ABB E-mobility — Center title block
+Create a new page component `src/pages/CaseABB.tsx` that renders the full ABB case as a bespoke editorial scroll. Update the router to serve this page at `/work/abb-emobility` instead of the generic CaseDetail.
 
-**File: `src/pages/Index.tsx` (lines 70-80)**
+---
 
-Change the inner positioning div from `flex-col justify-end p-8 md:p-16` to `flex-col items-center justify-center text-center`. This centers the title, subline, area, and year both horizontally and vertically within the hero project container.
+## File Changes
 
-The hover-reveal row also gets `justify-center` so the metadata stays centered below the title.
+### 1. `src/pages/CaseABB.tsx` (new)
 
-### 2. About Section — Remove button-like styling from blobs
+A single-file editorial page. Dark base via inline CSS variables. No reuse of generic case components (CaseModule, CaseHook, etc.) — everything is purpose-built inline for this narrative.
 
-The Blob component (lines 24-43) already uses inline JS for hover effects (translateY, scale, shadow) and has no click handlers. However, the `cursor` defaults to text. To further remove any button-like impression:
+**Structure:**
 
-- Add `cursor-default` to the blob className
-- The hover behavior is already correct per spec (translateY -3px, scale 1.02, soft shadow, 260ms cubic-bezier)
-- No other changes needed — the layout already matches the two-column reference with portrait left and copy right
+```text
+HERO
+  - H1: "ABB E-mobility" (Clash Display, text-5xl md:text-7xl)
+  - H2: "Defining the digital brand foundation of ABB E-mobility." (text-xl md:text-2xl, muted, max-w-2xl)
+  - Full-bleed media placeholder below (edge-to-edge, aspect-[16/9], bg-muted)
+  - No overlay text on media
 
-### 3. Arrow-link consistency — Add class to footer links
+CONTEXT
+  - Micro label: "CONTEXT" (text-[11px] uppercase tracking-[0.25em] text-white/30 font-light)
+  - Two-column grid (grid-cols-12)
+    - Text: col-span-5 (left), max-w ~65ch
+    - Media: col-span-6 col-start-7 (right), half-bleed to right edge
+      - Uses: ml-auto, w-[calc(50vw)] attached to right viewport edge
+      - mt-16 or mt-20 to offset lower than text
+  - Copy as specified (4 paragraphs)
 
-**File: `src/components/Layout.tsx` (lines 31-33)**
+TENSION
+  - Micro label: "TENSION"
+  - Two-column grid (grid-cols-12), reversed
+    - Media: col-span-6 (left), half-bleed to left edge
+      - Uses: mr-auto, w-[calc(50vw)] attached to left viewport edge
+      - mt-16 offset
+    - Text: col-span-5 col-start-8 (right)
+  - Copy as specified (3 stanza blocks with line breaks)
+  - No centered statement
 
-Footer nav links currently use plain styling without the `arrow-link` class. Add `arrow-link` to each footer link so they get the same slide-in arrow + micro-bounce hover behavior as the rest of the site.
+DECISION
+  - Micro label: "DECISION"
+  - Text block (narrow measure, left-aligned): "Build a standalone modular..."
+  - Centered statement: "A new system." (font-heading text-3xl md:text-5xl, py-20 md:py-28, text-center)
+  - Continue text: "One that could express..."
+  - Full-width media placeholder below (aspect-[16/9])
 
-### 4. Remove footer border-top divider
+EXECUTION
+  - Micro label: "EXECUTION"
+  - Text block with copy as specified
+  - Bullet list using "–" prefix (styled as plain text, not <ul>)
+  - Closing paragraph about continuity
+  - Stacked media placeholders below in varied widths:
+    - First: full width
+    - Second: two-column (grid-cols-2)
+    - Third: half-bleed right
 
-**File: `src/components/Layout.tsx` (line 24)**
+OUTCOME
+  - Micro label: "OUTCOME"
+  - Text block (3 lines)
+  - Horizontal artifact row: single line of items separated by " · "
+    - "Modular digital design system · Global brand website · Scalable component library · Product interface adoption"
+    - text-sm text-white/40, centered, py-8
+  - Final centered statement: "For the first time, product, platform and brand moved as one."
+    - font-heading text-3xl md:text-5xl, py-20 md:py-28, text-center
 
-Remove `border-t border-border` from the `<footer>` element. The spacing between Karma and footer remains generous without a hard line.
+WHY ME + NEXT CASE
+  - Reuse existing CaseWhyMe component with the ABB whyMe text and next case link
+```
+
+**Half-bleed media implementation:**
+
+```text
+Right-attached media:
+  Container: overflow-hidden
+  Inner div: ml-auto w-[50vw] aspect-[3/2] bg-muted
+  This makes the media start at viewport center and extend to right edge
+
+Left-attached media:
+  Container: overflow-hidden
+  Inner div: mr-auto w-[50vw] aspect-[3/2] bg-muted
+  This makes the media start at left edge and end at viewport center
+```
+
+The page wraps in `Layout` without `fullWidth` but uses a custom full-width wrapper internally to break out of the max-w container for media elements.
+
+Actually — since the page needs full viewport control for half-bleed media, it will use `Layout fullWidth` and handle all horizontal padding internally via `px-6 md:px-8` on text containers, with a `max-w-4xl mx-auto` for the text measure (58-72ch).
+
+**Micro label component (inline):**
+
+```text
+const MicroLabel = ({ children }) => (
+  <p className="text-[11px] uppercase tracking-[0.25em] text-white/30 font-light mb-8">
+    {children}
+  </p>
+);
+```
+
+**Color scheme:**
+
+The page sets inline CSS variables to force dark mode colors:
+- `--background: 220 20% 5%` (near #01031A)
+- `--foreground: 210 15% 90%`
+- `--muted: 220 15% 12%`
+
+Body text: `text-white/70` for secondary paragraphs, `text-white` for primary.
+
+### 2. `src/App.tsx`
+
+Add a route for `/work/abb-emobility` BEFORE the generic `/work/:slug` route so it takes priority:
+
+```text
+<Route path="/work/abb-emobility" element={<CaseABB />} />
+<Route path="/work/:slug" element={<CaseDetail />} />
+```
+
+### 3. No other files modified
+
+The generic CaseDetail, data/cases, Layout, and index.css remain untouched.
 
 ---
 
 ## Technical Details
 
-### ABB title centering (Index.tsx line 70)
+### Two-column grid with vertical offset
+
 ```text
-Before: className="absolute inset-0 z-10 flex flex-col justify-end p-8 md:p-16"
-After:  className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center"
+<div className="grid grid-cols-12 gap-8 items-start">
+  <div className="col-span-12 md:col-span-5">
+    {/* Text content */}
+  </div>
+  <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-20">
+    {/* Half-bleed media */}
+    <div className="md:w-[50vw] aspect-[3/2] bg-muted" />
+  </div>
+</div>
 ```
 
-Also center the hover metadata row (line 75):
+For right-attached: the media div gets no special margin — it naturally extends right because the grid column is at the right edge and the content is wider than the column.
+
+For left-attached (reversed): media column is `col-span-6` starting at column 1, and uses `md:-ml-[calc((100vw-100%)/2)]` to extend to the left viewport edge while ending at center.
+
+### Text measure control
+
+All body text wraps in `max-w-[65ch]` to maintain the 58-72ch reading width.
+
+### Spacing rhythm
+
+- Between sections: `py-24 md:py-32`
+- Micro label to content: `mb-8`
+- Between paragraphs: `space-y-4`
+- Centered statements: `py-20 md:py-28`
+
+### Dark base enforcement
+
 ```text
-Before: className="hidden md:flex mt-4 gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-After:  className="hidden md:flex mt-4 gap-4 justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+<div style={{
+  '--background': '220 20% 5%',
+  '--foreground': '210 15% 90%',
+  '--muted': '220 15% 12%',
+} as React.CSSProperties}
+className="bg-[#01031A] text-[hsl(210,15%,90%)]">
 ```
 
-### Blob cursor fix (Index.tsx line 26)
-Add `cursor-default` to existing className string.
-
-### Footer links with arrow-link (Layout.tsx lines 31-33)
-```text
-Before: className="text-muted-foreground hover:text-foreground transition-colors"
-After:  className="arrow-link text-muted-foreground hover:text-foreground transition-colors"
-```
-
-### Footer divider removal (Layout.tsx line 24)
-```text
-Before: <footer className="border-t border-border">
-After:  <footer>
-```
