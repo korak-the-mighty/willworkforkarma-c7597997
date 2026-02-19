@@ -1,108 +1,142 @@
 
 
-# ABB E-mobility Case Page — Refinements
+# ABB E-mobility Case Page — Structural Refinement (Updated)
 
-Seven targeted edits to `src/pages/CaseABB.tsx` plus two new asset copies.
-
----
-
-## Assets to Copy
-
-- `user-uploads://abb-e-mobility-mcs-hero.mp4` to `src/assets/abb-e-mobility-mcs-hero.mp4` (new hero video)
-- `user-uploads://ABB-media_4.webp` to `src/assets/ABB-media_4.webp` (Decision section full-width image)
+Six edits to `src/pages/CaseABB.tsx`. No other files changed. Incorporates both user tweaks.
 
 ---
 
-## Changes to `src/pages/CaseABB.tsx`
+## 1. Execution Section — Hierarchy with A400 Paragraph Retained
 
-### 1. Hero video — swap to local asset
+Restructure lines 191-232:
 
-Replace the external URL constant with a local import:
+- Keep MicroLabel and opening paragraph ("The first new charger generation -- A400 -- became the proving ground.")
+- Add generous spacing (`mt-16`)
+- Add sub-heading: "System in practice" -- `text-lg text-white font-normal tracking-normal` (Inter, no uppercase, no micro-label style)
+- After sub-heading (`mt-6`), place the A400 paragraph ("It was the first product built under the new positioning...") -- kept intact, given breathing room
+- After that paragraph (`mt-10`), the bullet list with increased spacing (`space-y-4` instead of `space-y-2`)
+- After bullets (`mt-12`), the two closing paragraphs about continuity
 
-```text
-import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
+---
+
+## 2. Gallery — Scalable Masonry Layout (3 now, structured for 5)
+
+Replace lines 235-269 (the current 12-col grid) with a CSS columns masonry layout.
+
+Structure uses a `galleryItems` array of objects so adding tiles later is a one-line addition:
+
+```
+const galleryItems = [
+  { src: galleryImg11, alt: "ABB E-mobility interface", aspect: "aspect-[4/5]" },
+  { src: galleryImg3, alt: "ABB E-mobility charger", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
+  { src: galleryImg13, alt: "ABB E-mobility components", aspect: "aspect-[4/3]" },
+];
 ```
 
-Remove the `HERO_VIDEO_SRC` constant and use `heroVideo` in the `<video>` element's `src`.
+Rendered with `columns-2 md:columns-3 gap-4` and `.map()` over the array. Each tile gets `break-inside-avoid mb-4 overflow-hidden cursor-pointer`. To add tiles 4 and 5 later, just push to the array. Container stays `max-w-4xl mx-auto px-6 md:px-8`.
 
-### 2. Hero copy change
+---
 
-Change the H1 from:
-> Defining the digital brand foundation of ABB E-mobility.
+## 3. Outcome Section — Centered Thesis Block
 
-To:
-> Building the digital brand foundation of a global e-mobility leader.
+Lines 282-314: Wrap the three supporting sentences in a centered constrained block (`max-w-[42rem] mx-auto text-center px-6 space-y-2`) with generous vertical padding (`py-12`). Large headline and artifact row unchanged.
 
-Use `e&#8209;mobility` or `e&#x2011;mobility` (non-breaking hyphen) in places where "E-mobility" should not break across lines. For the hero H1 specifically, wrap with `<span className="whitespace-nowrap">e-mobility</span>` or use `&nbsp;` strategically. The simplest approach: use `e&#8209;mobility` (non-breaking hyphen entity) throughout the page wherever "E-mobility" appears, preventing mid-word line breaks.
+---
 
-### 3. Decision full-width image — replace placeholder
+## 4. Replace CaseWhyMe with "What This Required"
 
-Import the new asset:
-```text
-import decisionImg from "@/assets/ABB-media_4.webp";
+Remove `CaseWhyMe` import and its usage (plus the unused `caseData`, `caseIndex`, `nextCase`, `nextCaseLink` variables). Replace with:
+
+```
+<section className="py-24 md:py-32">
+  <div className="px-6 md:px-8 max-w-4xl mx-auto">
+    <MicroLabel>What this required</MicroLabel>
+    <p className="max-w-[72ch] leading-relaxed text-white">
+      Holding the line between engineering depth and human clarity at global scale.
+    </p>
+  </div>
+</section>
 ```
 
-Replace the empty placeholder div (line 185-187) with an actual image using the FULL_BLEED class and the same brightness hover treatment as other media.
+Dark background maintained. No links, no next case CTA. Page ends here.
 
-### 4. Context copy — add "ABB"
+---
 
-Line 87: Change `"E-mobility operated inside ABB corporate."` to `"ABB E-mobility operated inside ABB corporate."`
+## 5. Remove White Background Block
 
-### 5. Context micro label alignment
+Achieved automatically by removing `CaseWhyMe` (which rendered the light-background band).
 
-The "CONTEXT" label is currently inside a `max-w-4xl mx-auto` wrapper (line 81), while the text column uses a calculated left padding `md:pl-[max(2rem,calc((100vw-56rem)/2))]`. Move the MicroLabel out of its own wrapper and into the text column div so it aligns flush with the body copy below it.
+---
 
-### 6. Decision — left-align "A new system" and change copy
+## 6. No External Links
 
-The centered statement "A new system." (lines 170-174) will be:
-- Changed to left-aligned within the `max-w-4xl mx-auto` text wrapper (remove `text-center`, add `px-6 md:px-8 max-w-4xl mx-auto`)
-- Text changed to: "A new flexible, future proof brand system."
-- Keep the large Clash Display sizing
-
-### 7. Non-breaking "E-mobility" globally
-
-Throughout the file, replace regular hyphens in "E-mobility" / "e-mobility" with non-breaking hyphens (`\u2011`) to prevent the word from splitting across lines. This affects hero text, context copy, and anywhere else the term appears.
+No "Visit" link. No outbound references.
 
 ---
 
 ## Technical Details
 
-### Context label alignment fix
+### Execution reflow (lines 191-232)
 
-Before (lines 80-86):
-```text
-<div className="px-6 md:px-8 max-w-4xl mx-auto">
-  <MicroLabel>Context</MicroLabel>
-</div>
-<div className="grid grid-cols-12 gap-8 items-start">
-  <div className="col-span-12 md:col-span-5 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-0">
+```
+<section className="py-24 md:py-32">
+  <div className="px-6 md:px-8 max-w-4xl mx-auto">
+    <MicroLabel>Execution</MicroLabel>
+    <div className="max-w-[72ch] leading-relaxed">
+      <p>The first new charger generation -- A400 -- became the proving ground.</p>
+
+      <p className="text-lg text-white font-normal mt-16">System in practice</p>
+
+      <p className="mt-6">
+        It was the first product built under the new positioning, with a
+        redesigned interface and industrial language. We used it to validate
+        the new visual and interaction principles before scaling them globally.
+      </p>
+
+      <div className="space-y-4 mt-10">
+        <p>-- Built a modular digital architecture</p>
+        <p>-- Created a reusable component library</p>
+        ...
+      </div>
+
+      <p className="mt-12">Over two years, teams evolved and roles shifted.</p>
+      <p className="mt-4">I remained responsible for maintaining strategic and structural continuity.</p>
+    </div>
+  </div>
+  ...
+</section>
 ```
 
-After: Remove the separate MicroLabel wrapper div. Place `<MicroLabel>Context</MicroLabel>` inside the text column div (before the body copy div), so it inherits the same left padding and aligns with the paragraphs.
+### Masonry gallery (data-driven, scalable)
 
-### Decision statement realignment
+```
+const galleryItems = [
+  { src: galleryImg11, alt: "...", aspect: "aspect-[4/5]" },
+  { src: galleryImg3, alt: "...", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
+  { src: galleryImg13, alt: "...", aspect: "aspect-[4/3]" },
+  // Add up to 2 more tiles here when assets are available
+];
 
-Before (lines 170-174):
-```text
-<div className="py-20 md:py-28 text-center px-6">
-  <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-    A new system.
-  </p>
+<div className="mt-16 px-6 md:px-8 max-w-4xl mx-auto">
+  <div className="columns-2 md:columns-3 gap-4">
+    {galleryItems.map((item, i) => (
+      <div key={i} className={`break-inside-avoid mb-4 overflow-hidden cursor-pointer ${item.offsetClass || ""}`}
+           onClick={() => setLightboxSrc(item.src)}>
+        <img src={item.src} alt={item.alt}
+             className={`w-full h-auto object-cover ${item.aspect} ${MEDIA_HOVER}`} />
+      </div>
+    ))}
+  </div>
 </div>
 ```
 
-After:
-```text
-<div className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
-  <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-    A new flexible, future proof brand system.
-  </p>
+### Outcome centered block
+
+```
+<div className="max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12">
+  <p>ABB E-mobility gained a system capable of expressing its ambition.</p>
+  <p>The architecture extended beyond marketing into product dashboards and infrastructure tools.</p>
+  <p>The positioning became tangible.</p>
 </div>
 ```
-
-### Non-breaking hyphen
-
-Use the Unicode non-breaking hyphen character (U+2011) instead of the regular hyphen in "E-mobility" / "e-mobility". This is a single character swap that prevents line-break opportunities at the hyphen. In JSX, use `{"\u2011"}` or the HTML entity within text.
-
-The simplest approach: use `E\u2011mobility` in all string literals and JSX text nodes where the term appears.
 
