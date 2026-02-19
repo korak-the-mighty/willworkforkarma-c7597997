@@ -1,172 +1,136 @@
 
 
-# ABB E-mobility — Bespoke Case Page
+# ABB E-mobility — Full Rebuild with Media, Highlight Colour & Refinements
 
-A dedicated editorial case page for ABB E-mobility, built as a standalone page component rather than using the generic CaseDetail template. The page follows a cinematic narrative scroll with two-column asymmetric layouts and half-bleed media.
+Complete rebuild of `src/pages/CaseABB.tsx` incorporating real media assets, the #ECA9CC highlight colour, a full-viewport hero video, image lightbox, and four specific refinements from feedback.
 
 ---
 
-## Approach
+## Feedback Fixes (integrated throughout)
 
-Create a new page component `src/pages/CaseABB.tsx` that renders the full ABB case as a bespoke editorial scroll. Update the router to serve this page at `/work/abb-emobility` instead of the generic CaseDetail.
+1. **True half-bleed edge-to-center media** -- The current implementation already uses `md:w-[50vw]` with `md:ml-auto` / `md:mr-auto` inside `overflow-hidden` sections, which is correct. The rebuild will preserve this pattern and ensure no `max-width` wrapper constrains the media containers. Each half-bleed section uses the full 12-col grid at viewport width, with media divs set to `w-[50vw]` anchored to the appropriate edge.
+
+2. **Micro labels restyled** -- Change from `text-[11px] uppercase tracking-[0.25em] text-white/30 font-light` to `text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8`. Bigger size (13px), less aggressive tracking (0.12em), headline font (Clash Display), highlight colour instead of white/30.
+
+3. **Hero small lines -- reduce tracking** -- The hero's "ABB E-mobility" label and "Branding · UI/UX · 2024-2025" meta line will use `tracking-normal` or `tracking-[0.02em]` max. No wide-tracked SaaS-style spacing. Feels editorial.
+
+4. **Brightness hover** -- Applied only to media elements (images/video in Context, Tension, gallery, and full-width media). Uses `brightness-[0.85] hover:brightness-100 transition-[filter] duration-300`. Not applied to hero video (which uses a fixed overlay instead). Consistent across all media.
+
+5. **Hero video src swappable** -- Defined as a single constant at top of file for easy replacement with a local asset later.
+
+---
+
+## Assets to Copy
+
+Six files copied into `src/assets/`:
+- `ABB_E-mobility_3.png`
+- `ABB_E-mobility_11.png`
+- `ABB_E-mobility_13.png`
+- `ABB-emobility-context.webp`
+- `ABB-c50-launch.mp4`
+- `ABB-visuals-wide-dash.avif`
 
 ---
 
 ## File Changes
 
-### 1. `src/pages/CaseABB.tsx` (new)
+### 1. `src/pages/CaseABB.tsx` -- Full Rewrite
 
-A single-file editorial page. Dark base via inline CSS variables. No reuse of generic case components (CaseModule, CaseHook, etc.) — everything is purpose-built inline for this narrative.
-
-**Structure:**
-
+**Constants at top of file:**
 ```text
-HERO
-  - H1: "ABB E-mobility" (Clash Display, text-5xl md:text-7xl)
-  - H2: "Defining the digital brand foundation of ABB E-mobility." (text-xl md:text-2xl, muted, max-w-2xl)
-  - Full-bleed media placeholder below (edge-to-edge, aspect-[16/9], bg-muted)
-  - No overlay text on media
-
-CONTEXT
-  - Micro label: "CONTEXT" (text-[11px] uppercase tracking-[0.25em] text-white/30 font-light)
-  - Two-column grid (grid-cols-12)
-    - Text: col-span-5 (left), max-w ~65ch
-    - Media: col-span-6 col-start-7 (right), half-bleed to right edge
-      - Uses: ml-auto, w-[calc(50vw)] attached to right viewport edge
-      - mt-16 or mt-20 to offset lower than text
-  - Copy as specified (4 paragraphs)
-
-TENSION
-  - Micro label: "TENSION"
-  - Two-column grid (grid-cols-12), reversed
-    - Media: col-span-6 (left), half-bleed to left edge
-      - Uses: mr-auto, w-[calc(50vw)] attached to left viewport edge
-      - mt-16 offset
-    - Text: col-span-5 col-start-8 (right)
-  - Copy as specified (3 stanza blocks with line breaks)
-  - No centered statement
-
-DECISION
-  - Micro label: "DECISION"
-  - Text block (narrow measure, left-aligned): "Build a standalone modular..."
-  - Centered statement: "A new system." (font-heading text-3xl md:text-5xl, py-20 md:py-28, text-center)
-  - Continue text: "One that could express..."
-  - Full-width media placeholder below (aspect-[16/9])
-
-EXECUTION
-  - Micro label: "EXECUTION"
-  - Text block with copy as specified
-  - Bullet list using "–" prefix (styled as plain text, not <ul>)
-  - Closing paragraph about continuity
-  - Stacked media placeholders below in varied widths:
-    - First: full width
-    - Second: two-column (grid-cols-2)
-    - Third: half-bleed right
-
-OUTCOME
-  - Micro label: "OUTCOME"
-  - Text block (3 lines)
-  - Horizontal artifact row: single line of items separated by " · "
-    - "Modular digital design system · Global brand website · Scalable component library · Product interface adoption"
-    - text-sm text-white/40, centered, py-8
-  - Final centered statement: "For the first time, product, platform and brand moved as one."
-    - font-heading text-3xl md:text-5xl, py-20 md:py-28, text-center
-
-WHY ME + NEXT CASE
-  - Reuse existing CaseWhyMe component with the ABB whyMe text and next case link
+const HERO_VIDEO_SRC = "https://e-mobility.abb.com/..."; // easily swappable to local asset
 ```
 
-**Half-bleed media implementation:**
-
-```text
-Right-attached media:
-  Container: overflow-hidden
-  Inner div: ml-auto w-[50vw] aspect-[3/2] bg-muted
-  This makes the media start at viewport center and extend to right edge
-
-Left-attached media:
-  Container: overflow-hidden
-  Inner div: mr-auto w-[50vw] aspect-[3/2] bg-muted
-  This makes the media start at left edge and end at viewport center
-```
-
-The page wraps in `Layout` without `fullWidth` but uses a custom full-width wrapper internally to break out of the max-w container for media elements.
-
-Actually — since the page needs full viewport control for half-bleed media, it will use `Layout fullWidth` and handle all horizontal padding internally via `px-6 md:px-8` on text containers, with a `max-w-4xl mx-auto` for the text measure (58-72ch).
-
-**Micro label component (inline):**
-
+**MicroLabel component (updated):**
 ```text
 const MicroLabel = ({ children }) => (
-  <p className="text-[11px] uppercase tracking-[0.25em] text-white/30 font-light mb-8">
+  <p className="text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8">
     {children}
   </p>
 );
 ```
 
-**Color scheme:**
-
-The page sets inline CSS variables to force dark mode colors:
-- `--background: 220 20% 5%` (near #01031A)
-- `--foreground: 210 15% 90%`
-- `--muted: 220 15% 12%`
-
-Body text: `text-white/70` for secondary paragraphs, `text-white` for primary.
-
-### 2. `src/App.tsx`
-
-Add a route for `/work/abb-emobility` BEFORE the generic `/work/:slug` route so it takes priority:
-
+**Lightbox state:**
 ```text
-<Route path="/work/abb-emobility" element={<CaseABB />} />
-<Route path="/work/:slug" element={<CaseDetail />} />
+const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 ```
 
-### 3. No other files modified
+**HERO** -- Full-viewport video:
+- `h-screen w-full overflow-hidden` container
+- `<video>` with `autoPlay muted loop playsInline`, `src={HERO_VIDEO_SRC}`, absolute fill, object-cover
+- Dark overlay: `absolute inset-0 bg-black/35`
+- Centered text stack (z-10, flex col, items-center, justify-center):
+  - "ABB E-mobility" -- `text-sm tracking-[0.02em] text-white font-body`
+  - "Branding · UI/UX · 2024--2025" -- `text-sm tracking-[0.02em] text-[#ECA9CC] font-body mt-2`
+  - "Defining the digital brand foundation of ABB E-mobility." -- `font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6`
 
-The generic CaseDetail, data/cases, Layout, and index.css remain untouched.
+**CONTEXT** -- Text left, media right (half-bleed):
+- Section: `py-24 md:py-32 overflow-hidden`
+- MicroLabel inside `max-w-4xl mx-auto px-6 md:px-8`
+- Grid: `grid-cols-12 gap-8 items-start`
+- Text col: `col-span-12 md:col-span-5`, padded with `md:pl-[max(2rem,calc((100vw-56rem)/2))]`
+- Body copy: `text-white` (pure white), `max-w-[72ch]`, `space-y-4 leading-relaxed`
+- Media col: `col-span-12 md:col-span-6 md:col-start-7 md:mt-20`
+- Media inner: `md:ml-auto md:w-[50vw] aspect-[3/2] overflow-hidden`
+- Image: `ABB-emobility-context.webp`, `h-full w-full object-cover brightness-[0.85] hover:brightness-100 transition-[filter] duration-300`
+
+**TENSION** -- Media left (half-bleed), text right:
+- Same reversed layout as current
+- Media inner: `md:mr-auto md:w-[50vw] aspect-[3/2] overflow-hidden`
+- Video: `ABB-c50-launch.mp4`, autoPlay muted loop playsInline, `h-full w-full object-cover brightness-[0.85] hover:brightness-100 transition-[filter] duration-300`
+- Text col: `col-span-12 md:col-span-4 md:col-start-8`
+- Body copy: `text-white`
+
+**DECISION** -- Text + centered statement + full-width media:
+- Body copy: `text-white`
+- Centered statement: unchanged styling (font-heading, text-3xl md:text-5xl, white)
+- Full-width media: placeholder kept (ABB-media 4 not uploaded)
+
+**EXECUTION** -- Text + gallery + full-width media:
+- Body copy: `text-white`
+- Gallery replaces current stacked placeholders:
+  - Grid: `grid-cols-12 gap-4`
+  - Large image (ABB_E-mobility_11.png): `col-span-12 md:col-span-7 aspect-[4/3]`
+  - Two smaller images stacked: `col-span-12 md:col-span-5 space-y-4 md:mt-12`
+    - ABB_E-mobility_3.png: `aspect-[3/2]`
+    - ABB_E-mobility_13.png: `aspect-[3/2]`
+  - All images: `cursor-pointer`, `brightness-[0.85] hover:brightness-100 transition-[filter] duration-300`
+  - onClick: `setLightboxSrc(imgSrc)`
+- After gallery: full-width `ABB-visuals-wide-dash.avif` (edge-to-edge using FULL_BLEED class), same brightness treatment
+
+**OUTCOME** -- Reordered per latest prompt:
+- MicroLabel
+- Large centered statement FIRST: "For the first time, product, platform and brand moved as one."
+- Then body copy (3 paragraphs), `text-white`
+- Artifact row: `text-[#ECA9CC]` instead of `text-white/40`
+
+**LIGHTBOX** -- Rendered at bottom of component, before closing `</div>`:
+```text
+{lightboxSrc && (
+  <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-pointer"
+       onClick={() => setLightboxSrc(null)}>
+    <img src={lightboxSrc} className="max-w-[90vw] max-h-[90vh] object-contain" onClick={e => e.stopPropagation()} />
+    <button className="absolute top-6 right-6 text-white hover:opacity-70 transition-opacity"
+            onClick={() => setLightboxSrc(null)}>
+      <X size={32} />
+    </button>
+  </div>
+)}
+```
+
+### 2. No other files changed
+
+`src/App.tsx` already routes `/work/abb-emobility` to CaseABB. No changes to Layout, data/cases, or index.css.
 
 ---
 
-## Technical Details
+## Summary of Refinement Fixes
 
-### Two-column grid with vertical offset
-
-```text
-<div className="grid grid-cols-12 gap-8 items-start">
-  <div className="col-span-12 md:col-span-5">
-    {/* Text content */}
-  </div>
-  <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-20">
-    {/* Half-bleed media */}
-    <div className="md:w-[50vw] aspect-[3/2] bg-muted" />
-  </div>
-</div>
-```
-
-For right-attached: the media div gets no special margin — it naturally extends right because the grid column is at the right edge and the content is wider than the column.
-
-For left-attached (reversed): media column is `col-span-6` starting at column 1, and uses `md:-ml-[calc((100vw-100%)/2)]` to extend to the left viewport edge while ending at center.
-
-### Text measure control
-
-All body text wraps in `max-w-[65ch]` to maintain the 58-72ch reading width.
-
-### Spacing rhythm
-
-- Between sections: `py-24 md:py-32`
-- Micro label to content: `mb-8`
-- Between paragraphs: `space-y-4`
-- Centered statements: `py-20 md:py-28`
-
-### Dark base enforcement
-
-```text
-<div style={{
-  '--background': '220 20% 5%',
-  '--foreground': '210 15% 90%',
-  '--muted': '220 15% 12%',
-} as React.CSSProperties}
-className="bg-[#01031A] text-[hsl(210,15%,90%)]">
-```
+| Fix | Before | After |
+|-----|--------|-------|
+| Half-bleed media | `w-[50vw]` with `ml-auto`/`mr-auto` in overflow-hidden -- already correct | Confirmed; no max-width wrapper constrains media |
+| Micro labels | 11px, tracking-[0.25em], white/30, font-light | 13px, tracking-[0.12em], #ECA9CC, font-heading, font-light |
+| Hero tracking | Default/wide tracking on small lines | tracking-[0.02em] -- tight, editorial feel |
+| Brightness hover | Inconsistent / not applied | brightness-[0.85] + hover:brightness-100 on all media except hero video |
+| Hero video src | Inline string | Top-level constant `HERO_VIDEO_SRC` for easy swap |
 
