@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import Layout from "@/components/Layout";
-import CaseWhyMe from "@/components/CaseWhyMe";
-import { cases } from "@/data/cases";
 
 import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
 import contextImg from "@/assets/ABB-emobility-context.webp";
@@ -27,15 +25,16 @@ const MEDIA_HOVER =
   "brightness-[0.85] hover:brightness-100 transition-[filter] duration-300";
 
 /* ── Page ── */
-const CaseABB = () => {
-  const caseData = cases.find((c) => c.slug === "abb-emobility")!;
-  const caseIndex = cases.findIndex((c) => c.slug === "abb-emobility");
-  const nextCase = cases[caseIndex + 1] || cases[0];
-  const nextCaseLink =
-    nextCase && nextCase.slug !== caseData.slug
-      ? { slug: nextCase.slug, title: nextCase.title }
-      : null;
+/* ── Gallery data (scalable to 5 tiles) ── */
+const galleryItems = [
+  { src: galleryImg11, alt: "ABB E-mobility interface", aspect: "aspect-[4/5]" },
+  { src: galleryImg3, alt: "ABB E-mobility charger", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
+  { src: galleryImg13, alt: "ABB E-mobility components", aspect: "aspect-[4/3]" },
+  // Add up to 2 more tiles here when assets are available
+];
 
+/* ── Page ── */
+const CaseABB = () => {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
@@ -191,19 +190,24 @@ const CaseABB = () => {
         <section className="py-24 md:py-32">
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Execution</MicroLabel>
-            <div className="max-w-[72ch] space-y-4 leading-relaxed">
+            <div className="max-w-[72ch] leading-relaxed">
               <p>
                 The first new charger generation — A400 — became the proving
                 ground.
               </p>
-              <p>
+
+              <p className="text-lg text-white font-normal tracking-normal mt-16">
+                System in practice
+              </p>
+
+              <p className="mt-6">
                 It was the first product built under the new positioning, with a
                 redesigned interface and industrial language. We used it to
                 validate the new visual and interaction principles before scaling
                 them globally.
               </p>
 
-              <div className="space-y-2 pt-4">
+              <div className="space-y-4 mt-10">
                 <p>– Built a modular digital architecture</p>
                 <p>– Created a reusable component library</p>
                 <p>
@@ -221,10 +225,10 @@ const CaseABB = () => {
                 </p>
               </div>
 
-              <p className="pt-4">
+              <p className="mt-12">
                 Over two years, teams evolved and roles shifted.
               </p>
-              <p>
+              <p className="mt-4">
                 I remained responsible for maintaining strategic and structural
                 continuity.
               </p>
@@ -233,39 +237,20 @@ const CaseABB = () => {
 
           {/* Gallery */}
           <div className="mt-16 px-6 md:px-8 max-w-4xl mx-auto">
-            <div className="grid grid-cols-12 gap-4">
-              <div
-                className="col-span-12 md:col-span-7 aspect-[4/3] overflow-hidden cursor-pointer"
-                onClick={() => setLightboxSrc(galleryImg11)}
-              >
-                <img
-                  src={galleryImg11}
-                  alt="ABB E-mobility interface"
-                  className={`h-full w-full object-cover ${MEDIA_HOVER}`}
-                />
-              </div>
-              <div className="col-span-12 md:col-span-5 space-y-4 md:mt-12">
+            <div className="columns-2 md:columns-3 gap-4">
+              {galleryItems.map((item, i) => (
                 <div
-                  className="aspect-[3/2] overflow-hidden cursor-pointer"
-                  onClick={() => setLightboxSrc(galleryImg3)}
+                  key={i}
+                  className={`break-inside-avoid mb-4 overflow-hidden cursor-pointer ${item.offsetClass || ""}`}
+                  onClick={() => setLightboxSrc(item.src)}
                 >
                   <img
-                    src={galleryImg3}
-                    alt="ABB E-mobility charger"
-                    className={`h-full w-full object-cover ${MEDIA_HOVER}`}
+                    src={item.src}
+                    alt={item.alt}
+                    className={`w-full h-auto object-cover ${item.aspect} ${MEDIA_HOVER}`}
                   />
                 </div>
-                <div
-                  className="aspect-[3/2] overflow-hidden cursor-pointer"
-                  onClick={() => setLightboxSrc(galleryImg13)}
-                >
-                  <img
-                    src={galleryImg13}
-                    alt="ABB E-mobility components"
-                    className={`h-full w-full object-cover ${MEDIA_HOVER}`}
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
@@ -291,18 +276,16 @@ const CaseABB = () => {
             </p>
           </div>
 
-          <div className="px-6 md:px-8 max-w-4xl mx-auto">
-            <div className="max-w-[72ch] space-y-4 leading-relaxed">
-              <p>
-                ABB E&#8209;mobility gained a system capable of expressing its
-                ambition.
-              </p>
-              <p>
-                The architecture extended beyond marketing into product
-                dashboards and infrastructure tools.
-              </p>
-              <p>The positioning became tangible.</p>
-            </div>
+          <div className="max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12">
+            <p>
+              ABB E&#8209;mobility gained a system capable of expressing its
+              ambition.
+            </p>
+            <p>
+              The architecture extended beyond marketing into product
+              dashboards and infrastructure tools.
+            </p>
+            <p>The positioning became tangible.</p>
           </div>
 
           <div className="text-center py-8 mt-8">
@@ -313,8 +296,15 @@ const CaseABB = () => {
           </div>
         </section>
 
-        {/* ═══════════════ WHY ME + NEXT ═══════════════ */}
-        <CaseWhyMe text={caseData.whyMe} nextCase={nextCaseLink} />
+        {/* ═══════════════ WHAT THIS REQUIRED ═══════════════ */}
+        <section className="py-24 md:py-32">
+          <div className="px-6 md:px-8 max-w-4xl mx-auto">
+            <MicroLabel>What this required</MicroLabel>
+            <p className="max-w-[72ch] leading-relaxed text-white">
+              Holding the line between engineering depth and human clarity at global scale.
+            </p>
+          </div>
+        </section>
 
         {/* ═══════════════ LIGHTBOX ═══════════════ */}
         {lightboxSrc && (
