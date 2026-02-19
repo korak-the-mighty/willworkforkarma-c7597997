@@ -1,142 +1,122 @@
 
 
-# ABB E-mobility Case Page — Structural Refinement (Updated)
+# ABB E-mobility Case — Final Adjustments (with guardrails)
 
-Six edits to `src/pages/CaseABB.tsx`. No other files changed. Incorporates both user tweaks.
-
----
-
-## 1. Execution Section — Hierarchy with A400 Paragraph Retained
-
-Restructure lines 191-232:
-
-- Keep MicroLabel and opening paragraph ("The first new charger generation -- A400 -- became the proving ground.")
-- Add generous spacing (`mt-16`)
-- Add sub-heading: "System in practice" -- `text-lg text-white font-normal tracking-normal` (Inter, no uppercase, no micro-label style)
-- After sub-heading (`mt-6`), place the A400 paragraph ("It was the first product built under the new positioning...") -- kept intact, given breathing room
-- After that paragraph (`mt-10`), the bullet list with increased spacing (`space-y-4` instead of `space-y-2`)
-- After bullets (`mt-12`), the two closing paragraphs about continuity
+Five edits across `Layout.tsx` and `CaseABB.tsx`. Incorporates both guardrails.
 
 ---
 
-## 2. Gallery — Scalable Masonry Layout (3 now, structured for 5)
+## 1. Background Continuity Through Footer (backgroundColor only)
 
-Replace lines 235-269 (the current 12-col grid) with a CSS columns masonry layout.
+**Layout.tsx** -- Add optional `theme` prop. Only set `backgroundColor` on the wrapper via inline style. All text colors controlled exclusively via classes.
 
-Structure uses a `galleryItems` array of objects so adding tiles later is a one-line addition:
+- `LayoutProps` gains `theme?: { bg: string }`
+- Footer accepts same prop
+- Outer `div`: `style={theme ? { backgroundColor: theme.bg } : undefined}`
+- Footer text classes swap conditionally: `text-white`, `text-white/50`, `text-white/30` when themed; default `text-muted-foreground` etc. otherwise
+- No `color` set in inline styles -- all text via Tailwind classes
 
-```
-const galleryItems = [
-  { src: galleryImg11, alt: "ABB E-mobility interface", aspect: "aspect-[4/5]" },
-  { src: galleryImg3, alt: "ABB E-mobility charger", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
-  { src: galleryImg13, alt: "ABB E-mobility components", aspect: "aspect-[4/3]" },
-];
-```
-
-Rendered with `columns-2 md:columns-3 gap-4` and `.map()` over the array. Each tile gets `break-inside-avoid mb-4 overflow-hidden cursor-pointer`. To add tiles 4 and 5 later, just push to the array. Container stays `max-w-4xl mx-auto px-6 md:px-8`.
+**CaseABB.tsx** -- Pass `theme={{ bg: "#1E1E1E" }}` to Layout. Change inner wrapper from `bg-[#01031A]` to `bg-[#1E1E1E]`.
 
 ---
 
-## 3. Outcome Section — Centered Thesis Block
+## 2. Footer Headline -- Avoid "Let's talk" Duplication
 
-Lines 282-314: Wrap the three supporting sentences in a centered constrained block (`max-w-[42rem] mx-auto text-center px-6 space-y-2`) with generous vertical padding (`py-12`). Large headline and artifact row unchanged.
+When `theme` is active (case pages), footer headline changes from:
+
+> "I'm available for work. Let's talk."
+
+to:
+
+> "I'm available for work."
+
+This avoids repetition with the new "Let's talk." CTA at the end of the case content. Non-themed pages keep the original headline.
 
 ---
 
-## 4. Replace CaseWhyMe with "What This Required"
+## 3. Increase Case Body Typography
 
-Remove `CaseWhyMe` import and its usage (plus the unused `caseData`, `caseIndex`, `nextCase`, `nextCaseLink` variables). Replace with:
+Add constant `BODY_TEXT = "text-[1.25rem] leading-[1.65]"` and apply to each body copy wrapper in Context, Tension, Decision, Execution, and Outcome sections. MicroLabels, hero, navigation, and footer unchanged.
 
-```
+---
+
+## 4. Remove "What This Required" Section
+
+Delete lines 299--307 (the entire section). Clean removal.
+
+---
+
+## 5. Add "Let's talk." CTA After Outcome
+
+After the artifact row (line 296), insert:
+
+```text
 <section className="py-24 md:py-32">
-  <div className="px-6 md:px-8 max-w-4xl mx-auto">
-    <MicroLabel>What this required</MicroLabel>
-    <p className="max-w-[72ch] leading-relaxed text-white">
-      Holding the line between engineering depth and human clarity at global scale.
-    </p>
+  <div className="text-center">
+    <Link to="/contact"
+      className="font-heading text-2xl md:text-4xl tracking-tight text-white hover:opacity-60 transition-opacity">
+      Let's talk.
+    </Link>
   </div>
 </section>
 ```
 
-Dark background maintained. No links, no next case CTA. Page ends here.
+Import `Link` from `react-router-dom` at top of CaseABB.tsx.
 
 ---
 
-## 5. Remove White Background Block
+## Technical: Layout.tsx Changes
 
-Achieved automatically by removing `CaseWhyMe` (which rendered the light-background band).
+```text
+interface LayoutProps {
+  children: React.ReactNode;
+  fullWidth?: boolean;
+  theme?: { bg: string };
+}
 
----
-
-## 6. No External Links
-
-No "Visit" link. No outbound references.
-
----
-
-## Technical Details
-
-### Execution reflow (lines 191-232)
-
-```
-<section className="py-24 md:py-32">
-  <div className="px-6 md:px-8 max-w-4xl mx-auto">
-    <MicroLabel>Execution</MicroLabel>
-    <div className="max-w-[72ch] leading-relaxed">
-      <p>The first new charger generation -- A400 -- became the proving ground.</p>
-
-      <p className="text-lg text-white font-normal mt-16">System in practice</p>
-
-      <p className="mt-6">
-        It was the first product built under the new positioning, with a
-        redesigned interface and industrial language. We used it to validate
-        the new visual and interaction principles before scaling them globally.
-      </p>
-
-      <div className="space-y-4 mt-10">
-        <p>-- Built a modular digital architecture</p>
-        <p>-- Created a reusable component library</p>
-        ...
+const Footer = ({ theme }: { theme?: { bg: string } }) => (
+  <footer>
+    <div className="mx-auto max-w-7xl px-6 md:px-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
+        <p className={`font-heading text-lg md:text-xl tracking-tight ${theme ? "text-white" : ""}`}>
+          {theme ? "I'm available for work." : "I'm available for work. Let's talk."}
+        </p>
+        <div className="flex gap-8 text-sm">
+          <Link ... className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
+          <!-- same pattern for About, Contact -->
+        </div>
       </div>
-
-      <p className="mt-12">Over two years, teams evolved and roles shifted.</p>
-      <p className="mt-4">I remained responsible for maintaining strategic and structural continuity.</p>
+      <div className="pb-8">
+        <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
+      </div>
     </div>
-  </div>
-  ...
-</section>
+  </footer>
+);
+
+const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
+  // ...
+  return (
+    <div className="flex min-h-screen flex-col"
+         style={theme ? { backgroundColor: theme.bg } : undefined}>
+      ...
+      <Footer theme={theme} />
+    </div>
+  );
+};
 ```
 
-### Masonry gallery (data-driven, scalable)
+Key difference from previous plan: **no `color` in inline styles** -- only `backgroundColor`. All text colors use Tailwind classes.
 
-```
-const galleryItems = [
-  { src: galleryImg11, alt: "...", aspect: "aspect-[4/5]" },
-  { src: galleryImg3, alt: "...", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
-  { src: galleryImg13, alt: "...", aspect: "aspect-[4/3]" },
-  // Add up to 2 more tiles here when assets are available
-];
+---
 
-<div className="mt-16 px-6 md:px-8 max-w-4xl mx-auto">
-  <div className="columns-2 md:columns-3 gap-4">
-    {galleryItems.map((item, i) => (
-      <div key={i} className={`break-inside-avoid mb-4 overflow-hidden cursor-pointer ${item.offsetClass || ""}`}
-           onClick={() => setLightboxSrc(item.src)}>
-        <img src={item.src} alt={item.alt}
-             className={`w-full h-auto object-cover ${item.aspect} ${MEDIA_HOVER}`} />
-      </div>
-    ))}
-  </div>
-</div>
-```
+## Summary
 
-### Outcome centered block
-
-```
-<div className="max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12">
-  <p>ABB E-mobility gained a system capable of expressing its ambition.</p>
-  <p>The architecture extended beyond marketing into product dashboards and infrastructure tools.</p>
-  <p>The positioning became tangible.</p>
-</div>
-```
+| Change | File | Detail |
+|--------|------|--------|
+| Theme prop (bg only) | Layout.tsx | `backgroundColor` inline, text via classes |
+| Footer headline dedup | Layout.tsx | Conditional: drops "Let's talk." when themed |
+| Body text bump | CaseABB.tsx | `text-[1.25rem] leading-[1.65]` on body wrappers |
+| Remove "What this required" | CaseABB.tsx | Delete section lines 299-307 |
+| Add "Let's talk." CTA | CaseABB.tsx | Centered Link to /contact after Outcome |
+| Pass theme to Layout | CaseABB.tsx | `theme={{ bg: "#1E1E1E" }}` |
 
