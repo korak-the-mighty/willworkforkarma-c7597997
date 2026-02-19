@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import Layout from "@/components/Layout";
 
@@ -24,13 +25,13 @@ const FULL_BLEED =
 const MEDIA_HOVER =
   "brightness-[0.85] hover:brightness-100 transition-[filter] duration-300";
 
-/* ── Page ── */
-/* ── Gallery data (scalable to 5 tiles) ── */
+const BODY_TEXT = "text-[1.25rem] leading-[1.65]";
+
+/* ── Gallery data ── */
 const galleryItems = [
   { src: galleryImg11, alt: "ABB E-mobility interface", aspect: "aspect-[4/5]" },
   { src: galleryImg3, alt: "ABB E-mobility charger", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
   { src: galleryImg13, alt: "ABB E-mobility components", aspect: "aspect-[4/3]" },
-  // Add up to 2 more tiles here when assets are available
 ];
 
 /* ── Page ── */
@@ -38,7 +39,7 @@ const CaseABB = () => {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
-    <Layout fullWidth>
+    <Layout fullWidth theme={{ bg: "#1E1E1E" }}>
       <div
         style={
           {
@@ -47,7 +48,7 @@ const CaseABB = () => {
             "--muted": "220 15% 12%",
           } as React.CSSProperties
         }
-        className="bg-[#01031A] text-white"
+        className="bg-[#1E1E1E] text-white"
       >
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
@@ -78,7 +79,7 @@ const CaseABB = () => {
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-12 md:col-span-5 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-0">
               <MicroLabel>Context</MicroLabel>
-              <div className="max-w-[72ch] space-y-4 leading-relaxed">
+              <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
                 <p>ABB E&#8209;mobility operated inside ABB corporate.</p>
                 <p>
                   A new generation of chargers was ready to launch — redesigned
@@ -128,7 +129,7 @@ const CaseABB = () => {
               <div className="hidden md:block">
                 <MicroLabel>Tension</MicroLabel>
               </div>
-              <div className="max-w-[72ch] space-y-6 leading-relaxed">
+              <div className={`max-w-[72ch] space-y-6 ${BODY_TEXT}`}>
                 <div className="space-y-1">
                   <p>The products had evolved.</p>
                   <p>The brand container had not.</p>
@@ -153,7 +154,7 @@ const CaseABB = () => {
         <section className="py-24 md:py-32">
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Decision</MicroLabel>
-            <div className="max-w-[72ch] leading-relaxed">
+            <div className={`max-w-[72ch] ${BODY_TEXT}`}>
               <p>
                 Build a standalone modular E&#8209;mobility brand system — aligned with
                 ABB heritage, but structurally independent.
@@ -169,7 +170,7 @@ const CaseABB = () => {
           </div>
 
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
-            <div className="max-w-[72ch] leading-relaxed">
+            <div className={`max-w-[72ch] ${BODY_TEXT}`}>
               <p>
                 One that could express the positioning, scale globally, and
                 extend beyond corporate constraints.
@@ -190,7 +191,7 @@ const CaseABB = () => {
         <section className="py-24 md:py-32">
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Execution</MicroLabel>
-            <div className="max-w-[72ch] leading-relaxed">
+            <div className={`max-w-[72ch] ${BODY_TEXT}`}>
               <p>
                 The first new charger generation — A400 — became the proving
                 ground.
@@ -276,7 +277,7 @@ const CaseABB = () => {
             </p>
           </div>
 
-          <div className="max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12">
+          <div className={`max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12 ${BODY_TEXT}`}>
             <p>
               ABB E&#8209;mobility gained a system capable of expressing its
               ambition.
@@ -296,13 +297,15 @@ const CaseABB = () => {
           </div>
         </section>
 
-        {/* ═══════════════ WHAT THIS REQUIRED ═══════════════ */}
+        {/* ═══════════════ LET'S TALK CTA ═══════════════ */}
         <section className="py-24 md:py-32">
-          <div className="px-6 md:px-8 max-w-4xl mx-auto">
-            <MicroLabel>What this required</MicroLabel>
-            <p className="max-w-[72ch] leading-relaxed text-white">
-              Holding the line between engineering depth and human clarity at global scale.
-            </p>
+          <div className="text-center">
+            <Link
+              to="/contact"
+              className="font-heading text-2xl md:text-4xl tracking-tight text-white hover:opacity-60 transition-opacity"
+            >
+              Let's talk.
+            </Link>
           </div>
         </section>
 
