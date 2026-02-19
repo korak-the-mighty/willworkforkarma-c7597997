@@ -20,21 +20,21 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
   </header>
 );
 
-const Footer = () => (
+const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer>
     <div className="mx-auto max-w-7xl px-6 md:px-8">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
-        <p className="font-heading text-lg md:text-xl tracking-tight">
-          I'm available for work. Let's talk.
+        <p className={`font-heading text-lg md:text-xl tracking-tight ${theme ? "text-white" : ""}`}>
+          {theme ? "I'm available for work." : "I'm available for work. Let's talk."}
         </p>
         <div className="flex gap-8 text-sm">
-          <Link to="/work" className="arrow-link text-muted-foreground hover:text-foreground transition-colors">Work</Link>
-          <Link to="/about" className="arrow-link text-muted-foreground hover:text-foreground transition-colors">About</Link>
-          <Link to="/contact" className="arrow-link text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
+          <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
+          <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
+          <Link to="/contact" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Contact</Link>
         </div>
       </div>
       <div className="pb-8">
-        <p className="text-sm text-muted-foreground">Privacy Policy</p>
+        <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
       </div>
     </div>
   </footer>
@@ -43,13 +43,15 @@ const Footer = () => (
 interface LayoutProps {
   children: React.ReactNode;
   fullWidth?: boolean;
+  theme?: { bg: string };
 }
 
-const Layout = ({ children, fullWidth = false }: LayoutProps) => {
+const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col"
+         style={theme ? { backgroundColor: theme.bg } : undefined}>
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
@@ -59,7 +61,7 @@ const Layout = ({ children, fullWidth = false }: LayoutProps) => {
           </div>
         )}
       </main>
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 };
