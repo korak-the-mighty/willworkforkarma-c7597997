@@ -4,16 +4,14 @@ import Layout from "@/components/Layout";
 import CaseWhyMe from "@/components/CaseWhyMe";
 import { cases } from "@/data/cases";
 
+import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
 import contextImg from "@/assets/ABB-emobility-context.webp";
 import tensionVideo from "@/assets/ABB-c50-launch.mp4";
 import galleryImg11 from "@/assets/ABB_E-mobility_11.png";
 import galleryImg3 from "@/assets/ABB_E-mobility_3.png";
 import galleryImg13 from "@/assets/ABB_E-mobility_13.png";
 import wideDash from "@/assets/ABB-visuals-wide-dash.avif";
-
-/* ── Swap this to a local import when ready ── */
-const HERO_VIDEO_SRC =
-  "https://e-mobility.abb.com/content/dam/abb-em/global/hero/abb-e-mobility-hero-video.mp4";
+import decisionImg from "@/assets/ABB-media_4.webp";
 
 /* ── Helpers ── */
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
@@ -55,7 +53,7 @@ const CaseABB = () => {
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
           <video
-            src={HERO_VIDEO_SRC}
+            src={heroVideo}
             autoPlay
             muted
             loop
@@ -65,26 +63,24 @@ const CaseABB = () => {
           <div className="absolute inset-0 bg-black/35" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
             <p className="text-sm tracking-[0.02em] text-white">
-              ABB E-mobility
+              ABB E&#8209;mobility
             </p>
             <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">
               Branding · UI/UX · 2024–2025
             </p>
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-              Defining the digital brand foundation of ABB&nbsp;E-mobility.
+              Building the digital brand foundation of a global e&#8209;mobility leader.
             </h1>
           </div>
         </section>
 
         {/* ═══════════════ CONTEXT ═══════════════ */}
         <section className="py-24 md:py-32 overflow-hidden">
-          <div className="px-6 md:px-8 max-w-4xl mx-auto">
-            <MicroLabel>Context</MicroLabel>
-          </div>
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-12 md:col-span-5 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-0">
+              <MicroLabel>Context</MicroLabel>
               <div className="max-w-[72ch] space-y-4 leading-relaxed">
-                <p>E-mobility operated inside ABB corporate.</p>
+                <p>ABB E&#8209;mobility operated inside ABB corporate.</p>
                 <p>
                   A new generation of chargers was ready to launch — redesigned
                   industrially, digitally, and strategically.
@@ -160,16 +156,16 @@ const CaseABB = () => {
             <MicroLabel>Decision</MicroLabel>
             <div className="max-w-[72ch] leading-relaxed">
               <p>
-                Build a standalone modular E-mobility brand system — aligned with
+                Build a standalone modular E&#8209;mobility brand system — aligned with
                 ABB heritage, but structurally independent.
               </p>
               <p className="mt-4">Not a redesign.</p>
             </div>
           </div>
 
-          <div className="py-20 md:py-28 text-center px-6">
+          <div className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
             <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-              A new system.
+              A new flexible, future proof brand system.
             </p>
           </div>
 
@@ -182,9 +178,13 @@ const CaseABB = () => {
             </div>
           </div>
 
-          <div
-            className={`${FULL_BLEED} mt-16 aspect-[16/9] bg-[hsl(220,15%,12%)]`}
-          />
+          <div className={`${FULL_BLEED} mt-16 overflow-hidden`}>
+            <img
+              src={decisionImg}
+              alt="ABB E-mobility brand system"
+              className={`h-full w-full object-cover ${MEDIA_HOVER}`}
+            />
+          </div>
         </section>
 
         {/* ═══════════════ EXECUTION ═══════════════ */}
@@ -294,7 +294,7 @@ const CaseABB = () => {
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <div className="max-w-[72ch] space-y-4 leading-relaxed">
               <p>
-                ABB E-mobility gained a system capable of expressing its
+                ABB E&#8209;mobility gained a system capable of expressing its
                 ambition.
               </p>
               <p>
