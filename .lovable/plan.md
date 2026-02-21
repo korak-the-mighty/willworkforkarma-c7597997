@@ -1,35 +1,55 @@
 
-# Editorial Stagger — Tension + Decision Spacing
 
-Three edits in `src/pages/CaseABB.tsx`. No other files.
+# Execution Block — Editorial Manifesto Redesign
 
----
-
-## 1. Tension Section — Stagger Video Down
-
-Mirror the Context approach: push the video (left column) much further down so text is read first.
-
-- **Line 116**: Change `md:mt-20` to `md:mt-48` on the video column, matching the Context image offset.
-- **Line 128**: Widen the text column from `md:col-span-4 md:col-start-8` to `md:col-span-5 md:col-start-8` for more breathing room.
-- Add `pb-16 md:pb-24` to the last text group ("Innovation existed. / The system to show it didn't.") so the text block has generous trailing space before the video catches up.
-
-This creates the same "read first, then discover the media" editorial stagger used in Context.
+Single file edit: `src/pages/CaseABB.tsx`, lines 211-227.
 
 ---
 
-## 2. Decision Section — Space After "Beyond Corporate Constraints"
+## What Changes
 
-- **Line 181**: Increase the gap between "beyond corporate constraints." and the full-bleed image from `mt-16` to `mt-32 md:mt-40`.
+Replace the six-line bullet list (lines 211-227) with four stacked manifesto blocks using the content specified.
 
-This gives that final Decision sentence room to breathe before the image arrives.
+## New Structure
 
----
+```text
+BUILT
+The modular digital foundation
 
-## Summary
+ESTABLISHED
+A scalable component system
 
-| Edit | Line | Change |
-|------|------|--------|
-| Tension video offset | 116 | `md:mt-20` to `md:mt-48` |
-| Tension text width | 128 | `md:col-span-4` to `md:col-span-5` |
-| Tension trailing space | 144-147 | Add `pb-16 md:pb-24` to last text group |
-| Decision image gap | 181 | `mt-16` to `mt-32 md:mt-40` |
+ALIGNED
+Product, interface and visual language under one logic
+
+SET
+Global standards for imagery and expression
+```
+
+## Implementation
+
+Replace lines 211-227 with a single container div:
+
+- Outer wrapper: `border-l border-[#ECA9CC]/50 pl-6 md:pl-8 space-y-12 md:space-y-16 mt-10`
+  - The `border-l` + pink at 50% opacity provides the subtle vertical structural line
+- Each of the four blocks: `space-y-2`
+  - Top word: `<p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">BUILT</p>`
+  - Description: `<p>The modular digital foundation</p>` (inherits `BODY_TEXT` from parent wrapper)
+
+## Styling Details
+
+| Element | Classes |
+|---------|---------|
+| Keyword (BUILT etc.) | `font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white` |
+| Description line | Inherited from parent `BODY_TEXT` (text-[1.25rem] leading-[1.65]) |
+| Block spacing | `space-y-12 md:space-y-16` between blocks |
+| Inner spacing | `space-y-2` within each block |
+| Left line | `border-l border-[#ECA9CC]/50 pl-6 md:pl-8` on outer wrapper |
+
+## What Does NOT Change
+
+- "System in practice" sub-heading (line 200)
+- Preceding paragraph about A400 (line 196)
+- Following paragraphs about team continuity (lines 229-235)
+- Gallery, Outcome, CTA, or any other section
+
