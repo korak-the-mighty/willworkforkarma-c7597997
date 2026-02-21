@@ -30,6 +30,7 @@ const ScrollyVideoSection = ({
 
   const [track, setTrack] = useState(0);
   const [error, setError] = useState(false);
+  const [frameMissing, setFrameMissing] = useState<string | null>(null);
   const [manifest, setManifest] = useState<{ count: number; ext: string } | null>(null);
 
   const loadFrame = useCallback(
@@ -38,12 +39,16 @@ const ScrollyVideoSection = ({
       if (cache.has(index)) return Promise.resolve(cache.get(index)!);
       return new Promise((resolve, reject) => {
         const img = new Image();
+        const url = framePath(basePath, index, ext);
         img.onload = () => {
           cache.set(index, img);
           resolve(img);
         };
-        img.onerror = reject;
-        img.src = framePath(basePath, index, ext);
+        img.onerror = () => {
+          if (index === 0) setFrameMissing(url);
+          reject(new Error(`Frame 404: ${url}`));
+        };
+        img.src = url;
       });
     },
     [basePath]
@@ -139,6 +144,14 @@ const ScrollyVideoSection = ({
   }
 
   if (error) return <div className="bg-[#1E1E1E] h-screen" />;
+
+  if (frameMissing) {
+    return (
+      <div className="bg-[#1E1E1E] h-screen flex items-center justify-center">
+        <p className="text-white/60 text-sm font-mono">Frames missing: {frameMissing}</p>
+      </div>
+    );
+  }
 
   return (
     <div
