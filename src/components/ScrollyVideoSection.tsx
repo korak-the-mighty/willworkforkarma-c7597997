@@ -10,10 +10,12 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
   const videoRef = useRef<HTMLVideoElement>(null);
   const [track, setTrack] = useState(0);
   const [fallback, setFallback] = useState(false);
-  
+  const [seekableReady, setSeekableReady] = useState(false);
+  const seekableReadyRef = useRef(false);
+  const cleanupRef = useRef<(() => void) | null>(null);
+
   const rafId = useRef(0);
 
-  // Detect prefers-reduced-motion
   const [reducedMotion] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
@@ -24,25 +26,39 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       setFallback(true);
       return;
     }
-    video.currentTime = 0;
     console.log("[scrolly] metadata duration", video.duration);
     setTrack(video.duration * pxPerSecond);
 
-    // Unlock seeking in browsers that require activation
+    const onReady = () => setSeekableReady(true);
+    video.addEventListener("loadeddata", onReady, { once: true });
+    video.addEventListener("canplay", onReady, { once: true });
+
+    cleanupRef.current = () => {
+      video.removeEventListener("loadeddata", onReady);
+      video.removeEventListener("canplay", onReady);
+    };
+  }, [pxPerSecond]);
+
+  // Cleanup listeners on unmount
+  useEffect(() => {
+    return () => { cleanupRef.current?.(); };
+  }, []);
+
+  // Unlock seeking once video is ready
+  useEffect(() => {
+    if (!seekableReady) return;
+    seekableReadyRef.current = true;
+    const video = videoRef.current;
+    if (!video) return;
+
+    console.log("[scrolly] seekableReady — unlocking");
     video.muted = true;
     video.playsInline = true;
-    const unlock = video.play();
-    if (unlock !== undefined) {
-      unlock.then(() => {
-        video.pause();
-        const t = Math.min(0.05, Math.max(0, video.duration - 0.05));
-        video.currentTime = t;
-        requestAnimationFrame(() => { video.currentTime = 0; });
-      }).catch(() => {
-        // ignore - not all browsers need this
-      });
-    }
-  }, [pxPerSecond]);
+    video.play().then(() => {
+      video.pause();
+      video.currentTime = 0;
+    }).catch(() => {});
+  }, [seekableReady]);
 
   useEffect(() => {
     if (reducedMotion || fallback || track === 0) return;
@@ -55,6 +71,11 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
     let frameCount = 0;
 
     const tick = () => {
+      if (!seekableReadyRef.current || video.readyState < 2) {
+        rafId.current = requestAnimationFrame(tick);
+        return;
+      }
+
       const duration = video.duration;
       if (!duration || !isFinite(duration) || duration === 0) {
         rafId.current = requestAnimationFrame(tick);
@@ -64,7 +85,6 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       const rect = wrapper.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      // Skip updates when far away (but keep RAF alive)
       const near = rect.bottom > -200 && rect.top < vh + 200;
       if (!near) {
         rafId.current = requestAnimationFrame(tick);
@@ -80,7 +100,6 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
         video.currentTime = targetTime;
       }
 
-      // Low-frequency debug log (~every 30 frames when near)
       frameCount++;
       if (frameCount % 30 === 0) {
         console.log("[scrolly]", { progress, targetTime, currentTime: video.currentTime });
