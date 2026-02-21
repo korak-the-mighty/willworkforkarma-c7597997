@@ -1,52 +1,103 @@
 
-
-# Fix Scrolly Video — Production-Safe Scroll Math
+# Fix Scrolly Video — Continuous RAF Loop + Micro-Fixes
 
 One file changed: `src/components/ScrollyVideoSection.tsx`
 
 ---
 
-## What's actually wrong
+## Changes (lines 31-67)
 
-The current component already uses refs (no `querySelector`), so the hero video is not being targeted. The likely production issue is the scroll math: using `-rect.top / track` can produce incorrect progress values depending on layout context and how the browser computes `rect.top` relative to the sticky container.
+Replace the scroll-event-based effect with a continuous RAF loop, plus the two micro-fixes:
 
-## What changes
+### 1. Continuous RAF loop (no scroll listener)
 
-**File: `src/components/ScrollyVideoSection.tsx`** — Lines 40-50 (scroll handler internals)
+Remove `window.addEventListener("scroll", ...)`. Instead, when `IntersectionObserver` sets `isVisible = true`, kick off a self-scheduling `requestAnimationFrame` tick that polls `getBoundingClientRect()` every frame. When visibility is lost, the loop stops.
 
-Replace the current scroll math:
+### 2. Micro-fix: guard duration each tick
+
+Do not store `const duration = video.duration` outside the loop. Instead, read it inside `tick()` and bail early if it's `NaN`, `0`, or non-finite.
+
+### 3. Micro-fix: clamp targetTime
+
+Before setting `video.currentTime`, clamp `targetTime` to `[0, duration - 0.001]` to avoid seeking past the last frame.
+
+### 4. Temporary debug logs
+
+Add three `console.log` statements for production verification (to be removed afterward).
+
+---
+
+## Resulting effect code (lines 31-67)
 
 ```typescript
-const scrolled = -rect.top;
-const progress = Math.min(Math.max(scrolled / track, 0), 1);
+useEffect(() => {
+  if (reducedMotion || fallback || track === 0) return;
+
+  const wrapper = wrapperRef.current;
+  const video = videoRef.current;
+  if (!wrapper || !video) return;
+
+  console.log("[scrolly] mounted");
+
+  const tick = () => {
+    const duration = video.duration;
+    if (!duration || !isFinite(duration) || duration === 0) {
+      if (isVisible.current) rafId.current = requestAnimationFrame(tick);
+      return;
+    }
+
+    const rect = wrapper.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    const total = rect.height - viewportHeight;
+    const scrolled = Math.min(Math.max(-rect.top, 0), total);
+    const progress = total > 0 ? scrolled / total : 0;
+    const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.001);
+
+    if (Math.abs(video.currentTime - targetTime) > 0.03) {
+      video.currentTime = targetTime;
+    }
+
+    if (isVisible.current) {
+      rafId.current = requestAnimationFrame(tick);
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const wasVisible = isVisible.current;
+      isVisible.current = entry.isIntersecting;
+      console.log("[scrolly] active", entry.isIntersecting);
+      if (entry.isIntersecting && !wasVisible) {
+        rafId.current = requestAnimationFrame(tick);
+      }
+    },
+    { threshold: 0 }
+  );
+  observer.observe(wrapper);
+
+  return () => {
+    observer.disconnect();
+    cancelAnimationFrame(rafId.current);
+  };
+}, [track, fallback, reducedMotion]);
 ```
 
-With viewport-relative bounding-rect logic:
+Also add to `handleMetadata` (line 27):
 
 ```typescript
-const viewportHeight = window.innerHeight;
-const total = rect.height - viewportHeight;
-const scrolled = Math.min(Math.max(-rect.top, 0), total);
-const progress = total > 0 ? scrolled / total : 0;
+console.log("[scrolly] metadata duration", video.duration);
 ```
 
-This is mathematically more robust because:
-- `total` equals `track` (wrapper height is `100vh + track`, minus viewport = `track`), but is derived from the actual rendered element rather than state
-- The `scrolled` value is explicitly clamped to `[0, total]` before division
-- Guards against `total <= 0` edge case
+---
 
-## What does NOT change
+## What changes vs. what stays
 
-- No `"use client"` directive (this is Vite/React, not Next.js)
-- No changes to asset location (`/videos/...` stays)
-- No changes to refs, IntersectionObserver, RAF gating, threshold optimization, fallback logic, or video attributes
-- No changes to `CaseABB.tsx`
+| Before | After |
+|--------|-------|
+| `window.addEventListener("scroll", ...)` | No scroll listener |
+| RAF fires once per scroll event | RAF loops continuously while in view |
+| `duration` captured once outside loop | `duration` read each tick, guarded for NaN/0 |
+| `targetTime` unclamped | Clamped to `[0, duration - 0.001]` |
+| No debug logs | 3 temporary `console.log` statements |
 
-## Summary
-
-| Item | Detail |
-|------|--------|
-| File | `src/components/ScrollyVideoSection.tsx` |
-| Lines changed | 44-45 (scroll math inside RAF callback) |
-| Risk | Zero — mathematically equivalent but more robust |
-
+Everything else unchanged: refs, asset path, bounding-rect math, 0.03s threshold, reduced-motion fallback, markup, styling.
