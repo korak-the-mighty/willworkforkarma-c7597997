@@ -1,80 +1,52 @@
 
 
-# Scrolly Video Module — Final Plan
+# Fix Scrolly Video — Production-Safe Scroll Math
 
-One new component, one asset placement, one page edit.
-
----
-
-## Asset Location
-
-Copy `user-uploads://ABB-E-mobility-mobilefly-short.mp4` to `public/videos/ABB-E-mobility-mobilefly-short.mp4`.
-
-Reference as a plain string path `"/videos/ABB-E-mobility-mobilefly-short.mp4"` — no ES module import needed.
+One file changed: `src/components/ScrollyVideoSection.tsx`
 
 ---
 
-## New Component: `src/components/ScrollyVideoSection.tsx`
+## What's actually wrong
 
-**Props:**
+The current component already uses refs (no `querySelector`), so the hero video is not being targeted. The likely production issue is the scroll math: using `-rect.top / track` can produce incorrect progress values depending on layout context and how the browser computes `rect.top` relative to the sticky container.
+
+## What changes
+
+**File: `src/components/ScrollyVideoSection.tsx`** — Lines 40-50 (scroll handler internals)
+
+Replace the current scroll math:
+
 ```typescript
-interface ScrollyVideoSectionProps {
-  src: string;
-  pxPerSecond?: number; // default 900
-}
+const scrolled = -rect.top;
+const progress = Math.min(Math.max(scrolled / track, 0), 1);
 ```
 
-**Layout:**
-```text
-<div>  <!-- outer wrapper, height = 100vh + track -->
-  <div>  <!-- sticky container, top:0, h-screen -->
-    <video />  <!-- fills viewport, object-contain -->
-  </div>
-</div>
+With viewport-relative bounding-rect logic:
+
+```typescript
+const viewportHeight = window.innerHeight;
+const total = rect.height - viewportHeight;
+const scrolled = Math.min(Math.max(-rect.top, 0), total);
+const progress = total > 0 ? scrolled / total : 0;
 ```
 
-**Core logic:**
+This is mathematically more robust because:
+- `total` equals `track` (wrapper height is `100vh + track`, minus viewport = `track`), but is derived from the actual rendered element rather than state
+- The `scrolled` value is explicitly clamped to `[0, total]` before division
+- Guards against `total <= 0` edge case
 
-- On `loadedmetadata`: read `video.duration`, compute `track = duration * pxPerSecond`, set `currentTime = 0`
-- Wrapper height: `calc(100vh + ${track}px)`
-- Scroll handler via `requestAnimationFrame`, gated by `IntersectionObserver` (only runs while wrapper is in viewport)
-- Compute: `progress = clamp((scrollY - wrapperOffsetTop) / track, 0, 1)`, then `targetTime = progress * duration`
-- **Threshold optimization**: only update `video.currentTime` if `Math.abs(video.currentTime - targetTime) > 0.03`
-- Video attributes: `muted`, `playsInline`, `preload="auto"`, no autoplay
+## What does NOT change
 
-**Accessibility / Fallback:**
-
-- `prefers-reduced-motion`: render standard `<video controls>` instead of scroll-scrub
-- If metadata fails to load: fall back to `<video controls>`
-
-**Styling:** `bg-[#1E1E1E]`, video uses `object-contain`
-
----
-
-## Page Edit: `src/pages/CaseABB.tsx`
-
-**Import:** `import ScrollyVideoSection from "@/components/ScrollyVideoSection";` (no video asset import)
-
-**Insertion:** After the "continuity." paragraph (around line 241), before the Gallery section:
-
-```tsx
-{/* Scrolly Video Highlight */}
-<div className="mt-24 md:mt-36">
-  <ScrollyVideoSection src="/videos/ABB-E-mobility-mobilefly-short.mp4" />
-</div>
-```
-
----
+- No `"use client"` directive (this is Vite/React, not Next.js)
+- No changes to asset location (`/videos/...` stays)
+- No changes to refs, IntersectionObserver, RAF gating, threshold optimization, fallback logic, or video attributes
+- No changes to `CaseABB.tsx`
 
 ## Summary
 
 | Item | Detail |
 |------|--------|
-| New file | `src/components/ScrollyVideoSection.tsx` |
-| Asset | `public/videos/ABB-E-mobility-mobilefly-short.mp4` (static, no import) |
-| Page edit | `src/pages/CaseABB.tsx` — import + insert after line 241 |
-| Scroll math | `track = duration * 900`, RAF-gated by IntersectionObserver |
-| Threshold | Skip `currentTime` update if delta less than 0.03s |
-| Mobile | `muted + playsInline + preload="auto"` |
-| Reduced motion | Standard `<video controls>` fallback |
+| File | `src/components/ScrollyVideoSection.tsx` |
+| Lines changed | 44-45 (scroll math inside RAF callback) |
+| Risk | Zero — mathematically equivalent but more robust |
 
