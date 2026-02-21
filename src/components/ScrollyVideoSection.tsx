@@ -16,9 +16,8 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
 
   const rafId = useRef(0);
 
-  const [reducedMotion] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  const reducedMotion = typeof window !== "undefined"
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const handleMetadata = useCallback(() => {
     const video = videoRef.current;
