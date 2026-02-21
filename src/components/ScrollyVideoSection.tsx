@@ -25,6 +25,7 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       return;
     }
     video.currentTime = 0;
+    console.log("[scrolly] metadata duration", video.duration);
     setTrack(video.duration * pxPerSecond);
   }, [pxPerSecond]);
 
@@ -35,32 +36,45 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
     const video = videoRef.current;
     if (!wrapper || !video) return;
 
-    const duration = video.duration;
+    console.log("[scrolly] mounted");
 
-    const onScroll = () => {
-      if (!isVisible.current) return;
-      rafId.current = requestAnimationFrame(() => {
-        const rect = wrapper.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        const total = rect.height - viewportHeight;
-        const scrolled = Math.min(Math.max(-rect.top, 0), total);
-        const progress = total > 0 ? scrolled / total : 0;
-        const targetTime = progress * duration;
-        if (Math.abs(video.currentTime - targetTime) > 0.03) {
-          video.currentTime = targetTime;
-        }
-      });
+    const tick = () => {
+      const duration = video.duration;
+      if (!duration || !isFinite(duration) || duration === 0) {
+        if (isVisible.current) rafId.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const rect = wrapper.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const total = rect.height - viewportHeight;
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const progress = total > 0 ? scrolled / total : 0;
+      const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.001);
+
+      if (Math.abs(video.currentTime - targetTime) > 0.03) {
+        video.currentTime = targetTime;
+      }
+
+      if (isVisible.current) {
+        rafId.current = requestAnimationFrame(tick);
+      }
     };
 
     const observer = new IntersectionObserver(
-      ([entry]) => { isVisible.current = entry.isIntersecting; },
+      ([entry]) => {
+        const wasVisible = isVisible.current;
+        isVisible.current = entry.isIntersecting;
+        console.log("[scrolly] active", entry.isIntersecting);
+        if (entry.isIntersecting && !wasVisible) {
+          rafId.current = requestAnimationFrame(tick);
+        }
+      },
       { threshold: 0 }
     );
     observer.observe(wrapper);
 
-    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", onScroll);
       observer.disconnect();
       cancelAnimationFrame(rafId.current);
     };
