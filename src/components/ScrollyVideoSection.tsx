@@ -1,86 +1,108 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 interface ScrollyVideoSectionProps {
-  src: string;
-  pxPerSecond?: number;
+  manifestUrl: string;
+  basePath: string;
+  pxPerFrame?: number;
 }
 
-const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProps) => {
+const framePath = (basePath: string, index: number, ext: string) =>
+  `${basePath}${String(index + 1).padStart(4, "0")}.${ext}`;
+
+const clamp = (v: number, min: number, max: number) =>
+  Math.min(Math.max(v, min), max);
+
+const reducedMotion =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const ScrollyVideoSection = ({
+  manifestUrl,
+  basePath,
+  pxPerFrame = 9,
+}: ScrollyVideoSectionProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [track, setTrack] = useState(0);
-  const [fallback, setFallback] = useState(false);
-  const [seekableReady, setSeekableReady] = useState(false);
-  const seekableReadyRef = useRef(false);
-  const cleanupRef = useRef<(() => void) | null>(null);
-
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const frameCache = useRef(new Map<number, HTMLImageElement>());
+  const lastDrawnRef = useRef(-1);
   const rafId = useRef(0);
+  const manifestRef = useRef<{ count: number; ext: string } | null>(null);
 
-  const reducedMotion = typeof window !== "undefined"
-    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const [track, setTrack] = useState(0);
+  const [error, setError] = useState(false);
+  const [manifest, setManifest] = useState<{ count: number; ext: string } | null>(null);
 
-  const handleMetadata = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || !video.duration || !isFinite(video.duration)) {
-      setFallback(true);
-      return;
+  // Load a single frame into cache, returns promise
+  const loadFrame = useCallback(
+    (index: number, ext: string): Promise<HTMLImageElement> => {
+      const cache = frameCache.current;
+      if (cache.has(index)) return Promise.resolve(cache.get(index)!);
+
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          cache.set(index, img);
+          resolve(img);
+        };
+        img.onerror = reject;
+        img.src = framePath(basePath, index, ext);
+      });
+    },
+    [basePath]
+  );
+
+  // Draw a frame to canvas
+  const drawFrame = useCallback((index: number) => {
+    const canvas = canvasRef.current;
+    const img = frameCache.current.get(index);
+    if (!canvas || !img) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Match canvas resolution to image on first draw or size change
+    if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
     }
-    console.log("[scrolly] metadata duration", video.duration);
-    setTrack(video.duration * pxPerSecond);
 
-    const onReady = () => setSeekableReady(true);
-    video.addEventListener("loadeddata", onReady, { once: true });
-    video.addEventListener("canplay", onReady, { once: true });
-
-    cleanupRef.current = () => {
-      video.removeEventListener("loadeddata", onReady);
-      video.removeEventListener("canplay", onReady);
-    };
-  }, [pxPerSecond]);
-
-  // Cleanup listeners on unmount
-  useEffect(() => {
-    return () => { cleanupRef.current?.(); };
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    lastDrawnRef.current = index;
   }, []);
 
-  // Unlock seeking once video is ready
+  // 1. Fetch manifest
   useEffect(() => {
-    if (!seekableReady) return;
-    seekableReadyRef.current = true;
-    const video = videoRef.current;
-    if (!video) return;
+    fetch(manifestUrl)
+      .then((r) => r.json())
+      .then((data: { count: number; ext: string }) => {
+        manifestRef.current = data;
+        setManifest(data);
+        setTrack(data.count * pxPerFrame);
+      })
+      .catch(() => setError(true));
+  }, [manifestUrl, pxPerFrame]);
 
-    console.log("[scrolly] seekableReady — unlocking");
-    video.muted = true;
-    video.playsInline = true;
-    video.play().then(() => {
-      video.pause();
-      video.currentTime = 0;
-    }).catch(() => {});
-  }, [seekableReady]);
-
+  // 2. Preload first 10 frames
   useEffect(() => {
-    if (reducedMotion || fallback || track === 0) return;
+    if (!manifest) return;
+    const count = Math.min(manifest.count, 10);
+    for (let i = 0; i < count; i++) {
+      loadFrame(i, manifest.ext);
+    }
+    // Draw frame 0 once loaded
+    loadFrame(0, manifest.ext).then(() => drawFrame(0));
+  }, [manifest, loadFrame, drawFrame]);
+
+  // 3. RAF loop
+  useEffect(() => {
+    if (reducedMotion || error || track === 0 || !manifest) return;
 
     const wrapper = wrapperRef.current;
-    const video = videoRef.current;
-    if (!wrapper || !video) return;
+    if (!wrapper) return;
 
-    console.log("[scrolly] mounted");
-    let frameCount = 0;
+    const { count, ext } = manifest;
 
     const tick = () => {
-      if (!seekableReadyRef.current || video.readyState < 2) {
-        rafId.current = requestAnimationFrame(tick);
-        return;
-      }
-
-      const duration = video.duration;
-      if (!duration || !isFinite(duration) || duration === 0) {
-        rafId.current = requestAnimationFrame(tick);
-        return;
-      }
-
       const rect = wrapper.getBoundingClientRect();
       const vh = window.innerHeight;
 
@@ -91,35 +113,57 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       }
 
       const total = rect.height - vh;
-      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+      const scrolled = clamp(-rect.top, 0, total);
       const progress = total > 0 ? scrolled / total : 0;
-      const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.001);
+      const index = Math.round(progress * (count - 1));
 
-      if (Math.abs(video.currentTime - targetTime) > 0.03) {
-        video.currentTime = targetTime;
+      if (index !== lastDrawnRef.current) {
+        const cached = frameCache.current.get(index);
+        if (cached) {
+          drawFrame(index);
+        } else {
+          loadFrame(index, ext).then(() => drawFrame(index));
+        }
       }
 
-      frameCount++;
-      if (frameCount % 30 === 0) {
-        console.log("[scrolly]", { progress, targetTime, currentTime: video.currentTime });
+      // Progressive preload: +/- 5 frames around current
+      for (let d = 1; d <= 5; d++) {
+        const ahead = index + d;
+        const behind = index - d;
+        if (ahead < count && !frameCache.current.has(ahead)) {
+          loadFrame(ahead, ext);
+        }
+        if (behind >= 0 && !frameCache.current.has(behind)) {
+          loadFrame(behind, ext);
+        }
       }
 
       rafId.current = requestAnimationFrame(tick);
     };
 
     rafId.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId.current);
+  }, [track, error, manifest, loadFrame, drawFrame]);
 
-    return () => {
-      cancelAnimationFrame(rafId.current);
-    };
-  }, [track, fallback, reducedMotion]);
-
-  if (reducedMotion || fallback) {
+  // Reduced motion: static first frame
+  if (reducedMotion) {
     return (
       <div className="bg-[#1E1E1E]">
-        <video src={src} controls muted playsInline preload="auto" className="w-full" />
+        {manifest ? (
+          <img
+            src={framePath(basePath, 0, manifest.ext)}
+            alt="ABB E-mobility product sequence"
+            className="w-full"
+          />
+        ) : (
+          <div className="h-screen" />
+        )}
       </div>
     );
+  }
+
+  if (error) {
+    return <div className="bg-[#1E1E1E] h-screen" />;
   }
 
   return (
@@ -130,15 +174,9 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       className="relative bg-[#1E1E1E]"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center">
-        <video
-          ref={videoRef}
-          data-scrolly="video"
-          src={src}
-          muted
-          playsInline
-          preload="auto"
-          onLoadedMetadata={handleMetadata}
-          onError={() => setFallback(true)}
+        <canvas
+          ref={canvasRef}
+          data-scrolly="canvas"
           className="h-full w-full object-contain"
         />
       </div>
