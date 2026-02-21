@@ -1,55 +1,76 @@
 
 
-# Execution Block — Editorial Manifesto Redesign
+# Quick Refinement Pass — 6 Changes
 
-Single file edit: `src/pages/CaseABB.tsx`, lines 211-227.
+Two files modified: `src/components/Layout.tsx` and `src/pages/CaseABB.tsx`. Two new image assets copied into the project.
 
 ---
 
-## What Changes
+## 1. Header: Burger + Name Always Visible
 
-Replace the six-line bullet list (lines 211-227) with four stacked manifesto blocks using the content specified.
+**File: `src/components/Layout.tsx`**
 
-## New Structure
+- Replace logo text "Willworkforkarma" with "Henrik Lehtikangas" (keep `font-heading`)
+- Increase burger icon from `size={24}` to `size={40}` and enlarge the tap target with padding (`p-2`)
+- Header stays `absolute` with `z-40` — always visible, no scroll-hide logic exists so no changes needed there
 
-```text
-BUILT
-The modular digital foundation
+## 2. Execution: Double Spacing Around Manifesto Block
 
-ESTABLISHED
-A scalable component system
+**File: `src/pages/CaseABB.tsx`**
 
-ALIGNED
-Product, interface and visual language under one logic
+- Line 211: Change `mt-10` to `mt-20` on the manifesto wrapper (doubles the gap after "...scaling them globally.")
+- Line 230: Change `mt-12` to `mt-24` on "Over two years..." paragraph (doubles the gap after the last manifesto item)
 
-SET
-Global standards for imagery and expression
-```
+## 3. Manifesto Keywords in Highlight Color
 
-## Implementation
+**File: `src/pages/CaseABB.tsx`**
 
-Replace lines 211-227 with a single container div:
+- Lines 213, 217, 221, 225: Change `text-white` to `text-[#ECA9CC]` on the four keyword paragraphs (BUILT, ESTABLISHED, ALIGNED, SET)
+- Descriptions remain white (inherited)
+- Left vertical line unchanged
 
-- Outer wrapper: `border-l border-[#ECA9CC]/50 pl-6 md:pl-8 space-y-12 md:space-y-16 mt-10`
-  - The `border-l` + pink at 50% opacity provides the subtle vertical structural line
-- Each of the four blocks: `space-y-2`
-  - Top word: `<p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">BUILT</p>`
-  - Description: `<p>The modular digital foundation</p>` (inherits `BODY_TEXT` from parent wrapper)
+## 4. Gallery: 5 Tiles + No Cropping
 
-## Styling Details
+**File: `src/pages/CaseABB.tsx`**
 
-| Element | Classes |
-|---------|---------|
-| Keyword (BUILT etc.) | `font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white` |
-| Description line | Inherited from parent `BODY_TEXT` (text-[1.25rem] leading-[1.65]) |
-| Block spacing | `space-y-12 md:space-y-16` between blocks |
-| Inner spacing | `space-y-2` within each block |
-| Left line | `border-l border-[#ECA9CC]/50 pl-6 md:pl-8` on outer wrapper |
+- Copy uploaded images into the project:
+  - `user-uploads://ABB-media_11.png` to `src/assets/ABB-media_11.png`
+  - `user-uploads://ABB-media_4-2.webp` to `src/assets/ABB-media_4-2.webp`
+- Add two new entries to `galleryItems` array (total 5 tiles) using the new images
+- Replace the `columns-2 md:columns-3` layout with a curated CSS Grid:
+  - 1 dominant large tile (spanning 2 columns) + 4 supporting tiles with varied aspect ratios
+  - Layout: `grid grid-cols-2 md:grid-cols-3 gap-4` with the first item spanning `md:col-span-2 md:row-span-2`
+- Change all gallery images from `object-cover` to `object-contain`
+- Add `bg-black/20 p-3` to each tile for subtle dark background and internal padding
+- Keep lightbox click behavior intact
 
-## What Does NOT Change
+## 5. Media Swap: Replace Wide Dash
 
-- "System in practice" sub-heading (line 200)
-- Preceding paragraph about A400 (line 196)
-- Following paragraphs about team continuity (lines 229-235)
-- Gallery, Outcome, CTA, or any other section
+**File: `src/pages/CaseABB.tsx`**
+
+- Change the import on line 12 from `ABB-visuals-wide-dash.avif` to `ABB-media_11.png` (the uploaded configurator screenshot)
+- The full-bleed placement and sizing at line 260-266 stays the same
+
+## 6. Fix Bad Line Break in Outcome
+
+**File: `src/pages/CaseABB.tsx`**
+
+- Line 281: Increase the container max-width from `max-w-[42rem]` to `max-w-[46rem]` to give the sentence more room
+- Add `word-break: keep-all` equivalent via className `break-keep` to prevent mid-word breaks
+- Use non-breaking space `\u00A0` between "its" and "ambition" to prevent orphan
+
+---
+
+## Technical Summary
+
+| Change | File | Lines |
+|--------|------|-------|
+| Header name + burger size | Layout.tsx | 9-18 |
+| Manifesto top spacing | CaseABB.tsx | 211 |
+| Manifesto bottom spacing | CaseABB.tsx | 230 |
+| Keywords to highlight color | CaseABB.tsx | 213, 217, 221, 225 |
+| Gallery 5 tiles + object-contain | CaseABB.tsx | 31-35, 240-257 |
+| Wide dash swap | CaseABB.tsx | 12, 260-266 |
+| Outcome text wrap fix | CaseABB.tsx | 281-285 |
+| New assets copied | src/assets/ | 2 files |
 
