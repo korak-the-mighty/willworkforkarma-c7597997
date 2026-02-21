@@ -77,7 +77,7 @@ const CaseABB = () => {
         {/* ═══════════════ CONTEXT ═══════════════ */}
         <section className="py-24 md:py-32 overflow-hidden">
           <div className="grid grid-cols-12 gap-8 items-start">
-            <div className="col-span-12 md:col-span-5 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-0">
+            <div className="col-span-12 md:col-span-6 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-4">
               <MicroLabel>Context</MicroLabel>
               <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
                 <p>ABB E&#8209;mobility operated inside ABB corporate.</p>
@@ -89,13 +89,13 @@ const CaseABB = () => {
                   But there was no independent brand or digital system capable of
                   expressing that shift.
                 </p>
-                <p>
+                <p className="pb-16 md:pb-24">
                   A future-facing product line had no independent brand
                   container.
                 </p>
               </div>
             </div>
-            <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-20">
+            <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] aspect-[3/2] overflow-hidden">
                 <img
                   src={contextImg}
