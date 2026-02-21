@@ -7,14 +7,14 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
   <header className="absolute top-0 left-0 right-0 z-40">
     <div className="flex items-center justify-between px-6 py-6">
       <Link to="/" className="font-heading text-lg tracking-tight">
-        Willworkforkarma
+        Henrik Lehtikangas
       </Link>
       <button
         onClick={onMenuOpen}
-        className="text-foreground hover:text-muted-foreground transition-colors"
+        className="p-2 text-foreground hover:text-muted-foreground transition-colors"
         aria-label="Open menu"
       >
-        <Menu size={24} />
+        <Menu size={40} />
       </button>
     </div>
   </header>

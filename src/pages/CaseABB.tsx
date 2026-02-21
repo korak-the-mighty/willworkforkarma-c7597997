@@ -9,7 +9,7 @@ import tensionVideo from "@/assets/ABB-c50-launch.mp4";
 import galleryImg11 from "@/assets/ABB_E-mobility_11.png";
 import galleryImg3 from "@/assets/ABB_E-mobility_3.png";
 import galleryImg13 from "@/assets/ABB_E-mobility_13.png";
-import wideDash from "@/assets/ABB-visuals-wide-dash.avif";
+import wideDash from "@/assets/ABB-media_11.png";
 import decisionImg from "@/assets/ABB-media_4.webp";
 
 /* ── Helpers ── */
@@ -28,10 +28,15 @@ const MEDIA_HOVER =
 const BODY_TEXT = "text-[1.25rem] leading-[1.65]";
 
 /* ── Gallery data ── */
+import galleryImg11b from "@/assets/ABB-media_11.png";
+import galleryImg4b from "@/assets/ABB-media_4-2.webp";
+
 const galleryItems = [
-  { src: galleryImg11, alt: "ABB E-mobility interface", aspect: "aspect-[4/5]" },
-  { src: galleryImg3, alt: "ABB E-mobility charger", aspect: "aspect-[3/2]", offsetClass: "md:mt-8" },
-  { src: galleryImg13, alt: "ABB E-mobility components", aspect: "aspect-[4/3]" },
+  { src: galleryImg11, alt: "ABB E-mobility interface", span: "md:col-span-2 md:row-span-2" },
+  { src: galleryImg3, alt: "ABB E-mobility charger" },
+  { src: galleryImg13, alt: "ABB E-mobility components" },
+  { src: galleryImg11b, alt: "ABB E-mobility configurator" },
+  { src: galleryImg4b, alt: "ABB E-mobility detail" },
 ];
 
 /* ── Page ── */
@@ -208,26 +213,26 @@ const CaseABB = () => {
                 them globally.
               </p>
 
-              <div className="border-l border-[#ECA9CC]/50 pl-6 md:pl-8 space-y-12 md:space-y-16 mt-10">
+              <div className="border-l border-[#ECA9CC]/50 pl-6 md:pl-8 space-y-12 md:space-y-16 mt-20">
                 <div className="space-y-2">
-                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">BUILT</p>
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-[#ECA9CC]">BUILT</p>
                   <p>The modular digital foundation</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">ESTABLISHED</p>
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-[#ECA9CC]">ESTABLISHED</p>
                   <p>A scalable component system</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">ALIGNED</p>
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-[#ECA9CC]">ALIGNED</p>
                   <p>Product, interface and visual language under one logic</p>
                 </div>
                 <div className="space-y-2">
-                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">SET</p>
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-[#ECA9CC]">SET</p>
                   <p>Global standards for imagery and expression</p>
                 </div>
               </div>
 
-              <p className="mt-12">
+              <p className="mt-24">
                 Over two years, teams evolved and roles shifted.
               </p>
               <p className="mt-4">
@@ -239,17 +244,17 @@ const CaseABB = () => {
 
           {/* Gallery */}
           <div className="mt-16 px-6 md:px-8 max-w-4xl mx-auto">
-            <div className="columns-2 md:columns-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {galleryItems.map((item, i) => (
                 <div
                   key={i}
-                  className={`break-inside-avoid mb-4 overflow-hidden cursor-pointer ${item.offsetClass || ""}`}
+                  className={`bg-black/20 p-3 overflow-hidden cursor-pointer ${item.span || ""}`}
                   onClick={() => setLightboxSrc(item.src)}
                 >
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className={`w-full h-auto object-cover ${item.aspect} ${MEDIA_HOVER}`}
+                    className={`w-full h-full object-contain ${MEDIA_HOVER}`}
                   />
                 </div>
               ))}
@@ -278,10 +283,9 @@ const CaseABB = () => {
             </p>
           </div>
 
-          <div className={`max-w-[42rem] mx-auto text-center px-6 space-y-2 py-12 ${BODY_TEXT}`}>
+          <div className={`max-w-[46rem] mx-auto text-center px-6 space-y-2 py-12 break-keep ${BODY_TEXT}`}>
             <p>
-              ABB E&#8209;mobility gained a system capable of expressing its
-              ambition.
+              ABB E&#8209;mobility gained a system capable of expressing its{"\u00A0"}ambition.
             </p>
             <p>
               The architecture extended beyond marketing into product
