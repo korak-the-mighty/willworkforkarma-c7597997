@@ -25,7 +25,6 @@ const ScrollyVideoSection = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameCache = useRef(new Map<number, HTMLImageElement>());
   const lastDrawnRef = useRef(-1);
-  const prevProgressRef = useRef(0);
   const rafId = useRef(0);
   const manifestRef = useRef<{ count: number; ext: string } | null>(null);
 
@@ -107,26 +106,18 @@ const ScrollyVideoSection = ({
     const { count, ext } = manifest;
 
     const tick = () => {
-      const wrapperTop = wrapper.offsetTop;
-      const total = wrapper.offsetHeight - window.innerHeight;
-      const scrolled = clamp(window.scrollY - wrapperTop, 0, total);
+      const rect = wrapper.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < -200 || rect.top > vh + 200) {
+        rafId.current = requestAnimationFrame(tick);
+        return;
+      }
+      const total = rect.height - vh;
+      const scrolled = clamp(-rect.top, 0, total);
       const progress = total > 0 ? scrolled / total : 0;
 
-      const floatIndex = progress * (count - 1);
-      let index = Math.floor(floatIndex + 1e-6);
+      let index = Math.floor(progress * (count - 1) + 1e-6);
       index = clamp(index, 0, count - 1);
-
-      // Hysteresis: ignore micro-changes within ±0.0005 to prevent N↔N+1 bouncing
-      const prev = prevProgressRef.current;
-      if (progress >= prev - 0.0005 && progress <= prev + 0.0005) {
-        // Within noise band — lock direction
-        if (progress >= prev) {
-          index = Math.max(index, lastDrawnRef.current);
-        } else {
-          index = Math.min(index, lastDrawnRef.current);
-        }
-      }
-      prevProgressRef.current = progress;
 
       if (index !== lastDrawnRef.current) {
         const cached = frameCache.current.get(index);
