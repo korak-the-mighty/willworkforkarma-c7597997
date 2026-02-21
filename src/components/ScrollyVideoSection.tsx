@@ -60,11 +60,19 @@ const ScrollyVideoSection = ({
     if (!canvas || !img) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    if (canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight) {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+    const dpr = window.devicePixelRatio || 1;
+    const cw = Math.floor(window.innerWidth * dpr);
+    const ch = Math.floor(window.innerHeight * dpr);
+    if (canvas.width !== cw || canvas.height !== ch) {
+      canvas.width = cw;
+      canvas.height = ch;
     }
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const scale = Math.max(canvas.width / iw, canvas.height / ih);
+    const dw = iw * scale, dh = ih * scale;
+    const dx = (canvas.width - dw) / 2, dy = (canvas.height - dh) / 2;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, dx, dy, dw, dh);
     lastDrawnRef.current = index;
   }, []);
 
@@ -107,7 +115,8 @@ const ScrollyVideoSection = ({
       const total = rect.height - vh;
       const scrolled = clamp(-rect.top, 0, total);
       const progress = total > 0 ? scrolled / total : 0;
-      const index = Math.round(progress * (count - 1));
+      const raw = progress <= 0.001 ? 0 : Math.floor(progress * (count - 1));
+      const index = clamp(raw, 0, count - 1);
 
       if (index !== lastDrawnRef.current) {
         const cached = frameCache.current.get(index);
@@ -160,8 +169,10 @@ const ScrollyVideoSection = ({
       data-scrolly="wrapper"
       className="relative bg-[#1E1E1E]"
     >
-      <div className="sticky top-0 h-screen flex items-center justify-center">
-        <canvas ref={canvasRef} data-scrolly="canvas" className="h-full w-full object-contain" />
+      <div className="sticky top-0 h-screen">
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[#1E1E1E]">
+          <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
+        </div>
       </div>
     </div>
   );
