@@ -245,7 +245,10 @@ const CaseABB = () => {
 
           {/* Scrolly Video Highlight */}
           <div className="mt-24 md:mt-36">
-            <ScrollyVideoSection src="/videos/ABB-E-mobility-mobilefly-short.mp4" />
+            <ScrollyVideoSection
+              manifestUrl="/videos/abb-mobilefly-frames/manifest.json"
+              basePath="/videos/abb-mobilefly-frames/"
+            />
           </div>
 
           {/* Gallery */}
