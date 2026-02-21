@@ -1,33 +1,27 @@
 
-# Fix Scrolly Video — Continuous RAF Loop + Micro-Fixes
+# Fix Scrolly Flapping — Remove IntersectionObserver, Use Continuous RAF
 
 One file changed: `src/components/ScrollyVideoSection.tsx`
 
 ---
 
-## Changes (lines 31-67)
+## Problem
 
-Replace the scroll-event-based effect with a continuous RAF loop, plus the two micro-fixes:
+The `IntersectionObserver` is flapping `active true/false` rapidly on the published site, which kills the RAF loop before it can update `video.currentTime`. The video stays frozen.
 
-### 1. Continuous RAF loop (no scroll listener)
+## Solution
 
-Remove `window.addEventListener("scroll", ...)`. Instead, when `IntersectionObserver` sets `isVisible = true`, kick off a self-scheduling `requestAnimationFrame` tick that polls `getBoundingClientRect()` every frame. When visibility is lost, the loop stops.
-
-### 2. Micro-fix: guard duration each tick
-
-Do not store `const duration = video.duration` outside the loop. Instead, read it inside `tick()` and bail early if it's `NaN`, `0`, or non-finite.
-
-### 3. Micro-fix: clamp targetTime
-
-Before setting `video.currentTime`, clamp `targetTime` to `[0, duration - 0.001]` to avoid seeking past the last frame.
-
-### 4. Temporary debug logs
-
-Add three `console.log` statements for production verification (to be removed afterward).
+Remove `IntersectionObserver` entirely. Start a single continuous RAF loop on effect mount that never stops until unmount. Inside `tick()`, use a lightweight "near viewport" check to skip `currentTime` updates when the wrapper is far away, but keep the loop alive regardless.
 
 ---
 
-## Resulting effect code (lines 31-67)
+## Changes
+
+### 1. Remove `isVisible` ref (line 13)
+
+No longer needed -- the RAF loop runs unconditionally.
+
+### 2. Replace effect body (lines 32-81)
 
 ```typescript
 useEffect(() => {
@@ -38,17 +32,26 @@ useEffect(() => {
   if (!wrapper || !video) return;
 
   console.log("[scrolly] mounted");
+  let frameCount = 0;
 
   const tick = () => {
     const duration = video.duration;
     if (!duration || !isFinite(duration) || duration === 0) {
-      if (isVisible.current) rafId.current = requestAnimationFrame(tick);
+      rafId.current = requestAnimationFrame(tick);
       return;
     }
 
     const rect = wrapper.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-    const total = rect.height - viewportHeight;
+    const vh = window.innerHeight;
+
+    // Skip updates when far away (but keep RAF alive)
+    const near = rect.bottom > -200 && rect.top < vh + 200;
+    if (!near) {
+      rafId.current = requestAnimationFrame(tick);
+      return;
+    }
+
+    const total = rect.height - vh;
     const scrolled = Math.min(Math.max(-rect.top, 0), total);
     const progress = total > 0 ? scrolled / total : 0;
     const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.001);
@@ -57,36 +60,27 @@ useEffect(() => {
       video.currentTime = targetTime;
     }
 
-    if (isVisible.current) {
-      rafId.current = requestAnimationFrame(tick);
+    // Low-frequency debug log (~every 30 frames when near)
+    frameCount++;
+    if (frameCount % 30 === 0) {
+      console.log("[scrolly]", { progress, targetTime, currentTime: video.currentTime });
     }
+
+    rafId.current = requestAnimationFrame(tick);
   };
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      const wasVisible = isVisible.current;
-      isVisible.current = entry.isIntersecting;
-      console.log("[scrolly] active", entry.isIntersecting);
-      if (entry.isIntersecting && !wasVisible) {
-        rafId.current = requestAnimationFrame(tick);
-      }
-    },
-    { threshold: 0 }
-  );
-  observer.observe(wrapper);
+  rafId.current = requestAnimationFrame(tick);
 
   return () => {
-    observer.disconnect();
     cancelAnimationFrame(rafId.current);
   };
 }, [track, fallback, reducedMotion]);
 ```
 
-Also add to `handleMetadata` (line 27):
+### 3. Add debug data attributes (lines 93, 98)
 
-```typescript
-console.log("[scrolly] metadata duration", video.duration);
-```
+- Wrapper div: add `data-scrolly="wrapper"`
+- Video element: add `data-scrolly="video"`
 
 ---
 
@@ -94,10 +88,10 @@ console.log("[scrolly] metadata duration", video.duration);
 
 | Before | After |
 |--------|-------|
-| `window.addEventListener("scroll", ...)` | No scroll listener |
-| RAF fires once per scroll event | RAF loops continuously while in view |
-| `duration` captured once outside loop | `duration` read each tick, guarded for NaN/0 |
-| `targetTime` unclamped | Clamped to `[0, duration - 0.001]` |
-| No debug logs | 3 temporary `console.log` statements |
+| IntersectionObserver gates RAF start/stop | No IntersectionObserver |
+| RAF stops when not intersecting | RAF runs continuously from mount to unmount |
+| Flapping kills the loop | "Near viewport" gate skips updates but keeps loop alive |
+| No debug attributes | `data-scrolly` on wrapper and video |
+| No frame-rate debug log | Log progress/targetTime/currentTime every ~30 frames |
 
-Everything else unchanged: refs, asset path, bounding-rect math, 0.03s threshold, reduced-motion fallback, markup, styling.
+Everything else unchanged: refs, asset path, bounding-rect math, duration guard, 0.03s threshold, clamp to `[0, duration-0.001]`, reduced-motion fallback, markup, styling.
