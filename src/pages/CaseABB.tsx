@@ -208,22 +208,23 @@ const CaseABB = () => {
                 them globally.
               </p>
 
-              <div className="space-y-4 mt-10">
-                <p>– Built a modular digital architecture</p>
-                <p>– Created a reusable component library</p>
-                <p>
-                  – Defined visual and interaction logic aligned with the
-                  positioning
-                </p>
-                <p>
-                  – Defined and enforced guidelines for product and use-case
-                  imagery to ensure visual consistency across markets
-                </p>
-                <p>– Recruited and led the core creative team</p>
-                <p>
-                  – Served as the constant bridge between leadership and
-                  production
-                </p>
+              <div className="border-l border-[#ECA9CC]/50 pl-6 md:pl-8 space-y-12 md:space-y-16 mt-10">
+                <div className="space-y-2">
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">BUILT</p>
+                  <p>The modular digital foundation</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">ESTABLISHED</p>
+                  <p>A scalable component system</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">ALIGNED</p>
+                  <p>Product, interface and visual language under one logic</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="font-heading text-lg md:text-xl uppercase tracking-[0.04em] text-white">SET</p>
+                  <p>Global standards for imagery and expression</p>
+                </div>
               </div>
 
               <p className="mt-12">
