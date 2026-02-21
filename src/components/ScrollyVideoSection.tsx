@@ -10,7 +10,7 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
   const videoRef = useRef<HTMLVideoElement>(null);
   const [track, setTrack] = useState(0);
   const [fallback, setFallback] = useState(false);
-  const isVisible = useRef(false);
+  
   const rafId = useRef(0);
 
   // Detect prefers-reduced-motion
@@ -37,17 +37,26 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
     if (!wrapper || !video) return;
 
     console.log("[scrolly] mounted");
+    let frameCount = 0;
 
     const tick = () => {
       const duration = video.duration;
       if (!duration || !isFinite(duration) || duration === 0) {
-        if (isVisible.current) rafId.current = requestAnimationFrame(tick);
+        rafId.current = requestAnimationFrame(tick);
         return;
       }
 
       const rect = wrapper.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const total = rect.height - viewportHeight;
+      const vh = window.innerHeight;
+
+      // Skip updates when far away (but keep RAF alive)
+      const near = rect.bottom > -200 && rect.top < vh + 200;
+      if (!near) {
+        rafId.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const total = rect.height - vh;
       const scrolled = Math.min(Math.max(-rect.top, 0), total);
       const progress = total > 0 ? scrolled / total : 0;
       const targetTime = Math.min(Math.max(progress * duration, 0), duration - 0.001);
@@ -56,26 +65,18 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
         video.currentTime = targetTime;
       }
 
-      if (isVisible.current) {
-        rafId.current = requestAnimationFrame(tick);
+      // Low-frequency debug log (~every 30 frames when near)
+      frameCount++;
+      if (frameCount % 30 === 0) {
+        console.log("[scrolly]", { progress, targetTime, currentTime: video.currentTime });
       }
+
+      rafId.current = requestAnimationFrame(tick);
     };
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const wasVisible = isVisible.current;
-        isVisible.current = entry.isIntersecting;
-        console.log("[scrolly] active", entry.isIntersecting);
-        if (entry.isIntersecting && !wasVisible) {
-          rafId.current = requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0 }
-    );
-    observer.observe(wrapper);
+    rafId.current = requestAnimationFrame(tick);
 
     return () => {
-      observer.disconnect();
       cancelAnimationFrame(rafId.current);
     };
   }, [track, fallback, reducedMotion]);
@@ -92,11 +93,13 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
     <div
       ref={wrapperRef}
       style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
+      data-scrolly="wrapper"
       className="relative bg-[#1E1E1E]"
     >
       <div className="sticky top-0 h-screen flex items-center justify-center">
         <video
           ref={videoRef}
+          data-scrolly="video"
           src={src}
           muted
           playsInline
