@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import Layout from "@/components/Layout";
+import ScrollyVideoSection from "@/components/ScrollyVideoSection";
 
 import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
 import contextImg from "@/assets/ABB-emobility-context.webp";
@@ -240,6 +241,11 @@ const CaseABB = () => {
                 continuity.
               </p>
             </div>
+          </div>
+
+          {/* Scrolly Video Highlight */}
+          <div className="mt-24 md:mt-36">
+            <ScrollyVideoSection src="/videos/ABB-E-mobility-mobilefly-short.mp4" />
           </div>
 
           {/* Gallery */}
