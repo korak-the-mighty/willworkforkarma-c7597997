@@ -41,8 +41,10 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
       if (!isVisible.current) return;
       rafId.current = requestAnimationFrame(() => {
         const rect = wrapper.getBoundingClientRect();
-        const scrolled = -rect.top;
-        const progress = Math.min(Math.max(scrolled / track, 0), 1);
+        const viewportHeight = window.innerHeight;
+        const total = rect.height - viewportHeight;
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const progress = total > 0 ? scrolled / total : 0;
         const targetTime = progress * duration;
         if (Math.abs(video.currentTime - targetTime) > 0.03) {
           video.currentTime = targetTime;
