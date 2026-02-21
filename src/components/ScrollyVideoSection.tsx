@@ -27,6 +27,21 @@ const ScrollyVideoSection = ({ src, pxPerSecond = 900 }: ScrollyVideoSectionProp
     video.currentTime = 0;
     console.log("[scrolly] metadata duration", video.duration);
     setTrack(video.duration * pxPerSecond);
+
+    // Unlock seeking in browsers that require activation
+    video.muted = true;
+    video.playsInline = true;
+    const unlock = video.play();
+    if (unlock !== undefined) {
+      unlock.then(() => {
+        video.pause();
+        const t = Math.min(0.05, Math.max(0, video.duration - 0.05));
+        video.currentTime = t;
+        requestAnimationFrame(() => { video.currentTime = 0; });
+      }).catch(() => {
+        // ignore - not all browsers need this
+      });
+    }
   }, [pxPerSecond]);
 
   useEffect(() => {
