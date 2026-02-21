@@ -113,7 +113,7 @@ const CaseABB = () => {
             <MicroLabel>Tension</MicroLabel>
           </div>
           <div className="grid grid-cols-12 gap-8 items-start">
-            <div className="col-span-12 md:col-span-6 md:mt-20 order-2 md:order-1">
+            <div className="col-span-12 md:col-span-6 md:mt-48 order-2 md:order-1">
               <div className="md:mr-auto md:w-[50vw] aspect-[3/2] overflow-hidden">
                 <video
                   src={tensionVideo}
@@ -125,7 +125,7 @@ const CaseABB = () => {
                 />
               </div>
             </div>
-            <div className="col-span-12 md:col-span-4 md:col-start-8 px-6 md:px-0 order-1 md:order-2">
+            <div className="col-span-12 md:col-span-5 md:col-start-8 px-6 md:px-0 order-1 md:order-2">
               <div className="hidden md:block">
                 <MicroLabel>Tension</MicroLabel>
               </div>
@@ -141,7 +141,7 @@ const CaseABB = () => {
                   <p>No modular foundation.</p>
                   <p>No independent digital presence.</p>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 pb-16 md:pb-24">
                   <p>Innovation existed.</p>
                   <p>The system to show it didn't.</p>
                 </div>
@@ -178,7 +178,7 @@ const CaseABB = () => {
             </div>
           </div>
 
-          <div className={`${FULL_BLEED} mt-16 overflow-hidden`}>
+          <div className={`${FULL_BLEED} mt-32 md:mt-40 overflow-hidden`}>
             <img
               src={decisionImg}
               alt="ABB E-mobility brand system"
