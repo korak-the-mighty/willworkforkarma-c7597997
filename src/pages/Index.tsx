@@ -65,8 +65,8 @@ const Index = () => (
 
     {/* ── 2. HERO PROJECT: ABB ── */}
     <Link to={`/work/${abb.slug}`} className="group block relative w-full">
-      <div className="relative min-h-[70vh] bg-muted overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 transition-colors duration-300 group-hover:bg-black/20" />
+      <div className="relative min-h-[70vh] overflow-hidden">
+        <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
           <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
             {abb.title}
