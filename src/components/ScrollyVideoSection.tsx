@@ -16,6 +16,10 @@ const reducedMotion =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const MOBILE_BP = "(max-width: 768px)";
+const MOBILE_MANIFEST = "/videos/abb-mobilefly-frames-mobile/manifest.json";
+const MOBILE_BASE = "/videos/abb-mobilefly-frames-mobile/";
+
 const ScrollyVideoSection = ({
   manifestUrl,
   basePath,
@@ -28,10 +32,25 @@ const ScrollyVideoSection = ({
   const rafId = useRef(0);
   const manifestRef = useRef<{ count: number; ext: string } | null>(null);
 
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia(MOBILE_BP).matches : false
+  );
+
   const [track, setTrack] = useState(0);
   const [error, setError] = useState(false);
   const [frameMissing, setFrameMissing] = useState<string | null>(null);
   const [manifest, setManifest] = useState<{ count: number; ext: string } | null>(null);
+
+  // Listen for viewport changes (resize / orientation)
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_BP);
+    const onChange = () => setIsMobile(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  const activeManifestUrl = isMobile ? MOBILE_MANIFEST : manifestUrl;
+  const activeBasePath = isMobile ? MOBILE_BASE : basePath;
 
   const loadFrame = useCallback(
     (index: number, ext: string): Promise<HTMLImageElement> => {
@@ -39,7 +58,7 @@ const ScrollyVideoSection = ({
       if (cache.has(index)) return Promise.resolve(cache.get(index)!);
       return new Promise((resolve, reject) => {
         const img = new Image();
-        const url = framePath(basePath, index, ext);
+        const url = framePath(activeBasePath, index, ext);
         img.onload = () => {
           cache.set(index, img);
           resolve(img);
@@ -51,7 +70,7 @@ const ScrollyVideoSection = ({
         img.src = url;
       });
     },
-    [basePath]
+    [activeBasePath]
   );
 
   const drawFrame = useCallback((index: number) => {
@@ -76,17 +95,37 @@ const ScrollyVideoSection = ({
     lastDrawnRef.current = index;
   }, []);
 
-  // Fetch manifest
+  // Fetch manifest — fall back to desktop if mobile fails
   useEffect(() => {
-    fetch(manifestUrl)
-      .then((r) => r.json())
+    frameCache.current.clear();
+    lastDrawnRef.current = -1;
+    setManifest(null);
+    setError(false);
+    setFrameMissing(null);
+
+    fetch(activeManifestUrl)
+      .then((r) => { if (!r.ok) throw new Error(r.statusText); return r.json(); })
       .then((data: { count: number; ext: string }) => {
         manifestRef.current = data;
         setManifest(data);
         setTrack(data.count * pxPerFrame);
       })
-      .catch(() => setError(true));
-  }, [manifestUrl, pxPerFrame]);
+      .catch(() => {
+        if (activeManifestUrl !== manifestUrl) {
+          // mobile failed → try desktop
+          fetch(manifestUrl)
+            .then((r) => r.json())
+            .then((data: { count: number; ext: string }) => {
+              manifestRef.current = data;
+              setManifest(data);
+              setTrack(data.count * pxPerFrame);
+            })
+            .catch(() => setError(true));
+        } else {
+          setError(true);
+        }
+      });
+  }, [activeManifestUrl, manifestUrl, pxPerFrame]);
 
   // Draw frame 0 immediately, then eagerly preload ALL frames
   useEffect(() => {
@@ -159,7 +198,7 @@ const ScrollyVideoSection = ({
     return (
       <div className="bg-[#1E1E1E]">
         {manifest ? (
-          <img src={framePath(basePath, 0, manifest.ext)} alt="ABB E-mobility product sequence" className="w-full" />
+          <img src={framePath(activeBasePath, 0, manifest.ext)} alt="ABB E-mobility product sequence" className="w-full" />
         ) : (
           <div className="h-screen" />
         )}
