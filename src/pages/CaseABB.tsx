@@ -252,21 +252,40 @@ const CaseABB = () => {
           </div>
 
           {/* Gallery */}
-          <div className="mt-16 px-6 md:px-8 max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {galleryItems.map((item, i) => (
-                <div
-                  key={i}
-                  className={`bg-black/20 p-3 overflow-hidden cursor-pointer ${item.span || ""}`}
-                  onClick={() => setLightboxSrc(item.src)}
-                >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className={`w-full h-full object-contain ${MEDIA_HOVER}`}
-                  />
-                </div>
-              ))}
+          <div className="mt-40 md:mt-56 px-6 md:px-8 max-w-5xl mx-auto">
+            <div className="flex flex-wrap items-start">
+              {galleryItems.map((item, i) => {
+                const styles: React.CSSProperties[] = [
+                  { width: "85%", marginTop: 0, marginLeft: 0, marginRight: "auto" },
+                  { width: "70%", marginTop: "1.5rem", marginLeft: "auto", marginRight: 0 },
+                  { width: "75%", marginTop: "1rem", marginLeft: "5%", marginRight: "auto" },
+                  { width: "80%", marginTop: "2rem", marginLeft: "auto", marginRight: 0 },
+                  { width: "65%", marginTop: "1rem", marginLeft: "10%", marginRight: "auto" },
+                ];
+                const desktopStyles: React.CSSProperties[] = [
+                  { width: "55%", marginTop: 0, marginLeft: 0, marginRight: "auto" },
+                  { width: "38%", marginTop: "2rem", marginLeft: "auto", marginRight: 0, paddingLeft: "3rem" },
+                  { width: "42%", marginTop: "-1rem", marginLeft: "1rem", marginRight: "auto" },
+                  { width: "48%", marginTop: "4rem", marginLeft: "auto", marginRight: 0 },
+                  { width: "36%", marginTop: "-2rem", marginLeft: "8%", marginRight: "auto" },
+                ];
+                const isMd = typeof window !== "undefined" && window.innerWidth >= 768;
+                const s = (isMd ? desktopStyles : styles)[i] || styles[0];
+                return (
+                  <div
+                    key={i}
+                    className="bg-black/20 p-3 overflow-hidden cursor-pointer"
+                    style={s}
+                    onClick={() => setLightboxSrc(item.src)}
+                  >
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className={`w-full h-full object-contain ${MEDIA_HOVER}`}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
