@@ -196,7 +196,7 @@ const ScrollyVideoSection = ({
 
   if (reducedMotion) {
     return (
-      <div className="bg-[#1E1E1E]">
+      <div className="bg-transparent">
         {manifest ? (
           <img src={framePath(activeBasePath, 0, manifest.ext)} alt="ABB E-mobility product sequence" className="w-full" />
         ) : (
@@ -206,11 +206,11 @@ const ScrollyVideoSection = ({
     );
   }
 
-  if (error) return <div className="bg-[#1E1E1E] h-screen" />;
+  if (error) return <div className="bg-transparent h-screen" />;
 
   if (frameMissing) {
     return (
-      <div className="bg-[#1E1E1E] h-screen flex items-center justify-center">
+      <div className="bg-transparent h-screen flex items-center justify-center">
         <p className="text-white/60 text-sm font-mono">Frames missing: {frameMissing}</p>
       </div>
     );
@@ -219,12 +219,12 @@ const ScrollyVideoSection = ({
   return (
     <div
       ref={wrapperRef}
-      style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
+      style={track ? { height: `calc(100vh + ${track}px)`, backgroundColor: "transparent" } : { height: "100vh", backgroundColor: "transparent" }}
       data-scrolly="wrapper"
-      className="relative bg-[#1E1E1E]"
+      className="relative bg-transparent"
     >
       <div className="sticky top-0 h-screen">
-        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[#1E1E1E]">
+        <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-transparent" style={{ backgroundColor: "transparent" }}>
           <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
         </div>
       </div>
