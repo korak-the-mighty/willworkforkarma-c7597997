@@ -87,6 +87,9 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
           if (["img", "video", "picture", "svg", "canvas"].includes(tag)) return;
           if (cs.position === "fixed") return;
 
+          // Skip semi-transparent overlays (scrims, tints) — they don't cause bands
+          if (bg.startsWith("rgba") && !bg.endsWith(", 1)")) return;
+
           const rect = htmlEl.getBoundingClientRect();
           if (rect.width < 8 || rect.height < 8) return;
 
