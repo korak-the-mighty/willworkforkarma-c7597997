@@ -223,7 +223,7 @@ const ScrollyVideoSection = ({
       data-scrolly="wrapper"
       className="relative bg-[var(--page-bg)]"
     >
-      <div className="sticky top-0 h-screen transform-gpu">
+      <div className="relative top-0 h-screen transform-gpu">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[var(--page-bg)]">
           <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
         </div>
