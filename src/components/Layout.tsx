@@ -60,11 +60,13 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
     const prevBodyBg = body.style.backgroundColor;
     const prevRootBg = root?.style.backgroundColor ?? "";
     const prevColorScheme = html.style.colorScheme;
+    const prevPageBg = document.documentElement.style.getPropertyValue("--page-bg");
 
     html.style.backgroundColor = theme.bg;
     body.style.backgroundColor = theme.bg;
     if (root) root.style.backgroundColor = theme.bg;
     html.style.colorScheme = "dark";
+    document.documentElement.style.setProperty("--page-bg", theme.bg);
 
     const params = new URLSearchParams(window.location.search);
     const bgDebug = params.get("bgdebug") === "1";
@@ -108,6 +110,8 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
       body.style.backgroundColor = prevBodyBg;
       if (root) root.style.backgroundColor = prevRootBg;
       html.style.colorScheme = prevColorScheme;
+      if (prevPageBg) document.documentElement.style.setProperty("--page-bg", prevPageBg);
+      else document.documentElement.style.removeProperty("--page-bg");
       if (debugTimer) clearTimeout(debugTimer);
     };
   }, [theme]);
