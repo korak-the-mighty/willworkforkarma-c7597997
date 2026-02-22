@@ -88,14 +88,28 @@ const ScrollyVideoSection = ({
       .catch(() => setError(true));
   }, [manifestUrl, pxPerFrame]);
 
-  // Preload first 10 frames + draw frame 0
+  // Draw frame 0 immediately, then eagerly preload ALL frames
   useEffect(() => {
     if (!manifest) return;
-    const n = Math.min(manifest.count, 10);
-    for (let i = 0; i < n; i++) {
-      loadFrame(i, manifest.ext);
-    }
-    loadFrame(0, manifest.ext).then(() => drawFrame(0));
+    const { count, ext } = manifest;
+
+    // Show frame 0 ASAP
+    loadFrame(0, ext).then(() => drawFrame(0));
+
+    // Background preload with controlled concurrency
+    const CONCURRENCY = 6;
+    let pointer = 0;
+
+    const next = (): Promise<void> => {
+      while (pointer < count && frameCache.current.has(pointer)) pointer++;
+      if (pointer >= count) return Promise.resolve();
+      const idx = pointer++;
+      return loadFrame(idx, ext).catch(() => {}).then(() => next());
+    };
+
+    const workers = Array.from({ length: Math.min(CONCURRENCY, count) }, () => next());
+    // Fire-and-forget — no cleanup needed
+    Promise.all(workers);
   }, [manifest, loadFrame, drawFrame]);
 
   // RAF loop
