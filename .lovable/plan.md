@@ -1,91 +1,69 @@
 
 
-## Fix: Remove 3 Background Offenders Identified by bgdebug
+## Kill GPU Banding: Paint Base BG in Scrolly Layers
 
-The scanner found exactly 3 offending elements. All are identified, all have specific fixes.
+### Problem
+bgdebug shows 0 offenders, but horizontal bands persist because transparent layers over GPU-composited sticky/canvas elements create visible seams.
 
-### Offenders
+### Solution
+Paint the real page background color on scrolly layers using a CSS variable, instead of relying on transparency.
 
-| # | Element | Computed BG | Source | Cause |
-|---|---------|------------|--------|-------|
-| 1 | Scrolly wrapper div | `rgb(30, 30, 30)` / `#1E1E1E` | `ScrollyVideoSection.tsx` line 224 | `bg-[#1E1E1E]` class |
-| 2 | Scrolly inner full-bleed div | `rgb(30, 30, 30)` / `#1E1E1E` | `ScrollyVideoSection.tsx` line 227 | `bg-[#1E1E1E]` class |
-| 3 | Hero video overlay | `rgba(0, 0, 0, 0.35)` | `CaseABB.tsx` line 62 | `bg-black/35` class |
+---
 
-### Fixes
+### 1. `src/components/Layout.tsx` -- Expose theme bg as CSS var with safe restore
 
-#### 1. `src/components/ScrollyVideoSection.tsx`
+In the existing useEffect (lines 62-67), add `--page-bg` storage, setting, and cleanup:
 
-**Line 224** (main wrapper div): Replace `bg-[#1E1E1E]` with `bg-transparent` and add inline transparency.
-
-Change:
-```
-className="relative bg-[#1E1E1E]"
-```
-To:
-```
-className="relative bg-transparent"
-style={track ? { height: `calc(100vh + ${track}px)`, backgroundColor: "transparent" } : { height: "100vh", backgroundColor: "transparent" }}
-```
-(Merge the existing inline style with backgroundColor.)
-
-**Line 227** (inner full-bleed div): Same treatment.
-
-Change:
-```
-className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[#1E1E1E]"
-```
-To:
-```
-className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-transparent"
-style={{ backgroundColor: "transparent" }}
-```
-
-**Lines 199, 209, 213** (fallback states): Also replace `bg-[#1E1E1E]` with `bg-transparent` in the reduced-motion, error, and frame-missing fallback returns. These are less critical but should be consistent.
-
-#### 2. `src/pages/CaseABB.tsx`
-
-**Line 62** (hero overlay): This is a semi-transparent scrim over the hero video. It is intentional design (darkens the video for text readability), but the scanner flags it because it paints a non-base background.
-
-This one is a judgment call. Two options:
-- **Option A (recommended)**: Leave it as-is. It is a legitimate overlay on a video, not a page-level container creating bands. The scanner should skip it. We update the scanner to also skip elements that have a semi-transparent background (alpha < 1) since those are overlays, not bands.
-- **Option B**: Keep as-is and accept the scanner will report 1 "expected" offender.
-
-I recommend Option A: add a guard in the Layout.tsx scanner to skip backgrounds with alpha < 1 (they are overlays/scrims, not band-causing containers).
-
-### Technical Details
-
-#### ScrollyVideoSection.tsx changes (5 locations)
-
-```
-Line 199: bg-[#1E1E1E] -> bg-transparent
-Line 209: bg-[#1E1E1E] -> bg-transparent  
-Line 213: bg-[#1E1E1E] -> bg-transparent
-Line 224: bg-[#1E1E1E] -> bg-transparent + style={{ backgroundColor: "transparent" }}
-Line 227: bg-[#1E1E1E] -> bg-transparent + style={{ backgroundColor: "transparent" }}
-```
-
-#### Layout.tsx scanner enhancement (1 addition)
-
-Add after the `position: fixed` guard:
+**Line 62-67** -- Store prevPageBg, then set the CSS variable after colorScheme:
 
 ```typescript
-// Skip semi-transparent overlays (scrims, tints) — they don't cause bands
-if (bg.startsWith("rgba") && !bg.endsWith(", 1)")) return;
+const prevColorScheme = html.style.colorScheme;
+const prevPageBg = document.documentElement.style.getPropertyValue("--page-bg");
+
+html.style.backgroundColor = theme.bg;
+body.style.backgroundColor = theme.bg;
+if (root) root.style.backgroundColor = theme.bg;
+html.style.colorScheme = "dark";
+document.documentElement.style.setProperty("--page-bg", theme.bg);
 ```
 
-### Expected Result After Fix
+**Lines 110-111** -- Restore in cleanup (after colorScheme restore):
 
-- bgdebug reports **0 offenders**
-- No red outlines
-- No horizontal gray bands in the scrolly section
-- Hero overlay still works visually (just not flagged)
-- Canvas still renders frames correctly (canvas itself is already skipped by the scanner)
+```typescript
+html.style.colorScheme = prevColorScheme;
+if (prevPageBg) document.documentElement.style.setProperty("--page-bg", prevPageBg);
+else document.documentElement.style.removeProperty("--page-bg");
+if (debugTimer) clearTimeout(debugTimer);
+```
+
+---
+
+### 2. `src/components/ScrollyVideoSection.tsx` -- Paint bg using var(--page-bg)
+
+Replace every `bg-transparent` and inline `backgroundColor: "transparent"` with `bg-[var(--page-bg)]`. Add `transform-gpu` to sticky container.
+
+| Line | Current | New |
+|------|---------|-----|
+| 199 | `bg-transparent` | `bg-[var(--page-bg)]` |
+| 209 | `bg-transparent h-screen` | `bg-[var(--page-bg)] h-screen` |
+| 213 | `bg-transparent h-screen flex...` | `bg-[var(--page-bg)] h-screen flex...` |
+| 222 | `backgroundColor: "transparent"` in style | Remove `backgroundColor` from inline style (keep height only) |
+| 224 | `relative bg-transparent` | `relative bg-[var(--page-bg)]` |
+| 226 | `sticky top-0 h-screen` | `sticky top-0 h-screen transform-gpu` |
+| 227 | `bg-transparent` + `style={{ backgroundColor: "transparent" }}` | `bg-[var(--page-bg)]`, remove inline style entirely |
+
+---
+
+### Verification
+
+- Load `/work/abb-emobility?bgdebug=1` -- still 0 offenders (scrolly layers now paint the same color as body)
+- Scroll through: no horizontal seam/banding
+- No overscroll color mismatch
 
 ### Files Modified
 
 | File | Change |
 |------|--------|
-| `src/components/ScrollyVideoSection.tsx` | Replace all `bg-[#1E1E1E]` with `bg-transparent` + inline transparency |
-| `src/components/Layout.tsx` | Add rgba/semi-transparent skip guard to scanner |
+| `src/components/Layout.tsx` | Store/set/restore `--page-bg` CSS variable |
+| `src/components/ScrollyVideoSection.tsx` | Replace all transparent with `var(--page-bg)`, add `transform-gpu` |
 
