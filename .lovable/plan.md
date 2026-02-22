@@ -1,73 +1,54 @@
 
 
-## Hard Fix: Force Uniform #101010 Background
+## Deterministic Fix: Debug Mode + Footer/Base Alignment (Amended)
 
-### Root cause
-
-`body` has `@apply bg-background` in `src/index.css`, which resolves to a warm off-white (`hsl(40, 20%, 97%)`). The ABB page sets `#101010` only on a child `<div>` inside Layout. Any sub-pixel rendering gap between sections exposes the light body background as a visible horizontal band.
+Three changes across two files. Debug scanner uses `rgb(16, 16, 16)` as the "correct" color to avoid false negatives.
 
 ---
 
-### Changes
+### 1. src/index.css -- Remove broad CSS rules, add overscroll fix
 
-#### 1. src/index.css -- Add global background overrides for dark-themed pages
+**Remove lines 112-125** (the `main, section, footer, header { background-color: transparent; }` rule, the `.theme-dark-bg` block, and the `html:has(.theme-dark-bg)` rules).
 
-After the existing `body` rule (line 105), add a new scoped rule. The Layout component already sets `backgroundColor` via inline style on its wrapper div -- we need the full document stack (`html`, `body`, `#root`) to also go transparent so nothing leaks through.
-
-Add after line 111:
+**Add** (in their place):
 
 ```css
-/* Dark-themed case pages: ensure no light background bleeds through */
-.theme-dark-bg {
-  background-color: transparent !important;
-}
-
-html:has(.theme-dark-bg) body,
-html:has(.theme-dark-bg) #root {
-  background-color: inherit !important;
+html, body {
+  overscroll-behavior-y: none;
 }
 ```
 
-Also add a direct safety rule for the ABB-specific case inside `@layer base`:
-
-```css
-main, section, footer, header {
-  background-color: transparent;
-}
-```
-
-This ensures no structural element paints its own background unless explicitly told to.
-
-#### 2. src/components/Layout.tsx -- Apply theme background to html/body level
-
-Move the background color from the wrapper div to the full document tree when a theme is active:
-
-- Add a `useEffect` that sets `document.documentElement.style.backgroundColor` and `document.body.style.backgroundColor` to `theme.bg` when the theme prop is present, and cleans up on unmount.
-- Remove the inline `style` from the wrapper div (it becomes redundant).
-- Add className `theme-dark-bg` to the wrapper div when theme is present.
-
-This ensures html/body/root all share the same background, eliminating any bleed-through.
-
-#### 3. src/pages/CaseABB.tsx -- No changes needed
-
-Already clean from previous passes. MEDIA_HOVER is `""`, no bg classes on wrappers, theme is `{{ bg: "#101010" }}`.
+This stops overscroll bounce from revealing a mismatched background. The Layout `useEffect` handles html/body background directly -- the CSS rules are redundant and can mask the real offender.
 
 ---
 
-### Technical detail
+### 2. src/components/Layout.tsx -- Add bgdebug scanner, fix footer, remove theme-dark-bg class
+
+**useEffect (lines 52-62):** After setting html/body backgrounds, add the debug scanner:
+
+- Check `window.location.search.includes("bgdebug=1")`
+- After 500ms timeout, scan all `body *` elements
+- For each element, get `getComputedStyle(el).backgroundColor`
+- Flag if it is NOT `rgba(0, 0, 0, 0)` AND NOT `transparent` AND NOT `rgb(16, 16, 16)`
+- Flagged elements get `outline: 2px solid red`, `data-bgdebug` attribute, and console log
+- Store timeout ID for cleanup
+
+**Amendment applied:** The scanner compares against `rgb(16, 16, 16)` (the browser-computed form of `#101010`), not the raw hex value. This prevents false negatives from format mismatches.
+
+**Line 24 (Footer):** Add `className="bg-transparent"` to the `<footer>` element.
+
+**Line 65 (wrapper div):** Remove the `theme-dark-bg` class reference (the CSS rules it depended on are being removed). Change to just `"flex min-h-screen flex-col"`.
+
+---
+
+### Files touched
 
 | File | Change |
 |------|--------|
-| `src/index.css` | Add transparent background rule for `main`, `section`, `footer`, `header`; add `.theme-dark-bg` class |
-| `src/components/Layout.tsx` | Add `useEffect` to set html/body background from theme prop; add `theme-dark-bg` class to wrapper |
+| `src/index.css` | Remove lines 112-125 (transparent + theme-dark-bg + :has rules); add `overscroll-behavior-y: none` |
+| `src/components/Layout.tsx` | Add bgdebug scanner in useEffect; add `bg-transparent` on footer; remove `theme-dark-bg` from wrapper |
 
-### Why this works
+### Usage
 
-The banding happens because the CSS cascade paints `body` with a light color, and Layout only paints its child div dark. Any sub-pixel gap between sections (common with percentage-based padding, fractional viewport units, or browser rounding) exposes the light body. By making html/body match the theme color, there is nothing light to leak through.
-
-### Safety
-
-- Non-themed pages (homepage, about, contact) are unaffected -- `useEffect` only runs when `theme` is present and cleans up on unmount.
-- The `transparent` rule on structural elements is safe because they should inherit, not paint their own backgrounds.
-- No layout changes, no new colors, no gradients.
+Navigate to `/work/abb-emobility?bgdebug=1` -- any element painting a non-base background will be outlined red and logged to console. Fix that specific element, and banding is resolved.
 
