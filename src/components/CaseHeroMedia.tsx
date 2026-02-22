@@ -17,13 +17,13 @@ const CaseHeroMedia = ({ heroMedia }: CaseHeroMediaProps) => (
           muted
           loop
           playsInline
-          className="h-full w-full object-cover brightness-75 transition-[filter] duration-300 hover:brightness-100"
+          className="h-full w-full object-cover"
         />
       ) : (
         <img
           src={heroMedia.src}
           alt=""
-          className="h-full w-full object-cover brightness-75 transition-[filter] duration-300 hover:brightness-100"
+          className="h-full w-full object-cover"
         />
       )
     ) : null}

@@ -24,8 +24,7 @@ const MicroLabel = ({ children }: { children: React.ReactNode }) => (
 const FULL_BLEED =
   "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
 
-const MEDIA_HOVER =
-  "brightness-[0.85] hover:brightness-100 transition-[filter] duration-300";
+const MEDIA_HOVER = "";
 
 const BODY_TEXT = "text-[1.25rem] leading-[1.65]";
 
