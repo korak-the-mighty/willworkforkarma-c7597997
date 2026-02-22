@@ -1,43 +1,73 @@
-NUKE TEST: Eliminate All Background Banding Sources
 
-Temporary diagnostic to confirm perfectly uniform #101010 background. Minimize moving parts.
 
-1) src/components/CaseSectionWrapper.tsx — disable all tone backgrounds
+## Hard Fix: Force Uniform #101010 Background
 
-Set all tone classes to empty strings:
+### Root cause
 
-- default: ""
+`body` has `@apply bg-background` in `src/index.css`, which resolves to a warm off-white (`hsl(40, 20%, 97%)`). The ABB page sets `#101010` only on a child `<div>` inside Layout. Any sub-pixel rendering gap between sections exposes the light body background as a visible horizontal band.
 
-- subtle: ""
+---
 
-- emphasis: ""
+### Changes
 
-Result: wrapper never paints any background.
+#### 1. src/index.css -- Add global background overrides for dark-themed pages
 
-2) src/components/CaseHeroMedia.tsx — remove ALL brightness/filter behavior for test
+After the existing `body` rule (line 105), add a new scoped rule. The Layout component already sets `backgroundColor` via inline style on its wrapper div -- we need the full document stack (`html`, `body`, `#root`) to also go transparent so nothing leaks through.
 
-On both <video> and <img>:
+Add after line 111:
 
-- Remove brightness-75
+```css
+/* Dark-themed case pages: ensure no light background bleeds through */
+.theme-dark-bg {
+  background-color: transparent !important;
+}
 
-- Remove hover:brightness-* (for the test)
+html:has(.theme-dark-bg) body,
+html:has(.theme-dark-bg) #root {
+  background-color: inherit !important;
+}
+```
 
-- Keep only: transition-[filter] duration-300 IF needed, otherwise remove transition too.
+Also add a direct safety rule for the ABB-specific case inside `@layer base`:
 
-Goal: media does not alter perceived background via default dimming or hover.
+```css
+main, section, footer, header {
+  background-color: transparent;
+}
+```
 
-3) src/pages/CaseABB.tsx — remove ALL brightness/filter behavior for test
+This ensures no structural element paints its own background unless explicitly told to.
 
-Update MEDIA_HOVER constant to empty string ("") or remove it from media elements.
+#### 2. src/components/Layout.tsx -- Apply theme background to html/body level
 
-Goal: no default dimming, no hover brighten on ABB page media during test.
+Move the background color from the wrapper div to the full document tree when a theme is active:
 
-Acceptance:
+- Add a `useEffect` that sets `document.documentElement.style.backgroundColor` and `document.body.style.backgroundColor` to `theme.bg` when the theme prop is present, and cleans up on unmount.
+- Remove the inline `style` from the wrapper div (it becomes redundant).
+- Add className `theme-dark-bg` to the wrapper div when theme is present.
 
-- Scrolling ABB case shows a perfectly uniform background (#101010) with no horizontal bands, even when moving the mouse around.
+This ensures html/body/root all share the same background, eliminating any bleed-through.
 
-Next:
+#### 3. src/pages/CaseABB.tsx -- No changes needed
 
-- If bands disappear → reintroduce features one-by-one (tones first, then hover).
+Already clean from previous passes. MEDIA_HOVER is `""`, no bg classes on wrappers, theme is `{{ bg: "#101010" }}`.
 
-- If bands persist → a stray bg exists elsewhere; locate via DevTools computed background-color on the band area.
+---
+
+### Technical detail
+
+| File | Change |
+|------|--------|
+| `src/index.css` | Add transparent background rule for `main`, `section`, `footer`, `header`; add `.theme-dark-bg` class |
+| `src/components/Layout.tsx` | Add `useEffect` to set html/body background from theme prop; add `theme-dark-bg` class to wrapper |
+
+### Why this works
+
+The banding happens because the CSS cascade paints `body` with a light color, and Layout only paints its child div dark. Any sub-pixel gap between sections (common with percentage-based padding, fractional viewport units, or browser rounding) exposes the light body. By making html/body match the theme color, there is nothing light to leak through.
+
+### Safety
+
+- Non-themed pages (homepage, about, contact) are unaffected -- `useEffect` only runs when `theme` is present and cleans up on unmount.
+- The `transparent` rule on structural elements is safe because they should inherit, not paint their own backgrounds.
+- No layout changes, no new colors, no gradients.
+
