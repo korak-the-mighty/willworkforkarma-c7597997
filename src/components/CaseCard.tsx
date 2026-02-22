@@ -9,7 +9,7 @@ interface CaseCardProps {
 const CaseCard = ({ caseData }: CaseCardProps) => (
   <Link to={`/work/${caseData.slug}`} className="group block">
     <article className="space-y-5">
-      <div className="overflow-hidden brightness-75 transition-[filter] duration-300 group-hover:brightness-100">
+      <div className="overflow-hidden">
         <PlaceholderCover aspectRatio="3/2" />
       </div>
       <div className="space-y-2 transition-transform duration-300 group-hover:-translate-y-0.5">

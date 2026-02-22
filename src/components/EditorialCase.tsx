@@ -15,7 +15,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
     <div className="hidden md:block relative min-h-[70vh] overflow-hidden">
       {/* Image half — flush to viewport edge */}
       <div
-        className={`absolute top-0 bottom-0 w-1/2 bg-muted brightness-75 transition-[filter] duration-300 group-hover:brightness-100 ${
+        className={`absolute top-0 bottom-0 w-1/2 border border-white/[0.06] ${
           imageAlign === "right" ? "right-0" : "left-0"
         }`}
       />
@@ -34,7 +34,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
 
     {/* Mobile layout — stacked */}
     <div className="md:hidden">
-      <div className="w-full aspect-[16/10] bg-muted brightness-75" />
+      <div className="w-full aspect-[16/10] border border-white/[0.06]" />
       <div className="px-6 py-8">
         <h2 className="font-heading text-4xl tracking-tight text-foreground">{title}</h2>
         <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
