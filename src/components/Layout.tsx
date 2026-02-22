@@ -21,7 +21,7 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
 );
 
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
-  <footer>
+  <footer className="bg-transparent">
     <div className="mx-auto max-w-7xl px-6 md:px-8">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
         <p className={`font-heading text-lg md:text-xl tracking-tight ${theme ? "text-white" : ""}`}>
@@ -55,14 +55,34 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
     const body = document.body;
     html.style.backgroundColor = theme.bg;
     body.style.backgroundColor = theme.bg;
+
+    let debugTimer: number | undefined;
+    if (window.location.search.includes("bgdebug=1")) {
+      debugTimer = window.setTimeout(() => {
+        document.querySelectorAll("body *").forEach((el) => {
+          const bg = getComputedStyle(el).backgroundColor;
+          if (
+            bg !== "rgba(0, 0, 0, 0)" &&
+            bg !== "transparent" &&
+            bg !== "rgb(16, 16, 16)"
+          ) {
+            (el as HTMLElement).style.outline = "2px solid red";
+            el.setAttribute("data-bgdebug", bg);
+            console.log("BGDEBUG", bg, el);
+          }
+        });
+      }, 500);
+    }
+
     return () => {
       html.style.backgroundColor = "";
       body.style.backgroundColor = "";
+      if (debugTimer) clearTimeout(debugTimer);
     };
   }, [theme]);
 
   return (
-    <div className={`flex min-h-screen flex-col${theme ? " theme-dark-bg" : ""}`}>
+    <div className="flex min-h-screen flex-col">
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
