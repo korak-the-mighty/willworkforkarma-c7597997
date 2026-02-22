@@ -12,7 +12,7 @@ const CaseModule = ({ module, index }: CaseModuleProps) => {
   if (module.type === "break") {
     return (
       <div className={`${FULL_BLEED} my-12`}>
-        <div className="aspect-[16/9] bg-muted w-full" />
+        <div className="aspect-[16/9] border border-white/[0.06] w-full" />
       </div>
     );
   }
@@ -32,7 +32,7 @@ const CaseModule = ({ module, index }: CaseModuleProps) => {
   const mediaBlock = hasMedia ? (
     <CaseMediaGrid items={module.media.map((src) => ({ src }))} count={module.media.length} />
   ) : (
-    <div className="aspect-[16/9] bg-muted w-full" />
+    <div className="aspect-[16/9] border border-white/[0.06] w-full" />
   );
 
   return (

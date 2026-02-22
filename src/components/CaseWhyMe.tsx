@@ -5,10 +5,8 @@ interface CaseWhyMeProps {
   nextCase?: { slug: string; title: string } | null;
 }
 
-const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
-
 const CaseWhyMe = ({ text, nextCase }: CaseWhyMeProps) => (
-  <div className={`${FULL_BLEED} bg-foreground text-background py-16 md:py-24`}>
+  <div className="py-16 md:py-24">
     <div className="mx-auto max-w-4xl px-6">
       <h2 className="text-xs uppercase tracking-[0.2em] opacity-60 mb-6">Why this matters</h2>
       <p className="text-lg leading-relaxed max-w-2xl">{text}</p>

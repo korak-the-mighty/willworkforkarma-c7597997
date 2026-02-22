@@ -12,7 +12,7 @@ const CaseHook = ({ problem }: CaseHookProps) => {
           <p key={i} className="text-lg leading-relaxed">{p}</p>
         ))}
       </div>
-      <div className="aspect-[16/9] bg-muted w-full" />
+      <div className="aspect-[16/9] border border-white/[0.06] w-full" />
     </div>
   );
 };

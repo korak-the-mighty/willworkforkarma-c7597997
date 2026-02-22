@@ -8,6 +8,7 @@ import CaseModule from "@/components/CaseModule";
 import CaseMediaGrid from "@/components/CaseMediaGrid";
 import CaseOutcome from "@/components/CaseOutcome";
 import CaseWhyMe from "@/components/CaseWhyMe";
+import CaseSectionWrapper from "@/components/CaseSectionWrapper";
 import { cases } from "@/data/cases";
 
 const CaseDetail = () => {
@@ -69,7 +70,9 @@ const CaseDetail = () => {
         </div>
 
         {/* Hook */}
-        <CaseHook problem={caseData.problem} />
+        <CaseSectionWrapper tone="subtle">
+          <CaseHook problem={caseData.problem} />
+        </CaseSectionWrapper>
 
         {/* BAM */}
         <CaseBamStatement statement={caseData.decision} />
@@ -85,12 +88,14 @@ const CaseDetail = () => {
         </div>
 
         {/* Outcomes */}
-        <CaseOutcome outcomes={caseData.outcomes} />
+        <CaseSectionWrapper tone="subtle">
+          <CaseOutcome outcomes={caseData.outcomes} />
+        </CaseSectionWrapper>
 
         {/* Why Me */}
-        <div className="mt-8">
+        <CaseSectionWrapper tone="emphasis">
           <CaseWhyMe text={caseData.whyMe} nextCase={nextCaseLink} />
-        </div>
+        </CaseSectionWrapper>
       </article>
       </div>
     </Layout>
