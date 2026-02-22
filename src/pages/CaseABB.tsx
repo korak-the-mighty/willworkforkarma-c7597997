@@ -45,7 +45,7 @@ const CaseABB = () => {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
-    <Layout fullWidth theme={{ bg: "#1E1E1E" }}>
+    <Layout fullWidth theme={{ bg: "#101010" }}>
       <div
         style={
           {
@@ -54,7 +54,7 @@ const CaseABB = () => {
             "--muted": "220 15% 12%",
           } as React.CSSProperties
         }
-        className="bg-[#1E1E1E] text-white"
+        className="bg-[#101010] text-white"
       >
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
@@ -265,7 +265,7 @@ const CaseABB = () => {
                 const desktopStyles: React.CSSProperties[] = [
                   { width: "55%", marginTop: 0, marginLeft: 0, marginRight: "auto" },
                   { width: "38%", marginTop: "2rem", marginLeft: "auto", marginRight: 0, paddingLeft: "3rem" },
-                  { width: "42%", marginTop: "-1rem", marginLeft: "1rem", marginRight: "auto" },
+                  { width: "42%", marginTop: "3rem", marginLeft: "1rem", marginRight: "auto" },
                   { width: "48%", marginTop: "4rem", marginLeft: "auto", marginRight: 0 },
                   { width: "36%", marginTop: "-2rem", marginLeft: "8%", marginRight: "auto" },
                 ];
@@ -274,7 +274,7 @@ const CaseABB = () => {
                 return (
                   <div
                     key={i}
-                    className="bg-black/20 p-3 overflow-hidden cursor-pointer"
+                    className="p-3 overflow-hidden cursor-pointer"
                     style={s}
                     onClick={() => setLightboxSrc(item.src)}
                   >
