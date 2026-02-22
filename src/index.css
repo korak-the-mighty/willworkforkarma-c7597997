@@ -109,19 +109,10 @@
     font-weight: 500;
   }
 
-  main, section, footer, header {
-    background-color: transparent;
-  }
 }
 
-/* Dark-themed case pages: ensure no light background bleeds through */
-.theme-dark-bg {
-  background-color: transparent !important;
-}
-
-html:has(.theme-dark-bg) body,
-html:has(.theme-dark-bg) #root {
-  background-color: inherit !important;
+html, body {
+  overscroll-behavior-y: none;
 }
 
 /* Arrow link hover with micro-bounce */
