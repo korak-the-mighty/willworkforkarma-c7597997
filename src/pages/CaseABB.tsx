@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 import Layout from "@/components/Layout";
 import ScrollyVideoSection from "@/components/ScrollyVideoSection";
+import CaseSectionWrapper from "@/components/CaseSectionWrapper";
 
 import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
 import contextImg from "@/assets/ABB-emobility-context.webp";
@@ -54,7 +55,7 @@ const CaseABB = () => {
             "--muted": "220 15% 12%",
           } as React.CSSProperties
         }
-        className="bg-[#101010] text-white"
+        className="text-white"
       >
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
@@ -300,6 +301,7 @@ const CaseABB = () => {
         </section>
 
         {/* ═══════════════ OUTCOME ═══════════════ */}
+        <CaseSectionWrapper tone="emphasis" fullWidth>
         <section className="py-24 md:py-32">
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Outcome</MicroLabel>
@@ -329,6 +331,7 @@ const CaseABB = () => {
             </p>
           </div>
         </section>
+        </CaseSectionWrapper>
 
         {/* ═══════════════ LET'S TALK CTA ═══════════════ */}
         <section className="py-24 md:py-32">
