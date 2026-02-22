@@ -50,39 +50,67 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!theme) return;
+    if (!theme?.bg) return;
+
     const html = document.documentElement;
     const body = document.body;
+    const root = document.getElementById("root");
+
+    const prevHtmlBg = html.style.backgroundColor;
+    const prevBodyBg = body.style.backgroundColor;
+    const prevRootBg = root?.style.backgroundColor ?? "";
+    const prevColorScheme = html.style.colorScheme;
+
     html.style.backgroundColor = theme.bg;
     body.style.backgroundColor = theme.bg;
+    if (root) root.style.backgroundColor = theme.bg;
+    html.style.colorScheme = "dark";
+
+    const params = new URLSearchParams(window.location.search);
+    const bgDebug = params.get("bgdebug") === "1";
 
     let debugTimer: number | undefined;
-    if (window.location.search.includes("bgdebug=1")) {
+    if (bgDebug) {
       debugTimer = window.setTimeout(() => {
+        const offenders: Element[] = [];
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+
         document.querySelectorAll("body *").forEach((el) => {
-          const bg = getComputedStyle(el).backgroundColor;
-          if (
-            bg !== "rgba(0, 0, 0, 0)" &&
-            bg !== "transparent" &&
-            bg !== "rgb(16, 16, 16)"
-          ) {
-            (el as HTMLElement).style.outline = "2px solid red";
-            el.setAttribute("data-bgdebug", bg);
-            console.log("BGDEBUG", bg, el);
-          }
+          const htmlEl = el as HTMLElement;
+          const cs = window.getComputedStyle(htmlEl);
+          const bg = cs.backgroundColor;
+
+          if (bg === "rgba(0, 0, 0, 0)" || bg === "transparent") return;
+          if (bg === bodyBg) return;
+
+          const tag = htmlEl.tagName.toLowerCase();
+          if (["img", "video", "picture", "svg", "canvas"].includes(tag)) return;
+          if (cs.position === "fixed") return;
+
+          const rect = htmlEl.getBoundingClientRect();
+          if (rect.width < 8 || rect.height < 8) return;
+
+          offenders.push(el);
+          htmlEl.style.outline = "2px solid red";
+          htmlEl.setAttribute("data-bgdebug", bg);
+          console.log("[bgdebug] offender:", el, "bg:", bg);
         });
+
+        console.log(`[bgdebug] offenders found: ${offenders.length}`);
       }, 500);
     }
 
     return () => {
-      html.style.backgroundColor = "";
-      body.style.backgroundColor = "";
+      html.style.backgroundColor = prevHtmlBg;
+      body.style.backgroundColor = prevBodyBg;
+      if (root) root.style.backgroundColor = prevRootBg;
+      html.style.colorScheme = prevColorScheme;
       if (debugTimer) clearTimeout(debugTimer);
     };
   }, [theme]);
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
