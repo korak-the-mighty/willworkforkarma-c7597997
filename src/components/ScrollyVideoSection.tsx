@@ -219,7 +219,7 @@ const ScrollyVideoSection = ({
   return (
     <div
       ref={wrapperRef}
-      style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
+      style={track ? { height: `${track}px` } : { height: "100vh" }}
       data-scrolly="wrapper"
       className="relative bg-[var(--page-bg)]"
     >
