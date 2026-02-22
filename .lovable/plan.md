@@ -1,54 +1,91 @@
 
 
-## Deterministic Fix: Debug Mode + Footer/Base Alignment (Amended)
+## Apply the Approved Plan (with two tweaks)
 
-Three changes across two files. Debug scanner uses `rgb(16, 16, 16)` as the "correct" color to avoid false negatives.
+Three files changed. No guessing — all changes are explicit.
 
 ---
 
-### 1. src/index.css -- Remove broad CSS rules, add overscroll fix
+### 1. `src/components/Layout.tsx` — Enhanced useEffect + wrapper bg + #root
 
-**Remove lines 112-125** (the `main, section, footer, header { background-color: transparent; }` rule, the `.theme-dark-bg` block, and the `html:has(.theme-dark-bg)` rules).
+**Replace lines 52-82** (the entire useEffect block) with the full implementation:
 
-**Add** (in their place):
+- Set `backgroundColor` on `html`, `body`, AND `#root`
+- Set `color-scheme: dark` on html
+- Store all previous values and restore on cleanup
+- Debug scanner with the two requested guards:
+  - Skip media tags (`img`, `video`, `picture`, `svg`, `canvas`)
+  - Skip `position: fixed` elements
+  - Skip tiny elements (width < 8 or height < 8)
+  - Compare against computed body bg (not hardcoded hex)
+  - Log offender count at end
 
-```css
-html, body {
-  overscroll-behavior-y: none;
-}
+**Line 85** — Add inline style to wrapper div:
+
+```
+<div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
 ```
 
-This stops overscroll bounce from revealing a mismatched background. The Layout `useEffect` handles html/body background directly -- the CSS rules are redundant and can mask the real offender.
+Footer already has `bg-transparent` — no change needed.
 
 ---
 
-### 2. src/components/Layout.tsx -- Add bgdebug scanner, fix footer, remove theme-dark-bg class
+### 2. `src/index.css` — No changes needed
 
-**useEffect (lines 52-62):** After setting html/body backgrounds, add the debug scanner:
-
-- Check `window.location.search.includes("bgdebug=1")`
-- After 500ms timeout, scan all `body *` elements
-- For each element, get `getComputedStyle(el).backgroundColor`
-- Flag if it is NOT `rgba(0, 0, 0, 0)` AND NOT `transparent` AND NOT `rgb(16, 16, 16)`
-- Flagged elements get `outline: 2px solid red`, `data-bgdebug` attribute, and console log
-- Store timeout ID for cleanup
-
-**Amendment applied:** The scanner compares against `rgb(16, 16, 16)` (the browser-computed form of `#101010`), not the raw hex value. This prevents false negatives from format mismatches.
-
-**Line 24 (Footer):** Add `className="bg-transparent"` to the `<footer>` element.
-
-**Line 65 (wrapper div):** Remove the `theme-dark-bg` class reference (the CSS rules it depended on are being removed). Change to just `"flex min-h-screen flex-col"`.
+Already clean: overscroll-behavior is present (line 114-116), broad transparency hacks already removed.
 
 ---
 
-### Files touched
+### 3. `src/components/CaseSectionWrapper.tsx` — Restore full implementation (with tweak #2)
 
-| File | Change |
-|------|--------|
-| `src/index.css` | Remove lines 112-125 (transparent + theme-dark-bg + :has rules); add `overscroll-behavior-y: none` |
-| `src/components/Layout.tsx` | Add bgdebug scanner in useEffect; add `bg-transparent` on footer; remove `theme-dark-bg` from wrapper |
+Restore from fragment back to the full section wrapper. The key difference from the previous version: `fullWidth` controls full-bleed, NOT the default. Normal sections get no special positioning.
 
-### Usage
+```tsx
+type SectionTone = "default" | "subtle" | "emphasis";
 
-Navigate to `/work/abb-emobility?bgdebug=1` -- any element painting a non-base background will be outlined red and logged to console. Fix that specific element, and banding is resolved.
+interface CaseSectionWrapperProps {
+  tone?: SectionTone;
+  fullWidth?: boolean;
+  className?: string;
+  children: React.ReactNode;
+}
 
+const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
+
+const toneMap: Record<SectionTone, string> = {
+  default: "",
+  subtle: "",
+  emphasis: "",
+};
+
+const CaseSectionWrapper = ({
+  tone = "default",
+  fullWidth = false,
+  className = "",
+  children,
+}: CaseSectionWrapperProps) => (
+  <section
+    className={`${fullWidth ? FULL_BLEED : ""} ${toneMap[tone]} ${className}`.trim()}
+  >
+    {children}
+  </section>
+);
+
+export default CaseSectionWrapper;
+```
+
+Tone map values are empty strings — structural layout only, no painted backgrounds.
+
+---
+
+### Summary
+
+| File | What changes |
+|------|-------------|
+| `src/components/Layout.tsx` | Replace useEffect with full version (html/body/#root/color-scheme + guarded debug scanner); add inline bg style to wrapper div |
+| `src/components/CaseSectionWrapper.tsx` | Restore full section wrapper; fullWidth triggers FULL_BLEED, default is clean |
+| `src/index.css` | No changes |
+
+### Verification
+
+Open `/work/abb-emobility?bgdebug=1` — expect 0 red outlines and 0 console offenders. No bands, no overscroll mismatch.
