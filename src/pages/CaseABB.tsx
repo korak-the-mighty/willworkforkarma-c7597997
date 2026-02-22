@@ -47,16 +47,7 @@ const CaseABB = () => {
 
   return (
     <Layout fullWidth theme={{ bg: "#101010" }}>
-      <div
-        style={
-          {
-            "--background": "220 20% 5%",
-            "--foreground": "210 15% 90%",
-            "--muted": "220 15% 12%",
-          } as React.CSSProperties
-        }
-        className="text-white"
-      >
+      <div className="text-white">
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
           <video
