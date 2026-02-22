@@ -11,8 +11,8 @@ const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
 
 const toneMap: Record<SectionTone, string> = {
   default: "",
-  subtle: "bg-white/[0.02]",
-  emphasis: "bg-white/[0.04]",
+  subtle: "",
+  emphasis: "",
 };
 
 const CaseSectionWrapper = ({
