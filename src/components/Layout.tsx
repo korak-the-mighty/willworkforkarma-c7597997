@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
 import OverlayMenu from "@/components/OverlayMenu";
@@ -49,9 +49,20 @@ interface LayoutProps {
 const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!theme) return;
+    const html = document.documentElement;
+    const body = document.body;
+    html.style.backgroundColor = theme.bg;
+    body.style.backgroundColor = theme.bg;
+    return () => {
+      html.style.backgroundColor = "";
+      body.style.backgroundColor = "";
+    };
+  }, [theme]);
+
   return (
-    <div className="flex min-h-screen flex-col"
-         style={theme ? { backgroundColor: theme.bg } : undefined}>
+    <div className={`flex min-h-screen flex-col${theme ? " theme-dark-bg" : ""}`}>
       <Header onMenuOpen={() => setMenuOpen(true)} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
