@@ -1,27 +1,40 @@
 
 
-## Fix: Remove huge vertical gap after scrolly module
+## Restore Scrolly Sticky Behavior + Correct Height Math
 
 ### Problem
-The wrapper uses `calc(100vh + ${track}px)` for height, but since the inner container changed from `sticky` to `relative`, the viewport height is already occupied by the inner div. Adding `100vh` again creates a massive blank gap.
+Two previous changes broke the scrolly section:
+1. `sticky` was changed to `relative` on line 226, so the canvas no longer pins during scroll
+2. The wrapper height was changed from `calc(100vh + ${track}px)` to `${track}px`, which is only correct for relative positioning
 
-### Change
+Both need to be reverted together -- they are a matched pair.
 
-**File:** `src/components/ScrollyVideoSection.tsx`  
-**Line 222** -- Change:
+### Changes (src/components/ScrollyVideoSection.tsx only)
 
-```typescript
+**Line 222** -- Restore calc height for sticky:
+```
+// From:
+style={track ? { height: `${track}px` } : { height: "100vh" }}
+// To:
 style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
 ```
 
-To:
-
-```typescript
-style={track ? { height: `${track}px` } : { height: "100vh" }}
+**Line 226** -- Restore sticky positioning:
+```
+// From:
+<div className="relative top-0 h-screen transform-gpu">
+// To:
+<div className="sticky top-0 h-screen transform-gpu">
 ```
 
-One expression change. Nothing else touched.
+### Why both changes must go together
+- `sticky` keeps the canvas pinned at `top: 0` while the user scrolls through the wrapper
+- The wrapper must be `100vh + track` tall so there is exactly `track` pixels of scroll travel while the sticky element is pinned
+- With `relative`, the inner div just sits at the top and scrolls away -- no pinning, no frame scrubbing
+- With `sticky` but only `track` height, the wrapper is too short and clips the animation
 
-### Why
-`track = count * pxPerFrame` already represents the total scroll distance. The inner `relative` div provides its own `h-screen` height. Adding `100vh` on top double-counts the viewport, producing the gap.
+### Nothing else changes
+- Background classes (`bg-[var(--page-bg)]`) stay as-is
+- `transform-gpu` stays on the sticky container
+- Canvas and full-bleed div unchanged
 
