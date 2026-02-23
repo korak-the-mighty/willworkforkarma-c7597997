@@ -45,7 +45,7 @@ const CaseABB = () => {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
-    <Layout fullWidth theme={{ bg: "#101010" }}>
+    <Layout fullWidth theme={{ bg: "#0D0D0D" }}>
       <div className="text-white">
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
