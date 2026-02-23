@@ -156,7 +156,7 @@ const FeaturedMediaSection = ({
             <img
               src={src}
               alt={alt}
-              className="h-full w-auto object-contain"
+              className="h-full w-auto max-w-none shrink-0 object-contain"
               draggable={false}
               onLoad={handleImageLoad}
             />
