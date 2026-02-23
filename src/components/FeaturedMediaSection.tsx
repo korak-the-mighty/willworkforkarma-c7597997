@@ -203,7 +203,7 @@ const FeaturedMediaSection = ({
       : undefined;
 
   return (
-    <section className={`block lg:hidden relative bg-[var(--page-bg)] ${className ?? ""}`}>
+    <section className={`block lg:hidden relative bg-[var(--page-bg)] border-2 border-red-500 ${className ?? ""}`}>
       {DEBUG && (
         <div className="block lg:hidden fixed bottom-2 left-2 z-50 text-xs leading-tight bg-black/70 text-white rounded-md px-2 py-2 font-mono">
           <div>vW: {debugViewportW.current}</div>
@@ -221,6 +221,7 @@ const FeaturedMediaSection = ({
       )}
       <div ref={wrapperRef} style={{ height: wrapperHeight ? `${wrapperHeight}px` : "100vh" }}>
         <div className="sticky top-0 h-screen overflow-hidden bg-[var(--page-bg)] transform-gpu">
+          <span className="absolute top-3 left-3 z-50 text-xs font-mono bg-black/70 text-white px-2 py-1 rounded">FEATURED MEDIA (MOBILE)</span>
           <div
             ref={trackRef}
             className="h-full flex flex-nowrap w-max"

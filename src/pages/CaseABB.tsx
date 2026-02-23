@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import Layout from "@/components/Layout";
 import ScrollyVideoSection from "@/components/ScrollyVideoSection";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
+import FeaturedMediaSection from "@/components/FeaturedMediaSection";
 
 import heroVideo from "@/assets/abb-e-mobility-mcs-hero.mp4";
 import contextImg from "@/assets/ABB-emobility-context.webp";
@@ -280,14 +281,9 @@ const CaseABB = () => {
             </div>
           </div>
 
-          {/* Full-width wide dash */}
-          <div className={`${FULL_BLEED} mt-16 overflow-hidden`}>
-            <img
-              src={wideDash}
-              alt="ABB E-mobility dashboard"
-              className={`h-full w-full object-cover ${MEDIA_HOVER}`}
-            />
-          </div>
+          {/* Featured media pan sections (mobile) */}
+          <FeaturedMediaSection src={decisionImg} alt="ABB E-mobility detail" />
+          <FeaturedMediaSection src={wideDash} alt="ABB E-mobility dashboard" />
         </section>
 
         {/* ═══════════════ OUTCOME ═══════════════ */}
