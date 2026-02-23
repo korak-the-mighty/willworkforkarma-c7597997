@@ -219,11 +219,11 @@ const ScrollyVideoSection = ({
   return (
     <div
       ref={wrapperRef}
-      style={track ? { height: `${track}px` } : { height: "100vh" }}
+      style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
       data-scrolly="wrapper"
       className="relative bg-[var(--page-bg)]"
     >
-      <div className="relative top-0 h-screen transform-gpu">
+      <div className="sticky top-0 h-screen transform-gpu">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[var(--page-bg)]">
           <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
         </div>
