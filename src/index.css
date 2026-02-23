@@ -146,3 +146,36 @@ html, body {
     animation: none;
   }
 }
+
+:root {
+  --page-noise-opacity: 0.035;
+}
+
+body::before {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+  opacity: var(--page-noise-opacity);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
+      rgba(0,0,0,0.018) 2px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      rgba(0,0,0,0.012) 2px
+    );
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    opacity: 0.02;
+  }
+}
