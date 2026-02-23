@@ -23,9 +23,11 @@ const FeaturedMediaSection = ({
   const rafPending = useRef(false);
   const rafId = useRef(0);
   const maxOffsetRef = useRef(0);
+  const prevHeight = useRef(0);
+  const prevTx = useRef(0);
 
   const [wrapperHeight, setWrapperHeight] = useState(
-    typeof window !== "undefined" ? window.innerHeight : 0
+    typeof window !== "undefined" ? window.innerHeight : 1
   );
   const [translateX, setTranslateX] = useState(0);
 
@@ -36,7 +38,11 @@ const FeaturedMediaSection = ({
     const vw = window.innerWidth;
     const dist = Math.max(0, sw - vw);
     maxOffsetRef.current = dist;
-    setWrapperHeight(dist > 0 ? window.innerHeight + dist : window.innerHeight);
+    const nextHeight = dist > 0 ? window.innerHeight + dist : window.innerHeight;
+    if (nextHeight !== prevHeight.current) {
+      prevHeight.current = nextHeight;
+      setWrapperHeight(nextHeight);
+    }
   }, []);
 
   const updateTransform = useCallback(() => {
@@ -45,18 +51,28 @@ const FeaturedMediaSection = ({
     if (!wrapper) return;
     const maxOffset = maxOffsetRef.current;
     if (maxOffset === 0) {
-      setTranslateX(0);
+      if (prevTx.current !== 0) {
+        prevTx.current = 0;
+        setTranslateX(0);
+      }
       return;
     }
     const rect = wrapper.getBoundingClientRect();
     const travel = rect.height - window.innerHeight;
     if (travel <= 0) {
-      setTranslateX(0);
+      if (prevTx.current !== 0) {
+        prevTx.current = 0;
+        setTranslateX(0);
+      }
       return;
     }
     const scrolled = clamp(-rect.top, 0, travel);
-    const progress = scrolled / travel;
-    setTranslateX(Math.round(progress * maxOffset));
+    const progress = clamp(scrolled / travel, 0, 1);
+    const next = Math.round(progress * maxOffset);
+    if (next !== prevTx.current) {
+      prevTx.current = next;
+      setTranslateX(next);
+    }
   }, []);
 
   const onScroll = useCallback(() => {
@@ -66,37 +82,68 @@ const FeaturedMediaSection = ({
   }, [updateTransform]);
 
   useEffect(() => {
-    if (window.matchMedia(DESKTOP_MQ).matches) return;
-
-    measure();
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", measure);
-
-    const track = trackRef.current;
+    const mq = window.matchMedia(DESKTOP_MQ);
     let ro: ResizeObserver | undefined;
-    if (track && typeof ResizeObserver !== "undefined") {
-      ro = new ResizeObserver(measure);
-      ro.observe(track);
-    }
+    let active = false;
 
-    return () => {
+    const enable = () => {
+      if (active) return;
+      active = true;
+      measure();
+      updateTransform();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", measure);
+      const track = trackRef.current;
+      if (track && typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(measure);
+        ro.observe(track);
+      }
+    };
+
+    const disable = () => {
+      if (!active) return;
+      active = false;
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", measure);
       cancelAnimationFrame(rafId.current);
       ro?.disconnect();
+      ro = undefined;
     };
-  }, [measure, onScroll]);
+
+    const onChange = (e: MediaQueryListEvent | MediaQueryList) => {
+      if ("matches" in e && e.matches) {
+        disable();
+      } else {
+        enable();
+      }
+    };
+
+    onChange(mq);
+
+    if (mq.addEventListener) {
+      mq.addEventListener("change", onChange as (e: MediaQueryListEvent) => void);
+    } else if (mq.addListener) {
+      mq.addListener(onChange as (e: MediaQueryListEvent) => void);
+    }
+
+    return () => {
+      disable();
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", onChange as (e: MediaQueryListEvent) => void);
+      } else if (mq.removeListener) {
+        mq.removeListener(onChange as (e: MediaQueryListEvent) => void);
+      }
+    };
+  }, [measure, onScroll, updateTransform]);
 
   const handleImageLoad = useCallback(() => {
     measure();
-    // also run one transform update so position is correct
     updateTransform();
   }, [measure, updateTransform]);
 
   return (
     <section className={`block lg:hidden relative bg-[var(--page-bg)] ${className ?? ""}`}>
-      <div ref={wrapperRef} style={{ height: `${wrapperHeight}px` }}>
+      <div ref={wrapperRef} style={{ height: wrapperHeight ? `${wrapperHeight}px` : "100vh" }}>
         <div className="sticky top-0 h-screen overflow-hidden bg-[var(--page-bg)] transform-gpu">
           <div
             ref={trackRef}
