@@ -12,6 +12,22 @@ const clamp = (v: number, min: number, max: number) =>
 
 const DESKTOP_MQ = "(min-width: 1024px)";
 
+const getScrollParent = (el: HTMLElement): HTMLElement | Window => {
+  let node: HTMLElement | null = el.parentElement;
+  while (node) {
+    const style = window.getComputedStyle(node);
+    const overflowY = style.overflowY;
+    if (
+      (overflowY === "auto" || overflowY === "scroll") &&
+      node.scrollHeight > node.clientHeight
+    ) {
+      return node;
+    }
+    node = node.parentElement;
+  }
+  return window;
+};
+
 const FeaturedMediaSection = ({
   src,
   alt,
@@ -25,6 +41,7 @@ const FeaturedMediaSection = ({
   const maxOffsetRef = useRef(0);
   const prevHeight = useRef(0);
   const prevTx = useRef(0);
+  const scrollTargetRef = useRef<HTMLElement | Window | null>(null);
 
   const [wrapperHeight, setWrapperHeight] = useState(
     typeof window !== "undefined" ? window.innerHeight : 1
@@ -89,21 +106,28 @@ const FeaturedMediaSection = ({
     const enable = () => {
       if (active) return;
       active = true;
+      const wrapper = wrapperRef.current;
+      const target = wrapper ? getScrollParent(wrapper) : window;
+      scrollTargetRef.current = target;
       measure();
-      updateTransform();
-      window.addEventListener("scroll", onScroll, { passive: true });
+      target.addEventListener("scroll", onScroll as EventListener, { passive: true });
       window.addEventListener("resize", measure);
       const track = trackRef.current;
       if (track && typeof ResizeObserver !== "undefined") {
         ro = new ResizeObserver(measure);
         ro.observe(track);
       }
+      updateTransform();
     };
 
     const disable = () => {
       if (!active) return;
       active = false;
-      window.removeEventListener("scroll", onScroll);
+      const target = scrollTargetRef.current;
+      if (target) {
+        target.removeEventListener("scroll", onScroll as EventListener);
+      }
+      scrollTargetRef.current = null;
       window.removeEventListener("resize", measure);
       cancelAnimationFrame(rafId.current);
       ro?.disconnect();
