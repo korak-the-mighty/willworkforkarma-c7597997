@@ -1,40 +1,60 @@
 
 
-## Restore Scrolly Sticky Behavior + Correct Height Math
+## Final Chrome Banding Fix
 
-### Problem
-Two previous changes broke the scrolly section:
-1. `sticky` was changed to `relative` on line 226, so the canvas no longer pins during scroll
-2. The wrapper height was changed from `calc(100vh + ${track}px)` to `${track}px`, which is only correct for relative positioning
+### Change 1 -- Shift base background
+**File:** `src/pages/CaseABB.tsx` (line 56)
 
-Both need to be reverted together -- they are a matched pair.
-
-### Changes (src/components/ScrollyVideoSection.tsx only)
-
-**Line 222** -- Restore calc height for sticky:
 ```
 // From:
-style={track ? { height: `${track}px` } : { height: "100vh" }}
+theme={{ bg: "#101010" }}
 // To:
-style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
+theme={{ bg: "#0D0D0D" }}
 ```
 
-**Line 226** -- Restore sticky positioning:
-```
-// From:
-<div className="relative top-0 h-screen transform-gpu">
-// To:
-<div className="sticky top-0 h-screen transform-gpu">
+### Change 2 -- Add noise film overlay
+**File:** `src/index.css`
+
+Append at the end of the file:
+
+```css
+:root {
+  --page-noise-opacity: 0.035;
+}
+
+body::before {
+  content: "";
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 9999 !important;
+  opacity: var(--page-noise-opacity);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.018) 0px,
+      rgba(255,255,255,0.018) 1px,
+      rgba(0,0,0,0.018) 2px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.012) 0px,
+      rgba(255,255,255,0.012) 1px,
+      rgba(0,0,0,0.012) 2px
+    );
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    opacity: 0.02;
+  }
+}
 ```
 
-### Why both changes must go together
-- `sticky` keeps the canvas pinned at `top: 0` while the user scrolls through the wrapper
-- The wrapper must be `100vh + track` tall so there is exactly `track` pixels of scroll travel while the sticky element is pinned
-- With `relative`, the inner div just sits at the top and scrolls away -- no pinning, no frame scrubbing
-- With `sticky` but only `track` height, the wrapper is too short and clips the animation
-
-### Nothing else changes
-- Background classes (`bg-[var(--page-bg)]`) stay as-is
-- `transform-gpu` stays on the sticky container
-- Canvas and full-bleed div unchanged
+### Summary
+- Two files, two minimal changes
+- Noise overlay: fixed, non-interactive (`pointer-events: none`), z-index 9999
+- Reduced-motion fallback included
+- After publish, hard-refresh Chrome on `/work/abb-emobility` to confirm banding is resolved
 
