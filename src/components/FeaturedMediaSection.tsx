@@ -223,7 +223,7 @@ const FeaturedMediaSection = ({
         <div className="sticky top-0 h-screen overflow-hidden bg-[var(--page-bg)] transform-gpu">
           <div
             ref={trackRef}
-            className="h-full flex"
+            className="h-full flex flex-nowrap w-max"
             style={{
               transform: `translateX(-${translateX}px)`,
               willChange: "transform",
@@ -232,10 +232,10 @@ const FeaturedMediaSection = ({
             <img
               src={src}
               alt={alt}
-              className="h-full w-auto max-w-none shrink-0 object-contain"
+              className="h-full w-auto object-contain shrink-0 max-w-none"
               draggable={false}
               onLoad={handleImageLoad}
-              style={forceMinWidth}
+              style={{ maxWidth: "none", ...(forceMinWidth || {}) }}
             />
           </div>
         </div>
