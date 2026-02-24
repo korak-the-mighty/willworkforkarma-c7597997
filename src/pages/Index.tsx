@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section className="py-[160px] md:py-[200px] px-6 text-center">
+  <section style={{ paddingTop: 200, paddingBottom: 200 }} className="px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
