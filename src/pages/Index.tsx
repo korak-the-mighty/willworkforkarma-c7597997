@@ -72,23 +72,21 @@ const Index = () => (
           />
         )}
         <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
-          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center">
-            <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
-              {abb.title}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
+          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
+            <h2 className="font-heading text-2xl md:text-4xl tracking-tight text-white font-light">
+              Building the digital brand foundation of a global e&#8209;mobility leader.
             </h2>
-            <div className="mt-4 flex gap-4 justify-center">
-              {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
-              {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
-              <span className="text-sm text-white/50">{abb.year}</span>
-            </div>
+            <p className="mt-4 text-[13px] uppercase tracking-[0.12em] font-heading text-white/60">
+              ABB E&#8209;mobility · Brand &amp; Digital
+            </p>
           </div>
         </div>
       </div>
       {/* Mobile info */}
       <div className="md:hidden px-6 py-6 space-y-1">
-        {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
-        <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
+        <p className="font-heading text-xl tracking-tight text-white font-light">Building the digital brand foundation of a global e&#8209;mobility leader.</p>
+        <p className="text-[13px] uppercase tracking-[0.12em] font-heading text-muted-foreground mt-3">ABB E&#8209;mobility · Brand &amp; Digital</p>
       </div>
     </Link>
 
@@ -96,22 +94,22 @@ const Index = () => (
     <Statement>I help clients and teams see what actually matters.</Statement>
 
     {/* ── 4. SHARE ── */}
-    <EditorialCase slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
+    <EditorialCase slug={share.slug} title={share.title} heroHeadline="Making &quot;helping&quot; the most desirable product on the shelf." year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
 
     {/* ── 5. STATEMENT 2 ── */}
     <Statement>I turn complexity into clear direction and action.</Statement>
 
     {/* ── 6. MAN ── */}
-    <EditorialCase slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
+    <EditorialCase slug={man.slug} title={man.title} heroHeadline="A complete digital launch for the first MAN van." year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
 
     {/* ── 7. STATEMENT 3 ── */}
     <Statement>I inspire and lead creative work with relentless passion.</Statement>
 
     {/* ── 8. BMW ── */}
-    <EditorialCase slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
+    <EditorialCase slug={bmw.slug} title={bmw.title} heroHeadline="Staying ahead, globally." year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
 
     {/* ── 9. DRIVELOG ── */}
-    <EditorialCase slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left" />
+    <EditorialCase slug={drivelog.slug} title={drivelog.title} heroHeadline="Making your car talk to you." year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left" />
 
     {/* ── 10. SEE ALL ── */}
     <section className="py-16 md:py-24 text-center">
