@@ -13,8 +13,8 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section style={{ paddingTop: 200, paddingBottom: 200 }} className="px-6 text-center">
-    <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
+  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: "#05060A" }} className="px-6 text-center">
+    <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto text-white">
       {children}
     </h2>
   </section>
@@ -43,7 +43,7 @@ const Blob = ({ label }: { label: string }) => (
 );
 
 const Index = () => (
-  <Layout fullWidth>
+  <Layout fullWidth theme={{ bg: "#06070D" }}>
     {/* ── 1. HERO ── */}
     <section className="relative min-h-screen w-full">
       <img
@@ -114,7 +114,7 @@ const Index = () => (
 
     {/* ── 10. SEE ALL ── */}
     <section className="py-16 md:py-24 text-center">
-      <Link to="/work" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">
+      <Link to="/work" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">
         See all of my work
       </Link>
     </section>
@@ -127,25 +127,27 @@ const Index = () => (
           <div className="w-64 md:w-80 rounded-full overflow-hidden">
             <img src={profileImg} alt="Henrik Lehtikangas" className="w-full h-auto aspect-square object-cover" />
           </div>
-          <div className="flex gap-3 flex-wrap mt-6 md:mt-8 justify-center md:justify-start">
-            <Blob label="Brand" />
-            <Blob label="Product" />
-            <Blob label="Campaign" />
+          {/* Blobs — positioned below/overlapping bottom of portrait */}
+          <div className="relative w-64 md:w-80 -mt-8 md:-mt-10">
+            <div className="flex flex-wrap justify-center md:justify-start gap-x-2 gap-y-3" style={{ paddingLeft: 8 }}>
+              <Blob label="Brand" />
+              <Blob label="Product" />
+            </div>
+            <div className="flex justify-center md:justify-start mt-3" style={{ paddingLeft: 40 }}>
+              <Blob label="Campaign" />
+            </div>
           </div>
         </div>
         {/* Right — Copy */}
         <div className="space-y-6">
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight">Henrik</h2>
-          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white">Henrik</h2>
+          <p className="text-base text-white/70 leading-relaxed max-w-lg">
             I'm a creative director working through vision, taste, and clarity.
-            I help teams see what actually matters — and turn that into work that feels confident, intentional, and real.
-          </p>
-          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
-            That can mean creating a new brand, sharpening a creative team's focus, building a pragmatic, pixel-precise product, or running wild with campaign ideas — always in service of something clear and meaningful.
+            I help teams see what actually matters.
           </p>
           <div className="flex gap-8 pt-2">
-            <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
-            <Link to="/contact" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">Contact me</Link>
+            <Link to="/about" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">More about me</Link>
+            <Link to="/contact" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">Contact me</Link>
           </div>
         </div>
       </div>
@@ -153,7 +155,7 @@ const Index = () => (
 
     {/* ── 12. KARMA ── */}
     <section className="py-16 md:py-24 px-6 md:px-8">
-      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
+      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-white leading-relaxed">
         <p>I try to be decent, curious, and honest.</p>
         <p>I care deeply about the work — and the people doing it.</p>
         <p>Somehow, that keeps coming back.</p>

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import OverlayMenu from "@/components/OverlayMenu";
 
 const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
-  <header className="absolute top-0 left-0 right-0 z-40">
+  <header className="fixed top-0 left-0 right-0 z-40">
     <div className="flex items-center justify-between px-6 py-6">
       <Link to="/" className="font-heading text-lg tracking-tight">
         Henrik Lehtikangas
