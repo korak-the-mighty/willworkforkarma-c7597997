@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
-import profileImg from "@/assets/HenrikLehtikangas-profile_picture.webp";
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section style={{ paddingTop: 200, paddingBottom: 200 }} className="px-6 text-center">
+  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: '#05060A' }} className="px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -21,147 +21,208 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 );
 
 /* ─── About blob ─── */
-const Blob = ({ label }: { label: string }) => (
-  <span
-    className="inline-block rounded-full px-6 py-3 text-sm font-heading bg-[hsl(var(--rose-blob))] text-[hsl(var(--rose-blob-foreground))] transition-all select-none cursor-default"
-    style={{ transitionDuration: "260ms", transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)" }}
-    onMouseEnter={(e) => {
-      const el = e.currentTarget;
-      el.style.transform = "translateY(-3px) scale(1.02)";
-      el.style.filter = "brightness(1.05)";
-      el.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
+const BlobImg = ({
+  src,
+  alt,
+  className,
+  onHoverChange,
+  onClick,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  onHoverChange: (hovering: boolean) => void;
+  onClick: () => void;
+}) => (
+  <div
+    className={`cursor-pointer relative ${className ?? ""}`}
+    onMouseEnter={() => onHoverChange(true)}
+    onMouseLeave={() => onHoverChange(false)}
+    onClick={onClick}
+    style={{ transition: "transform 300ms ease" }}
+    onMouseOver={(e) => {
+      (e.currentTarget as HTMLElement).style.transform = "scale(1.03)";
     }}
-    onMouseLeave={(e) => {
-      const el = e.currentTarget;
-      el.style.transform = "";
-      el.style.filter = "";
-      el.style.boxShadow = "";
+    onMouseOut={(e) => {
+      (e.currentTarget as HTMLElement).style.transform = "scale(1)";
     }}
   >
-    {label}
-  </span>
+    <img src={src} alt={alt} className="w-full h-full" draggable={false} />
+    <div
+      className="absolute inset-0 pointer-events-none rounded-full"
+      style={{ backgroundColor: "rgba(236,169,204,0.15)", opacity: 0, transition: "opacity 300ms ease" }}
+      ref={(el) => {
+        if (!el) return;
+        const parent = el.parentElement!;
+        parent.addEventListener("mouseenter", () => { el.style.opacity = "1"; });
+        parent.addEventListener("mouseleave", () => { el.style.opacity = "0"; });
+      }}
+    />
+  </div>
 );
 
-const Index = () => (
-  <Layout fullWidth>
-    {/* ── 1. HERO ── */}
-    <section className="relative min-h-screen w-full">
-      <img
-        src={heroImg}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]"
-      />
-      <div className="absolute inset-0 bg-black/20" />
-      <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
-        <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center">
-          I push vision, clarity
-          <br className="hidden md:block" /> and creative confidence.
-        </h1>
-      </div>
-    </section>
+const Index = () => {
+  const [blobHovered, setBlobHovered] = useState(false);
+  const navigate = useNavigate();
 
-    {/* ── 2. HERO PROJECT: ABB ── */}
-    <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
-      <div className="relative min-h-[70vh] overflow-hidden">
-      {abb.coverImage && (
-          <img
-            src={abb.coverImage}
-            alt={abb.title}
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
-          />
-        )}
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
-          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center">
-            <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
-              {abb.title}
-            </h2>
-            <div className="mt-4 flex gap-4 justify-center">
-              {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
-              {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
-              <span className="text-sm text-white/50">{abb.year}</span>
+  return (
+    <Layout fullWidth theme={{ bg: "#06070D" }}>
+      {/* ── 1. HERO ── */}
+      <section className="relative min-h-screen w-full">
+        <img
+          src={heroImg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]"
+        />
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center">
+            I push vision, clarity
+            <br className="hidden md:block" /> and creative confidence.
+          </h1>
+        </div>
+      </section>
+
+      {/* ── 2. HERO PROJECT: ABB ── */}
+      <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
+        <div className="relative min-h-[70vh] overflow-hidden">
+          {abb.coverImage && (
+            <img
+              src={abb.coverImage}
+              alt={abb.title}
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out"
+            />
+          )}
+          <div className="absolute inset-0 bg-black/30" />
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
+            <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
+              <h2 className="font-heading text-2xl md:text-3xl tracking-tight text-white font-light">
+                Building the digital brand foundation of a global e-mobility leader.
+              </h2>
+              <p className="mt-4 text-xs uppercase tracking-widest text-white/60">
+                ABB E-mobility · Brand &amp; Digital
+              </p>
             </div>
           </div>
         </div>
-      </div>
-      {/* Mobile info */}
-      <div className="md:hidden px-6 py-6 space-y-1">
-        {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
-        <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
-      </div>
-    </Link>
-
-    {/* ── 3. STATEMENT 1 ── */}
-    <Statement>I help clients and teams see what actually matters.</Statement>
-
-    {/* ── 4. SHARE ── */}
-    <EditorialCase slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
-
-    {/* ── 5. STATEMENT 2 ── */}
-    <Statement>I turn complexity into clear direction and action.</Statement>
-
-    {/* ── 6. MAN ── */}
-    <EditorialCase slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
-
-    {/* ── 7. STATEMENT 3 ── */}
-    <Statement>I inspire and lead creative work with relentless passion.</Statement>
-
-    {/* ── 8. BMW ── */}
-    <EditorialCase slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
-
-    {/* ── 9. DRIVELOG ── */}
-    <EditorialCase slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left" />
-
-    {/* ── 10. SEE ALL ── */}
-    <section className="py-16 md:py-24 text-center">
-      <Link to="/work" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">
-        See all of my work
+        {/* Mobile info */}
+        <div className="md:hidden px-6 py-6 space-y-1">
+          {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
+          <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
+        </div>
       </Link>
-    </section>
 
-    {/* ── 11. ABOUT ── */}
-    <section className="py-24 md:py-32 px-6 md:px-16">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-        {/* Left — Portrait + Blobs */}
-        <div className="relative flex flex-col items-center md:items-start">
-          <div className="w-64 md:w-80 rounded-full overflow-hidden">
-            <img src={profileImg} alt="Henrik Lehtikangas" className="w-full h-auto aspect-square object-cover" />
+      {/* ── 3. STATEMENT 1 ── */}
+      <Statement>I help clients and teams see what actually matters.</Statement>
+
+      {/* ── 4. SHARE ── */}
+      <EditorialCase
+        slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
+        heroHeadline="Making 'helping' the most desirable product on the shelf."
+        supportingText="SHARE · Brand"
+      />
+
+      {/* ── 5. STATEMENT 2 ── */}
+      <Statement>I turn complexity into clear direction and action.</Statement>
+
+      {/* ── 6. MAN ── */}
+      <EditorialCase
+        slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
+        heroHeadline="A focused digital presence for a global transport brand."
+        supportingText="MAN · Brand & Digital"
+      />
+
+      {/* ── 7. STATEMENT 3 ── */}
+      <Statement>I inspire and lead creative work with relentless passion.</Statement>
+
+      {/* ── 8. BMW ── */}
+      <EditorialCase
+        slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
+        heroHeadline="Staying ahead, globally."
+        supportingText="BMW · Campaign"
+      />
+
+      {/* ── 9. DRIVELOG ── */}
+      <EditorialCase
+        slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
+        heroHeadline="From idea to product — a pragmatic mobility solution."
+        supportingText="DRIVELOG · Product"
+      />
+
+      {/* ── 10. SEE ALL ── */}
+      <section className="py-16 md:py-24 text-center">
+        <Link to="/work" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">
+          See all of my work
+        </Link>
+      </section>
+
+      {/* ── 11. ABOUT ── */}
+      <section className="py-24 md:py-32 px-6 md:px-16">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+          {/* Left — Portrait + Blobs */}
+          <div className="relative">
+            <div className="w-64 md:w-80">
+              <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
+            </div>
+            {/* Blobs clustered bottom-left */}
+            <div className="relative mt-4 w-64 md:w-80 h-32">
+              <BlobImg
+                src="/blob-brand.svg" alt="Brand"
+                className="absolute bottom-0 left-0 w-20 md:w-24"
+                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+              />
+              <BlobImg
+                src="/blob-product.svg" alt="Product"
+                className="absolute top-0 left-16 md:left-20 w-20 md:w-24"
+                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+              />
+              <BlobImg
+                src="/blob-campaign.svg" alt="Campaign"
+                className="absolute bottom-0 left-10 md:left-12 w-20 md:w-24"
+                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+              />
+            </div>
           </div>
-          <div className="flex gap-3 flex-wrap mt-6 md:mt-8 justify-center md:justify-start">
-            <Blob label="Brand" />
-            <Blob label="Product" />
-            <Blob label="Campaign" />
+          {/* Right — Copy */}
+          <div className="space-y-6">
+            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+              A brand from scratch? A campaign platform? That app idea you've been sitting on?
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+              I've been shaping visions into real brands for over twenty years.
+            </p>
+            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+              I'm ready to get excited about yours.
+            </p>
+            <p className="text-base leading-relaxed max-w-lg">
+              <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
+            </p>
+            <div className="flex gap-8 pt-2">
+              <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
+              <Link
+                to="/contact"
+                className="arrow-link text-sm transition-colors"
+                style={{ color: blobHovered ? "#ECA9CC" : undefined }}
+              >
+                Contact me
+              </Link>
+            </div>
           </div>
         </div>
-        {/* Right — Copy */}
-        <div className="space-y-6">
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight">Henrik</h2>
-          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
-            I'm a creative director working through vision, taste, and clarity.
-            I help teams see what actually matters — and turn that into work that feels confident, intentional, and real.
-          </p>
-          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
-            That can mean creating a new brand, sharpening a creative team's focus, building a pragmatic, pixel-precise product, or running wild with campaign ideas — always in service of something clear and meaningful.
-          </p>
-          <div className="flex gap-8 pt-2">
-            <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
-            <Link to="/contact" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">Contact me</Link>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    {/* ── 12. KARMA ── */}
-    <section className="py-16 md:py-24 px-6 md:px-8">
-      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
-        <p>I try to be decent, curious, and honest.</p>
-        <p>I care deeply about the work — and the people doing it.</p>
-        <p>Somehow, that keeps coming back.</p>
-        <p className="py-4">———</p>
-        <p>That's why I work for karma.</p>
-      </div>
-    </section>
-  </Layout>
-);
+      {/* ── 12. KARMA ── */}
+      <section className="py-16 md:py-24 px-6 md:px-8">
+        <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
+          <p>I try to be decent, curious, and honest.</p>
+          <p>I care deeply about the work — and the people doing it.</p>
+          <p>Somehow, that keeps coming back.</p>
+          <p className="py-4">———</p>
+          <p>That's why I work for karma.</p>
+        </div>
+      </section>
+    </Layout>
+  );
+};
 
 export default Index;

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import OverlayMenu from "@/components/OverlayMenu";
 
 const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
-  <header className="absolute top-0 left-0 right-0 z-40">
+  <header className="fixed top-0 left-0 right-0 z-40">
     <div className="flex items-center justify-between px-6 py-6">
       <Link to="/" className="font-heading text-lg tracking-tight">
         Henrik Lehtikangas
@@ -25,7 +25,7 @@ const Footer = ({ theme }: { theme?: { bg: string } }) => (
     <div className="mx-auto max-w-7xl px-6 md:px-8">
       <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
         <p className={`font-heading text-lg md:text-xl tracking-tight ${theme ? "text-white" : ""}`}>
-          {theme ? "I'm available for work." : "Let's talk."}
+          Let's talk.
         </p>
         <div className="flex gap-8 text-sm">
           <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
