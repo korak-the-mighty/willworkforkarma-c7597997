@@ -57,15 +57,19 @@ const Index = () => (
           I push vision, clarity
           <br className="hidden md:block" /> and creative confidence.
         </h1>
-        <p className="text-sm md:text-base text-white/60 mt-6 tracking-widest">
-          — Henrik Lehtikangas
-        </p>
       </div>
     </section>
 
     {/* ── 2. HERO PROJECT: ABB ── */}
     <Link to={`/work/${abb.slug}`} className="group block relative w-full">
       <div className="relative min-h-[70vh] overflow-hidden">
+      {abb.coverImage && (
+          <img
+            src={abb.coverImage}
+            alt={abb.title}
+            className="absolute inset-0 w-full h-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+          />
+        )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
           <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
