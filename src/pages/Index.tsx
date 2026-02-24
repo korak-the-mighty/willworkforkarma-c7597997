@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section className="py-32 md:py-40 px-6 text-center">
+  <section className="py-[120px] md:py-[160px] px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -67,7 +67,7 @@ const Index = () => (
           <img
             src={abb.coverImage}
             alt={abb.title}
-            className="absolute inset-0 w-full h-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
           />
         )}
         <div className="absolute inset-0 bg-black/30" />
