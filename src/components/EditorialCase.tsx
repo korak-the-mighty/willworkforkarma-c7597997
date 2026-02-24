@@ -31,13 +31,13 @@ const EditorialCase = ({ slug, title, heroHeadline, year, area, subline, imageAl
             <img
               src={coverImage}
               alt={title}
-              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
+              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-600 ease-in-out"
             />
           )}
         </div>
         {/* Text half — centered in the empty side */}
         <div
-          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center px-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out`}
+          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center px-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-600 ease-in-out`}
         >
           <h2 className="font-heading text-3xl lg:text-5xl tracking-tight text-foreground font-light text-center max-w-md">
             {heroHeadline}

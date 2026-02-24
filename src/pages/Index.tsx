@@ -68,12 +68,12 @@ const Index = () => (
           <img
             src={abb.coverImage}
             alt={abb.title}
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-600 ease-in-out"
           />
         )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
-          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
+          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-600 ease-in-out flex flex-col items-center max-w-2xl">
             <h2 className="font-heading text-2xl md:text-4xl tracking-tight text-white font-light">
               Building the digital brand foundation of a global e&#8209;mobility leader.
             </h2>

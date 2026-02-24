@@ -14,7 +14,7 @@ const CaseCard = ({ caseData }: CaseCardProps) => (
           <img
             src={caseData.coverImage}
             alt={caseData.title}
-            className="w-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+            className="w-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-400"
             style={{ aspectRatio: "3/2" }}
           />
         ) : (
