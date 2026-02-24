@@ -30,23 +30,21 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
             <img
               src={coverImage}
               alt={title}
-              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-[400ms]"
+              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
             />
           )}
         </div>
         {/* Text half — centered in the empty side */}
         <div
-          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center pointer-events-none`}
+          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out`}
         >
           <h2 className="font-heading text-6xl lg:text-8xl tracking-tight text-foreground">
             {title}
           </h2>
-          <div className="mt-4 flex flex-col items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-[400ms]">
-            {subline && <p className="text-sm text-muted-foreground">{subline}</p>}
-            <div className="flex items-center gap-4">
-              {area && <span className="text-sm text-muted-foreground">{area}</span>}
-              <span className="text-sm text-muted-foreground">{year}</span>
-            </div>
+          {subline && <p className="mt-4 text-sm text-muted-foreground">{subline}</p>}
+          <div className="mt-1 flex items-center gap-4">
+            {area && <span className="text-sm text-muted-foreground">{area}</span>}
+            <span className="text-sm text-muted-foreground">{year}</span>
           </div>
         </div>
       </div>

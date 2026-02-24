@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section className="py-[120px] md:py-[160px] px-6 text-center">
+  <section className="py-[160px] md:py-[200px] px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -67,19 +67,20 @@ const Index = () => (
           <img
             src={abb.coverImage}
             alt={abb.title}
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
           />
         )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
-          <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
-            {abb.title}
-          </h2>
-          {/* Desktop hover reveal */}
-          <div className="hidden md:flex mt-4 gap-4 justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
-            {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
-            <span className="text-sm text-white/50">{abb.year}</span>
+          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center">
+            <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
+              {abb.title}
+            </h2>
+            <div className="mt-4 flex gap-4 justify-center">
+              {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
+              {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
+              <span className="text-sm text-white/50">{abb.year}</span>
+            </div>
           </div>
         </div>
       </div>
