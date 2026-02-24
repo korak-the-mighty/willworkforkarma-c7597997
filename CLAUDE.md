@@ -66,3 +66,7 @@ Runs on port **8080**. HMR overlay is disabled. The `lovable-tagger` plugin is a
 ### Background debug tool
 
 Append `?bgdebug=1` to any case URL to highlight elements with unexpected background colors (helps diagnose color-banding issues on case pages).
+
+### FeaturedMediaSection
+
+`src/components/FeaturedMediaSection.tsx` — scroll-driven horizontal pan on mobile. On mobile only (`md:hidden`), a `200vh` container with a sticky viewport-height window. Vertical scroll progress drives `translateX` on the image from `0` to `-(imageWidth - viewportWidth)`. Desktop shows full-bleed `object-cover` at `h-[900px]`. Do not modify this component without understanding this mechanic.
