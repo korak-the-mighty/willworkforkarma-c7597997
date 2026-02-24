@@ -4,13 +4,14 @@ import { cases } from "@/data/cases";
 interface EditorialCaseProps {
   slug: string;
   title: string;
+  heroHeadline: string;
   year: number;
   area?: string;
   subline?: string;
   imageAlign: "left" | "right";
 }
 
-const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: EditorialCaseProps) => {
+const EditorialCase = ({ slug, title, heroHeadline, year, area, subline, imageAlign }: EditorialCaseProps) => {
   const caseData = cases.find((c) => c.slug === slug);
   const coverImage = caseData?.coverImage;
 
@@ -36,16 +37,14 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
         </div>
         {/* Text half — centered in the empty side */}
         <div
-          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out`}
+          className={`absolute top-0 bottom-0 w-1/2 ${textHalf} z-10 flex flex-col items-center justify-center px-8 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out`}
         >
-          <h2 className="font-heading text-6xl lg:text-8xl tracking-tight text-foreground">
-            {title}
+          <h2 className="font-heading text-3xl lg:text-5xl tracking-tight text-foreground font-light text-center max-w-md">
+            {heroHeadline}
           </h2>
-          {subline && <p className="mt-4 text-sm text-muted-foreground">{subline}</p>}
-          <div className="mt-1 flex items-center gap-4">
-            {area && <span className="text-sm text-muted-foreground">{area}</span>}
-            <span className="text-sm text-muted-foreground">{year}</span>
-          </div>
+          <p className="mt-4 text-[13px] uppercase tracking-[0.12em] font-heading text-muted-foreground">
+            {title} · {area}
+          </p>
         </div>
       </div>
 
@@ -61,12 +60,10 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
           )}
         </div>
         <div className="px-6 py-8">
-          <h2 className="font-heading text-4xl tracking-tight text-foreground">{title}</h2>
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            {subline && <p>{subline}</p>}
-            {area && <span>{area}</span>}
-            <span>{year}</span>
-          </div>
+          <h2 className="font-heading text-2xl tracking-tight text-foreground font-light">{heroHeadline}</h2>
+          <p className="mt-3 text-[13px] uppercase tracking-[0.12em] font-heading text-muted-foreground">
+            {title} · {area}
+          </p>
         </div>
       </div>
     </Link>
