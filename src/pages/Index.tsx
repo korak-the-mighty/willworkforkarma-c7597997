@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
-import profileImg from "@/assets/HenrikLehtikangas-profile_picture.webp";
+
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -21,25 +21,26 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 );
 
 /* ─── About blob ─── */
-const Blob = ({ label }: { label: string }) => (
-  <span
-    className="inline-block rounded-full px-6 py-3 text-sm font-heading bg-[hsl(var(--rose-blob))] text-[hsl(var(--rose-blob-foreground))] transition-all select-none cursor-default"
+const Blob = ({ label, src, className = "" }: { label: string; src: string; className?: string }) => (
+  <div
+    className={`absolute select-none cursor-default transition-all ${className}`}
     style={{ transitionDuration: "260ms", transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)" }}
     onMouseEnter={(e) => {
       const el = e.currentTarget;
       el.style.transform = "translateY(-3px) scale(1.02)";
       el.style.filter = "brightness(1.05)";
-      el.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
     }}
     onMouseLeave={(e) => {
       const el = e.currentTarget;
       el.style.transform = "";
       el.style.filter = "";
-      el.style.boxShadow = "";
     }}
   >
-    {label}
-  </span>
+    <img src={src} alt="" className="w-full h-full" />
+    <span className="absolute inset-0 flex items-center justify-center text-sm font-heading text-[hsl(var(--rose-blob-foreground))]">
+      {label}
+    </span>
+  </div>
 );
 
 const Index = () => (
@@ -124,18 +125,12 @@ const Index = () => (
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
         {/* Left — Portrait + Blobs */}
         <div className="relative flex flex-col items-center md:items-start">
-          <div className="w-64 md:w-80 rounded-full overflow-hidden">
-            <img src={profileImg} alt="Henrik Lehtikangas" className="w-full h-auto aspect-square object-cover" />
-          </div>
-          {/* Blobs — positioned below/overlapping bottom of portrait */}
-          <div className="relative w-64 md:w-80 -mt-8 md:-mt-10">
-            <div className="flex flex-wrap justify-center md:justify-start gap-x-2 gap-y-3" style={{ paddingLeft: 8 }}>
-              <Blob label="Brand" />
-              <Blob label="Product" />
-            </div>
-            <div className="flex justify-center md:justify-start mt-3" style={{ paddingLeft: 40 }}>
-              <Blob label="Campaign" />
-            </div>
+          <div className="relative w-64 md:w-80">
+            <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
+            {/* Blobs clustered at bottom-left of portrait */}
+            <Blob label="Brand" src="/blob-brand.svg" className="w-24 md:w-28 bottom-2 -left-4 md:-left-6" />
+            <Blob label="Product" src="/blob-product.svg" className="w-28 md:w-32 bottom-16 left-12 md:left-14" />
+            <Blob label="Campaign" src="/blob-campaign.svg" className="w-26 md:w-30 -bottom-4 left-6 md:left-8" />
           </div>
         </div>
         {/* Right — Copy */}
