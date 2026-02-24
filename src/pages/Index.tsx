@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: '#05060A' }} className="px-6 text-center">
+  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: '#080808' }} className="px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -66,7 +66,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <Layout fullWidth theme={{ bg: "#06070D" }}>
+    <Layout fullWidth theme={{ bg: "#0A0A0A" }}>
       {/* ── 1. HERO ── */}
       <section className="relative min-h-screen w-full">
         <img
