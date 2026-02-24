@@ -61,7 +61,7 @@ const Index = () => (
     </section>
 
     {/* ── 2. HERO PROJECT: ABB ── */}
-    <Link to={`/work/${abb.slug}`} className="group block relative w-full">
+    <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
       <div className="relative min-h-[70vh] overflow-hidden">
       {abb.coverImage && (
           <img

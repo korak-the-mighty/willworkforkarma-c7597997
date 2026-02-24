@@ -17,7 +17,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign }: Editori
   const textHalf = imageAlign === "right" ? "left-0" : "right-0";
 
   return (
-    <Link to={`/work/${slug}`} className="group block relative">
+    <Link to={`/work/${slug}`} className="group block relative overflow-hidden">
       {/* Desktop layout */}
       <div className="hidden md:block relative min-h-[70vh] overflow-hidden">
         {/* Image half — flush to viewport edge */}
