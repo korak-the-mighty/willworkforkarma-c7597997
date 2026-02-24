@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
-
+import profileImg from "@/assets/HenrikLehtikangas-profile_picture.webp";
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -13,38 +13,37 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: "#05060A" }} className="px-6 text-center">
-    <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto text-white">
+  <section style={{ paddingTop: 200, paddingBottom: 200 }} className="px-6 text-center">
+    <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
   </section>
 );
 
 /* ─── About blob ─── */
-const Blob = ({ label, src, className = "" }: { label: string; src: string; className?: string }) => (
-  <div
-    className={`absolute select-none cursor-default transition-all ${className}`}
+const Blob = ({ label }: { label: string }) => (
+  <span
+    className="inline-block rounded-full px-6 py-3 text-sm font-heading bg-[hsl(var(--rose-blob))] text-[hsl(var(--rose-blob-foreground))] transition-all select-none cursor-default"
     style={{ transitionDuration: "260ms", transitionTimingFunction: "cubic-bezier(.2,.8,.2,1)" }}
     onMouseEnter={(e) => {
       const el = e.currentTarget;
       el.style.transform = "translateY(-3px) scale(1.02)";
       el.style.filter = "brightness(1.05)";
+      el.style.boxShadow = "0 4px 12px rgba(0,0,0,0.08)";
     }}
     onMouseLeave={(e) => {
       const el = e.currentTarget;
       el.style.transform = "";
       el.style.filter = "";
+      el.style.boxShadow = "";
     }}
   >
-    <img src={src} alt="" className="w-full h-full" />
-    <span className="absolute inset-0 flex items-center justify-center text-sm font-heading text-[hsl(var(--rose-blob-foreground))]">
-      {label}
-    </span>
-  </div>
+    {label}
+  </span>
 );
 
 const Index = () => (
-  <Layout fullWidth theme={{ bg: "#06070D" }}>
+  <Layout fullWidth>
     {/* ── 1. HERO ── */}
     <section className="relative min-h-screen w-full">
       <img
@@ -68,25 +67,27 @@ const Index = () => (
           <img
             src={abb.coverImage}
             alt={abb.title}
-            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-600 ease-in-out"
+            className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[600ms] ease-in-out"
           />
         )}
         <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6">
-          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-600 ease-in-out flex flex-col items-center max-w-2xl">
-            <h2 className="font-heading text-2xl md:text-4xl tracking-tight text-white font-light">
-              Building the digital brand foundation of a global e&#8209;mobility leader.
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center">
+          <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center">
+            <h2 className="font-heading text-4xl md:text-6xl tracking-tight text-white">
+              {abb.title}
             </h2>
-            <p className="mt-4 text-[13px] uppercase tracking-[0.12em] font-heading text-white/60">
-              ABB E&#8209;mobility · Brand &amp; Digital
-            </p>
+            <div className="mt-4 flex gap-4 justify-center">
+              {abb.subline && <p className="text-sm text-white/70">{abb.subline}</p>}
+              {abb.area && <span className="text-sm text-white/50">{abb.area}</span>}
+              <span className="text-sm text-white/50">{abb.year}</span>
+            </div>
           </div>
         </div>
       </div>
       {/* Mobile info */}
       <div className="md:hidden px-6 py-6 space-y-1">
-        <p className="font-heading text-xl tracking-tight text-white font-light">Building the digital brand foundation of a global e&#8209;mobility leader.</p>
-        <p className="text-[13px] uppercase tracking-[0.12em] font-heading text-muted-foreground mt-3">ABB E&#8209;mobility · Brand &amp; Digital</p>
+        {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
+        <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
       </div>
     </Link>
 
@@ -94,26 +95,26 @@ const Index = () => (
     <Statement>I help clients and teams see what actually matters.</Statement>
 
     {/* ── 4. SHARE ── */}
-    <EditorialCase slug={share.slug} title={share.title} heroHeadline="Making &quot;helping&quot; the most desirable product on the shelf." year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
+    <EditorialCase slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right" />
 
     {/* ── 5. STATEMENT 2 ── */}
     <Statement>I turn complexity into clear direction and action.</Statement>
 
     {/* ── 6. MAN ── */}
-    <EditorialCase slug={man.slug} title={man.title} heroHeadline="A complete digital launch for the first MAN van." year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
+    <EditorialCase slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left" />
 
     {/* ── 7. STATEMENT 3 ── */}
     <Statement>I inspire and lead creative work with relentless passion.</Statement>
 
     {/* ── 8. BMW ── */}
-    <EditorialCase slug={bmw.slug} title={bmw.title} heroHeadline="Staying ahead, globally." year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
+    <EditorialCase slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right" />
 
     {/* ── 9. DRIVELOG ── */}
-    <EditorialCase slug={drivelog.slug} title={drivelog.title} heroHeadline="Making your car talk to you." year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left" />
+    <EditorialCase slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left" />
 
     {/* ── 10. SEE ALL ── */}
     <section className="py-16 md:py-24 text-center">
-      <Link to="/work" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">
+      <Link to="/work" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">
         See all of my work
       </Link>
     </section>
@@ -123,24 +124,28 @@ const Index = () => (
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
         {/* Left — Portrait + Blobs */}
         <div className="relative flex flex-col items-center md:items-start">
-          <div className="relative w-64 md:w-80">
-            <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
-            {/* Blobs clustered at bottom-left of portrait */}
-            <Blob label="Brand" src="/blob-brand.svg" className="w-24 md:w-28 bottom-2 -left-4 md:-left-6" />
-            <Blob label="Product" src="/blob-product.svg" className="w-28 md:w-32 bottom-16 left-12 md:left-14" />
-            <Blob label="Campaign" src="/blob-campaign.svg" className="w-26 md:w-30 -bottom-4 left-6 md:left-8" />
+          <div className="w-64 md:w-80 rounded-full overflow-hidden">
+            <img src={profileImg} alt="Henrik Lehtikangas" className="w-full h-auto aspect-square object-cover" />
+          </div>
+          <div className="flex gap-3 flex-wrap mt-6 md:mt-8 justify-center md:justify-start">
+            <Blob label="Brand" />
+            <Blob label="Product" />
+            <Blob label="Campaign" />
           </div>
         </div>
         {/* Right — Copy */}
         <div className="space-y-6">
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white">Henrik</h2>
-          <p className="text-base text-white/70 leading-relaxed max-w-lg">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight">Henrik</h2>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
             I'm a creative director working through vision, taste, and clarity.
-            I help teams see what actually matters.
+            I help teams see what actually matters — and turn that into work that feels confident, intentional, and real.
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            That can mean creating a new brand, sharpening a creative team's focus, building a pragmatic, pixel-precise product, or running wild with campaign ideas — always in service of something clear and meaningful.
           </p>
           <div className="flex gap-8 pt-2">
-            <Link to="/about" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">More about me</Link>
-            <Link to="/contact" className="arrow-link text-sm text-white/50 hover:text-[#ECA9CC] transition-colors">Contact me</Link>
+            <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
+            <Link to="/contact" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">Contact me</Link>
           </div>
         </div>
       </div>
@@ -148,7 +153,7 @@ const Index = () => (
 
     {/* ── 12. KARMA ── */}
     <section className="py-16 md:py-24 px-6 md:px-8">
-      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-white leading-relaxed">
+      <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
         <p>I try to be decent, curious, and honest.</p>
         <p>I care deeply about the work — and the people doing it.</p>
         <p>Somehow, that keeps coming back.</p>
@@ -160,4 +165,3 @@ const Index = () => (
 );
 
 export default Index;
-
