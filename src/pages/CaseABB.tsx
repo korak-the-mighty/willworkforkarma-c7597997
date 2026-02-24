@@ -176,13 +176,11 @@ const CaseABB = () => {
             </div>
           </div>
 
-          <div className={`${FULL_BLEED} mt-32 md:mt-40 overflow-hidden`}>
-            <img
-              src={decisionImg}
-              alt="ABB E-mobility brand system"
-              className={`h-full w-full object-cover ${MEDIA_HOVER}`}
-            />
-          </div>
+          <FeaturedMediaSection
+            src={decisionImg}
+            alt="ABB E-mobility brand system"
+            className={`${FULL_BLEED} mt-32 md:mt-40`}
+          />
         </section>
 
         {/* ═══════════════ EXECUTION ═══════════════ */}
@@ -281,9 +279,12 @@ const CaseABB = () => {
             </div>
           </div>
 
-          {/* Featured media pan sections (mobile) */}
-          <FeaturedMediaSection src={decisionImg} alt="ABB E-mobility detail" />
-          <FeaturedMediaSection src={wideDash} alt="ABB E-mobility dashboard" />
+          {/* Featured media highlight (mobile: horizontal scroll) */}
+          <FeaturedMediaSection
+            src={wideDash}
+            alt="ABB E-mobility dashboard"
+            className={`${FULL_BLEED} mt-32 md:mt-40`}
+          />
         </section>
 
         {/* ═══════════════ OUTCOME ═══════════════ */}
