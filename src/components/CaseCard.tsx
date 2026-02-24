@@ -10,7 +10,16 @@ const CaseCard = ({ caseData }: CaseCardProps) => (
   <Link to={`/work/${caseData.slug}`} className="group block">
     <article className="space-y-5">
       <div className="overflow-hidden">
-        <PlaceholderCover aspectRatio="3/2" />
+        {caseData.coverImage && caseData.coverImage !== "/placeholder.svg" ? (
+          <img
+            src={caseData.coverImage}
+            alt={caseData.title}
+            className="w-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+            style={{ aspectRatio: "3/2" }}
+          />
+        ) : (
+          <PlaceholderCover aspectRatio="3/2" />
+        )}
       </div>
       <div className="space-y-2 transition-transform duration-300 group-hover:-translate-y-0.5">
         <div className="flex items-baseline justify-between">
