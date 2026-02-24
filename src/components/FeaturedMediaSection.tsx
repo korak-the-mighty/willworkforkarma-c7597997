@@ -16,7 +16,7 @@ const FeaturedMediaSection = ({ src, alt, className }: FeaturedMediaSectionProps
       <div className="md:hidden h-screen w-full">
         <div
           className="h-full overflow-x-auto overflow-y-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          style={{ WebkitOverflowScrolling: "touch" }}
+          style={{ WebkitOverflowScrolling: "touch", touchAction: "pan-x" }}
         >
           <img
             src={src}
