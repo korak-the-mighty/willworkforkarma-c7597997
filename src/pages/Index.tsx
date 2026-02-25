@@ -125,35 +125,19 @@ const Index = () => {
             <div className="w-64 md:w-80">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
-            {/* Blobs below portrait */}
-            <div className="relative -mt-8 md:-mt-10 flex items-start justify-between w-64 md:w-80">
-              <img
-                src="/blob-brand.svg" alt="Brand"
-                className="w-[5.5rem] md:w-[6.5rem] mt-2 cursor-pointer"
-                style={{ transition: 'transform 300ms ease' }}
-                draggable={false}
-                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
-                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
-                onClick={() => navigate("/contact")}
-              />
-              <img
-                src="/blob-campaign.svg" alt="Campaign"
-                className="w-[5.5rem] md:w-[6.5rem] mt-6 md:mt-8 cursor-pointer"
-                style={{ transition: 'transform 300ms ease' }}
-                draggable={false}
-                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
-                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
-                onClick={() => navigate("/contact")}
-              />
-              <img
-                src="/blob-product.svg" alt="Product"
-                className="w-[5.5rem] md:w-[6.5rem] mt-1 cursor-pointer"
-                style={{ transition: 'transform 300ms ease' }}
-                draggable={false}
-                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
-                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
-                onClick={() => navigate("/contact")}
-              />
+            <div className="flex flex-row items-end gap-4 mt-6">
+              <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
+                <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Brand</span>
+              </div>
+              <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
+                <img src="/blob-campaign.svg" alt="" className="w-44 h-auto" />
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Campaign</span>
+              </div>
+              <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
+                <img src="/blob-product.svg" alt="" className="w-40 h-auto" />
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Product</span>
+              </div>
             </div>
           </div>
           {/* Right — Copy */}
@@ -171,7 +155,7 @@ const Index = () => {
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
             </p>
             <div className="flex gap-8 pt-2">
-              <Link to="/about" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
+              <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
               <Link
                 to="/contact"
                 className="arrow-link text-sm transition-colors"
