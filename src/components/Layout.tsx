@@ -23,17 +23,15 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
     <div className="mx-auto max-w-7xl px-6 md:px-8">
-      <div className="flex flex-col md:flex-row md:justify-between md:items-start py-8 gap-6">
+      <div className="pb-8 space-y-6">
+        <div className="space-y-1">
+          <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
+          <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
+        </div>
         <div className="flex gap-8 text-sm">
           <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
           <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
           <Link to="/contact" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Contact</Link>
-        </div>
-      </div>
-      <div className="pb-8 space-y-4">
-        <div className="space-y-1">
-          <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
-          <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
         </div>
         <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
       </div>
