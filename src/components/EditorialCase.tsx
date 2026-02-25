@@ -46,7 +46,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
                 {heroHeadline}
               </h2>
               {supportingText && (
-                <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground">
+                <p className="mt-4 text-xs uppercase tracking-widest" style={{ color: '#ECA9CC' }}>
                   {supportingText}
                 </p>
               )}

@@ -13,7 +13,7 @@ const drivelog = cases.find((c) => c.slug === "drivelog")!;
 
 /* ─── Statement ─── */
 const Statement = ({ children }: { children: React.ReactNode }) => (
-  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: '#080808' }} className="px-6 text-center">
+  <section style={{ paddingTop: 200, paddingBottom: 200, backgroundColor: '#06040B' }} className="px-6 text-center">
     <h2 className="font-heading text-2xl md:text-4xl lg:text-5xl tracking-tight max-w-3xl mx-auto">
       {children}
     </h2>
@@ -66,7 +66,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <Layout fullWidth theme={{ bg: "#0A0A0A" }}>
+    <Layout fullWidth theme={{ bg: "#08060E" }}>
       {/* ── 1. HERO ── */}
       <section className="relative min-h-screen w-full">
         <img
@@ -99,7 +99,7 @@ const Index = () => {
               <h2 className="font-heading text-2xl md:text-3xl tracking-tight text-white font-light">
                 Building the digital brand foundation of a global e-mobility leader.
               </h2>
-              <p className="mt-4 text-xs uppercase tracking-widest text-white/60">
+              <p className="mt-4 text-xs uppercase tracking-widest" style={{ color: '#ECA9CC' }}>
                 ABB E-mobility · Brand &amp; Digital
               </p>
             </div>
@@ -164,21 +164,21 @@ const Index = () => {
             <div className="w-64 md:w-80">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
-            {/* Blobs clustered bottom-left */}
-            <div className="relative mt-4 w-64 md:w-80 h-32">
+            {/* Blobs below portrait */}
+            <div className="relative -mt-8 md:-mt-10 flex items-start justify-between w-64 md:w-80" style={{ gap: '0.5rem' }}>
               <BlobImg
                 src="/blob-brand.svg" alt="Brand"
-                className="absolute bottom-0 left-0 w-20 md:w-24"
-                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
-              />
-              <BlobImg
-                src="/blob-product.svg" alt="Product"
-                className="absolute top-0 left-16 md:left-20 w-20 md:w-24"
+                className="w-[5.5rem] md:w-[6.5rem] mt-2"
                 onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
               />
               <BlobImg
                 src="/blob-campaign.svg" alt="Campaign"
-                className="absolute bottom-0 left-10 md:left-12 w-20 md:w-24"
+                className="w-[5.5rem] md:w-[6.5rem] mt-6 md:mt-8"
+                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+              />
+              <BlobImg
+                src="/blob-product.svg" alt="Product"
+                className="w-[5.5rem] md:w-[6.5rem] mt-1"
                 onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
               />
             </div>
