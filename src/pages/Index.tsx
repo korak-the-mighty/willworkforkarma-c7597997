@@ -151,7 +151,7 @@ const Index = () => {
 
       {/* ── 10. SEE ALL ── */}
       <section className="py-16 md:py-24 text-center">
-        <Link to="/work" className="arrow-link text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <Link to="/work" className="arrow-link hover:text-foreground transition-colors" style={{ fontSize: '1.25rem', opacity: 1, color: 'inherit' }}>
           See all of my work
         </Link>
       </section>
@@ -185,16 +185,16 @@ const Index = () => {
           </div>
           {/* Right — Copy */}
           <div className="space-y-6">
-            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               A brand from scratch? A campaign platform? That app idea you've been sitting on?
             </p>
-            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               I've been shaping visions into real brands for over twenty years.
             </p>
-            <p className="text-base text-muted-foreground leading-relaxed max-w-lg">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               I'm ready to get excited about yours.
             </p>
-            <p className="text-base leading-relaxed max-w-lg">
+            <p className="text-lg leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
             </p>
             <div className="flex gap-8 pt-2">
@@ -211,16 +211,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 12. KARMA ── */}
-      <section className="py-16 md:py-24 px-6 md:px-8">
-        <div className="max-w-4xl mx-auto space-y-1 text-base md:text-lg text-foreground leading-relaxed">
-          <p>I try to be decent, curious, and honest.</p>
-          <p>I care deeply about the work — and the people doing it.</p>
-          <p>Somehow, that keeps coming back.</p>
-          <p className="py-4">———</p>
-          <p>That's why I work for karma.</p>
-        </div>
-      </section>
     </Layout>
   );
 };
