@@ -20,46 +20,7 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
   </section>
 );
 
-/* ─── About blob ─── */
-const BlobImg = ({
-  src,
-  alt,
-  className,
-  onHoverChange,
-  onClick,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  onHoverChange: (hovering: boolean) => void;
-  onClick: () => void;
-}) => (
-  <div
-    className={`cursor-pointer relative ${className ?? ""}`}
-    onMouseEnter={() => onHoverChange(true)}
-    onMouseLeave={() => onHoverChange(false)}
-    onClick={onClick}
-    style={{ transition: "transform 300ms ease" }}
-    onMouseOver={(e) => {
-      (e.currentTarget as HTMLElement).style.transform = "scale(1.03)";
-    }}
-    onMouseOut={(e) => {
-      (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-    }}
-  >
-    <img src={src} alt={alt} className="w-full h-full" draggable={false} />
-    <div
-      className="absolute inset-0 pointer-events-none rounded-full"
-      style={{ backgroundColor: "rgba(236,169,204,0.15)", opacity: 0, transition: "opacity 300ms ease" }}
-      ref={(el) => {
-        if (!el) return;
-        const parent = el.parentElement!;
-        parent.addEventListener("mouseenter", () => { el.style.opacity = "1"; });
-        parent.addEventListener("mouseleave", () => { el.style.opacity = "0"; });
-      }}
-    />
-  </div>
-);
+
 
 const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
@@ -165,21 +126,33 @@ const Index = () => {
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
             {/* Blobs below portrait */}
-            <div className="relative -mt-8 md:-mt-10 flex items-start justify-between w-64 md:w-80" style={{ gap: '0.5rem' }}>
-              <BlobImg
+            <div className="relative -mt-8 md:-mt-10 flex items-start justify-between w-64 md:w-80">
+              <img
                 src="/blob-brand.svg" alt="Brand"
-                className="w-[5.5rem] md:w-[6.5rem] mt-2"
-                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+                className="w-[5.5rem] md:w-[6.5rem] mt-2 cursor-pointer"
+                style={{ transition: 'transform 300ms ease' }}
+                draggable={false}
+                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
+                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
+                onClick={() => navigate("/contact")}
               />
-              <BlobImg
+              <img
                 src="/blob-campaign.svg" alt="Campaign"
-                className="w-[5.5rem] md:w-[6.5rem] mt-6 md:mt-8"
-                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+                className="w-[5.5rem] md:w-[6.5rem] mt-6 md:mt-8 cursor-pointer"
+                style={{ transition: 'transform 300ms ease' }}
+                draggable={false}
+                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
+                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
+                onClick={() => navigate("/contact")}
               />
-              <BlobImg
+              <img
                 src="/blob-product.svg" alt="Product"
-                className="w-[5.5rem] md:w-[6.5rem] mt-1"
-                onHoverChange={setBlobHovered} onClick={() => navigate("/contact")}
+                className="w-[5.5rem] md:w-[6.5rem] mt-1 cursor-pointer"
+                style={{ transition: 'transform 300ms ease' }}
+                draggable={false}
+                onMouseEnter={(e) => { setBlobHovered(true); (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)'; }}
+                onMouseLeave={(e) => { setBlobHovered(false); (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
+                onClick={() => navigate("/contact")}
               />
             </div>
           </div>
