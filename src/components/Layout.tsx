@@ -22,7 +22,7 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
 
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
-    <div className="mx-auto max-w-7xl px-6 md:px-8">
+    <div className="px-6">
       <div className="pb-8 space-y-6">
         <div className="flex justify-between items-end">
           <div className="space-y-1">

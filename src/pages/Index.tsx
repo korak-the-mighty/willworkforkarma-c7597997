@@ -118,7 +118,7 @@ const Index = () => {
       </section>
 
       {/* ── 11. ABOUT ── */}
-      <section className="py-24 md:py-32 px-6 md:px-16">
+      <section className="py-24 md:py-32 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           {/* Left — Portrait + Blobs */}
           <div className="relative">
