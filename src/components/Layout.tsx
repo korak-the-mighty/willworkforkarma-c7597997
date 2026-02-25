@@ -33,7 +33,11 @@ const Footer = ({ theme }: { theme?: { bg: string } }) => (
           <Link to="/contact" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Contact</Link>
         </div>
       </div>
-      <div className="pb-8">
+      <div className="pb-8 space-y-4">
+        <div className="space-y-1">
+          <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
+          <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
+        </div>
         <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
       </div>
     </div>
