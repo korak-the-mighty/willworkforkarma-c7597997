@@ -155,7 +155,10 @@ const Index = () => {
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
             </p>
             <div className="flex gap-8 pt-2">
-              <Link to="/about" className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">More about me</Link>
+              <Link to="/about" className="group relative inline-block text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">
+                More about me
+                <span className="absolute left-full ml-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" aria-hidden="true">→</span>
+              </Link>
               <Link
                 to="/contact"
                 className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors"
