@@ -119,24 +119,24 @@ const Index = () => {
 
       {/* ── 11. ABOUT ── */}
       <section className="py-24 md:py-32 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
           {/* Left — Portrait + Blobs */}
           <div className="relative md:mr-16">
             <div className="w-[80vw] md:w-[28vw]">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
             <div className="flex flex-row items-end gap-4 -mt-14">
-              <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
                 <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-heading uppercase tracking-wide text-gray-800">Brand</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Brand</span>
               </div>
-              <div className="relative cursor-pointer translate-y-6" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer translate-y-11" onClick={() => navigate('/contact')}>
                 <img src="/blob-campaign.svg" alt="" className="w-44 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-heading uppercase tracking-wide text-gray-800">Campaign</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Campaign</span>
               </div>
               <div className="relative cursor-pointer -translate-y-4 -ml-2" onClick={() => navigate('/contact')}>
                 <img src="/blob-product.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-heading uppercase tracking-wide text-gray-800">Product</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Product</span>
               </div>
             </div>
           </div>
