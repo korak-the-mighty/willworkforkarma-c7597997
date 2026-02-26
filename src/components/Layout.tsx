@@ -23,11 +23,14 @@ const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
     <div className="px-6">
-      <div className="pb-8 space-y-6">
+      <div className="pb-8">
         <div className="flex justify-between items-end">
-          <div className="space-y-1">
-            <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
-            <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
+              <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
+            </div>
+            <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
           </div>
           <div className="flex gap-8 text-sm">
             <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
@@ -35,7 +38,6 @@ const Footer = ({ theme }: { theme?: { bg: string } }) => (
             <Link to="/contact" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Contact</Link>
           </div>
         </div>
-        <p className={`text-sm ${theme ? "text-white/30" : "text-muted-foreground"}`}>Privacy Policy</p>
       </div>
     </div>
   </footer>
