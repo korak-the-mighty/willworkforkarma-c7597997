@@ -128,15 +128,15 @@ const Index = () => {
             <div className="flex flex-row items-end gap-4 -mt-14">
               <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
                 <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Brand</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Brand</span>
               </div>
               <div className="relative cursor-pointer translate-y-11" onClick={() => navigate('/contact')}>
                 <img src="/blob-campaign.svg" alt="" className="w-44 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Campaign</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Campaign</span>
               </div>
-              <div className="relative cursor-pointer -translate-y-4 -ml-2" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer -translate-y-10 -ml-2" onClick={() => navigate('/contact')}>
                 <img src="/blob-product.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-base font-heading tracking-wide text-gray-800">Product</span>
+                <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Product</span>
               </div>
             </div>
           </div>
@@ -155,10 +155,10 @@ const Index = () => {
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
             </p>
             <div className="flex gap-8 pt-2">
-              <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">More about me</Link>
+              <Link to="/about" className="text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">More about me</Link>
               <Link
                 to="/contact"
-                className="arrow-link text-sm transition-colors"
+                className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors"
                 style={{ color: blobHovered ? "#ECA9CC" : undefined }}
               >
                 Contact me
