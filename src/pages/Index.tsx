@@ -156,8 +156,8 @@ const Index = () => {
             </p>
             <div className="flex gap-8 pt-2">
               <Link to="/about" className="group relative inline-block text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">
-                More about me
-                <span className="absolute left-full ml-1 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" aria-hidden="true">→</span>
+                <span className="absolute right-full pr-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200" aria-hidden="true">→</span>
+                <span>More about me</span>
               </Link>
               <Link
                 to="/contact"
