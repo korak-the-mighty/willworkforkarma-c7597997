@@ -125,7 +125,7 @@ const Index = () => {
             <div className="w-[80vw] md:w-[28vw]">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
-            <div className="flex flex-row items-end gap-4 -mt-14">
+            <div className="flex flex-row items-end gap-4 -mt-14 ml-8">
               <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
                 <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Brand</span>
@@ -155,7 +155,7 @@ const Index = () => {
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
             </p>
             <div className="flex gap-8 pt-2">
-              <Link to="/about" className="text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">More about me</Link>
+              <Link to="/about" className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">More about me</Link>
               <Link
                 to="/contact"
                 className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors"
