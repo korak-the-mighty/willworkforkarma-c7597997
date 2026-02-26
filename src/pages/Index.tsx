@@ -122,21 +122,21 @@ const Index = () => {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           {/* Left — Portrait + Blobs */}
           <div className="relative">
-            <div className="w-64 md:w-80">
+            <div className="w-[80vw] md:w-[33vw]">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
             </div>
-            <div className="flex flex-row items-end gap-4 mt-6">
+            <div className="flex flex-row items-end gap-4 -mt-14">
               <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
                 <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Brand</span>
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-sans font-medium text-gray-800">Brand</span>
               </div>
               <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
                 <img src="/blob-campaign.svg" alt="" className="w-44 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Campaign</span>
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-sans font-medium text-gray-800">Campaign</span>
               </div>
               <div className="relative cursor-pointer" onClick={() => navigate('/contact')}>
                 <img src="/blob-product.svg" alt="" className="w-40 h-auto" />
-                <span className="absolute inset-0 flex items-center justify-center text-sm font-medium text-gray-800">Product</span>
+                <span className="absolute inset-0 flex items-center justify-center text-sm font-sans font-medium text-gray-800">Product</span>
               </div>
             </div>
           </div>
