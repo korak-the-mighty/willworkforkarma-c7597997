@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Work from "./pages/Work";
 import CaseABB from "./pages/CaseABB";
+import CaseShare from "./pages/CaseShare";
 import CaseDetail from "./pages/CaseDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/work" element={<Work />} />
           <Route path="/work/abb-emobility" element={<CaseABB />} />
+          <Route path="/work/share" element={<CaseShare />} />
           <Route path="/work/:slug" element={<CaseDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
