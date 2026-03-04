@@ -120,10 +120,10 @@ const CaseShare = () => {
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Execution</MicroLabel>
             <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
-              <p className="font-display text-[1.5rem] leading-[1.4] tracking-tight">Bolder product presence.</p>
-              <p className="font-display text-[1.5rem] leading-[1.4] tracking-tight">Bright, confident color.</p>
-              <p className="font-display text-[1.5rem] leading-[1.4] tracking-tight">Less explaining.</p>
-              <p className="font-display text-[1.5rem] leading-[1.4] tracking-tight">More feeling.</p>
+              <p className="font-heading text-[1.5rem] leading-[1.4] tracking-tight text-white">Bolder product presence.</p>
+              <p className="font-heading text-[1.5rem] leading-[1.4] tracking-tight text-white">Bright, confident color.</p>
+              <p className="font-heading text-[1.5rem] leading-[1.4] tracking-tight text-white">Less explaining.</p>
+              <p className="font-heading text-[1.5rem] leading-[1.4] tracking-tight text-white">More feeling.</p>
               <p className="mt-6">One clear joyful identity across the range.</p>
               <p>Helping stepped back. The product stepped forward.</p>
             </div>
