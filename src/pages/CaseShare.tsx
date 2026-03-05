@@ -26,7 +26,7 @@ const CaseShare = () => {
       <div className="text-white">
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
-          <div className="absolute inset-0 bg-white/5" />
+          <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp" alt="Share bar product shot" className="w-full h-full object-cover" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
             <p className="text-sm tracking-[0.02em] text-white">
               Share
@@ -109,7 +109,7 @@ const CaseShare = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <MediaPlaceholder />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share5.webp" alt="Share chocolate product" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -126,6 +126,41 @@ const CaseShare = () => {
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">More feeling.</p>
               <p className="mt-6">One clear joyful identity across the range.</p>
               <p>Helping stepped back. The product stepped forward.</p>
+            </div>
+          </div>
+
+          <div className="w-full mt-12">
+            <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" className="w-full object-cover" />
+          </div>
+
+          <div className="w-full mt-12 aspect-video">
+            <iframe
+              src="https://www.youtube.com/embed/KC7KfRSPcyU?rel=0&modestbranding=1"
+              title="Share brand film"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="aspect-video">
+              <iframe
+                src="https://www.youtube.com/embed/nu574NTekfQ?rel=0&modestbranding=1"
+                title="Share spot 1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+            <div className="aspect-video">
+              <iframe
+                src="https://www.youtube.com/embed/_2CzwJwLd40?rel=0&modestbranding=1"
+                title="Share spot 3"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
           </div>
 
