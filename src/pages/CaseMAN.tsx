@@ -134,9 +134,8 @@ const CaseMAN = () => {
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Creative direction across the platform.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX for the experience.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools connecting needs to configurations.</p>
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Close collaboration with development teams, internal stakeholders and production partners.</p>
-              <p className="mt-6">More than a year of work</p>
-              <p>leading to the public launch.</p>
+              <p className="mt-6">Close collaboration with development teams and internal stakeholders.</p>
+              <p>Over a year of work leading to the public launch.</p>
             </div>
           </div>
 
@@ -181,7 +180,7 @@ const CaseMAN = () => {
 
             <div className="py-20 md:py-28 text-center px-6">
               <p className="font-heading text-3xl md:text-5xl tracking-tight text-white max-w-3xl mx-auto leading-[1.15]">
-                A new category. But still the same brand.
+                A new category.<br />But still the same brand.
               </p>
             </div>
 
