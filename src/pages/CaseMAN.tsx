@@ -33,7 +33,8 @@ const CaseMAN = () => {
               Digital · UX · Product Launch
             </p>
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-              Entering a new category without losing identity.
+              Entering a new category<br />
+              without losing the core.
             </h1>
           </div>
         </section>
@@ -46,21 +47,10 @@ const CaseMAN = () => {
               <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
                 <p>MAN was known for trucks.</p>
                 <p>The TGE was something new.</p>
-                <p>A modular van platform.</p>
-                <p>Built for many different professional realities.</p>
-                <p>From logistics to construction.</p>
-                <p>From urban services to specialized applications.</p>
-                <p>And it was launching on a public stage.</p>
-                <p>The ambition was big.</p>
-                <p>This was more than a new vehicle.</p>
-                <p>
-                  It was MAN entering a category it had never been part of before.
-                  A different audience. Different expectations. Different buying logic.
-                </p>
-                <p>And a product that could be almost anything.</p>
-                <p className="pb-16 md:pb-24">
-                  The launch was tied to the IAA Commercial Vehicles show. The spotlight was real.
-                </p>
+                <p>A modular van platform entering a category the brand had never been part of.</p>
+                <p>Different buyers.</p>
+                <p>Different expectations.</p>
+                <p className="pb-16 md:pb-24">The ambition was big.</p>
               </div>
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
@@ -88,15 +78,18 @@ const CaseMAN = () => {
               </div>
               <div className={`max-w-[72ch] space-y-6 ${BODY_TEXT}`}>
                 <div className="space-y-1">
+                  <p>Versatility creates complexity.</p>
                   <p>When a product can do almost everything,</p>
                   <p>communication becomes fragile.</p>
-                  <p>Show too little and you miss the capability.</p>
-                  <p>Show everything and you create chaos.</p>
+                  <p>Show too little</p>
+                  <p>and the capability disappears.</p>
+                  <p>Show everything</p>
+                  <p>and the story collapses.</p>
                 </div>
                 <div className="space-y-1 pb-16 md:pb-24">
-                  <p>The strategy defined three dominant worlds to guide the story.</p>
-                  <p>But turning that into a real experience required discipline.</p>
-                  <p>Because expansion without structure quickly fragments a brand.</p>
+                  <p>The strategy defined three key worlds.</p>
+                  <p>But turning that into a coherent experience</p>
+                  <p>required discipline.</p>
                 </div>
               </div>
             </div>
@@ -118,11 +111,10 @@ const CaseMAN = () => {
             <div className="col-span-12 md:col-span-6 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-4">
               <MicroLabel>Decision</MicroLabel>
               <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
-                <p>Translate the strategic ambition into a coherent digital experience.</p>
-                <p>Three clear entry points guide the story. Interactive tools help users define their needs.</p>
+                <p>Translate the strategy into a clear digital structure.</p>
+                <p>Three entry points frame the story. Tools help users define their needs.</p>
                 <p className="pb-16 md:pb-24">
-                  The product's versatility becomes understandable. Every element supports the same goal:
-                  show what the van can do — without overwhelming the audience.
+                  The product's versatility becomes understandable without overwhelming the audience.
                 </p>
               </div>
             </div>
@@ -139,12 +131,12 @@ const CaseMAN = () => {
           <div className="px-6 md:px-8 max-w-4xl mx-auto">
             <MicroLabel>Execution</MicroLabel>
             <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Creative direction across the entire experience.</p>
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX design for the platform.</p>
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools that translate needs into configurations.</p>
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">A structure that allows exploration without losing orientation.</p>
-              <p className="mt-6">Close collaboration with development teams, internal stakeholders and external production partners.</p>
-              <p>More than a year of sustained work to deliver a coherent experience for a public product launch.</p>
+              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Creative direction across the platform.</p>
+              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX for the experience.</p>
+              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools connecting needs to configurations.</p>
+              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Close collaboration with development teams, internal stakeholders and production partners.</p>
+              <p className="mt-6">More than a year of work</p>
+              <p>leading to the public launch.</p>
             </div>
           </div>
 
