@@ -44,6 +44,8 @@ const galleryItems = [
 /* ── Page ── */
 const CaseABB = () => {
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+  const [tensionVideoReady, setTensionVideoReady] = useState(false);
 
   return (
     <Layout fullWidth theme={{ bg: "#0D0D0D" }}>
@@ -56,7 +58,9 @@ const CaseABB = () => {
             muted
             loop
             playsInline
+            onCanPlay={() => setHeroVideoReady(true)}
             className="absolute inset-0 h-full w-full object-cover"
+            style={{ opacity: heroVideoReady ? 1 : 0, transition: "opacity 400ms ease" }}
           />
           <div className="absolute inset-0 bg-black/35" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
@@ -94,11 +98,13 @@ const CaseABB = () => {
               </div>
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
-              <div className="md:ml-auto md:w-[50vw] aspect-[3/2] overflow-hidden">
+              <div className="md:ml-auto md:w-[50vw] aspect-[3/2] overflow-hidden bg-muted">
                 <img
                   src={contextImg}
                   alt="ABB E-mobility context"
-                  className={`h-full w-full object-cover ${MEDIA_HOVER}`}
+                  loading="lazy"
+                  className={`h-full w-full object-cover lazy-img ${MEDIA_HOVER}`}
+                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
                 />
               </div>
             </div>
@@ -119,7 +125,9 @@ const CaseABB = () => {
                   muted
                   loop
                   playsInline
+                  onCanPlay={() => setTensionVideoReady(true)}
                   className={`h-full w-full object-cover ${MEDIA_HOVER}`}
+                  style={{ opacity: tensionVideoReady ? 1 : 0, transition: "opacity 400ms ease" }}
                 />
               </div>
             </div>
@@ -264,14 +272,16 @@ const CaseABB = () => {
                 return (
                   <div
                     key={i}
-                    className="p-3 overflow-hidden cursor-pointer"
+                    className="p-3 overflow-hidden cursor-pointer bg-muted"
                     style={s}
                     onClick={() => setLightboxSrc(item.src)}
                   >
                     <img
                       src={item.src}
                       alt={item.alt}
-                      className={`w-full h-full object-contain ${MEDIA_HOVER}`}
+                      loading="lazy"
+                      className={`w-full h-full object-contain lazy-img ${MEDIA_HOVER}`}
+                      onLoad={(e) => e.currentTarget.classList.add('loaded')}
                     />
                   </div>
                 );

@@ -33,6 +33,8 @@ const Index = () => {
         <img
           src={heroImg}
           alt=""
+          loading="eager"
+          fetchPriority="high"
           className="absolute inset-0 w-full h-full object-cover object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]"
         />
         <div className="absolute inset-0 bg-black/20" />
@@ -51,7 +53,9 @@ const Index = () => {
             <img
               src={abb.coverImage}
               alt={abb.title}
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out"
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out lazy-img"
+              onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
           )}
           <div className="absolute inset-0 bg-black/30" />
@@ -123,19 +127,19 @@ const Index = () => {
           {/* Left — Portrait + Blobs */}
           <div className="relative md:mr-16">
             <div className="w-[80vw] md:w-[28vw]">
-              <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" className="w-full h-auto" />
+              <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" loading="lazy" className="w-full h-auto lazy-img" onLoad={(e) => e.currentTarget.classList.add('loaded')} />
             </div>
             <div className="flex flex-row items-end gap-4 -mt-14 ml-8">
               <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
-                <img src="/blob-brand.svg" alt="" className="w-40 h-auto" />
+                <img src="/blob-brand.svg" alt="" loading="lazy" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Brand</span>
               </div>
               <div className="relative cursor-pointer translate-y-11" onClick={() => navigate('/contact')}>
-                <img src="/blob-campaign.svg" alt="" className="w-44 h-auto" />
+                <img src="/blob-campaign.svg" alt="" loading="lazy" className="w-44 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Campaign</span>
               </div>
               <div className="relative cursor-pointer -translate-y-10 -ml-2" onClick={() => navigate('/contact')}>
-                <img src="/blob-product.svg" alt="" className="w-40 h-auto" />
+                <img src="/blob-product.svg" alt="" loading="lazy" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Product</span>
               </div>
             </div>

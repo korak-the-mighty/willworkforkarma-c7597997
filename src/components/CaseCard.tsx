@@ -9,13 +9,15 @@ interface CaseCardProps {
 const CaseCard = ({ caseData }: CaseCardProps) => (
   <Link to={`/work/${caseData.slug}`} className="group block">
     <article className="space-y-5">
-      <div className="overflow-hidden">
+      <div className="overflow-hidden bg-muted">
         {caseData.coverImage && caseData.coverImage !== "/placeholder.svg" ? (
           <img
             src={caseData.coverImage}
             alt={caseData.title}
-            className="w-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms]"
+            loading="lazy"
+            className="w-full object-cover brightness-75 md:group-hover:brightness-100 transition-[filter] duration-[400ms] lazy-img"
             style={{ aspectRatio: "3/2" }}
+            onLoad={(e) => e.currentTarget.classList.add('loaded')}
           />
         ) : (
           <PlaceholderCover aspectRatio="3/2" />

@@ -24,7 +24,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
       <div className="hidden md:block relative min-h-[70vh] overflow-hidden">
         {/* Image half */}
         <div
-          className={`absolute top-0 bottom-0 w-1/2 overflow-hidden ${
+          className={`absolute top-0 bottom-0 w-1/2 overflow-hidden bg-muted ${
             imageAlign === "right" ? "right-0" : "left-0"
           }`}
         >
@@ -32,7 +32,9 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
             <img
               src={coverImage}
               alt={title}
-              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out"
+              loading="lazy"
+              className="w-full h-full object-cover brightness-[0.6] group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out lazy-img"
+              onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
           )}
         </div>
@@ -68,12 +70,14 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
 
       {/* Mobile layout — stacked */}
       <div className="md:hidden">
-        <div className="w-full aspect-[16/10] overflow-hidden">
+        <div className="w-full aspect-[16/10] overflow-hidden bg-muted">
           {coverImage && (
             <img
               src={coverImage}
               alt={title}
-              className="w-full h-full object-cover"
+              loading="lazy"
+              className="w-full h-full object-cover lazy-img"
+              onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
           )}
         </div>

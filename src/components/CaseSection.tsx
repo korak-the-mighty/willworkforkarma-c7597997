@@ -18,12 +18,15 @@ const CaseSection = ({ section }: CaseSectionProps) => {
         ))}
       </div>
       {section.image && (
-        <img
-          src={section.image}
-          alt={section.heading}
-          className="w-full object-cover"
-          loading="lazy"
-        />
+        <div className="overflow-hidden bg-muted">
+          <img
+            src={section.image}
+            alt={section.heading}
+            loading="lazy"
+            className="w-full object-cover lazy-img"
+            onLoad={(e) => e.currentTarget.classList.add('loaded')}
+          />
+        </div>
       )}
     </section>
   );
