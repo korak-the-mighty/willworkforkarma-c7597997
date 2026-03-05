@@ -135,7 +135,7 @@ const CaseMAN = () => {
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX for the experience.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools connecting needs to configurations.</p>
               <p className="mt-6">Close collaboration with development teams and internal stakeholders.</p>
-              <p>Over a year of work leading to the public launch.</p>
+              <p>A year of work leading to the public launch.</p>
             </div>
           </div>
 
