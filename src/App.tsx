@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Work from "./pages/Work";
 import CaseABB from "./pages/CaseABB";
 import CaseShare from "./pages/CaseShare";
+import CaseMAN from "./pages/CaseMAN";
 import CaseDetail from "./pages/CaseDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/work" element={<Work />} />
           <Route path="/work/abb-emobility" element={<CaseABB />} />
           <Route path="/work/share" element={<CaseShare />} />
+          <Route path="/work/man" element={<CaseMAN />} />
           <Route path="/work/:slug" element={<CaseDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
