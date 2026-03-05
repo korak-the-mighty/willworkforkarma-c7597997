@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
+import ScrollyVideoSection from "@/components/ScrollyVideoSection";
 
 /* ── Helpers (mirrored from CaseShare) ── */
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
@@ -134,6 +135,18 @@ const CaseMAN = () => {
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Creative direction across the platform.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX for the experience.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools connecting needs to configurations.</p>
+            </div>
+          </div>
+
+          <div className="hidden md:block">
+            <ScrollyVideoSection
+              manifestUrl="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/man-scrolly-frames/manifest.json"
+              basePath="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/man-scrolly-frames/"
+            />
+          </div>
+
+          <div className="px-6 md:px-8 max-w-4xl mx-auto">
+            <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
               <p className="mt-6">Close collaboration with development teams and internal stakeholders.</p>
               <p>A year of work leading to the public launch.</p>
             </div>
