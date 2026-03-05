@@ -35,16 +35,6 @@ const CaseMAN = () => {
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
               Entering a new category without losing identity.
             </h1>
-            <div className={`mt-10 max-w-2xl space-y-3 text-white/70 ${BODY_TEXT}`}>
-              <p>MAN was known for trucks.</p>
-              <p>The TGE was something new.</p>
-              <p>A modular van platform.</p>
-              <p>Built for many different professional realities.</p>
-              <p>From logistics to construction.</p>
-              <p>From urban services to specialized applications.</p>
-              <p>And it was launching on a public stage.</p>
-              <p>The ambition was big.</p>
-            </div>
           </div>
         </section>
 
@@ -54,6 +44,14 @@ const CaseMAN = () => {
             <div className="col-span-12 md:col-span-6 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-4">
               <MicroLabel>Context</MicroLabel>
               <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
+                <p>MAN was known for trucks.</p>
+                <p>The TGE was something new.</p>
+                <p>A modular van platform.</p>
+                <p>Built for many different professional realities.</p>
+                <p>From logistics to construction.</p>
+                <p>From urban services to specialized applications.</p>
+                <p>And it was launching on a public stage.</p>
+                <p>The ambition was big.</p>
                 <p>This was more than a new vehicle.</p>
                 <p>
                   It was MAN entering a category it had never been part of before.
@@ -108,7 +106,9 @@ const CaseMAN = () => {
         {/* ═══════════════ BAM STATEMENT ═══════════════ */}
         <section className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
           <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-            A first van. A global stage. No room for confusion.
+            A first van.<br />
+            A global stage.<br />
+            No room for confusion.
           </p>
         </section>
 
