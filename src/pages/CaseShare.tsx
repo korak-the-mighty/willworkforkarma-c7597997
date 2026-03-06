@@ -143,14 +143,14 @@ const CaseShare = () => {
           </div>
 
           <section className="py-64 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
-            <p className="font-heading text-3xl md:text-4xl text-white tracking-tight leading-[1.3]">The idea showed its energy early.<br />It gave the brand confidence to go further.</p>
+            <p className="font-heading text-3xl md:text-4xl text-white tracking-tight leading-[1.3]">The idea showed its energy early. It pointed the way forward.</p>
           </section>
 
           <section className="py-24 px-6 md:px-16">
             <div className="mb-12">
               <p className="text-[#C8A0A0] uppercase tracking-widest text-xs mb-2">TV campaign</p>
               <p className="font-heading text-2xl text-white">"So einfach kann Teilen sein"</p>
-              <p className="text-white/50 text-sm mt-3">An early expression of the idea that gave confidence in the direction.</p>
+              <p className="text-white/50 text-sm mt-3">An early expression of the idea before the full brand system was built.</p>
             </div>
             <div className="aspect-video w-[90%] mx-auto mb-6">
               <iframe id="campaign-player" className="w-full h-full" src="https://www.youtube.com/embed/KC7KfRSPcyU" title="Spot 1" frameBorder="0" allowFullScreen></iframe>
