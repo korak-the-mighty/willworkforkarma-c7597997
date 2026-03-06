@@ -182,8 +182,7 @@ body::before {
 
 /* Lazy blur-up pattern — applied to non-hero images */
 .lazy-img {
-  opacity: 0;
-  transition: opacity 300ms ease;
+  opacity: 1;
 }
 
 .lazy-img.loaded {
