@@ -97,7 +97,7 @@ const CaseShare = () => {
         {/* ═══════════════ BAM STATEMENT ═══════════════ */}
         <section className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
           <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-            If it doesn't win on shelf, it doesn't help anyone.
+            If it doesn't win on shelf,<br />it doesn't help anyone.
           </p>
         </section>
 
