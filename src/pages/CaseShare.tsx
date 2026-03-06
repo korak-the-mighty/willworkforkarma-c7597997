@@ -56,7 +56,9 @@ const CaseShare = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <MediaPlaceholder />
+                <div className="aspect-[3/2] overflow-hidden">
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp" alt="Share context" className="w-full h-full object-cover" />
+                </div>
               </div>
             </div>
           </div>
