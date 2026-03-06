@@ -135,7 +135,21 @@ const CaseMAN = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <MediaPlaceholder />
+                <video
+                  ref={(el) => {
+                    if (!el) return;
+                    const observer = new IntersectionObserver(
+                      ([entry]) => { entry.isIntersecting ? el.play() : el.pause(); },
+                      { threshold: 0.3 }
+                    );
+                    observer.observe(el);
+                  }}
+                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-video-2.webm"
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
