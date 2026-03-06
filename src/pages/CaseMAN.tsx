@@ -24,7 +24,7 @@ const CaseMAN = () => {
       <div className="text-white">
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative min-h-screen w-full">
-          <div className="absolute inset-0 bg-white/5" />
+          <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-3.webp" className="absolute inset-0 w-full h-full object-cover" alt="" />
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
             <p className="text-sm tracking-[0.02em] text-white">
@@ -56,7 +56,7 @@ const CaseMAN = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <MediaPlaceholder />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-2.webp" className="w-full h-full object-cover" alt="" />
               </div>
             </div>
           </div>
