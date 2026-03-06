@@ -138,36 +138,24 @@ const CaseShare = () => {
             <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" className="w-full object-cover" />
           </div>
 
-          <div className="w-full mt-12 aspect-video">
-            <iframe
-              src="https://www.youtube.com/embed/KC7KfRSPcyU?rel=0&modestbranding=1"
-              title="Share brand film"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-            />
-          </div>
+          <section className="py-32 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
+            <p className="font-heading text-3xl md:text-4xl text-white tracking-tight leading-[1.3]">The system was ready.<br />Now the brand could speak.</p>
+          </section>
 
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed/nu574NTekfQ?rel=0&modestbranding=1"
-                title="Share spot 1"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
+          <section className="py-24 px-6 md:px-16">
+            <div className="mb-12">
+              <p className="text-[#C8A0A0] uppercase tracking-widest text-xs mb-2">TV campaign</p>
+              <p className="font-heading text-2xl text-white">"So einfach kann Teilen sein"</p>
             </div>
-            <div className="aspect-video">
-              <iframe
-                src="https://www.youtube.com/embed/_2CzwJwLd40?rel=0&modestbranding=1"
-                title="Share spot 3"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
+            <div className="aspect-video w-full mb-6">
+              <iframe id="campaign-player" className="w-full h-full" src="https://www.youtube.com/embed/KC7KfRSPcyU" title="Spot 1" frameBorder="0" allowFullScreen></iframe>
             </div>
-          </div>
+            <div className="flex gap-8">
+              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/KC7KfRSPcyU'} className="text-white border-b border-white pb-1 text-sm">Spot 1</button>
+              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/nu574NTekfQ'} className="text-white/40 pb-1 text-sm">Spot 2</button>
+              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/_2CzwJwLd40'} className="text-white/40 pb-1 text-sm">Spot 3</button>
+            </div>
+          </section>
 
           {/* Gallery placeholders — staggered layout mirroring ABB */}
           <div className="mt-40 md:mt-56 px-6 md:px-8 max-w-5xl mx-auto">
