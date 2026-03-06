@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
@@ -21,6 +22,9 @@ const MediaPlaceholder = ({ className = "" }: { className?: string }) => (
 
 /* ── Page ── */
 const CaseShare = () => {
+  const [activeSpot, setActiveSpot] = useState(1);
+  const spotIds = ['KC7KfRSPcyU', 'nu574NTekfQ', '_2CzwJwLd40'];
+
   return (
     <Layout fullWidth theme={{ bg: "#0f0c0c" }}>
       <div className="text-white">
@@ -138,7 +142,7 @@ const CaseShare = () => {
             <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" className="w-full object-cover" />
           </div>
 
-          <section className="py-32 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
+          <section className="py-64 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
             <p className="font-heading text-3xl md:text-4xl text-white tracking-tight leading-[1.3]">The system was ready.<br />Now the brand could speak.</p>
           </section>
 
@@ -147,30 +151,25 @@ const CaseShare = () => {
               <p className="text-[#C8A0A0] uppercase tracking-widest text-xs mb-2">TV campaign</p>
               <p className="font-heading text-2xl text-white">"So einfach kann Teilen sein"</p>
             </div>
-            <div className="aspect-video w-full mb-6">
+            <div className="aspect-video w-[90%] mx-auto mb-6">
               <iframe id="campaign-player" className="w-full h-full" src="https://www.youtube.com/embed/KC7KfRSPcyU" title="Spot 1" frameBorder="0" allowFullScreen></iframe>
             </div>
-            <div className="flex gap-8">
-              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/KC7KfRSPcyU'} className="text-white border-b border-white pb-1 text-sm">Spot 1</button>
-              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/nu574NTekfQ'} className="text-white/40 pb-1 text-sm">Spot 2</button>
-              <button onClick={() => (document.getElementById('campaign-player') as HTMLIFrameElement).src='https://www.youtube.com/embed/_2CzwJwLd40'} className="text-white/40 pb-1 text-sm">Spot 3</button>
+            <div className="flex gap-8 justify-center mt-4">
+              {[1,2,3].map((n) => (
+                <button
+                  key={n}
+                  onClick={() => {
+                    setActiveSpot(n);
+                    const player = document.getElementById('campaign-player') as HTMLIFrameElement;
+                    if (player) player.src = `https://www.youtube.com/embed/${spotIds[n-1]}`;
+                  }}
+                  className={`text-sm pb-1 transition-colors ${activeSpot === n ? 'text-white border-b border-white' : 'text-white/40'}`}
+                >
+                  Spot {n}
+                </button>
+              ))}
             </div>
           </section>
-
-          {/* Gallery placeholders — staggered layout mirroring ABB */}
-          <div className="mt-40 md:mt-56 px-6 md:px-8 max-w-5xl mx-auto">
-            <div className="flex flex-wrap items-start">
-              <div className="p-3 overflow-hidden" style={{ width: "55%", marginLeft: 0, marginRight: "auto" }}>
-                <MediaPlaceholder />
-              </div>
-              <div className="p-3 overflow-hidden" style={{ width: "38%", marginTop: "2rem", marginLeft: "auto", marginRight: 0 }}>
-                <MediaPlaceholder />
-              </div>
-              <div className="p-3 overflow-hidden" style={{ width: "42%", marginTop: "3rem", marginLeft: "1rem", marginRight: "auto" }}>
-                <MediaPlaceholder />
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* ═══════════════ IMPACT ═══════════════ */}
