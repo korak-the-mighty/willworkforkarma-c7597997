@@ -199,7 +199,7 @@ const CaseShare = () => {
 
             <div className="py-20 md:py-28 text-center px-6">
               <p className="font-heading text-3xl md:text-5xl tracking-tight text-white max-w-3xl mx-auto leading-[1.15]">
-                Doing good was not enough. It had to feel good too.
+                Doing good was not enough.<br />It had to feel good too.
               </p>
             </div>
 
