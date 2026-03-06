@@ -173,36 +173,41 @@ const CaseMAN = () => {
         </section>
 
         <section className="w-full">
-          <video
-            ref={(el) => {
-              if (!el) return;
-              const observer = new IntersectionObserver(
-                ([entry]) => { entry.isIntersecting ? el.play() : el.pause(); },
-                { threshold: 0.3 }
-              );
-              observer.observe(el);
-            }}
-            src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-case-video.webm"
-            muted
-            playsInline
-            className="w-full block"
-            onEnded={(e) => {
-              const btn = e.currentTarget.nextSibling as HTMLElement;
-              if (btn) btn.style.display = 'block';
-            }}
-          />
-          <button
-            style={{ display: 'none' }}
-            onClick={(e) => {
-              const video = e.currentTarget.previousSibling as HTMLVideoElement;
-              video.currentTime = 0;
-              video.play();
-              (e.currentTarget as HTMLElement).style.display = 'none';
-            }}
-            className="mt-4 px-6 text-[13px] uppercase tracking-[0.12em] text-white/50 hover:text-white transition-colors font-heading font-light block mx-auto"
-          >
-            Replay
-          </button>
+          <div className="relative w-full">
+            <video
+              ref={(el) => {
+                if (!el) return;
+                const observer = new IntersectionObserver(
+                  ([entry]) => { entry.isIntersecting ? el.play() : el.pause(); },
+                  { threshold: 0.3 }
+                );
+                observer.observe(el);
+                el.addEventListener('ended', () => {
+                  const overlay = el.nextSibling as HTMLElement;
+                  if (overlay) overlay.style.opacity = '1';
+                });
+              }}
+              src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-case-video.webm"
+              muted
+              playsInline
+              className="w-full block"
+            />
+            <div
+              style={{ opacity: 0, transition: 'opacity 0.8s ease' }}
+              className="absolute inset-0 bg-black flex items-center justify-center cursor-pointer"
+              onClick={(e) => {
+                const overlay = e.currentTarget as HTMLElement;
+                const video = overlay.previousSibling as HTMLVideoElement;
+                overlay.style.opacity = '0';
+                video.currentTime = 0;
+                video.play();
+              }}
+            >
+              <span className="text-[13px] uppercase tracking-[0.12em] text-white/50 hover:text-white transition-colors font-heading font-light">
+                Replay
+              </span>
+            </div>
+          </div>
         </section>
 
         {/* ═══════════════ IMPACT ═══════════════ */}
