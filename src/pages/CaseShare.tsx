@@ -72,7 +72,9 @@ const CaseShare = () => {
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-12 md:col-span-6 md:mt-48 order-2 md:order-1">
               <div className="md:mr-auto md:w-[50vw] overflow-hidden">
-                <MediaPlaceholder />
+                <div className="aspect-[3/2] overflow-hidden">
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-3rd.webp" alt="Share tension" className="w-full h-full object-cover" />
+                </div>
               </div>
             </div>
             <div className="col-span-12 md:col-span-5 md:col-start-8 px-6 md:px-0 order-1 md:order-2">
