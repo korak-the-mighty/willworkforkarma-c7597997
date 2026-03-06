@@ -194,7 +194,7 @@ const CaseMAN = () => {
             />
             <div
               style={{ opacity: 0, transition: 'opacity 0.8s ease' }}
-              className="absolute inset-0 bg-black flex items-center justify-center cursor-pointer"
+              className="absolute inset-0 bg-black/80 flex items-center justify-center cursor-pointer"
               onClick={(e) => {
                 const overlay = e.currentTarget as HTMLElement;
                 const video = overlay.previousSibling as HTMLVideoElement;
