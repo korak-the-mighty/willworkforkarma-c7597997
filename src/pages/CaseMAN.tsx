@@ -12,11 +12,6 @@ const MicroLabel = ({ children }: { children: React.ReactNode }) => (
 
 const BODY_TEXT = "text-[1.25rem] leading-[1.65]";
 
-/* ── Placeholder ── */
-const MediaPlaceholder = ({ className = "" }: { className?: string }) => (
-  <div className={`bg-white/5 aspect-[3/2] ${className}`} />
-);
-
 /* ── Page ── */
 const CaseMAN = () => {
   return (
@@ -175,31 +170,39 @@ const CaseMAN = () => {
             />
           </div>
 
-          <div className="w-full mt-12">
-            <MediaPlaceholder />
-          </div>
+        </section>
 
-          <div className="w-full mt-12 aspect-video bg-white/5" />
-
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            <div className="aspect-video bg-white/5" />
-            <div className="aspect-video bg-white/5" />
-          </div>
-
-          {/* Gallery placeholders — staggered layout mirroring Share */}
-          <div className="mt-40 md:mt-56 px-6 md:px-8 max-w-5xl mx-auto">
-            <div className="flex flex-wrap items-start">
-              <div className="p-3 overflow-hidden" style={{ width: "55%", marginLeft: 0, marginRight: "auto" }}>
-                <MediaPlaceholder />
-              </div>
-              <div className="p-3 overflow-hidden" style={{ width: "38%", marginTop: "2rem", marginLeft: "auto", marginRight: 0 }}>
-                <MediaPlaceholder />
-              </div>
-              <div className="p-3 overflow-hidden" style={{ width: "42%", marginTop: "3rem", marginLeft: "1rem", marginRight: "auto" }}>
-                <MediaPlaceholder />
-              </div>
-            </div>
-          </div>
+        <section className="w-full">
+          <video
+            ref={(el) => {
+              if (!el) return;
+              const observer = new IntersectionObserver(
+                ([entry]) => { entry.isIntersecting ? el.play() : el.pause(); },
+                { threshold: 0.3 }
+              );
+              observer.observe(el);
+            }}
+            src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-case-video.webm"
+            muted
+            playsInline
+            className="w-full block"
+            onEnded={(e) => {
+              const btn = e.currentTarget.nextSibling as HTMLElement;
+              if (btn) btn.style.display = 'block';
+            }}
+          />
+          <button
+            style={{ display: 'none' }}
+            onClick={(e) => {
+              const video = e.currentTarget.previousSibling as HTMLVideoElement;
+              video.currentTime = 0;
+              video.play();
+              (e.currentTarget as HTMLElement).style.display = 'none';
+            }}
+            className="mt-4 px-6 text-[13px] uppercase tracking-[0.12em] text-white/50 hover:text-white transition-colors font-heading font-light block mx-auto"
+          >
+            Replay
+          </button>
         </section>
 
         {/* ═══════════════ IMPACT ═══════════════ */}
