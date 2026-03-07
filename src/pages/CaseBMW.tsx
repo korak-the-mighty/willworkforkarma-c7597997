@@ -35,7 +35,7 @@ const CaseBMW = () => {
           <p className="text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8">Context</p>
           <p className="font-heading text-3xl md:text-5xl tracking-tight text-white mb-8">BMW's digital presence was expanding globally.</p>
           <p className="text-[1.25rem] leading-[1.65] mb-3">New platforms were being built.<br />Markets were launching campaigns.<br />Electric mobility was emerging.</p>
-          <p className="text-[1.25rem] leading-[1.65]">At Hi-ReS! we worked closely with BMW to guide and evolve this ecosystem.</p>
+          <p className="text-[1.25rem] leading-[1.65]">Together with my team, I worked closely with BMW to guide an evolving digital landscape.</p>
         </section>
 
         {/* CONTEXT IMAGE */}
