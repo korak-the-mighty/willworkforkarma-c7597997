@@ -40,7 +40,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#01031A] animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-50 bg-[#01031A] animate-in fade-in duration-300 overflow-hidden">
       {/* Background images — one per case, crossfade on hover */}
       {MENU_CASES.map((c, i) =>
         c.heroImage ? (
@@ -63,11 +63,11 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-30"
         aria-label="Close menu"
       >
-        <X size={28} />
+        <X size={40} />
       </button>
 
       {/* Content — two columns */}
-      <div className="relative z-20 h-full flex flex-row px-16 md:px-24 py-16 md:py-20">
+      <div className="relative z-20 h-full flex flex-row px-16 md:px-24 py-8 md:py-12">
 
         {/* Left column — case list */}
         <div className="w-[70%] flex flex-col justify-center">
@@ -82,13 +82,14 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
               >
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
                 <p
-                  className={`font-heading text-5xl md:text-6xl lg:text-7xl leading-tight transition-colors duration-150 ${
+                  className={`font-heading text-3xl md:text-4xl lg:text-5xl leading-tight transition-colors duration-150 ${
                     hoveredCase === null
                       ? "text-white/60"
                       : hoveredCase === i
-                      ? "text-white"
+                      ? ""
                       : "text-white/30"
                   }`}
+                  style={{ color: hoveredCase === i ? '#FF4D6D' : undefined }}
                 >
                   {c.tagline}
                 </p>
