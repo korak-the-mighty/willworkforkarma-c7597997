@@ -30,6 +30,15 @@ const CaseBMW = () => {
           />
         </section>
 
+        {/* HERO IMAGE 2 */}
+        <section className="w-full py-16">
+          <img
+            src={`${R2}/BMW1.webp`}
+            alt="Global BMW website platform across devices"
+            className="w-full object-cover"
+          />
+        </section>
+
         {/* CONTEXT */}
         <section className="max-w-2xl mx-auto px-6 py-24">
           <p className="text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8">Context</p>
