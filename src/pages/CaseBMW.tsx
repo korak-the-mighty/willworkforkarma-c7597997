@@ -13,21 +13,16 @@ const CaseBMW = () => {
     <Layout fullWidth theme={{ bg: "#0a0a0a" }}>
       <div className="text-white">
         {/* HERO */}
-        <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 py-32">
-          <p className="text-sm tracking-[0.02em] text-white">BMW</p>
-          <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">Digital · Creative Direction · Global Platform</p>
-          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-            Creative leadership across BMW's global digital ecosystem.
-          </h1>
-        </section>
-
-        {/* HERO IMAGE */}
-        <section className="w-full py-16">
-          <img
-            src={`${R2}/BMW-hero.webp`}
-            alt="Global BMW website platform across devices"
-            className="w-full object-cover"
-          />
+        <section className="relative min-h-screen w-full">
+          <img src={`${R2}/BMW-hero.webp`} className="absolute inset-0 w-full h-full object-cover" alt="" />
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
+            <p className="text-sm tracking-[0.02em] text-white">BMW</p>
+            <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">Digital · Creative Direction · Global Platform</p>
+            <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
+              Creative leadership across BMW's global digital ecosystem.
+            </h1>
+          </div>
         </section>
 
         {/* HERO IMAGE 2 */}
