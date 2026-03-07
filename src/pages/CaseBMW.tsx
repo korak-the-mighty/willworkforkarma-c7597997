@@ -24,7 +24,7 @@ const CaseBMW = () => {
         {/* HERO IMAGE */}
         <section className="w-full py-16">
           <img
-            src={`${R2}/BMW1.webp`}
+            src={`${R2}/BMW-hero.webp`}
             alt="Global BMW website platform across devices"
             className="w-full object-cover"
           />
