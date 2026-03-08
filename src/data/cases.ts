@@ -64,7 +64,7 @@ export const cases: Case[] = [
     year: 2024,
     summary: "Shaping the brand presence for a global leader in electric vehicle charging infrastructure.",
     tags: ["Brand", "Digital", "Product"],
-    coverImage: "/ABB-media-1.webp",
+    coverImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-hero.webp",
     coverVariant: "grid",
     subline: "Charging infrastructure reimagined for scale and clarity.",
     area: "Brand & Digital Product",

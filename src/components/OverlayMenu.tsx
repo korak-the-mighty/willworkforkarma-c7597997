@@ -12,7 +12,7 @@ const MENU_CASES = [
     client: "ABB E\u2011mobility",
     tagline: "Building the digital brand foundation of a global e\u2011mobility leader.",
     route: "/work/abb-emobility",
-    heroImage: "", // TODO: add hero image URL — hero uses a local video asset, no R2 URL
+    heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-hero.webp",
   },
   {
     client: "MAN",
