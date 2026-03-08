@@ -89,7 +89,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                       ? ""
                       : "text-white/30"
                   }`}
-                  style={{ color: hoveredCase === i ? '#FF4D6D' : undefined }}
+                  style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
                 >
                   {c.tagline}
                 </p>
@@ -101,22 +101,38 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
           ))}
         </div>
 
-        {/* Right column — nav links */}
-        <div className="w-[30%] flex flex-col justify-center items-end gap-6">
-          {[
-            { to: "/about", label: "About" },
-            { to: "/work", label: "All Work" },
-            { to: "/contact", label: "Contact" },
-          ].map(({ to, label }) => (
-            <Link
-              key={to}
-              to={to}
-              onClick={onClose}
-              className="text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors text-right"
+        {/* Right column — profile image + nav links */}
+        <div className="w-[30%] flex flex-col justify-between h-full items-end">
+          <img
+            src="/HenrikLehtikangas-profilepicture.webp"
+            alt="Henrik Lehtikangas"
+            style={{ width: 200 }}
+            className="ml-auto"
+          />
+          <div className="flex flex-col items-end gap-6">
+            {[
+              { to: "/about", label: "About" },
+              { to: "/work", label: "All Work" },
+              { to: "/contact", label: "Contact" },
+            ].map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                onClick={onClose}
+                className="text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors text-right"
+              >
+                {label}
+              </Link>
+            ))}
+            <a
+              href="https://wa.me/4915141655661"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors text-right mt-4"
             >
-              {label}
-            </Link>
-          ))}
+              WhatsApp →
+            </a>
+          </div>
         </div>
 
       </div>
