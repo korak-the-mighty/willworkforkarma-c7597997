@@ -8,6 +8,8 @@ const CaseDrivelogV2 = () => {
         <img
           src={`${R2}/drivelog-hero3.webp`}
           alt="Drivelog — Bring your car to life"
+          loading="eager"
+          fetchPriority="high"
           className="w-full h-screen object-cover"
         />
       </section>
@@ -37,6 +39,7 @@ into something drivers could actually understand.`}
         <img
           src={`${R2}/drivelog2.webp`}
           alt="Drivelog connector"
+          loading="lazy"
           className="w-full object-cover"
         />
       </section>
@@ -57,6 +60,7 @@ A small gateway between the vehicle and the digital world.`}
             <img
               src={`${R2}/drivelog9.webp`}
               alt="Drivelog packaging"
+              loading="lazy"
               className="w-full object-cover"
             />
           </div>
@@ -78,11 +82,13 @@ your car communicating with its driver.`}
           <img
             src={`${R2}/drivelog4.webp`}
             alt="Drivelog campaign"
+            loading="lazy"
             className="w-full object-cover"
           />
           <img
             src={`${R2}/drivelog6.webp`}
             alt="Drivelog brand system"
+            loading="lazy"
             className="w-full object-cover"
           />
         </div>
@@ -92,6 +98,7 @@ your car communicating with its driver.`}
         <img
           src={`${R2}/drivelog3.webp`}
           alt="Drivelog app UI overview"
+          loading="lazy"
           className="w-full object-cover"
         />
       </section>
@@ -114,6 +121,7 @@ Instead of hidden technical information, drivers received a clear overview of ho
         <img
           src={`${R2}/drivelog5.webp`}
           alt="Drivelog ecosystem"
+          loading="lazy"
           className="w-full object-cover"
         />
       </section>
@@ -131,6 +139,7 @@ It explored what a connected car companion could become — long before conversa
         <img
           src={`${R2}/drivelog8.webp`}
           alt="Drivelog closing"
+          loading="lazy"
           className="w-full object-cover"
         />
       </section>

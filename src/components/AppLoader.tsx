@@ -5,10 +5,24 @@ const AppLoader = ({ children }: { children: React.ReactNode }) => {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    document.fonts.ready.then(() => {
+    let revealed = false;
+    const reveal = () => {
+      if (revealed) return;
+      revealed = true;
       setFontsReady(true);
       setTimeout(() => setHidden(true), 450);
+    };
+
+    const safetyTimer = setTimeout(reveal, 4000);
+
+    document.fonts.ready.then(async () => {
+      const heroImg = document.querySelector('img[fetchpriority="high"]');
+      if (heroImg) await (heroImg as HTMLImageElement).decode().catch(() => {});
+      clearTimeout(safetyTimer);
+      reveal();
     });
+
+    return () => clearTimeout(safetyTimer);
   }, []);
 
   return (

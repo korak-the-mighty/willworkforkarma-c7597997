@@ -14,7 +14,7 @@ const CaseBMW = () => {
       <div className="text-white">
         {/* HERO */}
         <section className="relative min-h-screen w-full">
-          <img src={`${R2}/BMW-hero.webp`} className="absolute inset-0 w-full h-full object-cover" alt="" />
+          <img src={`${R2}/BMW-hero.webp`} loading="eager" fetchPriority="high" className="absolute inset-0 w-full h-full object-cover" alt="" />
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
             <p className="text-sm tracking-[0.02em] text-white">BMW</p>
@@ -30,6 +30,7 @@ const CaseBMW = () => {
           <img
             src={`${R2}/BMW1.webp`}
             alt="Global BMW website platform across devices"
+            loading="lazy"
             className="w-full object-cover"
           />
         </section>
@@ -47,6 +48,7 @@ const CaseBMW = () => {
           <img
             src={`${R2}/BMW5.webp`}
             alt="Global BMW site video mosaic and platform capabilities"
+            loading="lazy"
             className="w-full object-cover"
           />
         </section>
@@ -64,6 +66,7 @@ const CaseBMW = () => {
           <img
             src={`${R2}/BMW2.webp`}
             alt="Campaign and storytelling concept exploration"
+            loading="lazy"
             className="w-full object-cover"
           />
         </section>
@@ -86,6 +89,7 @@ const CaseBMW = () => {
           <img
             src={`${R2}/BMW4.webp`}
             alt="Internal BMW communication film introducing website modules to global markets"
+            loading="lazy"
             className="w-full object-cover"
           />
         </section>
@@ -109,6 +113,7 @@ const CaseBMW = () => {
           <img
             src={`${R2}/BMW3.webp`}
             alt="Concept exploration and interactive storytelling ideas"
+            loading="lazy"
             className="w-full object-cover"
           />
         </section>
