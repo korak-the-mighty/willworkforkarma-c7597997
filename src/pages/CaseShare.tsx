@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@/components/Layout";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
+import CaseSnapshot from "@/components/CaseSnapshot";
 
 /* ── Helpers (mirrored from CaseABB) ── */
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
