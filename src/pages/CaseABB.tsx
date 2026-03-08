@@ -102,9 +102,9 @@ const CaseABB = () => {
                 <img
                   src={contextImg}
                   alt="ABB E-mobility context"
-                  loading="lazy"
-                  className={`h-full w-full object-cover lazy-img ${MEDIA_HOVER}`}
-                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
+                  loading="eager"
+                  fetchPriority="high"
+                  className={`h-full w-full object-cover ${MEDIA_HOVER}`}
                 />
               </div>
             </div>

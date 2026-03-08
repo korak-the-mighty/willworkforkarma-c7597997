@@ -76,7 +76,7 @@ const CaseShare = () => {
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp" alt="Share context" loading="lazy" className="w-full h-full object-cover" />
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp" alt="Share context" loading="lazy" className="w-full h-full object-cover lazy-img" />
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@ const CaseShare = () => {
             <div className="col-span-12 md:col-span-6 md:mt-48 order-2 md:order-1">
               <div className="md:mr-auto md:w-[50vw] overflow-hidden">
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-3rd.webp" alt="Share tension" loading="lazy" className="w-full h-full object-cover" />
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-3rd.webp" alt="Share tension" loading="lazy" className="w-full h-full object-cover lazy-img" />
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ const CaseShare = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share5.webp" alt="Share chocolate product" loading="lazy" className="w-full h-full object-cover" />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share5.webp" alt="Share chocolate product" loading="lazy" className="w-full h-full object-cover lazy-img" />
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ const CaseShare = () => {
           </div>
 
           <div className="w-full mt-12">
-            <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" loading="lazy" className="w-full object-cover" />
+            <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" loading="lazy" className="w-full object-cover lazy-img" />
           </div>
 
           <section className="py-64 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
