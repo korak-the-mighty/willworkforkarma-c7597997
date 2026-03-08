@@ -1,38 +1,50 @@
 
 
-## Add "One View" Snapshot Feature to Share Case Page
+## Create CaseShare.tsx Case Study Page
 
-Three changes total. No existing files modified except `CaseShare.tsx` (minimal additions only).
-
----
-
-### 1. Install `dom-to-image-more` and `framer-motion`
-
-Add both as dependencies. `dom-to-image-more` for PNG export, `framer-motion` for AnimatePresence enter/exit animations.
+Two files changed, one file created.
 
 ---
 
-### 2. New File: `src/components/CaseSnapshot.tsx`
+### 1. New File: `src/pages/CaseShare.tsx`
 
-A full-screen overlay component receiving `{ title, contextLine, decisionLine, outcomeLine, images, onClose }`.
+Create a new page mirroring `CaseABB.tsx` structure exactly, with Share-specific content and warm dark background `#0f0c0c`.
 
-- **Container**: `fixed inset-0 z-50 bg-[#0A0A0A] overflow-auto p-8 md:p-16`
-- **Title**: top-left, `font-heading text-4xl md:text-6xl font-light text-white` — animates in from top (`y: -100 → 0`)
-- **Three labeled rows** (Context / Decision / Outcome): label `text-white/30 text-xs uppercase tracking-widest`, value `text-white text-lg` — each flies in from left (`x: -200 → 0`), staggered by 0.1s
-- **Three images**: horizontal grid `grid grid-cols-3 gap-4`, `aspect-video object-cover`, all with `crossOrigin="anonymous"` — fly in from bottom (`y: 100 → 0`), staggered
-- **Two buttons** bottom-center: "Download Snapshot" and "Back to Full Case" — fade in last (`opacity: 0 → 1`, delay ~0.8s)
-- **Exit**: entire overlay `opacity → 0` via `framer-motion exit`
-- **Download**: refs the snapshot container div, calls `domtoimage.toPng()` with proper options, triggers download as `share-snapshot.png`
+**Imports**: `Link` from react-router-dom, `Layout`, `CaseSectionWrapper`. No media imports yet (placeholders only).
+
+**Helpers** (copied from CaseABB):
+- `MicroLabel` -- pink `#ECA9CC` uppercase tracked label
+- `FULL_BLEED` class string
+- `BODY_TEXT` = `text-[1.25rem] leading-[1.65]`
+
+**Sections in order:**
+
+| # | Section | Pattern from CaseABB | Share Content |
+|---|---------|---------------------|---------------|
+| 1 | **Hero** | Full-viewport `h-screen` with centered text overlay | Dark placeholder div instead of video. Label: "Share". Tags: "Branding . Brand System . Consumer Goods" in `#ECA9CC`. Headline: "Do good. And enjoy it. Making helping something people choose again." in Clash Display `text-4xl md:text-6xl lg:text-7xl`. |
+| 2 | **Context** | 12-col grid, text left (col-span-6), image right (half-bleed `md:w-[50vw]`) | Label: "Context". Copy: 3 paragraphs. Right: placeholder div with `bg-white/5 aspect-[3/2]`. |
+| 3 | **Tension** | 12-col grid, image left (half-bleed), text right -- reversed from Context | Label: "Tension". Copy: 3 short lines. Left: placeholder div. |
+| 4 | **BAM Statement** | Centered large Clash Display text between sections (`py-20 md:py-28 max-w-4xl`) | "If it doesn't win on shelf, it doesn't help anyone." |
+| 5 | **Decision** | Text block left-aligned in `max-w-4xl`, then half-bleed right placeholder | Label: "Decision". Copy: 3 lines. Right: placeholder div. |
+| 6 | **Execution** | Text block + gallery/media area below | Label: "Execution". Copy: 3 lines. Below: 3 placeholder image divs in a staggered gallery layout (same `flex flex-wrap` pattern as ABB gallery but with placeholder `bg-white/5` divs). |
+| 7 | **Impact** | Wrapped in `CaseSectionWrapper tone="emphasis" fullWidth` (same as ABB Outcome) | Label: "Impact". Centered body: 2 lines. Large centered thesis in Clash Display. Pink deliverables line at bottom. |
+| 8 | **Let's talk** | Centered `Link to="/contact"` | Same styling as ABB. |
+
+No lightbox needed (no real images yet).
 
 ---
 
-### 3. Modified: `src/pages/CaseShare.tsx` (additions only)
+### 2. Modified File: `src/App.tsx`
 
-- Import `useState` (already imported), `AnimatePresence` and `motion` from framer-motion, `CaseSnapshot`
-- Add `const [isSnapshot, setIsSnapshot] = useState(false)`
-- Wrap existing `<div className="text-white">` content with a motion.div that transitions opacity to 0 when `isSnapshot` is true (no unmount)
-- Render `<AnimatePresence>{isSnapshot && <CaseSnapshot ... onClose={() => setIsSnapshot(false)} />}</AnimatePresence>` after the content div
-- Add fixed bottom-right "One View" button: `fixed bottom-6 right-6 z-40 border border-white/20 text-white/40 hover:text-white hover:border-white/40 text-xs tracking-widest uppercase px-5 py-2.5 transition-colors` — hidden when snapshot is open
+- Add `import CaseShare from "./pages/CaseShare";` after the CaseABB import (line 8).
+- Add route `<Route path="/work/share" element={<CaseShare />} />` on line 26, right after the ABB route and before the generic `/work/:slug` route.
 
-No existing copy, layout, structure, or styling is changed.
+---
+
+### Technical Notes
+
+- No new components created -- only `Layout`, `CaseSectionWrapper`, `Link` are used.
+- All media slots use `<div className="bg-white/5 aspect-[3/2]" />` as placeholders, matching the dimensions ABB uses for its images/videos.
+- Hero placeholder uses `bg-[#0f0c0c]` (same as page bg) with a subtle `bg-white/5` overlay.
+- Footer inherits `#0f0c0c` background via the `Layout theme={{ bg: "#0f0c0c" }}` prop.
 
