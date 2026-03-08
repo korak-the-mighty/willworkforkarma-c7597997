@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,28 +18,47 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/work/abb-emobility" element={<CaseABB />} />
-          <Route path="/work/share" element={<CaseShare />} />
-          <Route path="/work/man" element={<CaseMAN />} />
-          <Route path="/work/bmw" element={<CaseBMW />} />
-          <Route path="/work/drivelog" element={<CaseDrivelogV2 />} />
-          <Route path="/work/:slug" element={<CaseDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    const applyLoaded = (img: HTMLImageElement) => {
+      if (img.complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+        img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
+      }
+    };
+    document.querySelectorAll<HTMLImageElement>('img.lazy-img').forEach(applyLoaded);
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll<HTMLImageElement>('img.lazy-img:not(.loaded)').forEach(applyLoaded);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/work/abb-emobility" element={<CaseABB />} />
+            <Route path="/work/share" element={<CaseShare />} />
+            <Route path="/work/man" element={<CaseMAN />} />
+            <Route path="/work/bmw" element={<CaseBMW />} />
+            <Route path="/work/drivelog" element={<CaseDrivelogV2 />} />
+            <Route path="/work/:slug" element={<CaseDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

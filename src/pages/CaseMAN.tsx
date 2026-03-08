@@ -51,7 +51,7 @@ const CaseMAN = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-2.webp" loading="lazy" className="w-full h-full object-cover" alt="" />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-2.webp" loading="lazy" className="w-full h-full object-cover lazy-img" alt="" />
               </div>
             </div>
           </div>

@@ -31,7 +31,7 @@ const CaseBMW = () => {
             src={`${R2}/BMW1.webp`}
             alt="Global BMW website platform across devices"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </section>
 
@@ -49,7 +49,7 @@ const CaseBMW = () => {
             src={`${R2}/BMW5.webp`}
             alt="Global BMW site video mosaic and platform capabilities"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </section>
 
@@ -67,7 +67,7 @@ const CaseBMW = () => {
             src={`${R2}/BMW2.webp`}
             alt="Campaign and storytelling concept exploration"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </section>
 
@@ -90,7 +90,7 @@ const CaseBMW = () => {
             src={`${R2}/BMW4.webp`}
             alt="Internal BMW communication film introducing website modules to global markets"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </section>
 
@@ -114,7 +114,7 @@ const CaseBMW = () => {
             src={`${R2}/BMW3.webp`}
             alt="Concept exploration and interactive storytelling ideas"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </section>
 

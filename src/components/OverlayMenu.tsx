@@ -49,7 +49,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             src={c.heroImage}
             alt=""
             loading="lazy"
-            className="fixed inset-0 z-0 w-full h-full object-cover transition-opacity duration-300"
+            className="fixed inset-0 z-0 w-full h-full object-cover transition-opacity duration-300 lazy-img"
             style={{ opacity: hoveredCase === i ? 1 : 0 }}
           />
         ) : null

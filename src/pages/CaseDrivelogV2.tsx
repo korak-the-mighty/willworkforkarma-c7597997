@@ -40,7 +40,7 @@ into something drivers could actually understand.`}
           src={`${R2}/drivelog2.webp`}
           alt="Drivelog connector"
           loading="lazy"
-          className="w-full object-cover"
+          className="w-full object-cover lazy-img"
         />
       </section>
       {/* SECTION 2 — The Connector: text + packaging */}
@@ -61,7 +61,7 @@ A small gateway between the vehicle and the digital world.`}
               src={`${R2}/drivelog9.webp`}
               alt="Drivelog packaging"
               loading="lazy"
-              className="w-full object-cover"
+              className="w-full object-cover lazy-img"
             />
           </div>
         </div>
@@ -83,13 +83,13 @@ your car communicating with its driver.`}
             src={`${R2}/drivelog4.webp`}
             alt="Drivelog campaign"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
           <img
             src={`${R2}/drivelog6.webp`}
             alt="Drivelog brand system"
             loading="lazy"
-            className="w-full object-cover"
+            className="w-full object-cover lazy-img"
           />
         </div>
       </section>
@@ -99,7 +99,7 @@ your car communicating with its driver.`}
           src={`${R2}/drivelog3.webp`}
           alt="Drivelog app UI overview"
           loading="lazy"
-          className="w-full object-cover"
+          className="w-full object-cover lazy-img"
         />
       </section>
       {/* SECTION 4 — The Dashboard: text */}
@@ -122,7 +122,7 @@ Instead of hidden technical information, drivers received a clear overview of ho
           src={`${R2}/drivelog5.webp`}
           alt="Drivelog ecosystem"
           loading="lazy"
-          className="w-full object-cover"
+          className="w-full object-cover lazy-img"
         />
       </section>
       {/* SECTION 5 — The Ecosystem: text */}
@@ -140,7 +140,7 @@ It explored what a connected car companion could become — long before conversa
           src={`${R2}/drivelog8.webp`}
           alt="Drivelog closing"
           loading="lazy"
-          className="w-full object-cover"
+          className="w-full object-cover lazy-img"
         />
       </section>
     </Layout>
