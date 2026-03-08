@@ -45,7 +45,7 @@ const CaseShare = () => {
       <motion.div className="text-white" animate={{ opacity: isSnapshot ? 0 : 1 }} transition={{ duration: 0.3 }}>
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
-          <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp" alt="Share bar product shot" className="absolute inset-0 w-full h-full object-cover" />
+          <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp" alt="Share bar product shot" loading="eager" fetchPriority="high" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
             <p className="text-sm tracking-[0.02em] text-white">
@@ -76,7 +76,7 @@ const CaseShare = () => {
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp" alt="Share context" className="w-full h-full object-cover" />
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp" alt="Share context" loading="lazy" className="w-full h-full object-cover" />
                 </div>
               </div>
             </div>
@@ -92,7 +92,7 @@ const CaseShare = () => {
             <div className="col-span-12 md:col-span-6 md:mt-48 order-2 md:order-1">
               <div className="md:mr-auto md:w-[50vw] overflow-hidden">
                 <div className="aspect-[3/2] overflow-hidden">
-                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-3rd.webp" alt="Share tension" className="w-full h-full object-cover" />
+                  <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-3rd.webp" alt="Share tension" loading="lazy" className="w-full h-full object-cover" />
                 </div>
               </div>
             </div>
@@ -133,7 +133,7 @@ const CaseShare = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share5.webp" alt="Share chocolate product" className="w-full h-full object-cover" />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share5.webp" alt="Share chocolate product" loading="lazy" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ const CaseShare = () => {
           </div>
 
           <div className="w-full mt-12">
-            <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" className="w-full object-cover" />
+            <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp" alt="Share full product range system" loading="lazy" className="w-full object-cover" />
           </div>
 
           <section className="py-64 flex flex-col items-center justify-center text-center bg-[#0a0a0a]">
