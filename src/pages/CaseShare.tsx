@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import Layout from "@/components/Layout";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
+import CaseSnapshot from "@/components/CaseSnapshot";
 
 /* ── Helpers (mirrored from CaseABB) ── */
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
@@ -23,11 +25,24 @@ const MediaPlaceholder = ({ className = "" }: { className?: string }) => (
 /* ── Page ── */
 const CaseShare = () => {
   const [activeSpot, setActiveSpot] = useState(1);
+  const [isSnapshot, setIsSnapshot] = useState(false);
   const spotIds = ['KC7KfRSPcyU', 'nu574NTekfQ', '_2CzwJwLd40'];
+
+  const snapshotData = {
+    title: "Share",
+    contextLine: "A good product with a clear mission — but helping alone wasn't enough to win on shelf.",
+    decisionLine: "Changed the hierarchy: joyful product first, impact second.",
+    outcomeLine: "From one-time approval to repeat choice.",
+    images: [
+      "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp",
+      "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share-media-2nd.webp",
+      "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp",
+    ],
+  };
 
   return (
     <Layout fullWidth theme={{ bg: "#0f0c0c" }}>
-      <div className="text-white">
+      <motion.div className="text-white" animate={{ opacity: isSnapshot ? 0 : 1 }} transition={{ duration: 0.3 }}>
         {/* ═══════════════ HERO ═══════════════ */}
         <section className="relative h-screen w-full overflow-hidden">
           <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp" alt="Share bar product shot" className="absolute inset-0 w-full h-full object-cover" />
@@ -210,7 +225,22 @@ const CaseShare = () => {
             </Link>
           </div>
         </section>
-      </div>
+      </motion.div>
+
+      <AnimatePresence>
+        {isSnapshot && (
+          <CaseSnapshot {...snapshotData} onClose={() => setIsSnapshot(false)} />
+        )}
+      </AnimatePresence>
+
+      {!isSnapshot && (
+        <button
+          onClick={() => setIsSnapshot(true)}
+          className="fixed bottom-6 right-6 z-40 border border-white/20 text-white/40 hover:text-white hover:border-white/40 text-xs tracking-widest uppercase px-5 py-2.5 transition-colors"
+        >
+          One View
+        </button>
+      )}
     </Layout>
   );
 };

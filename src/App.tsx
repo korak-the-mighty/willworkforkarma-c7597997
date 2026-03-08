@@ -10,6 +10,7 @@ import CaseShare from "./pages/CaseShare";
 import CaseMAN from "./pages/CaseMAN";
 import CaseBMW from "./pages/CaseBMW";
 import CaseDetail from "./pages/CaseDetail";
+import CaseDrivelogV2 from "./pages/CaseDrivelogV2";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/work/share" element={<CaseShare />} />
           <Route path="/work/man" element={<CaseMAN />} />
           <Route path="/work/bmw" element={<CaseBMW />} />
+          <Route path="/work/drivelog" element={<CaseDrivelogV2 />} />
           <Route path="/work/:slug" element={<CaseDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
