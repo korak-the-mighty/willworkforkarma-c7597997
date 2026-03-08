@@ -102,13 +102,34 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         </div>
 
         {/* Right column — profile image + nav links */}
-        <div className="w-[30%] flex flex-col justify-between h-full items-end">
-          <img
-            src="/HenrikLehtikangas-profilepicture.webp"
-            alt="Henrik Lehtikangas"
-            style={{ width: 200 }}
-            className="ml-auto"
-          />
+        <div className="w-[30%] flex flex-col justify-between h-full">
+          {/* Top: profile image + WhatsApp blob */}
+          <div className="flex flex-col items-center gap-4">
+            <img
+              src="/HenrikLehtikangas-profilepicture.webp"
+              alt="Henrik Lehtikangas"
+              style={{ width: 280 }}
+              className="mx-auto"
+            />
+            <div className="relative mx-auto" style={{ width: 'fit-content' }}>
+              <img
+                src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
+                alt=""
+                style={{ width: 160, display: 'block' }}
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <a
+                  href="https://wa.me/4915141655661"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-black text-center"
+                >
+                  Whatsapp →
+                </a>
+              </div>
+            </div>
+          </div>
+          {/* Bottom: nav links */}
           <div className="flex flex-col items-end gap-6">
             {[
               { to: "/about", label: "About" },
@@ -124,14 +145,6 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                 {label}
               </Link>
             ))}
-            <a
-              href="https://wa.me/4915141655661"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors text-right mt-4"
-            >
-              WhatsApp →
-            </a>
           </div>
         </div>
 
