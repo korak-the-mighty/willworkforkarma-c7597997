@@ -1,10 +1,8 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import Layout from "@/components/Layout";
 const R2 = "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev";
 const CaseDrivelogV2 = () => {
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
+    <Layout fullWidth>
       {/* HERO */}
       <section className="w-full">
         <img
@@ -136,8 +134,7 @@ It explored what a connected car companion could become — long before conversa
           className="w-full object-cover"
         />
       </section>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 export default CaseDrivelogV2;
