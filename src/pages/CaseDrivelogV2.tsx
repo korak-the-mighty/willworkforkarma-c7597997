@@ -44,7 +44,7 @@ const CaseDrivelogV2 = () => {
         <img
           src={`${R2}/drivelog2.webp`}
           alt="Drivelog connector"
-          className="w-full h-[75vh] object-cover"
+          className="w-full"
         />
       </section>
       {/* CONNECTOR TEXT + PACKAGING */}
@@ -108,7 +108,7 @@ const CaseDrivelogV2 = () => {
         <img
           src={`${R2}/drivelog3.webp`}
           alt="Drivelog app UI"
-          className="w-full h-[75vh] object-cover"
+          className="w-full"
         />
       </section>
       {/* DASHBOARD TEXT */}
@@ -150,7 +150,7 @@ const CaseDrivelogV2 = () => {
         <img
           src={`${R2}/drivelog5.webp`}
           alt="Drivelog ecosystem"
-          className="w-full h-[75vh] object-cover"
+          className="w-full"
         />
       </section>
       {/* CLOSING */}
@@ -158,7 +158,7 @@ const CaseDrivelogV2 = () => {
         <img
           src={`${R2}/drivelog8.webp`}
           alt="Drivelog closing"
-          className="w-full min-h-screen object-cover"
+          className="w-full"
         />
       </section>
     </Layout>
