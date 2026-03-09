@@ -29,8 +29,7 @@ const CaseMAN = () => {
               Digital · UX · Product Launch
             </p>
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-              Entering a new category<br />
-              without losing the core.
+              Launching a global first.
             </h1>
           </div>
         </section>
@@ -89,17 +88,13 @@ const CaseMAN = () => {
               <div className={`max-w-[72ch] space-y-6 ${BODY_TEXT}`}>
                 <div className="space-y-1">
                   <p>Versatility creates complexity.</p>
-                  <p>When a product can do almost everything,</p>
-                  <p>communication becomes fragile.</p>
-                  <p>Show too little</p>
-                  <p>and the capability disappears.</p>
-                  <p>Show everything</p>
-                  <p>and the story collapses.</p>
+                  <p>When a product can do almost everything, communication becomes fragile.</p>
+                  <p>Show too little and the capability disappears.</p>
+                  <p>Show everything and the story collapses.</p>
                 </div>
                 <div className="space-y-1 pb-16 md:pb-24">
                   <p>The strategy defined three key worlds.</p>
-                  <p>But turning that into a coherent experience</p>
-                  <p>required discipline.</p>
+                  <p>But turning that into a coherent experience required discipline.</p>
                 </div>
               </div>
             </div>
@@ -159,7 +154,7 @@ const CaseMAN = () => {
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">UI and UX for the experience.</p>
               <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">Interactive tools connecting needs to configurations.</p>
               <p className="mt-6">Close collaboration with development teams and internal stakeholders.</p>
-              <p>A year of work leading to the public launch.</p>
+              <p>Over a year of work leading to the public launch.</p>
             </div>
           </div>
 
