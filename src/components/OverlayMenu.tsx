@@ -103,30 +103,31 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         </div>
 
         {/* Right column — profile image + nav links */}
-        <div className="w-[30%] flex flex-col justify-between h-full">
-          {/* Top: profile image + WhatsApp blob */}
-          <div className="flex flex-col items-center gap-6 pt-8">
+        <div className="w-[30%] flex flex-col justify-center h-full">
+          {/* Top: profile image + WhatsApp blob overlapping bottom */}
+          <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto' }}>
             <img
               src="/HenrikLehtikangas-profilepicture.webp"
+              style={{ width: '300px', display: 'block' }}
               alt="Henrik Lehtikangas"
-              style={{ width: 280 }}
-              className="mx-auto"
             />
-            <div style={{ position: 'relative', width: '160px', margin: '0 auto' }}>
-              <img
-                src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
-                alt=""
-                style={{ width: '160px', display: 'block' }}
-              />
-              <a
-                href="https://wa.me/4915141655661"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                className="font-heading text-sm text-black"
-              >
-                Whatsapp →
-              </a>
+            <div style={{ position: 'absolute', bottom: '-30px', left: '50%', transform: 'translateX(-50%)' }}>
+              <div style={{ position: 'relative', width: '160px' }}>
+                <img
+                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
+                  style={{ width: '160px', display: 'block' }}
+                  alt=""
+                />
+                <a
+                  href="https://wa.me/4915141655661"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  className="font-heading text-sm text-black"
+                >
+                  Whatsapp →
+                </a>
+              </div>
             </div>
           </div>
           {/* Bottom: nav links */}
