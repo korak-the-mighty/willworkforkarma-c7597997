@@ -46,7 +46,7 @@ const CaseWTR = () => {
             </div>
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
-                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp" loading="lazy" className="w-full h-full object-cover lazy-img" alt="" />
+                <img src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_2.webp" loading="lazy" className="w-full h-full object-cover lazy-img" alt="" />
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@ const CaseWTR = () => {
             <div className="col-span-12 md:col-span-6 md:mt-48 order-2 md:order-1">
               <div className="md:mr-auto md:w-[50vw] overflow-hidden">
                 <img
-                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp"
+                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR3.webp"
                   loading="lazy"
                   className="w-full h-full object-cover lazy-img"
                   alt=""
@@ -87,20 +87,13 @@ const CaseWTR = () => {
           </div>
         </section>
 
-        {/* ═══════════════ BAM STATEMENT ═══════════════ */}
-        <section className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
-          <p className="font-heading text-3xl md:text-5xl tracking-tight text-white">
-            Before any design decision,<br />
-            the practice had to be understood.
-          </p>
-        </section>
-
         {/* ═══════════════ DECISION ═══════════════ */}
         <section className="py-24 md:py-32 overflow-hidden">
           <div className="grid grid-cols-12 gap-8 items-start">
             <div className="col-span-12 md:col-span-6 px-6 md:pl-[max(2rem,calc((100vw-56rem)/2))] md:pr-4">
               <MicroLabel>Decision</MicroLabel>
               <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
+                <p>Before any design decision, the practice had to be understood.</p>
                 <p>How architects present work.</p>
                 <p>How they structure information.</p>
                 <p>What actually matters in a project.</p>
@@ -112,7 +105,7 @@ const CaseWTR = () => {
             <div className="col-span-12 md:col-span-6 md:col-start-7 md:mt-48">
               <div className="md:ml-auto md:w-[50vw] overflow-hidden">
                 <img
-                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp"
+                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_10.webp"
                   loading="lazy"
                   className="w-full h-full object-cover lazy-img"
                   alt=""
@@ -134,6 +127,32 @@ const CaseWTR = () => {
               <p>No formal redesign. A visual language that quietly evolved from the foundation already there.</p>
             </div>
           </div>
+          <div className="mt-16">
+            <img
+              src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_9.webp"
+              loading="lazy"
+              className="w-full object-cover lazy-img"
+              alt=""
+            />
+          </div>
+          <div className="mt-4">
+            <video
+              src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-execution.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full"
+            />
+          </div>
+          <div className="mt-4">
+            <img
+              src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_5.webp"
+              loading="lazy"
+              className="w-full object-cover lazy-img"
+              alt=""
+            />
+          </div>
         </section>
 
         {/* ═══════════════ IMPACT ═══════════════ */}
@@ -141,6 +160,14 @@ const CaseWTR = () => {
           <section className="py-24 md:py-32">
             <div className="px-6 md:px-8 max-w-4xl mx-auto">
               <MicroLabel>Impact</MicroLabel>
+            </div>
+            <div className="mb-16">
+              <img
+                src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_12.webp"
+                loading="lazy"
+                className="w-full object-cover lazy-img"
+                alt=""
+              />
             </div>
 
             <div className={`max-w-[46rem] mx-auto text-center px-6 space-y-2 py-12 break-keep ${BODY_TEXT}`}>
