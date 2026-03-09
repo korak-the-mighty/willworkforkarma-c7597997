@@ -22,17 +22,15 @@ const CaseDrivelogV2 = () => {
       </section>
       {/* SECTION 1 — Vision */}
       <section className="max-w-3xl mx-auto px-6 pb-32">
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed whitespace-pre-line">
-{`Cars generate enormous amounts of data.
-But most drivers never see it.
-Drivelog explored a simple idea:
-What if your car could talk to you?
-Not through dashboards and error codes,
-but through clear insights about driving behaviour,
-vehicle health and everyday use.
-The goal was to turn raw vehicle data
-into something drivers could actually understand.`}
-        </p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Cars generate enormous amounts of data.</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">But most drivers never see it.</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Drivelog explored a simple idea:</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">What if your car could talk to you?</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Not through dashboards and error codes,</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">but through clear insights about driving behaviour,</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">vehicle health and everyday use.</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">The goal was to turn raw vehicle data</p>
+        <p className="text-lg md:text-xl text-gray-200 leading-relaxed">into something drivers could actually understand.</p>
       </section>
       {/* SECTION 2 — The Connector: full width */}
       <section className="w-full mb-4">
@@ -48,13 +46,11 @@ into something drivers could actually understand.`}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
             <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Connector</p>
-            <p className="text-lg text-gray-200 leading-relaxed whitespace-pre-line">
-{`The system started with a small OBD connector.
-Plugged into the vehicle, it unlocked access to the car's internal data and connected it to the mobile platform.
-The object itself was designed as a physical counterpart to the app icon — a square with rounded corners.
-Opening the cube revealed the connector inside: half of the object went into the car, the other half remained as its protective shell.
-A small gateway between the vehicle and the digital world.`}
-            </p>
+            <p className="text-lg text-gray-200 leading-relaxed mb-4">The system started with a small OBD connector.</p>
+            <p className="text-lg text-gray-200 leading-relaxed mb-4">Plugged into the vehicle, it unlocked access to the car's internal data and connected it to the mobile platform.</p>
+            <p className="text-lg text-gray-200 leading-relaxed mb-4">The object itself was designed as a physical counterpart to the app icon — a square with rounded corners.</p>
+            <p className="text-lg text-gray-200 leading-relaxed mb-4">Opening the cube revealed the connector inside: half of the object went into the car, the other half remained as its protective shell.</p>
+            <p className="text-lg text-gray-200 leading-relaxed">A small gateway between the vehicle and the digital world.</p>
           </div>
           <div>
             <img
@@ -70,13 +66,11 @@ A small gateway between the vehicle and the digital world.`}
       <section className="max-w-7xl mx-auto px-6 pb-32">
         <div className="max-w-3xl mb-16">
           <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Conversation</p>
-          <p className="text-lg text-gray-200 leading-relaxed whitespace-pre-line">
-{`To make the system understandable, the entire brand was built around a simple metaphor:
-the car talking to you.
-The speech bubble became the central design element across product, interface and communication.
-It translated technical vehicle data into a simple idea:
-your car communicating with its driver.`}
-          </p>
+          <p className="text-lg text-gray-200 leading-relaxed mb-4">To make the system understandable, the entire brand was built around a simple metaphor:</p>
+          <p className="text-lg text-gray-200 leading-relaxed mb-4">the car talking to you.</p>
+          <p className="text-lg text-gray-200 leading-relaxed mb-4">The speech bubble became the central design element across product, interface and communication.</p>
+          <p className="text-lg text-gray-200 leading-relaxed mb-4">It translated technical vehicle data into a simple idea:</p>
+          <p className="text-lg text-gray-200 leading-relaxed">your car communicating with its driver.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <img
@@ -105,25 +99,21 @@ your car communicating with its driver.`}
       {/* SECTION 4 — The Dashboard: text */}
       <section className="max-w-3xl mx-auto px-6 py-24">
         <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Dashboard</p>
-        <p className="text-lg text-gray-200 leading-relaxed whitespace-pre-line">
-{`The mobile app transformed complex vehicle data into clear insights.
-Drivers could understand:
-- vehicle health and diagnostics
-- driving behaviour and efficiency scores
-- trip history through an automatic digital logbook
-- service reminders and maintenance alerts
-- the last parking location of the vehicle
-Instead of hidden technical information, drivers received a clear overview of how their car was doing.`}
-        </p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">The mobile app transformed complex vehicle data into clear insights.</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">Drivers could understand:</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">- vehicle health and diagnostics</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">- driving behaviour and efficiency scores</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">- trip history through an automatic digital logbook</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">- service reminders and maintenance alerts</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">- the last parking location of the vehicle</p>
+        <p className="text-lg text-gray-200 leading-relaxed">Instead of hidden technical information, drivers received a clear overview of how their car was doing.</p>
       </section>
       {/* SECTION 5 — The Ecosystem: text */}
       <section className="max-w-3xl mx-auto px-6 py-24">
         <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Ecosystem</p>
-        <p className="text-lg text-gray-200 leading-relaxed whitespace-pre-line">
-{`Drivelog launched as a consumer-facing mobility brand inside the technology ecosystem of Bosch and Deutsche Telekom.
-The project combined product design, digital experience and brand communication into one coherent system.
-It explored what a connected car companion could become — long before conversational vehicle interfaces became common.`}
-        </p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">Drivelog launched as a consumer-facing mobility brand inside the technology ecosystem of Bosch and Deutsche Telekom.</p>
+        <p className="text-lg text-gray-200 leading-relaxed mb-4">The project combined product design, digital experience and brand communication into one coherent system.</p>
+        <p className="text-lg text-gray-200 leading-relaxed">It explored what a connected car companion could become — long before conversational vehicle interfaces became common.</p>
       </section>
       {/* SECTION 5 — The Ecosystem: full width */}
       <section className="w-full mb-4">
