@@ -108,10 +108,10 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
           <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto', marginRight: '40px' }}>
             <img
               src="/HenrikLehtikangas-profilepicture.webp"
-              style={{ width: '300px', display: 'block' }}
+              style={{ width: '360px', display: 'block' }}
               alt="Henrik Lehtikangas"
             />
-            <div style={{ position: 'absolute', bottom: '-30px', left: '50%', transform: 'translateX(-50%)' }}>
+            <div style={{ position: 'absolute', bottom: '-50px', left: '50%', transform: 'translateX(-50%)' }}>
               <div style={{ position: 'relative', width: '160px' }}>
                 <img
                   src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
