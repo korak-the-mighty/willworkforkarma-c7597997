@@ -9,6 +9,7 @@ import Work from "./pages/Work";
 import CaseABB from "./pages/CaseABB";
 import CaseShare from "./pages/CaseShare";
 import CaseMAN from "./pages/CaseMAN";
+import CaseWTR from "./pages/CaseWTR";
 import CaseBMW from "./pages/CaseBMW";
 import CaseDetail from "./pages/CaseDetail";
 import CaseDrivelogV2 from "./pages/CaseDrivelogV2";
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/work/abb-emobility" element={<CaseABB />} />
             <Route path="/work/share" element={<CaseShare />} />
             <Route path="/work/man" element={<CaseMAN />} />
+            <Route path="/work/wtr" element={<CaseWTR />} />
             <Route path="/work/bmw" element={<CaseBMW />} />
             <Route path="/work/drivelog" element={<CaseDrivelogV2 />} />
             <Route path="/work/:slug" element={<CaseDetail />} />
