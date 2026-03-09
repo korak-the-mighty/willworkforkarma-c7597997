@@ -28,8 +28,7 @@ const CaseWTR = () => {
               Digital Platform · Creative Direction · 2022
             </p>
             <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-              They trusted the work.<br />
-              That was the only brief that mattered.
+              Setting a stage for clarity and design.
             </h1>
           </div>
         </section>
