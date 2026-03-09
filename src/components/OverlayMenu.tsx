@@ -105,7 +105,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         {/* Right column — profile image + nav links */}
         <div className="w-[30%] flex flex-col justify-center h-full">
           {/* Top: profile image + WhatsApp blob overlapping bottom */}
-          <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto' }}>
+          <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto', marginRight: '40px' }}>
             <img
               src="/HenrikLehtikangas-profilepicture.webp"
               style={{ width: '300px', display: 'block' }}
@@ -131,7 +131,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             </div>
           </div>
           {/* Bottom: nav links */}
-          <div className="flex flex-col items-end gap-6">
+          <div className="flex flex-col items-end gap-6 mt-16">
             {[
               { to: "/about", label: "About" },
               { to: "/work", label: "All Work" },
