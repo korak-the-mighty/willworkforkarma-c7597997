@@ -4,133 +4,161 @@ const CaseDrivelogV2 = () => {
   return (
     <Layout fullWidth>
       {/* HERO */}
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative min-h-screen w-full">
         <img
           src={`${R2}/drivelog-hero3.webp`}
-          alt="Drivelog hero"
-          loading="eager"
-          fetchPriority="high"
+          alt="Drivelog"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
-          <p className="text-sm uppercase tracking-widest text-white/60 mb-4">Drivelog</p>
-          <h1 className="text-4xl md:text-6xl font-light text-white max-w-4xl leading-tight">
+        <div className="absolute inset-0 bg-black/50" />
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6 py-24">
+          <p className="text-sm tracking-[0.02em] text-white/60 mb-4">Drivelog</p>
+          <p className="text-sm tracking-[0.02em] text-white/60 mb-6">Product · Brand · Digital</p>
+          <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-2">
             Making the car understandable.
           </h1>
         </div>
       </section>
-      {/* SECTION 1 — Vision */}
-      <section className="max-w-3xl mx-auto px-6 pb-32">
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Cars generate enormous amounts of data.</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">But most drivers never see it.</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Drivelog explored a simple idea:</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">What if your car could talk to you?</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">Not through dashboards and error codes,</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">but through clear insights about driving behaviour,</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">vehicle health and everyday use.</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed mb-4">The goal was to turn raw vehicle data</p>
-        <p className="text-lg md:text-xl text-gray-200 leading-relaxed">into something drivers could actually understand.</p>
+      {/* VISION */}
+      <section className="py-24 md:py-32 overflow-hidden">
+        <div className="grid grid-cols-12 gap-8 items-start">
+          <div className="col-span-12 md:col-span-5 md:col-start-2 px-6 md:px-0">
+            <p className="text-[13px] uppercase tracking-[0.12em] text-white/40 font-heading font-light mb-8">Vision</p>
+            <p className="font-heading text-2xl md:text-3xl tracking-tight text-white leading-[1.2] mb-10">
+              Cars generate enormous amounts of data. Most drivers never see it.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              Drivelog explored a simple idea: what if your car could talk to you?
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              Not through dashboards and error codes — but through clear insights about driving behaviour, vehicle health and everyday use.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed">
+              The goal was to turn raw vehicle data into something drivers could actually understand.
+            </p>
+          </div>
+        </div>
       </section>
-      {/* SECTION 2 — The Connector: full width */}
-      <section className="w-full mb-4">
+      {/* CONNECTOR REVEAL — full width */}
+      <section className="w-full">
         <img
           src={`${R2}/drivelog2.webp`}
           alt="Drivelog connector"
-          loading="lazy"
-          className="w-full object-cover lazy-img"
+          className="w-full h-[75vh] object-cover"
         />
       </section>
-      {/* SECTION 2 — The Connector: text + packaging */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Connector</p>
-            <p className="text-lg text-gray-200 leading-relaxed mb-4">The system started with a small OBD connector.</p>
-            <p className="text-lg text-gray-200 leading-relaxed mb-4">Plugged into the vehicle, it unlocked access to the car's internal data and connected it to the mobile platform.</p>
-            <p className="text-lg text-gray-200 leading-relaxed mb-4">The object itself was designed as a physical counterpart to the app icon — a square with rounded corners.</p>
-            <p className="text-lg text-gray-200 leading-relaxed mb-4">Opening the cube revealed the connector inside: half of the object went into the car, the other half remained as its protective shell.</p>
-            <p className="text-lg text-gray-200 leading-relaxed">A small gateway between the vehicle and the digital world.</p>
+      {/* CONNECTOR TEXT + PACKAGING */}
+      <section className="py-24 md:py-32 overflow-hidden">
+        <div className="grid grid-cols-12 gap-8 items-center">
+          <div className="col-span-12 md:col-span-4 md:col-start-2 px-6 md:px-0">
+            <p className="text-[13px] uppercase tracking-[0.12em] text-white/40 font-heading font-light mb-8">The Connector</p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              The system started with a small OBD connector. Plugged into the vehicle, it unlocked access to the car's internal data and connected it to the mobile platform.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              The object was designed as a physical counterpart to the app icon — a square with rounded corners. Opening the cube revealed the connector inside.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed">
+              Half went into the car. The other half remained as its protective shell. A small gateway between the vehicle and the digital world.
+            </p>
           </div>
-          <div>
+          <div className="col-span-12 md:col-span-5 md:col-start-7 px-6 md:px-0">
             <img
               src={`${R2}/drivelog9.webp`}
               alt="Drivelog packaging"
-              loading="lazy"
-              className="w-full object-cover lazy-img"
+              className="w-full object-cover"
             />
           </div>
         </div>
       </section>
-      {/* SECTION 3 — The Conversation */}
-      <section className="max-w-7xl mx-auto px-6 pb-32">
-        <div className="max-w-3xl mb-16">
-          <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Conversation</p>
-          <p className="text-lg text-gray-200 leading-relaxed mb-4">To make the system understandable, the entire brand was built around a simple metaphor:</p>
-          <p className="text-lg text-gray-200 leading-relaxed mb-4">the car talking to you.</p>
-          <p className="text-lg text-gray-200 leading-relaxed mb-4">The speech bubble became the central design element across product, interface and communication.</p>
-          <p className="text-lg text-gray-200 leading-relaxed mb-4">It translated technical vehicle data into a simple idea:</p>
-          <p className="text-lg text-gray-200 leading-relaxed">your car communicating with its driver.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <img
-            src={`${R2}/drivelog4.webp`}
-            alt="Drivelog campaign"
-            loading="lazy"
-            className="w-full object-cover lazy-img"
-          />
-          <img
-            src={`${R2}/drivelog6.webp`}
-            alt="Drivelog brand system"
-            loading="lazy"
-            className="w-full object-cover lazy-img"
-          />
+      {/* NARRATIVE PUNCH */}
+      <section className="py-20 md:py-28 px-6 md:px-8 max-w-4xl mx-auto">
+        <p className="font-heading text-3xl md:text-5xl tracking-tight text-white leading-[1.15]">
+          The car talking to you.<br />A speech bubble as a design system.<br />Simple by design.
+        </p>
+      </section>
+      {/* CONVERSATION — two images */}
+      <section className="py-24 md:py-32 overflow-hidden">
+        <div className="grid grid-cols-12 gap-8 items-start">
+          <div className="col-span-12 md:col-span-5 md:col-start-2 px-6 md:px-0">
+            <p className="text-[13px] uppercase tracking-[0.12em] text-white/40 font-heading font-light mb-8">The Conversation</p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              The entire brand was built around a simple metaphor: the car talking to you.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-10">
+              The speech bubble became the central design element across product, interface and communication — translating technical data into a human idea.
+            </p>
+            <img
+              src={`${R2}/drivelog4.webp`}
+              alt="Drivelog campaign"
+              className="w-full object-cover"
+            />
+          </div>
+          <div className="col-span-12 md:col-span-4 md:col-start-8 px-6 md:px-0 md:mt-32">
+            <img
+              src={`${R2}/drivelog6.webp`}
+              alt="Drivelog brand system"
+              className="w-full object-cover"
+            />
+          </div>
         </div>
       </section>
-      {/* SECTION 4 — The Dashboard: full width */}
-      <section className="w-full mb-4">
+      {/* DASHBOARD — full width */}
+      <section className="w-full">
         <img
           src={`${R2}/drivelog3.webp`}
-          alt="Drivelog app UI overview"
-          loading="lazy"
-          className="w-full object-cover lazy-img"
+          alt="Drivelog app UI"
+          className="w-full h-[75vh] object-cover"
         />
       </section>
-      {/* SECTION 4 — The Dashboard: text */}
-      <section className="max-w-3xl mx-auto px-6 py-24">
-        <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Dashboard</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">The mobile app transformed complex vehicle data into clear insights.</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">Drivers could understand:</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">- vehicle health and diagnostics</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">- driving behaviour and efficiency scores</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">- trip history through an automatic digital logbook</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">- service reminders and maintenance alerts</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">- the last parking location of the vehicle</p>
-        <p className="text-lg text-gray-200 leading-relaxed">Instead of hidden technical information, drivers received a clear overview of how their car was doing.</p>
+      {/* DASHBOARD TEXT */}
+      <section className="py-24 md:py-32 overflow-hidden">
+        <div className="grid grid-cols-12 gap-8 items-start">
+          <div className="col-span-12 md:col-span-5 md:col-start-2 px-6 md:px-0">
+            <p className="text-[13px] uppercase tracking-[0.12em] text-white/40 font-heading font-light mb-8">The Dashboard</p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              The mobile app transformed complex vehicle data into clear insights.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              Drivers could see vehicle health and diagnostics, driving behaviour scores, automatic trip history, service reminders, and the last parking location of the vehicle.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed">
+              Instead of hidden technical information — a clear overview of how their car was doing.
+            </p>
+          </div>
+        </div>
       </section>
-      {/* SECTION 5 — The Ecosystem: text */}
-      <section className="max-w-3xl mx-auto px-6 py-24">
-        <p className="text-xs uppercase tracking-widest text-gray-500 mb-6">The Ecosystem</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">Drivelog launched as a consumer-facing mobility brand inside the technology ecosystem of Bosch and Deutsche Telekom.</p>
-        <p className="text-lg text-gray-200 leading-relaxed mb-4">The project combined product design, digital experience and brand communication into one coherent system.</p>
-        <p className="text-lg text-gray-200 leading-relaxed">It explored what a connected car companion could become — long before conversational vehicle interfaces became common.</p>
+      {/* ECOSYSTEM TEXT */}
+      <section className="py-24 md:py-32 overflow-hidden">
+        <div className="grid grid-cols-12 gap-8 items-start">
+          <div className="col-span-12 md:col-span-5 md:col-start-2 px-6 md:px-0">
+            <p className="text-[13px] uppercase tracking-[0.12em] text-white/40 font-heading font-light mb-8">The Ecosystem</p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              Drivelog launched as a consumer-facing mobility brand inside the technology ecosystem of Bosch and Deutsche Telekom.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed mb-5">
+              The project combined product design, digital experience and brand communication into one coherent system.
+            </p>
+            <p className="text-base text-white/60 leading-relaxed">
+              It explored what a connected car companion could become — long before conversational vehicle interfaces became common.
+            </p>
+          </div>
+        </div>
       </section>
-      {/* SECTION 5 — The Ecosystem: full width */}
-      <section className="w-full mb-4">
+      {/* ECOSYSTEM IMAGE */}
+      <section className="w-full">
         <img
           src={`${R2}/drivelog5.webp`}
           alt="Drivelog ecosystem"
-          loading="lazy"
-          className="w-full object-cover lazy-img"
+          className="w-full h-[75vh] object-cover"
         />
       </section>
-      {/* CLOSING — full width */}
+      {/* CLOSING */}
       <section className="w-full">
         <img
           src={`${R2}/drivelog8.webp`}
           alt="Drivelog closing"
-          loading="lazy"
-          className="w-full object-cover lazy-img"
+          className="w-full min-h-screen object-cover"
         />
       </section>
     </Layout>
