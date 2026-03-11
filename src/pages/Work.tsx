@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Layout from '@/components/Layout';
 import { cases } from '../data/cases';
 import { otherWork } from '../data/otherWork';
 
@@ -96,7 +97,8 @@ export default function Work() {
   };
 
   return (
-    <div style={s.page}>
+    <Layout fullWidth theme={{ bg: '#0a0a0a' }}>
+    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
       {/* Fixed hover image — cases list (hidden on mobile) */}
       {!isMobile && (
         <div
@@ -250,6 +252,19 @@ export default function Work() {
           })}
         </div>
       </section>
+
+      {/* ═══════════════ LET'S TALK CTA ═══════════════ */}
+      <section className="py-24 md:py-32">
+        <div className="text-center">
+          <Link
+            to="/contact"
+            className="font-heading text-2xl md:text-4xl tracking-tight text-white hover:opacity-60 transition-opacity"
+          >
+            Let's talk.
+          </Link>
+        </div>
+      </section>
     </div>
+    </Layout>
   );
 }
