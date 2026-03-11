@@ -101,7 +101,7 @@ export default function Work() {
       {!isMobile && (
         <div
           ref={hoverWrapRef}
-          style={{ position: 'fixed', right: 0, top: 0, width: '38vw', pointerEvents: 'none', zIndex: 50, opacity: 0, transform: 'translateY(0px) translateX(100%)', willChange: 'transform, opacity' }}
+          style={{ position: 'fixed', right: 0, top: 0, width: '38vw', pointerEvents: 'none', zIndex: 20, opacity: 0, transform: 'translateY(0px) translateX(100%)', willChange: 'transform, opacity' }}
         >
           <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
             {cases.map(c => (
@@ -140,7 +140,7 @@ export default function Work() {
             }}
             onMouseEnter={() => activateCase(c.slug)}
           >
-            <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 60 }} className="md:max-w-[70%]">
+            <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
               <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.58)' : 'rgba(245,245,240,0.38)', marginBottom: 6, transition: 'color 200ms ease' }}>
                 {c.client}
               </div>
