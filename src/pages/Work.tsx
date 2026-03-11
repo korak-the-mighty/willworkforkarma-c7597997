@@ -151,42 +151,83 @@ export default function Work() {
 
       {/* Other work grid */}
       <section style={{ padding: '0 56px 120px', position: 'relative' }}>
-        <div style={{ position: 'relative' }}>
-          {/* Hover bg — behind grid (z-index 1), grid lines stay on top (z-index 2) */}
-          <div style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', overflow: 'hidden', opacity: activeGrid ? 1 : 0, transition: 'opacity 200ms ease' }}>
-            {activeGrid?.heroImage
-              ? <img src={activeGrid.heroImage} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0, display: 'block' }} />
-              : <div style={{ position: 'absolute', inset: 0, background: activeGrid?.color || '#1e1e1e' }} />
-            }
-          </div>
-          {/* Grid — z-index 2 so gap lines sit on top of hover bg */}
-          <div
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 3, background: activeGrid ? 'transparent' : '#0a0a0a', position: 'relative', zIndex: 2 }}
-            onMouseLeave={() => setActiveGrid(null)}
-          >
-            {otherWork.map((item, i) => (
+        <div
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 3, background: '#0a0a0a', position: 'relative' }}
+          onMouseLeave={() => setActiveGrid(null)}
+        >
+          {otherWork.map((item, i) => {
+            const col = i % 4;
+            const row = Math.floor(i / 4);
+            const totalRows = Math.ceil(otherWork.length / 4);
+            return (
               <div
                 key={i}
-                style={{ aspectRatio: '16/9', overflow: 'hidden', cursor: 'crosshair', position: 'relative', opacity: activeGrid && activeGrid !== item ? 0.28 : 1, transition: 'opacity 200ms ease' }}
+                style={{
+                  aspectRatio: '16/9',
+                  overflow: 'hidden',
+                  cursor: 'crosshair',
+                  position: 'relative',
+                  background: '#1e1e1e',
+                  opacity: activeGrid && activeGrid !== item ? 0.35 : 1,
+                  transition: 'opacity 200ms ease',
+                }}
                 onMouseEnter={() => setActiveGrid(item)}
               >
-                {item.heroImage
-                  ? <img src={item.heroImage} alt={item.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: activeGrid ? 0 : 1, transition: 'opacity 200ms ease' }} />
-                  : <div style={{ width: '100%', height: '100%', background: item.color, opacity: activeGrid ? 0 : 1, transition: 'opacity 200ms ease' }} />
-                }
+                {/* Cell's own content — fades out on any hover */}
+                {!activeGrid && (
+                  item.heroImage
+                    ? <img src={item.heroImage} alt={item.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                    : <div style={{ width: '100%', height: '100%', background: item.color }} />
+                )}
+                {/* Hover image — spans full grid, clipped by this cell's overflow:hidden */}
+                {activeGrid && (
+                  activeGrid.heroImage
+                    ? <img
+                        src={activeGrid.heroImage}
+                        alt=""
+                        style={{
+                          position: 'absolute',
+                          width: '400%',
+                          height: `${totalRows * 100}%`,
+                          left: `${-col * 100}%`,
+                          top: `${-row * 100}%`,
+                          objectFit: 'cover',
+                          display: 'block',
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    : <div
+                        style={{
+                          position: 'absolute',
+                          width: '400%',
+                          height: `${totalRows * 100}%`,
+                          left: `${-col * 100}%`,
+                          top: `${-row * 100}%`,
+                          background: activeGrid.color,
+                          pointerEvents: 'none',
+                        }}
+                      />
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-        {/* Info — fixed to viewport bottom */}
+        {/* Info — centered over the grid */}
         {activeGrid && (
-          <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 200, pointerEvents: 'none' }}>
-            <div style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 100%)', padding: '80px 56px 48px', position: 'relative' }}>
-              <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.5)', marginBottom: 8 }}>{activeGrid.client}</div>
-              <div style={{ fontSize: 'clamp(28px,3.5vw,56px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: '#f5f5f0', marginBottom: 10 }}>{activeGrid.title}</div>
-              <div style={{ fontSize: 12, letterSpacing: '0.06em', color: 'rgba(245,245,240,0.4)' }}>{activeGrid.what}</div>
-              <div style={{ position: 'absolute', bottom: 48, right: 56, fontSize: 11, letterSpacing: '0.1em', color: 'rgba(245,245,240,0.35)' }}>{activeGrid.year}</div>
-            </div>
+          <div style={{
+            position: 'absolute',
+            inset: '0 56px',
+            zIndex: 10,
+            pointerEvents: 'none',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+          }}>
+            <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.6)', marginBottom: 12 }}>{activeGrid.client}</div>
+            <div style={{ fontSize: 'clamp(28px,3.5vw,56px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: '#f5f5f0', marginBottom: 12 }}>{activeGrid.title}</div>
+            <div style={{ fontSize: 12, letterSpacing: '0.06em', color: 'rgba(245,245,240,0.5)' }}>{activeGrid.what}  ·  {activeGrid.year}</div>
           </div>
         )}
       </section>
