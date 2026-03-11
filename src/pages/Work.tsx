@@ -1,8 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import { cases } from '../data/cases';
 import { otherWork } from '../data/otherWork';
+
+const selectedCases = [
+  { slug: 'abb-emobility', client: 'ABB E-mobility',         image: '/ABB-hero.webp',      summary: 'Shaping the brand presence for a global leader in electric vehicle charging infrastructure.',                                                                      year: 2024 },
+  { slug: 'share',         client: 'Share',                  image: '/share-hero.webp',    summary: 'Rethinking how a global team communicates its value — from scattered updates to a single, coherent narrative that leadership actually reads.',                        year: 2023 },
+  { slug: 'wtr',           client: 'Wörner Traxler Richter', image: '/WTR-hero.webp',      summary: "Building a digital presence for one of Germany's leading architecture practices — precise, thoughtful and earned through trust.",                                   year: 2022 },
+  { slug: 'man',           client: 'MAN',                    image: '/MAN-hero.webp',      summary: 'Designing a brand identity for a craft workshop that needed to feel serious without being corporate, and personal without being precious.',                           year: 2022 },
+  { slug: 'bmw',           client: 'BMW',                    image: '/BMW-hero.webp',      summary: 'A campaign that cut through automotive advertising noise by saying less and showing only what matters.',                                                              year: 2021 },
+  { slug: 'drivelog',      client: 'Bosch / Drivelog',       image: '/drivelog-hero.webp', summary: 'Building a product experience that turned routine car maintenance into something drivers actually looked forward to opening.',                                        year: 2020 },
+];
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
@@ -85,16 +93,6 @@ export default function Work() {
 
   const cols = isMobile ? 2 : 4;
 
-  const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
-  const caseThumbs: Record<string, string> = {
-    'abb-emobility': `${R2}/ABB-hero.webp`,
-    'share':         `${R2}/share1.webp`,
-    'wtr':           `${R2}/WTR-hero.webp`,
-    'man':           '/MAN-1.webp',
-    'bmw':           `${R2}/BMW-hero.webp`,
-    'drivelog':      `${R2}/drivelog-hero.webp`,
-  };
-
   const hp = isMobile ? '16px' : '56px';
 
   const s: Record<string, React.CSSProperties> = {
@@ -118,10 +116,10 @@ export default function Work() {
           style={{ position: 'fixed', right: 0, top: 0, width: '38vw', pointerEvents: 'none', zIndex: 20, opacity: 0, transform: 'translateY(0px) translateX(100%)', willChange: 'transform, opacity' }}
         >
           <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
-            {cases.map(c => (
+            {selectedCases.map(c => (
               <div key={c.slug} style={{ position: 'absolute', inset: 0, opacity: activeCase === c.slug ? 1 : 0, transition: 'opacity 160ms ease' }}>
-                {c.heroMedia.src
-                  ? <img src={c.heroMedia.src} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                {c.image
+                  ? <img src={c.image} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   : <div style={{ width: '100%', height: '100%', background: '#1e1e1e' }} />
                 }
               </div>
@@ -139,7 +137,7 @@ export default function Work() {
       {/* Cases list */}
       <section style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
         <div style={s.label}>Selected Cases</div>
-        {cases.map(c => (
+        {selectedCases.map(c => (
           <Link
             key={c.slug}
             to={`/work/${c.slug}`}
@@ -154,9 +152,9 @@ export default function Work() {
             }}
             onMouseEnter={() => activateCase(c.slug)}
           >
-            {isMobile && caseThumbs[c.slug] && (
+            {isMobile && c.image && (
               <img
-                src={caseThumbs[c.slug]}
+                src={c.image}
                 alt={c.client}
                 style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 4, flexShrink: 0, marginRight: 16 }}
                 onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
