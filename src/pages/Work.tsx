@@ -161,7 +161,7 @@ export default function Work() {
           </div>
           {/* Grid — z-index 2 so gap lines sit on top of hover bg */}
           <div
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 3, background: '#0a0a0a', position: 'relative', zIndex: 2 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 3, background: activeGrid ? 'transparent' : '#0a0a0a', position: 'relative', zIndex: 2 }}
             onMouseLeave={() => setActiveGrid(null)}
           >
             {otherWork.map((item, i) => (
