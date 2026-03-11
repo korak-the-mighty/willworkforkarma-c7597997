@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { otherWork } from '../data/otherWork';
 
+const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
 const selectedCases = [
-  { slug: 'abb-emobility', client: 'ABB E-mobility',         image: '/ABB-hero.webp',      summary: 'Shaping the brand presence for a global leader in electric vehicle charging infrastructure.',                                                                      year: 2024 },
-  { slug: 'share',         client: 'Share',                  image: '/share-hero.webp',    summary: 'Rethinking how a global team communicates its value — from scattered updates to a single, coherent narrative that leadership actually reads.',                        year: 2023 },
-  { slug: 'wtr',           client: 'Wörner Traxler Richter', image: '/WTR-hero.webp',      summary: "Building a digital presence for one of Germany's leading architecture practices — precise, thoughtful and earned through trust.",                                   year: 2022 },
-  { slug: 'man',           client: 'MAN',                    image: '/MAN-hero.webp',      summary: 'Designing a brand identity for a craft workshop that needed to feel serious without being corporate, and personal without being precious.',                           year: 2022 },
-  { slug: 'bmw',           client: 'BMW',                    image: '/BMW-hero.webp',      summary: 'A campaign that cut through automotive advertising noise by saying less and showing only what matters.',                                                              year: 2021 },
-  { slug: 'drivelog',      client: 'Bosch / Drivelog',       image: '/drivelog-hero.webp', summary: 'Building a product experience that turned routine car maintenance into something drivers actually looked forward to opening.',                                        year: 2020 },
+  { slug: 'abb-emobility', client: 'ABB E-mobility',         image: `${R2}/ABB-hero.webp`,      summary: 'Shaping the brand presence for a global leader in electric vehicle charging infrastructure.',                                                                 year: 2024 },
+  { slug: 'share',         client: 'Share',                  image: `${R2}/share1.webp`,        summary: 'Rethinking how a global team communicates its value — from scattered updates to a single, coherent narrative that leadership actually reads.',                   year: 2023 },
+  { slug: 'wtr',           client: 'Wörner Traxler Richter', image: `${R2}/WTR-hero.webp`,      summary: "Building a digital presence for one of Germany's leading architecture practices — precise, thoughtful and earned through trust.",                              year: 2022 },
+  { slug: 'man',           client: 'MAN',                    image: '',                         summary: 'Designing a brand identity for a craft workshop that needed to feel serious without being corporate, and personal without being precious.',                        year: 2022 },
+  { slug: 'bmw',           client: 'BMW',                    image: `${R2}/BMW-hero.webp`,      summary: 'A campaign that cut through automotive advertising noise by saying less and showing only what matters.',                                                         year: 2021 },
+  { slug: 'drivelog',      client: 'Bosch / Drivelog',       image: `${R2}/drivelog-hero.webp`, summary: 'Building a product experience that turned routine car maintenance into something drivers actually looked forward to opening.',                                   year: 2020 },
 ];
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
@@ -119,7 +120,7 @@ export default function Work() {
             {selectedCases.map(c => (
               <div key={c.slug} style={{ position: 'absolute', inset: 0, opacity: activeCase === c.slug ? 1 : 0, transition: 'opacity 160ms ease' }}>
                 {c.image
-                  ? <img src={c.image} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  ? <img src={c.image} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                   : <div style={{ width: '100%', height: '100%', background: '#1e1e1e' }} />
                 }
               </div>
