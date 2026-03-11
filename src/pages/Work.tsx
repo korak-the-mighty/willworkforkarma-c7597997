@@ -16,6 +16,15 @@ export default function Work() {
   const mouseYRef = useRef(0);
   const [activeCase, setActiveCase] = useState<string | null>(null);
   const [activeGrid, setActiveGrid] = useState<typeof otherWork[0] | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -73,12 +82,14 @@ export default function Work() {
     setTimeout(() => { stopRaf(); }, 320);
   }
 
+  const cols = isMobile ? 2 : 4;
+
   const s: Record<string, React.CSSProperties> = {
     page:       { background: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' },
     header:     { padding: '160px 56px 80px' },
     headline:   { fontSize: 'clamp(40px,6vw,96px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 32 },
     context:    { fontSize: 'clamp(14px,1.2vw,17px)', fontWeight: 300, lineHeight: 1.7, color: 'rgba(245,245,240,0.45)', maxWidth: 520 },
-    label:      { fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: '0 56px', marginBottom: 32 },
+    label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: '0 56px', marginBottom: 32 },
     divider:    { padding: '96px 56px 72px', textAlign: 'center' as const },
     divHead:    { fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
     divSub:     { fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', marginTop: 18 },
@@ -86,22 +97,24 @@ export default function Work() {
 
   return (
     <div style={s.page}>
-      {/* Fixed hover image — cases list */}
-      <div
-        ref={hoverWrapRef}
-        style={{ position: 'fixed', right: 0, top: 0, width: '38vw', pointerEvents: 'none', zIndex: 50, opacity: 0, transform: 'translateY(0px) translateX(100%)', willChange: 'transform, opacity' }}
-      >
-        <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
-          {cases.map(c => (
-            <div key={c.slug} style={{ position: 'absolute', inset: 0, opacity: activeCase === c.slug ? 1 : 0, transition: 'opacity 160ms ease' }}>
-              {c.heroMedia.src
-                ? <img src={c.heroMedia.src} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                : <div style={{ width: '100%', height: '100%', background: '#1e1e1e' }} />
-              }
-            </div>
-          ))}
+      {/* Fixed hover image — cases list (hidden on mobile) */}
+      {!isMobile && (
+        <div
+          ref={hoverWrapRef}
+          style={{ position: 'fixed', right: 0, top: 0, width: '38vw', pointerEvents: 'none', zIndex: 50, opacity: 0, transform: 'translateY(0px) translateX(100%)', willChange: 'transform, opacity' }}
+        >
+          <div style={{ width: '100%', aspectRatio: '16/9', overflow: 'hidden', position: 'relative' }}>
+            {cases.map(c => (
+              <div key={c.slug} style={{ position: 'absolute', inset: 0, opacity: activeCase === c.slug ? 1 : 0, transition: 'opacity 160ms ease' }}>
+                {c.heroMedia.src
+                  ? <img src={c.heroMedia.src} alt={c.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  : <div style={{ width: '100%', height: '100%', background: '#1e1e1e' }} />
+                }
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Page header */}
       <div style={s.header}>
@@ -123,11 +136,12 @@ export default function Work() {
               textDecoration: 'none',
               opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
               transition: 'opacity 220ms ease, padding-left 220ms ease',
+              position: 'relative',
             }}
             onMouseEnter={() => activateCase(c.slug)}
           >
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.58)' : 'rgba(245,245,240,0.38)', marginBottom: 6, transition: 'color 200ms ease' }}>
+            <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 60 }} className="md:max-w-[70%]">
+              <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.58)' : 'rgba(245,245,240,0.38)', marginBottom: 6, transition: 'color 200ms ease' }}>
                 {c.client}
               </div>
               <div style={{ fontSize: 'clamp(18px,2vw,34px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
@@ -146,19 +160,21 @@ export default function Work() {
       {/* Divider */}
       <div style={s.divider}>
         <div style={s.divHead}>Other Cases in Short</div>
-        <div style={s.divSub}>Quick view — hover to explore</div>
+        <div style={s.divSub} className="hidden md:block">Quick view — hover to explore</div>
       </div>
 
       {/* Other work grid */}
       <section style={{ padding: '0 56px 120px', position: 'relative' }}>
         <div
-          style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 3, background: '#0a0a0a', position: 'relative' }}
-          onMouseLeave={() => setActiveGrid(null)}
+          className="grid grid-cols-2 md:grid-cols-4"
+          style={{ gap: 3, background: '#0a0a0a', position: 'relative' }}
+          onMouseLeave={() => { setActiveGrid(null); setHoveredIndex(null); }}
         >
           {otherWork.map((item, i) => {
-            const col = i % 4;
-            const row = Math.floor(i / 4);
-            const totalRows = Math.ceil(otherWork.length / 4);
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const totalRows = Math.ceil(otherWork.length / cols);
+            const isHovered = hoveredIndex === i;
             return (
               <div
                 key={i}
@@ -171,7 +187,8 @@ export default function Work() {
                   opacity: activeGrid && activeGrid !== item ? 0.35 : 1,
                   transition: 'opacity 200ms ease',
                 }}
-                onMouseEnter={() => setActiveGrid(item)}
+                onMouseEnter={() => { setActiveGrid(item); setHoveredIndex(i); }}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
                 {/* Cell's own content — fades out on any hover */}
                 {!activeGrid && (
@@ -187,7 +204,7 @@ export default function Work() {
                         alt=""
                         style={{
                           position: 'absolute',
-                          width: '400%',
+                          width: `${cols * 100}%`,
                           height: `${totalRows * 100}%`,
                           left: `${-col * 100}%`,
                           top: `${-row * 100}%`,
@@ -199,7 +216,7 @@ export default function Work() {
                     : <div
                         style={{
                           position: 'absolute',
-                          width: '400%',
+                          width: `${cols * 100}%`,
                           height: `${totalRows * 100}%`,
                           left: `${-col * 100}%`,
                           top: `${-row * 100}%`,
@@ -208,28 +225,37 @@ export default function Work() {
                         }}
                       />
                 )}
+                {/* Per-item text overlay — inside this cell */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 10,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: isHovered ? 1 : 0,
+                    transition: 'opacity 200ms',
+                    pointerEvents: 'none',
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)',
+                    padding: '16px',
+                  }}
+                >
+                  <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'rgba(245,245,240,0.6)', marginBottom: '8px', textTransform: 'uppercase', fontFamily: "'Clash Display', sans-serif", fontWeight: 300 }}>
+                    {item.client}
+                  </div>
+                  <div style={{ fontSize: 'clamp(18px, 2vw, 28px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
+                    {item.title}
+                  </div>
+                  <div style={{ fontSize: '11px', color: 'rgba(245,245,240,0.4)', marginTop: '8px', letterSpacing: '0.05em' }}>
+                    {item.what} · {item.year}
+                  </div>
+                </div>
               </div>
             );
           })}
         </div>
-        {/* Info — centered over the grid */}
-        {activeGrid && (
-          <div style={{
-            position: 'absolute',
-            inset: '0 56px',
-            zIndex: 10,
-            pointerEvents: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-          }}>
-            <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.6)', marginBottom: 12 }}>{activeGrid.client}</div>
-            <div style={{ fontSize: 'clamp(28px,3.5vw,56px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: '#f5f5f0', marginBottom: 12 }}>{activeGrid.title}</div>
-            <div style={{ fontSize: 12, letterSpacing: '0.06em', color: 'rgba(245,245,240,0.5)' }}>{activeGrid.what}  ·  {activeGrid.year}</div>
-          </div>
-        )}
       </section>
     </div>
   );
