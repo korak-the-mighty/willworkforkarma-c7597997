@@ -192,38 +192,31 @@ export default function Work() {
               >
                 {/* Cell's own content — fades out on any hover */}
                 {!activeGrid && (
-                  item.heroImage
-                    ? <img src={item.heroImage} alt={item.client} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    : <div style={{ width: '100%', height: '100%', background: item.color }} />
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      ...(item.heroImage
+                        ? { backgroundImage: `url(${item.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                        : { background: item.color }),
+                    }}
+                  />
                 )}
                 {/* Hover image — spans full grid, clipped by this cell's overflow:hidden */}
                 {activeGrid && (
-                  activeGrid.heroImage
-                    ? <img
-                        src={activeGrid.heroImage}
-                        alt=""
-                        style={{
-                          position: 'absolute',
-                          width: `${cols * 100}%`,
-                          height: `${totalRows * 100}%`,
-                          left: `${-col * 100}%`,
-                          top: `${-row * 100}%`,
-                          objectFit: 'cover',
-                          display: 'block',
-                          pointerEvents: 'none',
-                        }}
-                      />
-                    : <div
-                        style={{
-                          position: 'absolute',
-                          width: `${cols * 100}%`,
-                          height: `${totalRows * 100}%`,
-                          left: `${-col * 100}%`,
-                          top: `${-row * 100}%`,
-                          background: activeGrid.color,
-                          pointerEvents: 'none',
-                        }}
-                      />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      width: `${cols * 100}%`,
+                      height: `${totalRows * 100}%`,
+                      left: `${-col * 100}%`,
+                      top: `${-row * 100}%`,
+                      pointerEvents: 'none',
+                      ...(activeGrid.heroImage
+                        ? { backgroundImage: `url(${activeGrid.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                        : { background: activeGrid.color }),
+                    }}
+                  />
                 )}
                 {/* Per-item text overlay — inside this cell */}
                 <div
