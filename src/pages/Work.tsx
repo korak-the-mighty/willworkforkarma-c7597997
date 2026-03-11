@@ -85,13 +85,25 @@ export default function Work() {
 
   const cols = isMobile ? 2 : 4;
 
+  const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
+  const caseThumbs: Record<string, string> = {
+    'abb-emobility': `${R2}/ABB-hero.webp`,
+    'share':         `${R2}/share1.webp`,
+    'wtr':           `${R2}/WTR-hero.webp`,
+    'man':           '/MAN-1.webp',
+    'bmw':           `${R2}/BMW-hero.webp`,
+    'drivelog':      `${R2}/drivelog-hero.webp`,
+  };
+
+  const hp = isMobile ? '16px' : '56px';
+
   const s: Record<string, React.CSSProperties> = {
     page:       { background: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' },
-    header:     { padding: '160px 56px 80px' },
+    header:     { padding: isMobile ? `80px ${hp} 40px` : `160px ${hp} 80px` },
     headline:   { fontSize: 'clamp(40px,6vw,96px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 32 },
     context:    { fontSize: 'clamp(14px,1.2vw,17px)', fontWeight: 300, lineHeight: 1.7, color: 'rgba(245,245,240,0.45)', maxWidth: 520 },
-    label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: '0 56px', marginBottom: 32 },
-    divider:    { padding: '96px 56px 72px', textAlign: 'center' as const },
+    label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: `0 ${hp}`, marginBottom: 32 },
+    divider:    { padding: `96px ${hp} 72px`, textAlign: 'center' as const },
     divHead:    { fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
     divSub:     { fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', marginTop: 18 },
   };
@@ -133,7 +145,7 @@ export default function Work() {
             to={`/work/${c.slug}`}
             style={{
               display: 'flex', alignItems: 'center',
-              padding: activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px',
+              padding: isMobile ? '20px 16px' : (activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px'),
               borderTop: '1px solid rgba(245,245,240,0.1)',
               textDecoration: 'none',
               opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
@@ -142,6 +154,14 @@ export default function Work() {
             }}
             onMouseEnter={() => activateCase(c.slug)}
           >
+            {isMobile && caseThumbs[c.slug] && (
+              <img
+                src={caseThumbs[c.slug]}
+                alt={c.client}
+                style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 4, flexShrink: 0, marginRight: 16 }}
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+            )}
             <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
               <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.58)' : 'rgba(245,245,240,0.38)', marginBottom: 6, transition: 'color 200ms ease' }}>
                 {c.client}
@@ -166,7 +186,7 @@ export default function Work() {
       </div>
 
       {/* Other work grid */}
-      <section style={{ padding: '0 56px 120px', position: 'relative' }}>
+      <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 120, position: 'relative' }}>
         <div
           className="grid grid-cols-2 md:grid-cols-4"
           style={{ gap: 3, background: '#0a0a0a', position: 'relative' }}
