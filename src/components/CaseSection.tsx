@@ -1,14 +1,12 @@
 import React from 'react';
-import { Section, HeroSection, TextSection, ScrollySection as ScrollySectionType, GallerySection, CustomComponentSection } from '../types/case';
-// Real component imports go here — only from Step 1 findings
-// ScrollyVideoSection exists at ./ScrollyVideoSection but props (manifestUrl, basePath)
-// do not match ScrollySectionType (ref, frames) — wiring deferred.
-// CaseHeroMedia exists at ./CaseHeroMedia but expects CaseHeroMediaType from @/data/cases
-// not HeroSection from ../types/case — wiring deferred.
-// CaseGallery exists at ./CaseGallery but accepts no props — wiring deferred.
-// No LetsTalk component found in Step 1 grep.
+import { Section, HeroSection, ScrollySection as ScrollySectionType, GallerySection, CustomComponentSection } from '../types/case';
+import CaseHeroMedia from './CaseHeroMedia';
+import ScrollyVideoSection from './ScrollyVideoSection';
+import CaseGallery from './CaseGallery';
+import { LetsTalk } from './LetsTalk';
+
 const CUSTOM_COMPONENTS: Record<string, React.ComponentType> = {
-  // No LetsTalk component found in codebase — populate when component is added.
+  LetsTalk,
 };
 
 interface CaseSectionProps {
@@ -18,20 +16,38 @@ interface CaseSectionProps {
 export function CaseSection({ section }: CaseSectionProps) {
   switch (section.type) {
     case 'hero': {
-      // TODO: wire to real hero component — confirm props first
-      return null;
+      const s = section as HeroSection;
+      return (
+        <CaseHeroMedia
+          headline={s.headline}
+          backgroundImage={s.backgroundImage}
+        />
+      );
     }
     case 'text': {
-      // TODO: wire to real text section component — confirm props first
-      return null;
+      if (!section.body) return null;
+      return (
+        <p className="text-[1.25rem] leading-[1.65]">{section.body}</p>
+      );
     }
     case 'scrolly': {
-      // TODO: wire to real ScrollySection — confirm props first
-      return null;
+      const s = section as ScrollySectionType;
+      return (
+        <>
+          <div className="hidden md:block">
+            <ScrollyVideoSection folderRef={s.ref} frames={s.frames} />
+          </div>
+          {s.mobileFallback && (
+            <div className="block md:hidden">
+              <img src={s.mobileFallback.url} alt="" className="w-full" />
+            </div>
+          )}
+        </>
+      );
     }
     case 'gallery': {
-      // TODO: wire to real gallery component — confirm props first
-      return null;
+      const s = section as GallerySection;
+      return <CaseGallery images={s.images} />;
     }
     case 'custom-component': {
       const s = section as CustomComponentSection;

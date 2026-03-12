@@ -2,21 +2,29 @@ import { useState } from "react";
 import type { CaseHeroMedia as CaseHeroMediaType } from "@/data/cases";
 
 interface CaseHeroMediaProps {
-  heroMedia: CaseHeroMediaType;
+  // Legacy prop
+  heroMedia?: CaseHeroMediaType;
+  // Content-system props — used instead of heroMedia when provided
+  headline?: string;
+  backgroundImage?: string;
 }
 
 const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
 
-const CaseHeroMedia = ({ heroMedia }: CaseHeroMediaProps) => {
+const CaseHeroMedia = ({ heroMedia, headline: _headline, backgroundImage }: CaseHeroMediaProps) => {
+  // Synthesise a CaseHeroMediaType object when content-system props are provided
+  const effectiveHeroMedia: CaseHeroMediaType = backgroundImage
+    ? { type: "image", src: backgroundImage }
+    : (heroMedia ?? { type: "image", src: "" });
   const [videoReady, setVideoReady] = useState(false);
 
   return (
     <div className={`${FULL_BLEED} h-[55vh] md:h-[80vh] border border-white/[0.06] overflow-hidden`}>
-      {heroMedia.src ? (
-        heroMedia.type === "video" ? (
+      {effectiveHeroMedia.src ? (
+        effectiveHeroMedia.type === "video" ? (
           <video
-            src={heroMedia.src}
-            poster={heroMedia.poster}
+            src={effectiveHeroMedia.src}
+            poster={effectiveHeroMedia.poster}
             autoPlay
             muted
             loop
@@ -27,7 +35,7 @@ const CaseHeroMedia = ({ heroMedia }: CaseHeroMediaProps) => {
           />
         ) : (
           <img
-            src={heroMedia.src}
+            src={effectiveHeroMedia.src}
             alt=""
             loading="eager"
             fetchPriority="high"

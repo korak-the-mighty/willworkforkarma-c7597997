@@ -1,9 +1,13 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 
 interface ScrollyVideoSectionProps {
-  manifestUrl: string;
-  basePath: string;
+  // Direct props (legacy / existing callers)
+  manifestUrl?: string;
+  basePath?: string;
   pxPerFrame?: number;
+  // Content-system props — derive manifestUrl + basePath from these when provided
+  folderRef?: string;   // R2 folder path, e.g. "abb-scrolly-frames/"
+  frames?: number;      // frame count (informational; component reads count from manifest)
 }
 
 const framePath = (basePath: string, index: number, ext: string) =>
@@ -20,11 +24,18 @@ const MOBILE_BP = "(max-width: 768px)";
 const MOBILE_MANIFEST = "/videos/abb-mobilefly-frames-mobile/manifest.json";
 const MOBILE_BASE = "/videos/abb-mobilefly-frames-mobile/";
 
+const R2_BASE = "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/";
+
 const ScrollyVideoSection = ({
-  manifestUrl,
-  basePath,
+  manifestUrl: manifestUrlProp,
+  basePath: basePathProp,
   pxPerFrame = 9,
+  folderRef,
+  frames: _frames,
 }: ScrollyVideoSectionProps) => {
+  // Derive from content-system props when direct props are not provided
+  const basePath = basePathProp ?? (folderRef ? R2_BASE + folderRef : "");
+  const manifestUrl = manifestUrlProp ?? (folderRef ? basePath + "manifest.json" : "");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameCache = useRef(new Map<number, HTMLImageElement>());
