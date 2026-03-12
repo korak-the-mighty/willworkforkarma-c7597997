@@ -1,0 +1,26 @@
+cases:
+  - slug: abb-emobility
+    route: /work/abb-emobility
+    status: live
+    hero: ""
+    last_verified: 2026-03-07
+  - slug: share
+    route: /work/share
+    status: live
+    hero: ""
+    last_verified: 2026-03-07
+  - slug: man
+    route: /work/man
+    status: live
+    hero: ""
+    last_verified: 2026-03-07
+  - slug: bmw
+    route: /work/bmw
+    status: placeholder
+    hero: ""
+    last_verified: 2026-03-07
+  - slug: drivelog
+    route: /work/drivelog
+    status: placeholder
+    hero: ""
+    last_verified: 2026-03-07
