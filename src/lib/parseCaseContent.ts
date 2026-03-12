@@ -21,7 +21,7 @@ function parseFields(block: string): Record<string, string> {
   const fields: Record<string, string> = {};
   const lines = block.split('\n');
   for (const line of lines) {
-    const match = line.match(/^([a-zA-Z0-9_-]+):\s*(.+)$/);
+    const match = line.match(/^\s*([a-zA-Z0-9_-]+):\s*(.+)$/);
     if (match) fields[match[1].trim()] = match[2].trim();
   }
   return fields;
