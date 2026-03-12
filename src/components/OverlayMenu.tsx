@@ -72,6 +72,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
 
         {/* Left column — case list */}
         <div className="w-[70%] flex flex-col justify-center">
+          <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
           {MENU_CASES.map((c, i) => (
             <div key={c.route}>
               <Link
@@ -100,12 +101,13 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
               )}
             </div>
           ))}
+          <a href="/work" className="text-white/40 text-xs tracking-widest uppercase font-sans mt-8 block hover:text-white/70 transition-colors">All work →</a>
         </div>
 
         {/* Right column — profile image + nav links */}
         <div className="w-[30%] flex flex-col justify-center h-full">
           {/* Top: profile image + WhatsApp blob overlapping bottom */}
-          <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto', marginRight: '40px' }}>
+          <div style={{ position: 'relative', display: 'inline-block', marginLeft: 'auto', marginRight: '40px', marginTop: '-40px' }}>
             <img
               src="/HenrikLehtikangas-profilepicture.webp"
               style={{ width: '360px', display: 'block' }}
