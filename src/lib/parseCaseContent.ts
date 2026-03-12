@@ -1,4 +1,3 @@
-import matter from 'gray-matter';
 import {
   CaseData,
   MediaItem,
@@ -37,6 +36,16 @@ function parseImageList(value: string): string[] {
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
+}
+function parseFrontmatter(raw: string): { data: Record<string, string>; content: string } {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+  if (!match) return { data: {}, content: raw };
+  const data: Record<string, string> = {};
+  for (const line of match[1].split('\n')) {
+    const kv = line.match(/^([a-zA-Z0-9_-]+):\s*(.+)$/);
+    if (kv) data[kv[1].trim()] = kv[2].trim();
+  }
+  return { data, content: match[2] };
 }
 // ------------------------------------------------------------
 // Media inventory parser
@@ -148,8 +157,8 @@ function parseSection(
 // Main export
 // ------------------------------------------------------------
 export function parseCaseContent(raw: string): CaseData {
-  // Step 1: Parse top frontmatter via gray-matter
-  const { data: frontmatter, content } = matter(raw);
+  // Step 1: Parse top frontmatter
+  const { data: frontmatter, content } = parseFrontmatter(raw);
   // Step 2: Split content into named blocks on ## headings
   const blocks = content.split(/^## /m).filter(Boolean);
   let mediaInventory: MediaItem[] = [];
