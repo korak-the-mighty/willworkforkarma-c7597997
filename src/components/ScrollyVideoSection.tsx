@@ -8,6 +8,8 @@ interface ScrollyVideoSectionProps {
   // Content-system props — derive manifestUrl + basePath from these when provided
   folderRef?: string;   // R2 folder path, e.g. "abb-scrolly-frames/"
   frames?: number;      // frame count (informational; component reads count from manifest)
+  mobileRef?: string;   // R2 folder path for mobile scrolly frames
+  mobileFrames?: number;
 }
 
 const framePath = (basePath: string, index: number, ext: string) =>
@@ -21,8 +23,6 @@ const reducedMotion =
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const MOBILE_BP = "(max-width: 768px)";
-const MOBILE_MANIFEST = "/videos/abb-mobilefly-frames-mobile/manifest.json";
-const MOBILE_BASE = "/videos/abb-mobilefly-frames-mobile/";
 
 const R2_BASE = "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/";
 
@@ -32,10 +32,18 @@ const ScrollyVideoSection = ({
   pxPerFrame = 9,
   folderRef,
   frames: _frames,
+  mobileRef,
+  mobileFrames: _mobileFrames,
 }: ScrollyVideoSectionProps) => {
   // Derive from content-system props when direct props are not provided
   const basePath = basePathProp ?? (folderRef ? R2_BASE + folderRef : "");
   const manifestUrl = manifestUrlProp ?? (folderRef ? basePath + "manifest.json" : "");
+  const mobileManifestUrl = mobileRef
+    ? `${R2_BASE}${mobileRef}manifest.json`
+    : undefined;
+  const mobileBasePath = mobileRef
+    ? `${R2_BASE}${mobileRef}`
+    : undefined;
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameCache = useRef(new Map<number, HTMLImageElement>());
@@ -60,8 +68,8 @@ const ScrollyVideoSection = ({
     return () => mql.removeEventListener("change", onChange);
   }, []);
 
-  const activeManifestUrl = isMobile ? MOBILE_MANIFEST : manifestUrl;
-  const activeBasePath = isMobile ? MOBILE_BASE : basePath;
+  const activeManifestUrl = (isMobile && mobileManifestUrl) ? mobileManifestUrl : manifestUrl;
+  const activeBasePath = (isMobile && mobileBasePath) ? mobileBasePath : basePath;
 
   const loadFrame = useCallback(
     (index: number, ext: string): Promise<HTMLImageElement> => {
@@ -122,7 +130,7 @@ const ScrollyVideoSection = ({
         setTrack(data.count * pxPerFrame);
       })
       .catch(() => {
-        if (activeManifestUrl !== manifestUrl) {
+        if (mobileRef && isMobile) {
           // mobile failed → try desktop
           fetch(manifestUrl)
             .then((r) => r.json())
