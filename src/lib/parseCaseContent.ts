@@ -111,13 +111,19 @@ function parseSection(
     case 'scrolly': {
       const scrollMedia = resolveMedia(fields.ref, inventory);
       const mobileFallback = parseMobileFallback(block, inventory);
-      return {
+      const section: ScrollySection = {
         ...base,
         type: 'scrolly',
         ref: scrollMedia.ref ?? '',
         frames: scrollMedia.frames ?? 0,
         mobileFallback,
-      } as ScrollySection;
+      };
+      if (fields.mobileRef) {
+        const mobileMedia = resolveMedia(fields.mobileRef, inventory);
+        if (mobileMedia.ref) section.mobileRef = mobileMedia.ref;
+        if (mobileMedia.frames != null) section.mobileFrames = mobileMedia.frames;
+      }
+      return section;
     }
     case 'gallery': {
       const imageIds = parseImageList(fields.images ?? '');

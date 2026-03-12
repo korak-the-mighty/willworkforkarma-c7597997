@@ -35,7 +35,12 @@ export function CaseSection({ section }: CaseSectionProps) {
       return (
         <>
           <div className="hidden md:block">
-            <ScrollyVideoSection folderRef={s.ref} frames={s.frames} mobileRef={undefined} mobileFrames={undefined} />
+            <ScrollyVideoSection
+              folderRef={s.ref}
+              frames={s.frames}
+              {...(s.mobileRef != null ? { mobileRef: s.mobileRef } : {})}
+              {...(s.mobileFrames != null ? { mobileFrames: s.mobileFrames } : {})}
+            />
           </div>
           {s.mobileFallback && (
             <div className="block md:hidden">

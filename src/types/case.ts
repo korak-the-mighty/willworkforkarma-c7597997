@@ -41,6 +41,8 @@ export interface ScrollySection extends BaseSection {
   ref: string;           // resolved R2 folder URL
   frames: number;
   mobileFallback?: MobileFallback;
+  mobileRef?: string;    // resolved R2 folder URL for mobile scrolly frames
+  mobileFrames?: number;
 }
 export interface GallerySection extends BaseSection {
   type: 'gallery';
