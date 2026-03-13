@@ -1,6 +1,9 @@
 import React from 'react';
-import { Section, HeroSection, ScrollySection as ScrollySectionType, GallerySection, CustomComponentSection } from '../types/case';
+import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, CustomComponentSection } from '../types/case';
 import CaseHeroMedia from './CaseHeroMedia';
+import CaseTextBlock from './CaseTextBlock';
+import CaseTextMedia from './CaseTextMedia';
+import CaseMedia from './CaseMedia';
 import ScrollyVideoSection from './ScrollyVideoSection';
 import CaseGallery from './CaseGallery';
 import { LetsTalk } from './LetsTalk';
@@ -21,14 +24,20 @@ export function CaseSection({ section }: CaseSectionProps) {
         <CaseHeroMedia
           headline={s.headline}
           backgroundImage={s.backgroundImage}
+          isVideo={s.isVideo}
+          title={s.title}
+          subtitle={s.subtitle}
         />
       );
     }
     case 'text': {
-      if (!section.body) return null;
-      return (
-        <p className="text-[1.25rem] leading-[1.65]">{section.body}</p>
-      );
+      return <CaseTextBlock section={section as TextSection} />;
+    }
+    case 'text-media': {
+      return <CaseTextMedia section={section as TextMediaSection} />;
+    }
+    case 'media': {
+      return <CaseMedia section={section as MediaSection} />;
     }
     case 'scrolly': {
       const s = section as ScrollySectionType;

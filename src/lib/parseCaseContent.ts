@@ -4,6 +4,8 @@ import {
   Section,
   HeroSection,
   TextSection,
+  TextMediaSection,
+  MediaSection,
   ScrollySection,
   GallerySection,
   CustomComponentSection,
@@ -72,6 +74,15 @@ function parseMediaInventory(block: string): MediaItem[] {
 // ------------------------------------------------------------
 // Section parser
 // ------------------------------------------------------------
+// Parses "BUILT::The modular foundation||ESTABLISHED::A scalable system" into array
+function parseList(value: string): Array<{ tag: string; item: string }> | undefined {
+  if (!value || !value.includes('::')) return undefined;
+  return value.split('||').map(pair => {
+    const [tag, ...rest] = pair.split('::');
+    return { tag: (tag ?? '').trim(), item: rest.join('::').trim() };
+  }).filter(e => e.tag);
+}
+
 function parseMobileFallback(
   block: string,
   inventory: MediaItem[]
@@ -112,10 +123,24 @@ function parseSection(
         type: 'hero',
         headline: stripQuotes(fields.headline ?? ''),
         backgroundImage: bgMedia.url ?? '',
+        isVideo: bgMedia.type === 'video',
+        title: fields.title ? stripQuotes(fields.title) : undefined,
+        subtitle: fields.subtitle ? stripQuotes(fields.subtitle) : undefined,
       } as HeroSection;
     }
     case 'text': {
-      return { ...base, type: 'text' } as TextSection;
+      return {
+        ...base,
+        type: 'text',
+        label: fields.label ? stripQuotes(fields.label) : undefined,
+        statement: fields.statement ? stripQuotes(fields.statement) : undefined,
+        tone: (fields.tone as TextSection['tone']) ?? undefined,
+        centered: fields.centered === 'true',
+        tagline: fields.tagline ? stripQuotes(fields.tagline) : undefined,
+        subhead: fields.subhead ? stripQuotes(fields.subhead) : undefined,
+        body2: fields.body2 ? stripQuotes(fields.body2) : undefined,
+        list: fields.list ? parseList(fields.list) : undefined,
+      } as TextSection;
     }
     case 'scrolly': {
       const scrollMedia = resolveMedia(fields.ref, inventory);
@@ -133,6 +158,34 @@ function parseSection(
         if (mobileMedia.frames != null) section.mobileFrames = mobileMedia.frames;
       }
       return section;
+    }
+    case 'text-media': {
+      const imgMedia = fields.image ? resolveMedia(fields.image, inventory) : null;
+      const vidMedia = fields.video ? resolveMedia(fields.video, inventory) : null;
+      if (imgMedia && vidMedia) {
+        console.warn(`Section "${id}": both image and video provided for text-media — video will be used`);
+      }
+      return {
+        ...base,
+        type: 'text-media',
+        mediaPosition: (fields.mediaPosition as 'left' | 'right') ?? 'right',
+        label: fields.label ? stripQuotes(fields.label) : undefined,
+        imageUrl: imgMedia?.url,
+        videoUrl: vidMedia?.url,
+        imageAlt: imgMedia ? (fields['image-alt'] ?? '') : undefined,
+      } as TextMediaSection;
+    }
+    case 'media': {
+      const imgM = fields.image ? resolveMedia(fields.image, inventory) : null;
+      const vidM = fields.video ? resolveMedia(fields.video, inventory) : null;
+      return {
+        ...base,
+        type: 'media',
+        variant: (fields.variant as 'full-bleed' | 'contained') ?? 'full-bleed',
+        imageUrl: imgM?.url,
+        videoUrl: vidM?.url,
+        alt: fields.alt !== undefined ? fields.alt : (imgM || vidM ? '' : undefined),
+      } as MediaSection;
     }
     case 'gallery': {
       const imageIds = parseImageList(fields.images ?? '');

@@ -16,6 +16,8 @@ export interface MediaItem {
 export type SectionType =
   | 'hero'
   | 'text'
+  | 'text-media'
+  | 'media'
   | 'scrolly'
   | 'gallery'
   | 'custom-component';
@@ -32,10 +34,38 @@ export interface HeroSection extends BaseSection {
   type: 'hero';
   headline: string;
   backgroundImage: string; // resolved URL
+  isVideo?: boolean;
+  title?: string;    // client name line
+  subtitle?: string; // discipline · year line
 }
 export interface TextSection extends BaseSection {
   type: 'text';
+  label?: string;
+  statement?: string;
+  tone?: 'default' | 'emphasis';
+  centered?: boolean;
+  tagline?: string;
+  subhead?: string;
+  body2?: string;
+  list?: Array<{ tag: string; item: string }>;
 }
+export interface TextMediaSection extends BaseSection {
+  type: 'text-media';
+  mediaPosition: 'left' | 'right';
+  label?: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  imageAlt?: string;
+}
+
+export interface MediaSection extends BaseSection {
+  type: 'media';
+  variant: 'full-bleed' | 'contained';
+  imageUrl?: string;
+  videoUrl?: string;
+  alt?: string;
+}
+
 export interface ScrollySection extends BaseSection {
   type: 'scrolly';
   ref: string;           // resolved R2 folder URL
@@ -55,6 +85,8 @@ export interface CustomComponentSection extends BaseSection {
 export type Section =
   | HeroSection
   | TextSection
+  | TextMediaSection
+  | MediaSection
   | ScrollySection
   | GallerySection
   | CustomComponentSection;

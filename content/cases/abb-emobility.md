@@ -16,6 +16,9 @@ status: live
 - id: decision-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4.webp
+- id: wide-dash
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_11.png
 - id: scrolly-01
   type: scrolly
   ref: abb-mobilefly-frames/
@@ -42,45 +45,79 @@ status: live
 ---
 ## section-hero
 type: hero
-headline: "Building the digital brand foundation of a global e-mobility leader."
 background-image: hero-video
+title: ABB E-mobility
+subtitle: Branding · UI/UX · 2024–2025
+headline: "Building the digital brand foundation of a global e-mobility leader."
 ---
 ## section-context
-type: text
+type: text-media
+mediaPosition: right
+label: Context
+image: context-img
 ABB E-mobility operated inside ABB corporate.
 A new generation of chargers was ready to launch — redesigned industrially, digitally, and strategically.
 But there was no independent brand or digital system capable of expressing that shift.
 A future-facing product line had no independent brand container.
 ---
 ## section-tension
+type: text-media
+mediaPosition: left
+label: Tension
+video: tension-video
+The products had evolved.
+The brand container had not.
+There was no architecture capable of staging innovation.
+No modular foundation.
+No independent digital presence.
+Innovation existed.
+The system to show it didn't.
+---
+## section-decision
 type: text
-The products had evolved. The brand container had not.
-There was no architecture capable of staging innovation. No modular foundation. No independent digital presence.
-Innovation existed. The system to show it didn't.
+label: Decision
+statement: A new flexible, future proof brand system.
+Build a standalone modular E-mobility brand system — aligned with ABB heritage, but structurally independent.
+Not a redesign.
+One that could express the positioning, scale globally, and extend beyond corporate constraints.
+---
+## section-decision-media
+type: media
+variant: full-bleed
+image: decision-img
+---
+## section-execution
+type: text
+label: Execution
+subhead: System in practice
+body2: It was the first product built under the new positioning, with a redesigned interface and industrial language. We used it to validate the new visual and interaction principles before scaling them globally. Over two years, teams evolved and roles shifted. I remained responsible for maintaining strategic and structural continuity.
+list: BUILT::The modular digital foundation||ESTABLISHED::A scalable component system||ALIGNED::Product, interface and visual language under one logic||SET::Global standards for imagery and expression
+The first new charger generation — A400 — became the proving ground.
 ---
 ## section-scrolly
 type: scrolly
 ref: scrolly-01
 mobileRef: scrolly-01-mobile
 ---
-## section-decision
-type: text
-Build a standalone modular E-mobility brand system — aligned with ABB heritage, but structurally independent.
-Not a redesign. A new flexible, future proof brand system. One that could express the positioning, scale globally, and extend beyond corporate constraints.
----
-## section-execution
-type: text
-The first new charger generation — A400 — became the proving ground. It was the first product built under the new positioning, with a redesigned interface and industrial language. We used it to validate the new visual and interaction principles before scaling them globally.
-Over two years, teams evolved and roles shifted. I remained responsible for maintaining strategic and structural continuity.
----
 ## section-gallery
 type: gallery
-images: [gallery-01, gallery-02, gallery-03, gallery-04, gallery-05]
+images: gallery-01, gallery-02, gallery-03, gallery-04, gallery-05
 ---
-## section-impact
+## section-execution-media
+type: media
+variant: full-bleed
+image: wide-dash
+---
+## section-outcome
 type: text
-For the first time, product, platform and brand moved as one.
-ABB E-mobility gained a system capable of expressing its ambition. The architecture extended beyond marketing into product dashboards and infrastructure tools. The positioning became tangible.
+tone: emphasis
+centered: true
+label: Outcome
+statement: For the first time, product, platform and brand moved as one.
+tagline: Modular digital design system · Global brand website · Scalable component library · Product interface adoption
+ABB E-mobility gained a system capable of expressing its ambition.
+The architecture extended beyond marketing into product dashboards and infrastructure tools.
+The positioning became tangible.
 ---
 ## section-closing
 type: custom-component
