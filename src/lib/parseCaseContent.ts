@@ -110,6 +110,7 @@ function parseSection(
       if (/^[a-zA-Z0-9_-]+:\s*.+$/.test(line)) return false;
       if (/^mobile:\s*$/.test(line)) return false;
       if (/^[ \t]+type:|^[ \t]+ref:/.test(line)) return false;
+      if (line.trim() === '---') return false;
       return true;
     })
     .join('\n')
