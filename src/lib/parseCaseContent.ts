@@ -152,7 +152,7 @@ function parseSection(
       const section: ScrollySection = {
         ...base,
         type: 'scrolly',
-        ref: scrollMedia.ref ?? '',
+        folderRef: scrollMedia.ref ?? '',
         frames: Number(scrollMedia.frames ?? 0),
         mobileFallback,
       };

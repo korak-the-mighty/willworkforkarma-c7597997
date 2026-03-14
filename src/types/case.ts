@@ -68,10 +68,10 @@ export interface MediaSection extends BaseSection {
 
 export interface ScrollySection extends BaseSection {
   type: 'scrolly';
-  ref: string;           // resolved R2 folder URL
+  folderRef: string;     // resolved R2 folder path (e.g. "abb-mobilefly-frames/")
   frames: number;
   mobileFallback?: MobileFallback;
-  mobileRef?: string;    // resolved R2 folder URL for mobile scrolly frames
+  mobileRef?: string;    // resolved R2 folder path for mobile scrolly frames
   mobileFrames?: number;
 }
 export interface GallerySection extends BaseSection {

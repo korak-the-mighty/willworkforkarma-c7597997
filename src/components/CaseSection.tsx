@@ -43,7 +43,7 @@ export function CaseSection({ section }: CaseSectionProps) {
       const s = section as ScrollySectionType;
       return (
         <ScrollyVideoSection
-          folderRef={s.ref}
+          folderRef={s.folderRef}
           frames={s.frames}
           mobileRef={s.mobileRef}
           mobileFrames={s.mobileFrames}
