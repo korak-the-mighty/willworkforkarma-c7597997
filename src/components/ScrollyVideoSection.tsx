@@ -122,7 +122,15 @@ const ScrollyVideoSection = ({
     setError(false);
     setFrameMissing(null);
 
-    fetch(activeManifestUrl)
+    const fetchWithRetry = (url: string, retries = 2): Promise<Response> =>
+      fetch(url).then(r => {
+        if (!r.ok) {
+          if (retries > 0) return new Promise(res => setTimeout(() => res(fetchWithRetry(url, retries - 1)), 800));
+          throw new Error(`HTTP ${r.status}`);
+        }
+        return r;
+      });
+    fetchWithRetry(activeManifestUrl)
       .then((r) => { if (!r.ok) throw new Error(r.statusText); return r.json(); })
       .then((data: { count: number; ext: string }) => {
         manifestRef.current = data;
