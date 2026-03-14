@@ -246,15 +246,17 @@ const ScrollyVideoSection = ({
   return (
     <div
       ref={wrapperRef}
-      style={track ? { height: `calc(100vh + ${track}px)` } : { height: "100vh" }}
       data-scrolly="wrapper"
-      className="relative bg-[var(--page-bg)]"
+      className="relative w-full bg-[var(--page-bg)]"
     >
+      {/* Sticky canvas — height managed by position:sticky, not the wrapper */}
       <div className="sticky top-0 h-screen transform-gpu">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[var(--page-bg)]">
           <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
         </div>
       </div>
+      {/* Scroll spacer — this is what makes the wrapper tall enough to scroll through all frames */}
+      <div style={{ height: track > 0 ? `${track}px` : 0 }} aria-hidden="true" />
     </div>
   );
 };
