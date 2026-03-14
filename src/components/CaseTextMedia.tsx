@@ -62,7 +62,7 @@ export default function CaseTextMedia({ section }: { section: TextMediaSection }
           <MicroLabel>{section.label}</MicroLabel>
         </div>
       )}
-      <div className="grid grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-12 gap-16 md:gap-24 items-start">
         {isLeft ? <>{mediaCol}{textCol}</> : <>{textCol}{mediaCol}</>}
       </div>
     </section>

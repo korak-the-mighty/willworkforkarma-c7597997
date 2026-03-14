@@ -105,7 +105,7 @@ function parseSection(
   inventory: MediaItem[]
 ): Section {
   const fields = parseFields(block);
-  const type = fields.type as Section['type'];
+  const type = (fields.type ?? '').trim() as Section['type'];
   // Extract body text — lines that are not field definitions and not the mobile: block
   const bodyLines = block
     .split('\n')
@@ -207,6 +207,7 @@ function parseSection(
       } as CustomComponentSection;
     }
     default:
+      console.warn(`[parseCaseContent] Unknown section type "${type}" in section "${id}" — section skipped`);
       throw new Error(`Unknown section type "${type}" in section "${id}"`);
   }
 }
