@@ -31,6 +31,9 @@ function parseFields(block: string): Record<string, string> {
 function stripQuotes(value: string): string {
   return value.replace(/^["']|["']$/g, '');
 }
+function cleanBody(value: string): string {
+  return value.replace(/^---\s*$/gm, '').trim();
+}
 function parseImageList(value: string): string[] {
   // Parses "[editorial-01, editorial-02]" into ["editorial-01", "editorial-02"]
   return value
@@ -115,7 +118,7 @@ function parseSection(
     })
     .join('\n')
     .trim();
-  const base = { id, body: bodyLines || undefined };
+  const base = { id, body: bodyLines ? cleanBody(bodyLines) : undefined };
   switch (type) {
     case 'hero': {
       const bgMedia = resolveMedia(fields['background-image'], inventory);
@@ -133,13 +136,13 @@ function parseSection(
       return {
         ...base,
         type: 'text',
-        label: fields.label ? stripQuotes(fields.label) : undefined,
-        statement: fields.statement ? stripQuotes(fields.statement) : undefined,
+        label: fields.label ? cleanBody(stripQuotes(fields.label)) : undefined,
+        statement: fields.statement ? cleanBody(stripQuotes(fields.statement)) : undefined,
         tone: (fields.tone as TextSection['tone']) ?? undefined,
         centered: fields.centered === 'true',
-        tagline: fields.tagline ? stripQuotes(fields.tagline) : undefined,
-        subhead: fields.subhead ? stripQuotes(fields.subhead) : undefined,
-        body2: fields.body2 ? stripQuotes(fields.body2) : undefined,
+        tagline: fields.tagline ? cleanBody(stripQuotes(fields.tagline)) : undefined,
+        subhead: fields.subhead ? cleanBody(stripQuotes(fields.subhead)) : undefined,
+        body2: fields.body2 ? cleanBody(stripQuotes(fields.body2)) : undefined,
         list: fields.list ? parseList(fields.list) : undefined,
       } as TextSection;
     }
@@ -150,13 +153,13 @@ function parseSection(
         ...base,
         type: 'scrolly',
         ref: scrollMedia.ref ?? '',
-        frames: scrollMedia.frames ?? 0,
+        frames: Number(scrollMedia.frames ?? 0),
         mobileFallback,
       };
       if (fields.mobileRef) {
         const mobileMedia = resolveMedia(fields.mobileRef, inventory);
         if (mobileMedia.ref) section.mobileRef = mobileMedia.ref;
-        if (mobileMedia.frames != null) section.mobileFrames = mobileMedia.frames;
+        if (mobileMedia.frames != null) section.mobileFrames = Number(mobileMedia.frames);
       }
       return section;
     }

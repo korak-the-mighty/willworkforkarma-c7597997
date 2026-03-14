@@ -42,21 +42,12 @@ export function CaseSection({ section }: CaseSectionProps) {
     case 'scrolly': {
       const s = section as ScrollySectionType;
       return (
-        <>
-          <div className="hidden md:block">
-            <ScrollyVideoSection
-              folderRef={s.ref}
-              frames={s.frames}
-              {...(s.mobileRef != null ? { mobileRef: s.mobileRef } : {})}
-              {...(s.mobileFrames != null ? { mobileFrames: s.mobileFrames } : {})}
-            />
-          </div>
-          {s.mobileFallback && (
-            <div className="block md:hidden">
-              <img src={s.mobileFallback.url} alt="" className="w-full" />
-            </div>
-          )}
-        </>
+        <ScrollyVideoSection
+          folderRef={s.ref}
+          frames={s.frames}
+          mobileRef={s.mobileRef}
+          mobileFrames={s.mobileFrames}
+        />
       );
     }
     case 'gallery': {
