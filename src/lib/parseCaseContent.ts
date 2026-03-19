@@ -237,6 +237,7 @@ export function parseCaseContent(raw: string): CaseData {
       continue;
     }
   }
+  console.log('[SECTIONS]', JSON.stringify(sections.map(s => s.type)));
   return {
     slug: frontmatter.slug ?? '',
     route: frontmatter.route ?? '',
