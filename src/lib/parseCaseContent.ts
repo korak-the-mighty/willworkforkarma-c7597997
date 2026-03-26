@@ -233,11 +233,14 @@ export function parseCaseContent(raw: string): CaseData {
     }
     if (heading.startsWith('section-')) {
       const sectionId = heading; // e.g. "section-hero"
-      sections.push(parseSection(sectionId, body, mediaInventory));
+      try {
+        sections.push(parseSection(sectionId, body, mediaInventory));
+      } catch (err) {
+        console.error(`[parseCaseContent] Failed to parse section "${sectionId}":`, err);
+      }
       continue;
     }
   }
-  console.log('[SECTIONS]', JSON.stringify(sections.map(s => s.type)));
   return {
     slug: frontmatter.slug ?? '',
     route: frontmatter.route ?? '',
