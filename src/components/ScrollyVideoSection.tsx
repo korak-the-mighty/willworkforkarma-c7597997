@@ -298,7 +298,7 @@ const ScrollyVideoSection = ({
         </div>
       </div>
       {/* Scroll spacer — only rendered once frames are ready to prevent premature scrolling */}
-      {isReady && <div style={{ height: track > 0 ? `${track}px` : 0 }} aria-hidden="true" />}
+      <div style={{ height: track > 0 ? `${track}px` : 0 }} aria-hidden="true" />
     </div>
   );
 };
