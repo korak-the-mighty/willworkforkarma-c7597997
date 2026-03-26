@@ -236,7 +236,12 @@ export function parseCaseContent(raw: string): CaseData {
       try {
         sections.push(parseSection(sectionId, body, mediaInventory));
       } catch (err) {
-        console.error(`[parseCaseContent] Failed to parse section "${sectionId}":`, err);
+        const msg = `[parseCaseContent] Failed to parse section "${sectionId}": ${String(err)}`;
+        console.error(msg);
+        if (typeof window !== 'undefined') {
+          (window as any).__parseErrors = (window as any).__parseErrors ?? [];
+          (window as any).__parseErrors.push(msg);
+        }
       }
       continue;
     }
