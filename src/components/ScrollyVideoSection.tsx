@@ -77,7 +77,7 @@ const ScrollyVideoSection = ({
     if (!wrapper) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setIsNearViewport(true); observer.disconnect(); } },
-      { rootMargin: "0px 0px -20% 0px" }
+      { rootMargin: "0px 0px 800px 0px" }
     );
     observer.observe(wrapper);
     return () => observer.disconnect();
@@ -187,7 +187,7 @@ const ScrollyVideoSection = ({
     });
 
     // Background preload remaining frames with controlled concurrency
-    const CONCURRENCY = 6;
+    const CONCURRENCY = 10;
     let pointer = preloadCount;
 
     const next = (): Promise<void> => {
