@@ -151,7 +151,7 @@ const ScrollyVideoSection = ({
       .then((data: { count: number; ext: string }) => {
         manifestRef.current = data;
         setManifest(data);
-        setTrack(data.count * (isMobile ? 12 : pxPerFrame));
+        setTrack(data.count * (isMobile ? 6 : pxPerFrame));
       })
       .catch(() => {
         if (mobileRef && isMobile) {
@@ -161,7 +161,7 @@ const ScrollyVideoSection = ({
             .then((data: { count: number; ext: string }) => {
               manifestRef.current = data;
               setManifest(data);
-              setTrack(data.count * (isMobile ? 12 : pxPerFrame));
+              setTrack(data.count * (isMobile ? 6 : pxPerFrame));
             })
             .catch(() => setError(true));
         } else {
