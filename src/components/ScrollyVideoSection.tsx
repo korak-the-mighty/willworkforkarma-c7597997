@@ -59,6 +59,9 @@ const ScrollyVideoSection = ({
   const [error, setError] = useState(false);
   const [frameMissing, setFrameMissing] = useState<string | null>(null);
   const [manifest, setManifest] = useState<{ count: number; ext: string } | null>(null);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [cachedCount, setCachedCount] = useState(0);
 
   // Listen for viewport changes (resize / orientation)
   useEffect(() => {
@@ -66,6 +69,18 @@ const ScrollyVideoSection = ({
     const onChange = () => setIsMobile(mql.matches);
     mql.addEventListener("change", onChange);
     return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  // Lazy load — only fetch manifest when scrolly is near the viewport
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setIsNearViewport(true); observer.disconnect(); } },
+      { rootMargin: "0px 0px -20% 0px" }
+    );
+    observer.observe(wrapper);
+    return () => observer.disconnect();
   }, []);
 
   const activeManifestUrl = (isMobile && mobileManifestUrl) ? mobileManifestUrl : manifestUrl;
@@ -116,6 +131,7 @@ const ScrollyVideoSection = ({
 
   // Fetch manifest — fall back to desktop if mobile fails
   useEffect(() => {
+    if (!isNearViewport) return;
     frameCache.current.clear();
     lastDrawnRef.current = -1;
     setManifest(null);
@@ -152,19 +168,27 @@ const ScrollyVideoSection = ({
           setError(true);
         }
       });
-  }, [activeManifestUrl, manifestUrl, pxPerFrame]);
+  }, [activeManifestUrl, manifestUrl, pxPerFrame, isNearViewport]);
 
-  // Draw frame 0 immediately, then eagerly preload ALL frames
+  // Preload first 30 frames before allowing scroll, then background-load the rest
   useEffect(() => {
     if (!manifest) return;
     const { count, ext } = manifest;
+    setCachedCount(0);
+    setIsReady(false);
 
-    // Show frame 0 ASAP
-    loadFrame(0, ext).then(() => drawFrame(0));
+    const preloadCount = Math.min(30, count);
+    const warmup = Array.from({ length: preloadCount }, (_, i) =>
+      loadFrame(i, ext).then(() => setCachedCount(c => c + 1)).catch(() => {})
+    );
+    Promise.all(warmup).then(() => {
+      drawFrame(0);
+      setIsReady(true);
+    });
 
-    // Background preload with controlled concurrency
+    // Background preload remaining frames with controlled concurrency
     const CONCURRENCY = 6;
-    let pointer = 0;
+    let pointer = preloadCount;
 
     const next = (): Promise<void> => {
       while (pointer < count && frameCache.current.has(pointer)) pointer++;
@@ -173,7 +197,7 @@ const ScrollyVideoSection = ({
       return loadFrame(idx, ext).catch(() => {}).then(() => next());
     };
 
-    const workers = Array.from({ length: Math.min(CONCURRENCY, count) }, () => next());
+    const workers = Array.from({ length: Math.min(CONCURRENCY, count - preloadCount) }, () => next());
     // Fire-and-forget — no cleanup needed
     Promise.all(workers);
   }, [manifest, loadFrame, drawFrame]);
@@ -208,9 +232,11 @@ const ScrollyVideoSection = ({
         }
       }
 
-      // Progressive preload +/-5
-      for (let d = 1; d <= 5; d++) {
+      // Progressive preload +30 forward, -5 backward
+      for (let d = 1; d <= 30; d++) {
         if (index + d < count && !frameCache.current.has(index + d)) loadFrame(index + d, ext);
+      }
+      for (let d = 1; d <= 5; d++) {
         if (index - d >= 0 && !frameCache.current.has(index - d)) loadFrame(index - d, ext);
       }
 
@@ -261,10 +287,18 @@ const ScrollyVideoSection = ({
       <div className="sticky top-0 h-screen transform-gpu">
         <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen h-screen bg-[var(--page-bg)]">
           <canvas ref={canvasRef} data-scrolly="canvas" className="w-full h-full block" />
+          {!isReady && (
+            <div className="absolute bottom-0 left-0 h-[2px] bg-white/20 w-full">
+              <div
+                className="h-full bg-white/60 transition-all duration-200"
+                style={{ width: `${Math.min(cachedCount / 30 * 100, 100)}%` }}
+              />
+            </div>
+          )}
         </div>
       </div>
-      {/* Scroll spacer — this is what makes the wrapper tall enough to scroll through all frames */}
-      <div style={{ height: track > 0 ? `${track}px` : 0 }} aria-hidden="true" />
+      {/* Scroll spacer — only rendered once frames are ready to prevent premature scrolling */}
+      {isReady && <div style={{ height: track > 0 ? `${track}px` : 0 }} aria-hidden="true" />}
     </div>
   );
 };
