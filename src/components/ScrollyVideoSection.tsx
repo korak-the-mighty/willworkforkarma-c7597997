@@ -77,7 +77,7 @@ const ScrollyVideoSection = ({
     if (!wrapper) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setIsNearViewport(true); observer.disconnect(); } },
-      { rootMargin: "0px 0px 800px 0px" }
+      { rootMargin: "0px 0px 1500px 0px" }
     );
     observer.observe(wrapper);
     return () => observer.disconnect();
@@ -170,14 +170,14 @@ const ScrollyVideoSection = ({
       });
   }, [activeManifestUrl, manifestUrl, pxPerFrame, isNearViewport]);
 
-  // Preload first 30 frames before allowing scroll, then background-load the rest
+  // Preload first 60 frames before allowing scroll, then background-load the rest
   useEffect(() => {
     if (!manifest) return;
     const { count, ext } = manifest;
     setCachedCount(0);
     setIsReady(false);
 
-    const preloadCount = Math.min(30, count);
+    const preloadCount = Math.min(60, count);
     const warmup = Array.from({ length: preloadCount }, (_, i) =>
       loadFrame(i, ext).then(() => setCachedCount(c => c + 1)).catch(() => {})
     );
@@ -291,7 +291,7 @@ const ScrollyVideoSection = ({
             <div className="absolute bottom-0 left-0 h-[2px] bg-white/20 w-full">
               <div
                 className="h-full bg-white/60 transition-all duration-200"
-                style={{ width: `${Math.min(cachedCount / 30 * 100, 100)}%` }}
+                style={{ width: `${Math.min(cachedCount / 60 * 100, 100)}%` }}
               />
             </div>
           )}
