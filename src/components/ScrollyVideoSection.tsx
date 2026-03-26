@@ -29,7 +29,7 @@ const R2_BASE = "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/";
 const ScrollyVideoSection = ({
   manifestUrl: manifestUrlProp,
   basePath: basePathProp,
-  pxPerFrame = 9,
+  pxPerFrame = 20,
   folderRef,
   frames: _frames,
   mobileRef,
