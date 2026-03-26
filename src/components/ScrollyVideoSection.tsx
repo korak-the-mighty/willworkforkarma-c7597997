@@ -233,7 +233,15 @@ const ScrollyVideoSection = ({
     );
   }
 
-  if (error) return <div className="bg-[var(--page-bg)] h-screen" />;
+  if (error) return (
+    <div
+      data-scrolly="error"
+      data-manifest={manifestUrl}
+      className="bg-[var(--page-bg)] h-screen flex items-center justify-center"
+    >
+      <p className="text-white/40 text-xs font-mono">scrolly: manifest load failed — {manifestUrl}</p>
+    </div>
+  );
 
   if (frameMissing) {
     return (
