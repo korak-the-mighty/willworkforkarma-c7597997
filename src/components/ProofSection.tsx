@@ -1,22 +1,40 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { ProofSection as ProofSectionType, ProofItem } from '../types/case';
 
+const PLACEHOLDER_STYLE = { background: '#1a1a1a' };
+
+// Shared gray box — respects the same layout slot as the real asset
+function GrayBox({ isLeft, fullWidth }: { isLeft: boolean; fullWidth?: boolean }) {
+  if (fullWidth) {
+    return <div className="w-full aspect-video block" style={PLACEHOLDER_STYLE} />;
+  }
+  return (
+    <div className={`hidden md:flex md:px-16 lg:px-24 ${isLeft ? 'justify-start' : 'justify-end'}`}>
+      <div className="w-[60%] aspect-video" style={PLACEHOLDER_STYLE} />
+    </div>
+  );
+}
+
 // ------------------------------------------------------------
 // Video item — lazy loads src via IntersectionObserver
 // ------------------------------------------------------------
 function ProofVideo({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [failed, setFailed] = useState(!item.src);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || failed) return;
+
+    const onError = () => setFailed(true);
+    video.addEventListener('error', onError);
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             if (!video.getAttribute('src')) {
-              video.src = (video.dataset.src as string);
+              video.src = video.dataset.src as string;
             }
             video.play().catch(() => {});
           } else {
@@ -28,8 +46,22 @@ function ProofVideo({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
     );
 
     observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      video.removeEventListener('error', onError);
+    };
+  }, [failed]);
+
+  if (failed) {
+    return (
+      <div className="w-full">
+        <GrayBox isLeft={isLeft} />
+        <div className="md:hidden">
+          <GrayBox isLeft={isLeft} fullWidth />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -58,6 +90,7 @@ function ProofVideo({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
           className="w-full block"
           ref={(el) => {
             if (!el) return;
+            el.addEventListener('error', () => setFailed(true));
             const obs = new IntersectionObserver(
               (entries) => {
                 entries.forEach((entry) => {
@@ -86,6 +119,7 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [translateX, setTranslateX] = useState(0);
+  const [failed, setFailed] = useState(false);
 
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
@@ -101,16 +135,34 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
   }, []);
 
   useEffect(() => {
+    if (failed) return;
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  }, [handleScroll, failed]);
+
+  if (failed) {
+    return (
+      <>
+        <GrayBox isLeft={isLeft} />
+        <div className="md:hidden">
+          <GrayBox isLeft={isLeft} fullWidth />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       {/* Desktop: static in alternating layout */}
       <div className={`hidden md:flex md:px-16 lg:px-24 ${isLeft ? 'justify-start' : 'justify-end'}`}>
         <div className="w-[60%]">
-          <img src={item.src} alt={item.alt} loading="lazy" className="w-full block" />
+          <img
+            src={item.src}
+            alt={item.alt}
+            loading="lazy"
+            className="w-full block"
+            onError={() => setFailed(true)}
+          />
         </div>
       </div>
       {/* Mobile: scroll-driven horizontal pan — full bleed */}
@@ -124,6 +176,7 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
             className="h-full w-auto max-w-none block"
             style={{ transform: `translateX(${translateX}px)` }}
             draggable={false}
+            onError={() => setFailed(true)}
           />
         </div>
       </div>
@@ -135,17 +188,42 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
 // Static image
 // ------------------------------------------------------------
 function ProofImage({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
+  const [failed, setFailed] = useState(false);
+
+  if (failed) {
+    return (
+      <div className="w-full">
+        <GrayBox isLeft={isLeft} />
+        <div className="md:hidden">
+          <GrayBox isLeft={isLeft} fullWidth />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       {/* Desktop */}
       <div className={`hidden md:flex md:px-16 lg:px-24 ${isLeft ? 'justify-start' : 'justify-end'}`}>
         <div className="w-[60%]">
-          <img src={item.src} alt={item.alt} loading="lazy" className="w-full block" />
+          <img
+            src={item.src}
+            alt={item.alt}
+            loading="lazy"
+            className="w-full block"
+            onError={() => setFailed(true)}
+          />
         </div>
       </div>
       {/* Mobile: full width */}
       <div className="md:hidden w-full">
-        <img src={item.src} alt={item.alt} loading="lazy" className="w-full block" />
+        <img
+          src={item.src}
+          alt={item.alt}
+          loading="lazy"
+          className="w-full block"
+          onError={() => setFailed(true)}
+        />
       </div>
     </div>
   );
