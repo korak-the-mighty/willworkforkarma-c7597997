@@ -20,6 +20,7 @@ export type SectionType =
   | 'media'
   | 'scrolly'
   | 'gallery'
+  | 'proof'
   | 'custom-component';
 export interface MobileFallback {
   type: 'image';
@@ -78,6 +79,17 @@ export interface GallerySection extends BaseSection {
   type: 'gallery';
   images: string[];      // resolved URLs
 }
+export interface ProofItem {
+  src: string;
+  alt: string;
+  mobile: 'static' | 'pan-x'; // images only — videos are always static
+  isVideo: boolean;
+}
+export interface ProofSection extends BaseSection {
+  type: 'proof';
+  variant: string;       // 'drift-images' is the only supported variant
+  items: ProofItem[];
+}
 export interface CustomComponentSection extends BaseSection {
   type: 'custom-component';
   component: string;     // e.g. "LetsTalk"
@@ -89,6 +101,7 @@ export type Section =
   | MediaSection
   | ScrollySection
   | GallerySection
+  | ProofSection
   | CustomComponentSection;
 // ------------------------------------------------------------
 // Top-level case data

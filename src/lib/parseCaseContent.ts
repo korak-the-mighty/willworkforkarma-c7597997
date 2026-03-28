@@ -8,6 +8,8 @@ import {
   MediaSection,
   ScrollySection,
   GallerySection,
+  ProofSection,
+  ProofItem,
   CustomComponentSection,
   MobileFallback,
 } from '../types/case';
@@ -86,6 +88,23 @@ function parseList(value: string): Array<{ tag: string; item: string }> | undefi
   }).filter(e => e.tag);
 }
 
+// Parses "id::alt::mobile||id::alt::mobile" into ProofItem[]
+function parseProofItems(value: string, inventory: MediaItem[]): ProofItem[] {
+  return value
+    .split('||')
+    .map((token) => {
+      const parts = token.split('::');
+      const id = (parts[0] ?? '').trim();
+      const alt = (parts[1] ?? '').trim();
+      const mobilePart = ((parts[2] ?? 'static').trim()) as 'static' | 'pan-x';
+      const media = inventory.find((m) => m.id === id);
+      if (!media || !media.url) return null;
+      const src = media.url;
+      const isVideo = /\.(mp4|webm)(\?.*)?$/i.test(src);
+      return { src, alt, mobile: isVideo ? 'static' : mobilePart, isVideo } as ProofItem;
+    })
+    .filter((item): item is ProofItem => item !== null);
+}
 function parseMobileFallback(
   block: string,
   inventory: MediaItem[]
@@ -198,6 +217,16 @@ function parseSection(
         return media.url ?? '';
       });
       return { ...base, type: 'gallery', images: urls } as GallerySection;
+    }
+    case 'proof': {
+      const variant = fields.variant ?? 'drift-images';
+      const items = fields.items ? parseProofItems(fields.items, inventory) : [];
+      return {
+        ...base,
+        type: 'proof',
+        variant,
+        items,
+      } as ProofSection;
     }
     case 'custom-component': {
       return {

@@ -42,6 +42,15 @@ status: live
 - id: gallery-05
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4-2.webp
+- id: proof-img-01
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_11.png
+- id: proof-img-02
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_3.png
+- id: proof-img-03
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4-2.webp
 ---
 ## section-hero
 type: hero
@@ -107,6 +116,11 @@ images: gallery-01, gallery-02, gallery-03, gallery-04, gallery-05
 type: media
 variant: full-bleed
 image: wide-dash
+---
+## section-proof
+type: proof
+variant: drift-images
+items: proof-img-01::ABB E-mobility modular design system::pan-x||proof-img-02::Component and interface library in practice::static||proof-img-03::Visual language applied across product and platform::static
 ---
 ## section-outcome
 type: text

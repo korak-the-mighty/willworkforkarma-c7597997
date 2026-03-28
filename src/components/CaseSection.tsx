@@ -1,11 +1,12 @@
 import React from 'react';
-import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, CustomComponentSection } from '../types/case';
+import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, ProofSection as ProofSectionType, CustomComponentSection } from '../types/case';
 import CaseHeroMedia from './CaseHeroMedia';
 import CaseTextBlock from './CaseTextBlock';
 import CaseTextMedia from './CaseTextMedia';
 import CaseMedia from './CaseMedia';
 import ScrollyVideoSection from './ScrollyVideoSection';
 import CaseGallery from './CaseGallery';
+import { ProofSection } from './ProofSection';
 import { LetsTalk } from './LetsTalk';
 
 const CUSTOM_COMPONENTS: Record<string, React.ComponentType> = {
@@ -53,6 +54,9 @@ export function CaseSection({ section }: CaseSectionProps) {
     case 'gallery': {
       const s = section as GallerySection;
       return <CaseGallery images={s.images} />;
+    }
+    case 'proof': {
+      return <ProofSection section={section as ProofSectionType} />;
     }
     case 'custom-component': {
       const s = section as CustomComponentSection;
