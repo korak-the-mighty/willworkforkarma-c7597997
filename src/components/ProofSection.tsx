@@ -3,6 +3,14 @@ import { ProofSection as ProofSectionType, ProofItem } from '../types/case';
 
 const PLACEHOLDER_STYLE = { background: '#1a1a1a' };
 
+// True for missing, empty, or obviously non-real src values
+function isMissing(src: string | undefined | null): boolean {
+  if (!src) return true;
+  if (!src.startsWith('http')) return true;
+  if (/placeholder/i.test(src)) return true;
+  return false;
+}
+
 // Shared gray box — respects the same layout slot as the real asset
 function GrayBox({ isLeft, fullWidth }: { isLeft: boolean; fullWidth?: boolean }) {
   if (fullWidth) {
@@ -20,7 +28,7 @@ function GrayBox({ isLeft, fullWidth }: { isLeft: boolean; fullWidth?: boolean }
 // ------------------------------------------------------------
 function ProofVideo({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [failed, setFailed] = useState(!item.src);
+  const [failed, setFailed] = useState(() => isMissing(item.src));
 
   useEffect(() => {
     const video = videoRef.current;
@@ -119,7 +127,7 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const [translateX, setTranslateX] = useState(0);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(() => isMissing(item.src));
 
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
@@ -188,7 +196,7 @@ function ProofPanX({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
 // Static image
 // ------------------------------------------------------------
 function ProofImage({ item, isLeft }: { item: ProofItem; isLeft: boolean }) {
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(() => isMissing(item.src));
 
   if (failed) {
     return (
