@@ -77,7 +77,7 @@ const ScrollyVideoSection = ({
     if (!wrapper) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setIsNearViewport(true); observer.disconnect(); } },
-      { rootMargin: "0px 0px 1500px 0px" }
+      { rootMargin: "0px 0px 2500px 0px" }
     );
     observer.observe(wrapper);
     return () => observer.disconnect();
@@ -177,7 +177,7 @@ const ScrollyVideoSection = ({
     setCachedCount(0);
     setIsReady(false);
 
-    const preloadCount = Math.min(60, count);
+    const preloadCount = Math.min(100, count);
     const warmup = Array.from({ length: preloadCount }, (_, i) =>
       loadFrame(i, ext).then(() => setCachedCount(c => c + 1)).catch(() => {})
     );
@@ -187,7 +187,7 @@ const ScrollyVideoSection = ({
     });
 
     // Background preload remaining frames with controlled concurrency
-    const CONCURRENCY = 10;
+    const CONCURRENCY = 20;
     let pointer = preloadCount;
 
     const next = (): Promise<void> => {
