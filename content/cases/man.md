@@ -19,7 +19,7 @@ status: live
 - id: scrolly-execution
   type: scrolly
   ref: man-scrolly-frames/
-  frames: 0
+  frames: 163
 - id: replay-video
   type: video
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-case-video.webm
