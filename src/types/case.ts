@@ -61,7 +61,7 @@ export interface TextMediaSection extends BaseSection {
 
 export interface MediaSection extends BaseSection {
   type: 'media';
-  variant: 'full-bleed' | 'contained';
+  variant: 'full-bleed' | 'contained' | 'play-once';
   imageUrl?: string;
   videoUrl?: string;
   alt?: string;
