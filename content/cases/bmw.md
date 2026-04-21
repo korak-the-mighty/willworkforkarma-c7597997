@@ -67,6 +67,7 @@ Internal communication tools used by BMW to introduce new website modules to glo
 type: media
 variant: full-bleed
 image: img-04
+image: img-03
 ---
 ## section-interstitial
 type: statement-interstitial
@@ -82,11 +83,6 @@ tagline: Creative direction · Global platform · Campaign work · Electric mobi
 Some concepts became projects.
 Others pushed the conversation forward.
 The result was a digital ecosystem that continued to evolve while maintaining the quality and clarity expected from BMW.
----
-## section-outcome-media
-type: media
-variant: full-bleed
-image: img-03
 ---
 ## section-closing
 type: custom-component
