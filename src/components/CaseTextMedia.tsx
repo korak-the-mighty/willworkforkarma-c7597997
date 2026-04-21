@@ -34,7 +34,7 @@ export default function CaseTextMedia({ section }: { section: TextMediaSection }
     }`}>
       <div className={`${
         isLeft ? 'md:mr-auto md:w-[50vw]' : 'md:ml-auto md:w-[50vw]'
-      } aspect-[3/2] overflow-hidden bg-muted`}>
+      } aspect-[3/2] overflow-hidden bg-muted min-h-[300px] md:min-h-[400px]`}>
         {section.videoUrl ? (
           <video
             src={section.videoUrl}
@@ -50,6 +50,7 @@ export default function CaseTextMedia({ section }: { section: TextMediaSection }
             loading="eager"
             className="h-full w-full object-cover lazy-img"
             onLoad={(e) => e.currentTarget.classList.add('loaded')}
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
           />
         )}
       </div>
