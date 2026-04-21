@@ -15,9 +15,12 @@ function Inner({ section }: { section: TextSection }) {
     <section className="py-24 md:py-32">
       <div className={outerClass}>
         {section.label && <MicroLabel>{section.label}</MicroLabel>}
-        {section.body && (
+        {(section.headings?.length || section.body) && (
           <div className={`max-w-[72ch] ${BODY_TEXT} ${isCentered ? 'space-y-2 mx-auto' : 'space-y-4'}`}>
-            {section.body.split('\n').filter(l => l.trim()).map((para, i) => (
+            {section.headings?.map((h, i) => (
+              <p key={`h-${i}`} className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">{h}</p>
+            ))}
+            {(section.body ?? '').split('\n').filter(l => l.trim()).map((para, i) => (
               <p key={i}>{para}</p>
             ))}
           </div>

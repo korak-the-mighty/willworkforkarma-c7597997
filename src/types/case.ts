@@ -1,4 +1,14 @@
 // ------------------------------------------------------------
+// Snapshot data (for One View overlay)
+// ------------------------------------------------------------
+export interface SnapshotData {
+  title: string;
+  contextLine: string;
+  decisionLine: string;
+  outcomeLine: string;
+  images: string[];
+}
+// ------------------------------------------------------------
 // Media types
 // ------------------------------------------------------------
 export type MediaType = 'image' | 'video' | 'scrolly';
@@ -21,7 +31,9 @@ export type SectionType =
   | 'scrolly'
   | 'gallery'
   | 'proof'
-  | 'custom-component';
+  | 'custom-component'
+  | 'campaign'
+  | 'statement-interstitial';
 export interface MobileFallback {
   type: 'image';
   url: string;
@@ -49,6 +61,7 @@ export interface TextSection extends BaseSection {
   subhead?: string;
   body2?: string;
   list?: Array<{ tag: string; item: string }>;
+  headings?: string[];
 }
 export interface TextMediaSection extends BaseSection {
   type: 'text-media';
@@ -94,6 +107,23 @@ export interface CustomComponentSection extends BaseSection {
   type: 'custom-component';
   component: string;     // e.g. "LetsTalk"
 }
+export interface CampaignMediaItem {
+  type: 'youtube' | 'video' | 'image';
+  id?: string;   // youtube only
+  src?: string;  // video or image
+  label?: string;
+}
+export interface CampaignSection extends BaseSection {
+  type: 'campaign';
+  label?: string;
+  title?: string;
+  description?: string;
+  media: CampaignMediaItem[];
+}
+export interface StatementInterstitialSection extends BaseSection {
+  type: 'statement-interstitial';
+  text: string;
+}
 export type Section =
   | HeroSection
   | TextSection
@@ -102,7 +132,9 @@ export type Section =
   | ScrollySection
   | GallerySection
   | ProofSection
-  | CustomComponentSection;
+  | CustomComponentSection
+  | CampaignSection
+  | StatementInterstitialSection;
 // ------------------------------------------------------------
 // Top-level case data
 // ------------------------------------------------------------
@@ -112,4 +144,5 @@ export interface CaseData {
   status: 'live' | 'placeholder' | 'draft';
   mediaInventory: MediaItem[];
   sections: Section[];
+  snapshot?: SnapshotData;
 }

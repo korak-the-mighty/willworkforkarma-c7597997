@@ -12,6 +12,10 @@ import {
   ProofItem,
   CustomComponentSection,
   MobileFallback,
+  CampaignSection,
+  CampaignMediaItem,
+  StatementInterstitialSection,
+  SnapshotData,
 } from '../types/case';
 // ------------------------------------------------------------
 // Helpers
@@ -44,15 +48,51 @@ function parseImageList(value: string): string[] {
     .map((s) => s.trim())
     .filter(Boolean);
 }
-function parseFrontmatter(raw: string): { data: Record<string, string>; content: string } {
+function parseFrontmatter(raw: string): { data: Record<string, string>; frontmatterBody: string; content: string } {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!match) return { data: {}, content: raw };
+  if (!match) return { data: {}, frontmatterBody: '', content: raw };
+  const frontmatterBody = match[1];
   const data: Record<string, string> = {};
-  for (const line of match[1].split('\n')) {
+  for (const line of frontmatterBody.split('\n')) {
     const kv = line.match(/^([a-zA-Z0-9_-]+):\s*(.+)$/);
     if (kv) data[kv[1].trim()] = kv[2].trim();
   }
-  return { data, content: match[2] };
+  return { data, frontmatterBody, content: match[2] };
+}
+function parseSnapshotBlock(frontmatterBody: string): SnapshotData | undefined {
+  const snapshotMatch = frontmatterBody.match(/^snapshot:\s*\n((?:[ \t]+[^\n]*\n?)*)/m);
+  if (!snapshotMatch) return undefined;
+  const block = snapshotMatch[1];
+  const fields: Record<string, string> = {};
+  const images: string[] = [];
+  let inImages = false;
+  for (const line of block.split('\n')) {
+    const stripped = line.trimStart();
+    if (!stripped) continue;
+    if (/^images:\s*$/.test(stripped)) { inImages = true; continue; }
+    if (inImages && stripped.startsWith('- ')) { images.push(stripped.slice(2).trim()); continue; }
+    inImages = false;
+    const m = stripped.match(/^([a-zA-Z0-9_-]+):\s*(.+)$/);
+    if (m) fields[m[1]] = m[2].trim();
+  }
+  if (!fields.title) return undefined;
+  return {
+    title: fields.title,
+    contextLine: fields.contextLine ?? '',
+    decisionLine: fields.decisionLine ?? '',
+    outcomeLine: fields.outcomeLine ?? '',
+    images,
+  };
+}
+function parseCampaignMedia(value: string): CampaignMediaItem[] {
+  return value.split('||').map((token) => {
+    const parts = token.split('::').map((s) => s.trim());
+    const type = parts[0] as CampaignMediaItem['type'];
+    const srcOrId = parts[1] ?? '';
+    const label = parts[2];
+    if (type === 'youtube') return { type, id: srcOrId, label };
+    return { type, src: srcOrId, label };
+  }).filter((m) => m.type);
 }
 // ------------------------------------------------------------
 // Media inventory parser
@@ -163,6 +203,9 @@ function parseSection(
         subhead: fields.subhead ? cleanBody(stripQuotes(fields.subhead)) : undefined,
         body2: fields.body2 ? cleanBody(stripQuotes(fields.body2)) : undefined,
         list: fields.list ? parseList(fields.list) : undefined,
+        headings: fields.headings
+          ? fields.headings.split('||').map((s) => s.trim()).filter(Boolean)
+          : undefined,
       } as TextSection;
     }
     case 'scrolly': {
@@ -235,6 +278,23 @@ function parseSection(
         component: fields.component ?? '',
       } as CustomComponentSection;
     }
+    case 'campaign': {
+      return {
+        ...base,
+        type: 'campaign',
+        label: fields.label ? stripQuotes(fields.label) : undefined,
+        title: fields.title ? stripQuotes(fields.title) : undefined,
+        description: fields.description ? stripQuotes(fields.description) : undefined,
+        media: fields.media ? parseCampaignMedia(fields.media) : [],
+      } as CampaignSection;
+    }
+    case 'statement-interstitial': {
+      return {
+        ...base,
+        type: 'statement-interstitial',
+        text: fields.text ? stripQuotes(fields.text) : '',
+      } as StatementInterstitialSection;
+    }
     default:
       console.warn(`[parseCaseContent] Unknown section type "${type}" in section "${id}" — section skipped`);
       throw new Error(`Unknown section type "${type}" in section "${id}"`);
@@ -245,7 +305,8 @@ function parseSection(
 // ------------------------------------------------------------
 export function parseCaseContent(raw: string): CaseData {
   // Step 1: Parse top frontmatter
-  const { data: frontmatter, content } = parseFrontmatter(raw);
+  const { data: frontmatter, frontmatterBody, content } = parseFrontmatter(raw);
+  const snapshot = parseSnapshotBlock(frontmatterBody);
   // Step 2: Split content into named blocks on ## headings
   const blocks = content.split(/^## /m).filter(Boolean);
   let mediaInventory: MediaItem[] = [];
@@ -281,5 +342,6 @@ export function parseCaseContent(raw: string): CaseData {
     status: frontmatter.status ?? 'draft',
     mediaInventory,
     sections,
+    ...(snapshot ? { snapshot } : {}),
   };
 }

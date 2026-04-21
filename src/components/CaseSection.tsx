@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, ProofSection as ProofSectionType, CustomComponentSection } from '../types/case';
+import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, ProofSection as ProofSectionType, CustomComponentSection, CampaignSection, StatementInterstitialSection } from '../types/case';
 import CaseHeroMedia from './CaseHeroMedia';
 import CaseTextBlock from './CaseTextBlock';
 import CaseTextMedia from './CaseTextMedia';
@@ -8,6 +8,8 @@ import ScrollyVideoSection from './ScrollyVideoSection';
 import CaseGallery from './CaseGallery';
 import { ProofSection } from './ProofSection';
 import { LetsTalk } from './LetsTalk';
+import CaseCampaign from './CaseCampaign';
+import CaseStatementInterstitial from './CaseStatementInterstitial';
 
 const CUSTOM_COMPONENTS: Record<string, React.ComponentType> = {
   LetsTalk,
@@ -63,6 +65,12 @@ export function CaseSection({ section }: CaseSectionProps) {
       const Component = CUSTOM_COMPONENTS[s.component];
       if (!Component) return null;
       return <Component />;
+    }
+    case 'campaign': {
+      return <CaseCampaign section={section as CampaignSection} />;
+    }
+    case 'statement-interstitial': {
+      return <CaseStatementInterstitial section={section as StatementInterstitialSection} />;
     }
     default:
       return null;
