@@ -74,7 +74,7 @@ type: text-media
 mediaPosition: left
 label: Tension
 video: tension-video
-We saw that the products had evolved.
+The products had evolved.
 The brand container had not.
 There was no architecture capable of staging innovation.
 No modular foundation.
