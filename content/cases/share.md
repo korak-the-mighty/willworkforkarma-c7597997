@@ -34,7 +34,7 @@ type: hero
 background-image: hero-img
 title: Share
 subtitle: Branding · Brand System · Consumer Goods
-headline: "Do good. And enjoy it. Making helping something people choose again."
+headline: "Do REALLY good. And enjoy it. Making helping something people choose again."
 ---
 ## section-context
 type: text-media
