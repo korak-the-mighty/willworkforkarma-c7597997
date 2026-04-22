@@ -16,13 +16,13 @@ status: live
 - id: devices-video
   type: video
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-devices-desktop.webm
-- id: extra-img-01
+- id: gallery-01
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR6.webp
-- id: extra-img-02
+- id: gallery-02
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR7.webp
-- id: extra-img-03
+- id: gallery-03
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR8.webp
 ---
@@ -78,7 +78,7 @@ video: devices-video
 ---
 ## section-gallery
 type: gallery
-images: extra-img-01, extra-img-02, extra-img-03
+images: gallery-01, gallery-02, gallery-03
 ---
 ## section-impact
 type: text
