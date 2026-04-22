@@ -5,32 +5,21 @@ interface CaseLoaderProps {
   bg: string;
 }
 
-type Phase = "entering" | "visible" | "exiting" | "done";
-
 const CaseLoader = ({ role, bg }: CaseLoaderProps) => {
-  const [phase, setPhase] = useState<Phase>("entering");
+  const [exiting, setExiting] = useState(false);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const raf1 = requestAnimationFrame(() => {
-      requestAnimationFrame(() => setPhase("visible"));
-    });
-
-    const exitTimer = setTimeout(() => setPhase("exiting"), 3400);
-
-    return () => {
-      cancelAnimationFrame(raf1);
-      clearTimeout(exitTimer);
-    };
+    const exitTimer = setTimeout(() => setExiting(true), 3000);
+    return () => clearTimeout(exitTimer);
   }, []);
 
-  if (phase === "done") return null;
+  if (done) return null;
 
-  const dismiss = () => {
-    if (phase === "visible") setPhase("exiting");
-  };
+  const dismiss = () => setExiting(true);
 
   const handleTransitionEnd = () => {
-    if (phase === "exiting") setPhase("done");
+    if (exiting) setDone(true);
   };
 
   return (
@@ -39,8 +28,8 @@ const CaseLoader = ({ role, bg }: CaseLoaderProps) => {
       onTransitionEnd={handleTransitionEnd}
       style={{
         backgroundColor: bg,
-        opacity: phase === "visible" ? 1 : 0,
-        transition: phase === "exiting" ? "opacity 700ms ease" : "opacity 400ms ease",
+        opacity: exiting ? 0 : 1,
+        transition: exiting ? "opacity 700ms ease" : "none",
       }}
       className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-2 cursor-pointer"
     >
