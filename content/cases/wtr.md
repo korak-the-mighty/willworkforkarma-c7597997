@@ -9,25 +9,22 @@ status: live
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp
 - id: context-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_2.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR3.webp
 - id: tension-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR3.webp
-- id: decision-img
-  type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_10.webp
-- id: execution-img-top
-  type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_9.webp
-- id: execution-video
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR4.webp
+- id: devices-video
   type: video
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-execution.mp4
-- id: execution-img-bottom
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-devices-desktop.webm
+- id: extra-img-01
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_5.webp
-- id: impact-img
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR6.webp
+- id: extra-img-02
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR_website_12.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR7.webp
+- id: extra-img-03
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR8.webp
 ---
 ## section-hero
 type: hero
@@ -57,10 +54,8 @@ The challenge was not to modernize them.
 It was to earn their trust.
 ---
 ## section-decision
-type: text-media
-mediaPosition: right
+type: text
 label: Decision
-image: decision-img
 Before any design decision, the practice had to be understood.
 How architects present work.
 How they structure information.
@@ -76,26 +71,20 @@ statement3: Each project follows a deliberate rhythm: context → idea → space
 Every interaction — loaders, transitions, navigation — refined until invisible.
 No formal redesign. A visual language that quietly evolved from the foundation already there.
 ---
-## section-execution-media-top
+## section-devices-video
 type: media
 variant: full-bleed
-image: execution-img-top
+video: devices-video
 ---
-## section-execution-video
-type: media
-variant: full-bleed
-video: execution-video
----
-## section-execution-media-bottom
-type: media
-variant: full-bleed
-image: execution-img-bottom
+## section-gallery
+type: gallery
+images: extra-img-01, extra-img-02, extra-img-03
 ---
 ## section-impact
 type: text
 tone: emphasis
+centered: true
 label: Impact
-image: impact-img
 statement: Architecture for architecture.
 The practice recognized itself in the work.
 A digital presence they trust and stand behind.
