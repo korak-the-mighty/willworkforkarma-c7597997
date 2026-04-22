@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { CaseSection } from "@/components/CaseSection";
 import { getCaseData } from "@/lib/caseRegistry";
+import CaseLoader from "@/components/CaseLoader";
 
 const CaseBMW = () => {
   const caseData = getCaseData('bmw');
@@ -14,13 +15,16 @@ const CaseBMW = () => {
   }
 
   return (
-    <Layout fullWidth theme={{ bg: "#0D0D0D" }}>
-      <div className="text-white">
-        {caseData.sections.map((section) => (
-          <CaseSection key={section.id} section={section} />
-        ))}
-      </div>
-    </Layout>
+    <>
+      <CaseLoader bg="#0D0D0D" role="Global Digital Brand" />
+      <Layout fullWidth theme={{ bg: "#0D0D0D" }}>
+        <div className="text-white">
+          {caseData.sections.map((section) => (
+            <CaseSection key={section.id} section={section} />
+          ))}
+        </div>
+      </Layout>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import Layout from "@/components/Layout";
 import { CaseSection } from "@/components/CaseSection";
 import CaseSnapshot from "@/components/CaseSnapshot";
 import { getCaseData } from "@/lib/caseRegistry";
+import CaseLoader from "@/components/CaseLoader";
 
 const CaseShare = () => {
   const caseData = getCaseData('share');
@@ -18,6 +19,8 @@ const CaseShare = () => {
   }
 
   return (
+    <>
+      <CaseLoader bg="#0f0c0c" role="Brand Desirability" />
     <Layout fullWidth theme={{ bg: "#0f0c0c" }}>
       <motion.div
         className="text-white"
@@ -47,6 +50,7 @@ const CaseShare = () => {
         </button>
       )}
     </Layout>
+    </>
   );
 };
 
