@@ -2,6 +2,8 @@
 title: About
 ---
 
+Well hello world.
+
 I've spent the better part of two decades helping teams figure out what they're actually trying to say — and then helping them say it clearly, simply, and in a way that holds up over time.
 
 My work sits at the intersection of strategy and craft. I don't separate thinking from making. The best ideas emerge when you're willing to write the rough draft, question the brief, and stay close to the material. I believe in small teams, honest conversations, and doing fewer things well.
