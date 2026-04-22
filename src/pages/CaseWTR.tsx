@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import CaseSectionWrapper from "@/components/CaseSectionWrapper";
+import CaseLoader from "@/components/CaseLoader";
 
 /* ── Helpers (mirrored from CaseShare) ── */
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
@@ -14,6 +15,8 @@ const BODY_TEXT = "text-[1.25rem] leading-[1.65]";
 /* ── Page ── */
 const CaseWTR = () => {
   return (
+    <>
+      <CaseLoader bg="#0f0c0c" role="Wörner Traxler Richter" />
     <Layout fullWidth theme={{ bg: "#0f0c0c" }}>
       <div className="text-white">
         {/* ═══════════════ HERO ═══════════════ */}
@@ -202,6 +205,7 @@ const CaseWTR = () => {
         </section>
       </div>
     </Layout>
+    </>
   );
 };
 
