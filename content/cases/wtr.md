@@ -66,12 +66,10 @@ Only then could digital discipline follow architectural discipline.
 type: text
 label: Execution
 statement: A modular platform built around the work, not around the medium.
-statement2: Clear hierarchy. Strong imagery. Calm typography. Precise project data.
-statement3: Each project follows a deliberate rhythm: context → idea → space → detail → data.
 Every interaction — loaders, transitions, navigation — refined until invisible.
 No formal redesign. A visual language that quietly evolved from the foundation already there.
 ---
-## section-devices-video
+## section-execution-video
 type: media
 variant: full-bleed
 video: devices-video
