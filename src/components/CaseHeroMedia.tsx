@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { CaseHeroMedia as CaseHeroMediaType } from "@/data/cases";
 
 interface CaseHeroMediaProps {
@@ -10,16 +10,24 @@ interface CaseHeroMediaProps {
   isVideo?: boolean;
   title?: string;
   subtitle?: string;
+  loaderDone?: boolean;
 }
 
 const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
 
-const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle }: CaseHeroMediaProps) => {
+const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, loaderDone }: CaseHeroMediaProps) => {
   // Synthesise a CaseHeroMediaType object when content-system props are provided
   const effectiveHeroMedia: CaseHeroMediaType = backgroundImage
     ? { type: isVideo ? "video" : "image", src: backgroundImage }
     : (heroMedia ?? { type: "image", src: "" });
   const [videoReady, setVideoReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (loaderDone && videoRef.current) {
+      videoRef.current.play().catch(() => {/* autoplay policy — silently ignore */});
+    }
+  }, [loaderDone]);
 
   const hasOverlay = !!(headline || title || subtitle);
 
@@ -28,9 +36,9 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
       {effectiveHeroMedia.src ? (
         effectiveHeroMedia.type === "video" ? (
           <video
+            ref={videoRef}
             src={effectiveHeroMedia.src}
             poster={effectiveHeroMedia.poster}
-            autoPlay
             muted
             loop
             playsInline

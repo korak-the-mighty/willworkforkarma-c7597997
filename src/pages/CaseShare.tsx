@@ -9,6 +9,7 @@ import CaseLoader from "@/components/CaseLoader";
 const CaseShare = () => {
   const caseData = getCaseData('share');
   const [isSnapshot, setIsSnapshot] = useState(false);
+  const [loaderDone, setLoaderDone] = useState(false);
 
   if (!caseData) {
     return (
@@ -20,7 +21,7 @@ const CaseShare = () => {
 
   return (
     <>
-      <CaseLoader bg="#0f0c0c" role="Brand Desirability" />
+      <CaseLoader bg="#0f0c0c" role="Brand Desirability" onDone={() => setLoaderDone(true)} />
     <Layout fullWidth theme={{ bg: "#0f0c0c" }}>
       <motion.div
         className="text-white"
@@ -28,7 +29,7 @@ const CaseShare = () => {
         transition={{ duration: 0.3 }}
       >
         {caseData.sections.map((section) => (
-          <CaseSection key={section.id} section={section} />
+          <CaseSection key={section.id} section={section} loaderDone={loaderDone} />
         ))}
       </motion.div>
 

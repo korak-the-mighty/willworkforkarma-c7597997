@@ -17,9 +17,10 @@ const CUSTOM_COMPONENTS: Record<string, React.ComponentType> = {
 
 interface CaseSectionProps {
   section: Section;
+  loaderDone?: boolean;
 }
 
-export function CaseSection({ section }: CaseSectionProps) {
+export function CaseSection({ section, loaderDone }: CaseSectionProps) {
   switch (section.type) {
     case 'hero': {
       const s = section as HeroSection;
@@ -30,6 +31,7 @@ export function CaseSection({ section }: CaseSectionProps) {
           isVideo={s.isVideo}
           title={s.title}
           subtitle={s.subtitle}
+          loaderDone={loaderDone}
         />
       );
     }

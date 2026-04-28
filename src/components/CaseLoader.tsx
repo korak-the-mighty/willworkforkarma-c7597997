@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 interface CaseLoaderProps {
   role: string;
   bg: string;
+  onDone?: () => void;
 }
 
-const CaseLoader = ({ role, bg }: CaseLoaderProps) => {
+const CaseLoader = ({ role, bg, onDone }: CaseLoaderProps) => {
   const [exiting, setExiting] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -19,7 +20,10 @@ const CaseLoader = ({ role, bg }: CaseLoaderProps) => {
   const dismiss = () => setExiting(true);
 
   const handleTransitionEnd = () => {
-    if (exiting) setDone(true);
+    if (exiting) {
+      setDone(true);
+      onDone?.();
+    }
   };
 
   return (
