@@ -9,9 +9,9 @@ const CaseGallery = ({ images }: CaseGalleryProps = {}) => {
         {images.map((src, i) => (
           <div
             key={i}
-            className={`${i === images.length - 1 && images.length % 2 !== 0 ? "col-span-2 aspect-[2/1]" : "aspect-[3/2]"} border border-white/[0.06] overflow-hidden`}
+            className={`${i === images.length - 1 && images.length % 2 !== 0 ? "col-span-2" : ""} border border-white/[0.06] overflow-hidden`}
           >
-            <img src={src} alt="" loading="lazy" className="w-full h-full object-cover lazy-img" />
+            <img src={src} alt="" loading="lazy" className="w-full h-auto block lazy-img" />
           </div>
         ))}
       </div>
