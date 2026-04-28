@@ -6,13 +6,13 @@ status: live
 ## Media Inventory
 - id: hero-video
   type: video
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/abb-e-mobility-mcs-hero.mp4
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/abb-e-mobility-mcs-hero-recut.webm
 - id: context-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-emobility-context.webp
 - id: tension-video
   type: video
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-c50-launch.mp4
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-c50-launch.webm
 - id: decision-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4.webp
