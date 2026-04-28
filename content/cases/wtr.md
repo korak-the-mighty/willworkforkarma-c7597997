@@ -70,8 +70,8 @@ Every interaction — loaders, transitions, navigation — refined until invisib
 No formal redesign. A visual language that quietly evolved from the foundation already there.
 ---
 ## section-execution-video
-type: text-media
-mediaPosition: right
+type: media
+variant: play-once
 video: devices-video
 ---
 ## section-gallery
