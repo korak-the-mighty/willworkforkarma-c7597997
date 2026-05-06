@@ -58,7 +58,7 @@ const Index = () => {
                 className="absolute inset-0 w-full h-full object-cover lazy-img"
                 onLoad={(e) => e.currentTarget.classList.add('loaded')}
               />
-              <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-0 transition-opacity duration-500 delay-75" />
+              <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-30 transition-opacity duration-500 delay-75" />
             </>
           )}
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
@@ -66,7 +66,7 @@ const Index = () => {
               <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
                 Building the digital brand foundation of a global e-mobility leader.
               </h2>
-              <p className="mt-4 text-xs uppercase tracking-widest" style={{ color: '#ECA9CC' }}>
+              <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500" style={{ color: '#ECA9CC' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#1E1128')} onMouseLeave={(e) => (e.currentTarget.style.color = '#ECA9CC')}>
                 ABB E-mobility · Brand &amp; Digital
               </p>
             </div>
