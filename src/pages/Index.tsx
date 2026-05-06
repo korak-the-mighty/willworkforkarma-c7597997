@@ -54,14 +54,15 @@ const Index = () => {
               src={abb.coverImage}
               alt={abb.title}
               loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover brightness-[0.6] md:group-hover:brightness-100 transition-[filter] duration-[400ms] ease-in-out lazy-img"
+              className="absolute inset-0 w-full h-full object-cover lazy-img"
               onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
+            <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-0 transition-opacity duration-500 delay-75" />
           )}
           <div className="absolute inset-0 bg-black/30" />
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
             <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
-              <h2 className="font-heading text-2xl md:text-3xl tracking-tight text-white font-light">
+              <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
                 Building the digital brand foundation of a global e-mobility leader.
               </h2>
               <p className="mt-4 text-xs uppercase tracking-widest" style={{ color: '#ECA9CC' }}>
