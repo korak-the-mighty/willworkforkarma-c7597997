@@ -33,7 +33,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
               src={coverImage}
               alt={title}
               loading="lazy"
-              className="w-full h-full object-cover brightness-50 group-hover:brightness-100 transition-all duration-500 delay-75 lazy-img"
+              className="w-full h-full object-cover brightness-[0.35] group-hover:brightness-100 transition-all duration-500 delay-75 lazy-img"
               onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
           )}
@@ -44,7 +44,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
         >
           {heroHeadline ? (
             <>
-              <h2 className="font-heading text-2xl md:text-3xl tracking-tight text-foreground font-light max-w-md text-center">
+              <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-foreground font-light max-w-md text-center">
                 {heroHeadline}
               </h2>
               {supportingText && (
