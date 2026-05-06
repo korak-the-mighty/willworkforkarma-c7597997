@@ -29,13 +29,16 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
           }`}
         >
           {coverImage && (
-            <img
-              src={coverImage}
-              alt={title}
-              loading="lazy"
-              className="w-full h-full object-cover brightness-[0.35] group-hover:brightness-100 transition-all duration-500 delay-75 lazy-img"
-              onLoad={(e) => e.currentTarget.classList.add('loaded')}
-            />
+            <div className="relative w-full h-full">
+              <img
+                src={coverImage}
+                alt={title}
+                loading="lazy"
+                className="w-full h-full object-cover lazy-img"
+                onLoad={(e) => e.currentTarget.classList.add('loaded')}
+              />
+              <div className="absolute inset-0 bg-black opacity-60 group-hover:opacity-0 transition-opacity duration-500 delay-75" />
+            </div>
           )}
         </div>
         {/* Text half */}
