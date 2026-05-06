@@ -66,7 +66,7 @@ const Index = () => {
               <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
                 Building the digital brand foundation of a global e-mobility leader.
               </h2>
-              <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500" style={{ color: '#ECA9CC' }} onMouseEnter={(e) => (e.currentTarget.style.color = '#1E1128')} onMouseLeave={(e) => (e.currentTarget.style.color = '#ECA9CC')}>
+              <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500 text-[#ECA9CC] md:group-hover:text-[#1E1128]">
                 ABB E-mobility · Brand &amp; Digital
               </p>
             </div>
