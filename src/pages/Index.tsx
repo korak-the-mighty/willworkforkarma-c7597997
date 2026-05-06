@@ -118,7 +118,7 @@ const Index = () => {
 
       {/* ── 10. SEE ALL ── */}
       <section className="py-16 md:py-24 text-center">
-        <Link to="/work" className="arrow-link hover:text-foreground transition-colors" style={{ fontSize: '1.25rem', opacity: 1, color: 'inherit' }}>
+        <Link to="/work" className="arrow-link hover:text-foreground transition-colors" style={{ fontSize: '2rem', opacity: 1, color: 'inherit' }}>
           See all of my work
         </Link>
       </section>
