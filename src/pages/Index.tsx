@@ -149,9 +149,9 @@ const Index = () => {
           {/* Right — Copy */}
           <div className="space-y-6">
             <div className="max-w-lg">
-              <p className="font-heading text-2xl md:text-3xl tracking-tight text-foreground">A brand from scratch?</p>
-              <p className="font-heading text-2xl md:text-3xl tracking-tight text-foreground">A campaign platform?</p>
-              <p className="font-heading text-2xl md:text-3xl tracking-tight text-foreground">That app idea you've been sitting on?</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">A brand from scratch?</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">A campaign platform?</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">That app idea you've been sitting on?</p>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               I've been shaping visions into real brands for over twenty years.
