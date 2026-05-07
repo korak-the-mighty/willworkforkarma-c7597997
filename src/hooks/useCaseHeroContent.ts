@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+const modules = import.meta.glob('/content/cases/*.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
 
 interface CaseHero {
   headline: string;
@@ -6,8 +10,6 @@ interface CaseHero {
 }
 
 type CaseHeroMap = Record<string, CaseHero>;
-
-const CASE_SLUGS = ["abb-emobility", "share", "man", "bmw", "drivelog", "wtr"];
 
 function parseCaseHero(raw: string): CaseHero {
   const heroRegex = /##\s+section-hero[\s\S]*?headline:\s*"?([^\n"]+)"?[\s\S]*?subtitle:\s*"?([^\n"]+)"?/;
@@ -19,22 +21,14 @@ function parseCaseHero(raw: string): CaseHero {
 }
 
 export function useCaseHeroContent(): CaseHeroMap {
-  const [map, setMap] = useState<CaseHeroMap>({});
+  const map: CaseHeroMap = {};
 
-  useEffect(() => {
-    Promise.all(
-      CASE_SLUGS.map((slug) =>
-        fetch(`/content/cases/${slug}.md`)
-          .then((r) => r.text())
-          .then((raw) => ({ slug, hero: parseCaseHero(raw) }))
-          .catch(() => ({ slug, hero: { headline: "", subtitle: "" } }))
-      )
-    ).then((results) => {
-      const next: CaseHeroMap = {};
-      results.forEach(({ slug, hero }) => { next[slug] = hero; });
-      setMap(next);
-    });
-  }, []);
+  for (const path in modules) {
+    const raw = modules[path] as string ?? '';
+    // Extract slug from path: /content/cases/abb-emobility.md -> abb-emobility
+    const slug = path.replace('/content/cases/', '').replace('.md', '');
+    map[slug] = parseCaseHero(raw);
+  }
 
   return map;
 }

@@ -1,4 +1,8 @@
-import { useState, useEffect } from "react";
+const modules = import.meta.glob('/content/homepage.md', {
+  eager: true,
+  query: '?raw',
+  import: 'default',
+});
 
 interface HomepageAbout {
   headline1: string;
@@ -58,42 +62,34 @@ function parseSection(raw: string, sectionName: string): Record<string, string> 
 }
 
 export function useHomepageContent(): HomepageContent {
-  const [content, setContent] = useState<HomepageContent>(DEFAULTS);
+  const raw = modules['/content/homepage.md'] as string ?? '';
+  if (!raw) return DEFAULTS;
 
-  useEffect(() => {
-    fetch("/content/homepage.md")
-      .then((r) => r.text())
-      .then((raw) => {
-        const hero = parseSection(raw, "hero");
-        const statements = parseSection(raw, "statements");
-        const about = parseSection(raw, "about");
+  const hero = parseSection(raw, "hero");
+  const statements = parseSection(raw, "statements");
+  const about = parseSection(raw, "about");
 
-        const bodyRaw = about.body ?? "";
-        const bodyParagraphs = bodyRaw
-          .split(/\n\n+/)
-          .map((p) => p.trim())
-          .filter(Boolean);
+  const bodyRaw = about.body ?? "";
+  const bodyParagraphs = bodyRaw
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
 
-        setContent({
-          hero: {
-            headline: hero.headline ?? DEFAULTS.hero.headline,
-          },
-          statements: {
-            s1: statements.s1 ?? DEFAULTS.statements.s1,
-            s2: statements.s2 ?? DEFAULTS.statements.s2,
-            s3: statements.s3 ?? DEFAULTS.statements.s3,
-          },
-          about: {
-            headline1: about.headline1 ?? DEFAULTS.about.headline1,
-            headline2: about.headline2 ?? DEFAULTS.about.headline2,
-            headline3: about.headline3 ?? DEFAULTS.about.headline3,
-            body: bodyParagraphs.length ? bodyParagraphs : DEFAULTS.about.body,
-            cta: about.cta ?? DEFAULTS.about.cta,
-          },
-        });
-      })
-      .catch(() => setContent(DEFAULTS));
-  }, []);
-
-  return content;
+  return {
+    hero: {
+      headline: hero.headline ?? DEFAULTS.hero.headline,
+    },
+    statements: {
+      s1: statements.s1 ?? DEFAULTS.statements.s1,
+      s2: statements.s2 ?? DEFAULTS.statements.s2,
+      s3: statements.s3 ?? DEFAULTS.statements.s3,
+    },
+    about: {
+      headline1: about.headline1 ?? DEFAULTS.about.headline1,
+      headline2: about.headline2 ?? DEFAULTS.about.headline2,
+      headline3: about.headline3 ?? DEFAULTS.about.headline3,
+      body: bodyParagraphs.length ? bodyParagraphs : DEFAULTS.about.body,
+      cta: about.cta ?? DEFAULTS.about.cta,
+    },
+  };
 }
