@@ -3,7 +3,7 @@ title: Homepage
 ---
 
 ## hero
-headline: "I push vision, clarity and creative confidence."
+headline: "I KICK vision, clarity and creative confidence."
 
 ## statements
 s1: "I help clients and teams see what actually matters."
