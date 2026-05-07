@@ -4,6 +4,8 @@ import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
+import { useHomepageContent } from "@/hooks/useHomepageContent";
+import { useCaseHeroContent } from "@/hooks/useCaseHeroContent";
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -20,11 +22,17 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
   </section>
 );
 
-
-
 const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
   const navigate = useNavigate();
+  const hp = useHomepageContent();
+  const caseHeroes = useCaseHeroContent();
+
+  const abbHero = caseHeroes["abb-emobility"];
+  const shareHero = caseHeroes["share"];
+  const manHero = caseHeroes["man"];
+  const bmwHero = caseHeroes["bmw"];
+  const drivelogHero = caseHeroes["drivelog"];
 
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
@@ -40,8 +48,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
           <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center">
-            I push vision, clarity
-            <br className="hidden md:block" /> and creative confidence.
+            {hp.hero.headline}
           </h1>
         </div>
       </section>
@@ -64,10 +71,10 @@ const Index = () => {
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
             <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
               <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
-                Building the digital brand foundation of a global e-mobility leader.
+                {abbHero?.headline || "Building the digital brand foundation of a global e-mobility leader."}
               </h2>
               <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500 text-[#ECA9CC] md:group-hover:text-[#1E1128]">
-                ABB E-mobility · Brand &amp; Digital
+                {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
               </p>
             </div>
           </div>
@@ -80,40 +87,40 @@ const Index = () => {
       </Link>
 
       {/* ── 3. STATEMENT 1 ── */}
-      <Statement>I help clients and teams see what actually matters.</Statement>
+      <Statement>{hp.statements.s1}</Statement>
 
       {/* ── 4. SHARE ── */}
       <EditorialCase
         slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
-        heroHeadline="Making 'helping' the most desirable product on the shelf."
-        supportingText="SHARE · Brand"
+        heroHeadline={shareHero?.headline || "Making 'helping' the most desirable product on the shelf."}
+        supportingText={shareHero?.subtitle || "SHARE · Brand"}
       />
 
       {/* ── 5. STATEMENT 2 ── */}
-      <Statement>I turn complexity into clear direction and action.</Statement>
+      <Statement>{hp.statements.s2}</Statement>
 
       {/* ── 6. MAN ── */}
       <EditorialCase
         slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
-        heroHeadline="A focused digital presence for a global transport brand."
-        supportingText="MAN · Brand & Digital"
+        heroHeadline={manHero?.headline || "A focused digital presence for a global transport brand."}
+        supportingText={manHero?.subtitle || "MAN · Brand & Digital"}
       />
 
       {/* ── 7. STATEMENT 3 ── */}
-      <Statement>I inspire and lead creative work with relentless passion.</Statement>
+      <Statement>{hp.statements.s3}</Statement>
 
       {/* ── 8. BMW ── */}
       <EditorialCase
         slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
-        heroHeadline="Staying ahead, globally."
-        supportingText="BMW · Campaign"
+        heroHeadline={bmwHero?.headline || "Staying ahead, globally."}
+        supportingText={bmwHero?.subtitle || "BMW · Campaign"}
       />
 
       {/* ── 9. DRIVELOG ── */}
       <EditorialCase
         slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
-        heroHeadline="From idea to product — a pragmatic mobility solution."
-        supportingText="DRIVELOG · Product"
+        heroHeadline={drivelogHero?.headline || "From idea to product — a pragmatic mobility solution."}
+        supportingText={drivelogHero?.subtitle || "DRIVELOG · Product"}
       />
 
       {/* ── 10. SEE ALL ── */}
@@ -149,18 +156,17 @@ const Index = () => {
           {/* Right — Copy */}
           <div className="space-y-6">
             <div className="max-w-lg">
-              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">A brand from scratch?</p>
-              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">A campaign platform?</p>
-              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">That app idea you've been sitting on?</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline1}</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline2}</p>
+              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline3}</p>
             </div>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
-              I've been shaping visions into real brands for over twenty years.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
-              I'm ready to get excited about yours.
-            </p>
+            {hp.about.body.map((para, i) => (
+              <p key={i} className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
+                {para}
+              </p>
+            ))}
             <p className="font-heading text-lg leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
-              <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">Let's talk.</Link>
+              <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">{hp.about.cta}</Link>
             </p>
             <div className="flex gap-8 pt-2">
               <Link to="/about" className="group relative inline-block text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">
