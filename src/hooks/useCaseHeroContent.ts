@@ -12,11 +12,17 @@ interface CaseHero {
 type CaseHeroMap = Record<string, CaseHero>;
 
 function parseCaseHero(raw: string): CaseHero {
-  const heroRegex = /##\s+section-hero[\s\S]*?headline:\s*"?([^\n"]+)"?[\s\S]*?subtitle:\s*"?([^\n"]+)"?/;
-  const match = raw.match(heroRegex);
+  // Extract the section-hero block (up to the next ## section or end of file)
+  const blockMatch = raw.match(/##\s+section-hero\s*\n([\s\S]*?)(?=\n##\s|$)/);
+  const block = blockMatch?.[1] ?? "";
+
+  // Match each field independently within the block
+  const headlineMatch = block.match(/^headline:\s*"?([^\n"]+)"?\s*$/m);
+  const subtitleMatch = block.match(/^subtitle:\s*"?([^\n"]+)"?\s*$/m);
+
   return {
-    headline: match?.[1]?.trim() ?? "",
-    subtitle: match?.[2]?.trim() ?? "",
+    headline: headlineMatch?.[1]?.trim() ?? "",
+    subtitle: subtitleMatch?.[1]?.trim() ?? "",
   };
 }
 
