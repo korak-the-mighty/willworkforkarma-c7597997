@@ -94,7 +94,7 @@ export default function Work() {
     setTimeout(() => { stopRaf(); }, 320);
   }
 
-  const cols = isMobile ? 2 : 4;
+  const cols = isMobile ? 2 : (window.innerWidth < 1024 ? 3 : 4);
 
   const hp = isMobile ? '16px' : '56px';
 
@@ -111,7 +111,7 @@ export default function Work() {
 
   return (
     <Layout fullWidth theme={{ bg: '#0a0a0a' }}>
-    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
+    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden', scrollSnapType: 'y proximity' }}>
       {/* Fixed hover image — cases list (hidden on mobile) */}
       {!isMobile && (
         <div
@@ -180,6 +180,17 @@ export default function Work() {
         <div style={{ borderBottom: '1px solid rgba(245,245,240,0.1)' }} />
       </section>
 
+      {/* Other Cases snap wrapper */}
+      <div
+        id="other-cases-snap"
+        style={{
+          scrollSnapAlign: 'start',
+          height: '100svh',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+        }}
+      >
       {/* Divider */}
       <div style={s.divider}>
         <div style={s.divHead}>Other Cases in Short</div>
@@ -187,10 +198,10 @@ export default function Work() {
       </div>
 
       {/* Other work grid */}
-      <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 120, position: 'relative' }}>
+      <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div
-          className="grid grid-cols-2 md:grid-cols-4"
-          style={{ gap: 3, background: '#0a0a0a', position: 'relative' }}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1 }}
           onMouseLeave={() => { setActiveGrid(null); setHoveredIndex(null); }}
         >
           {otherWork.map((item, i) => {
@@ -202,7 +213,6 @@ export default function Work() {
               <div
                 key={i}
                 style={{
-                  aspectRatio: '16/9',
                   overflow: 'hidden',
                   cursor: 'crosshair',
                   position: 'relative',
@@ -273,6 +283,7 @@ export default function Work() {
           })}
         </div>
       </section>
+      </div>
 
       {/* ═══════════════ LET'S TALK CTA ═══════════════ */}
       <section className="py-24 md:py-32">
