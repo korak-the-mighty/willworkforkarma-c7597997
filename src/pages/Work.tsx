@@ -208,6 +208,7 @@ export default function Work() {
         ))}
         <div style={{ borderBottom: '1px solid rgba(245,245,240,0.1)' }} />
       </section>
+      <div style={{ height: '25vh' }} />
 
       {/* Other Cases snap wrapper */}
       <div
