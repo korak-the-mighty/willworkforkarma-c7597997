@@ -51,13 +51,33 @@ export default function Work() {
     return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
+  const snapSectionRef = useRef<HTMLDivElement>(null);
+  const hasSnappedRef = useRef(false);
+  const isInSnapZoneRef = useRef(false);
+
   useEffect(() => {
-    document.documentElement.style.scrollSnapType = 'y proximity';
-    document.documentElement.style.overflowY = 'scroll';
-    return () => {
-      document.documentElement.style.scrollSnapType = '';
-      document.documentElement.style.overflowY = '';
-    };
+    const section = snapSectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.15 && !hasSnappedRef.current) {
+            hasSnappedRef.current = true;
+            isInSnapZoneRef.current = true;
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          if (!entry.isIntersecting) {
+            hasSnappedRef.current = false;
+            isInSnapZoneRef.current = false;
+          }
+        });
+      },
+      { threshold: [0, 0.15, 1.0] }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
   }, []);
 
   function startRaf() {
@@ -192,8 +212,8 @@ export default function Work() {
       {/* Other Cases snap wrapper */}
       <div
         id="other-cases-snap"
+        ref={snapSectionRef}
         style={{
-          scrollSnapAlign: 'start',
           height: '100svh',
           display: 'flex',
           flexDirection: 'column',
