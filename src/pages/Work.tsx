@@ -51,6 +51,15 @@ export default function Work() {
     return () => document.removeEventListener('mousemove', onMove);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.style.scrollSnapType = 'y proximity';
+    document.documentElement.style.overflowY = 'scroll';
+    return () => {
+      document.documentElement.style.scrollSnapType = '';
+      document.documentElement.style.overflowY = '';
+    };
+  }, []);
+
   function startRaf() {
     if (rafRef.current) return;
     const tick = () => {
@@ -111,7 +120,7 @@ export default function Work() {
 
   return (
     <Layout fullWidth theme={{ bg: '#0a0a0a' }}>
-    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden', scrollSnapType: 'y proximity' }}>
+    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
       {/* Fixed hover image — cases list (hidden on mobile) */}
       {!isMobile && (
         <div
@@ -201,7 +210,7 @@ export default function Work() {
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1 }}
+          style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: 'repeat(3, 1fr)' }}
           onMouseLeave={() => { setActiveGrid(null); setHoveredIndex(null); }}
         >
           {otherWork.map((item, i) => {
@@ -217,6 +226,7 @@ export default function Work() {
                   cursor: 'crosshair',
                   position: 'relative',
                   background: '#1e1e1e',
+                  minHeight: 0,
                   opacity: activeGrid && activeGrid !== item ? 0.35 : 1,
                   transition: 'opacity 200ms ease',
                 }}
