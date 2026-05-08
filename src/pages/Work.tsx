@@ -131,7 +131,7 @@ export default function Work() {
     page:       { background: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' },
     header:     { padding: isMobile ? `80px ${hp} 40px` : `160px ${hp} 80px` },
     headline:   { fontSize: 'clamp(40px,6vw,96px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 32 },
-    context:    { fontSize: 'clamp(14px,1.2vw,17px)', fontWeight: 300, lineHeight: 1.7, color: 'rgba(245,245,240,0.45)', maxWidth: 520 },
+    context:    { fontSize: 'clamp(16px,1.4vw,20px)', fontWeight: 300, lineHeight: 1.7, color: 'rgba(245,245,240,0.65)', maxWidth: 520 },
     label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: `0 ${hp}`, marginBottom: 32 },
     divider:    { padding: `96px ${hp} 72px`, textAlign: 'center' as const },
     divHead:    { fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
@@ -193,7 +193,7 @@ export default function Work() {
               />
             )}
             <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
-              <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.58)' : 'rgba(245,245,240,0.38)', marginBottom: 6, transition: 'color 200ms ease' }}>
+              <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 15, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.7)' : 'rgba(245,245,240,0.5)', marginBottom: 6, transition: 'color 200ms ease' }}>
                 {c.client}
               </div>
               <div style={{ fontSize: 'clamp(18px,2vw,34px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
@@ -299,13 +299,13 @@ export default function Work() {
                     padding: '16px',
                   }}
                 >
-                  <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'rgba(245,245,240,0.6)', marginBottom: '8px', textTransform: 'uppercase', fontFamily: "'Clash Display', sans-serif", fontWeight: 300 }}>
+                  <div style={{ fontSize: '13px', letterSpacing: '0.12em', color: 'rgba(245,245,240,0.8)', marginBottom: '8px', textTransform: 'uppercase', fontFamily: "'Clash Display', sans-serif", fontWeight: 300 }}>
                     {item.client}
                   </div>
                   <div style={{ fontSize: 'clamp(18px, 2vw, 28px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
                     {item.title}
                   </div>
-                  <div style={{ fontSize: '11px', color: 'rgba(245,245,240,0.4)', marginTop: '8px', letterSpacing: '0.05em' }}>
+                  <div style={{ fontSize: '13px', color: 'rgba(245,245,240,0.6)', marginTop: '8px', letterSpacing: '0.05em' }}>
                     {item.what} · {item.year}
                   </div>
                 </div>
