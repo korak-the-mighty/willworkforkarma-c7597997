@@ -208,7 +208,7 @@ export default function Work() {
         ))}
         <div style={{ borderBottom: '1px solid rgba(245,245,240,0.1)' }} />
       </section>
-      <div style={{ height: '25vh' }} />
+      <div style={{ height: isMobile ? '8vh' : (window.innerWidth < 1024 ? '12vh' : '25vh') }} />
 
       {/* Other Cases snap wrapper */}
       <div
