@@ -2,6 +2,7 @@
 slug: share
 route: /work/share
 status: live
+summary: "Making helping the most desirable product on the shelf."
 snapshot:
   title: Share
   contextLine: A good product with a clear mission — but helping alone wasn't enough to win on shelf.

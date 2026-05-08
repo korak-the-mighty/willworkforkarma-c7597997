@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import { otherWork } from '../data/otherWork';
+import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
 
 const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
 const selectedCases = [
@@ -16,6 +17,7 @@ const selectedCases = [
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
 export default function Work() {
+  const caseHeroes = useCaseHeroContent();
   const hoverWrapRef = useRef<HTMLDivElement>(null);
   const activeKeyRef = useRef<string | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -166,7 +168,7 @@ export default function Work() {
                 {c.client}
               </div>
               <div style={{ fontSize: 'clamp(18px,2vw,34px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
-                {c.summary}
+                {caseHeroes[c.slug]?.summary || c.summary}
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>

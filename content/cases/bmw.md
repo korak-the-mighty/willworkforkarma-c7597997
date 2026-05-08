@@ -2,6 +2,7 @@
 slug: bmw
 route: /work/bmw
 status: live
+summary: "Creative leadership across BMW's global digital ecosystem."
 ---
 ## Media Inventory
 - id: hero-img

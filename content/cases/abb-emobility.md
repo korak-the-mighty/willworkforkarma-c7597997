@@ -2,6 +2,7 @@
 slug: abb-emobility
 route: /work/abb-emobility
 status: live
+summary: "Building the digital brand foundation of a global e-mobility leader."
 ---
 ## Media Inventory
 - id: hero-video

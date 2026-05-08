@@ -2,6 +2,7 @@
 slug: wtr
 route: /work/wtr
 status: live
+summary: "Setting a stage for clarity and design."
 ---
 ## Media Inventory
 - id: hero-img

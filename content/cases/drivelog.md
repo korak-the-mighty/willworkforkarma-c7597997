@@ -2,6 +2,7 @@
 slug: drivelog
 route: /work/drivelog
 status: live
+summary: "Making the car understandable."
 ---
 
 ## Media Inventory

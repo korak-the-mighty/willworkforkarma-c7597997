@@ -2,6 +2,7 @@
 slug: man
 route: /work/man
 status: live
+summary: "Launching a global first — a new category for a brand built on trucks."
 ---
 ## Media Inventory
 - id: hero-img
