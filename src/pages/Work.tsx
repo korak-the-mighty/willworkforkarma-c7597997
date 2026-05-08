@@ -29,6 +29,7 @@ export default function Work() {
   const [activeCase, setActiveCase] = useState<string | null>(null);
   const [activeGrid, setActiveGrid] = useState<typeof otherWork[0] | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [tappedIndex, setTappedIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -121,6 +122,19 @@ export default function Work() {
     const imgW = hoverWrapRef.current?.offsetWidth || window.innerWidth * 0.38;
     tgtX.current = imgW;
     setTimeout(() => { stopRaf(); }, 320);
+  }
+
+  function handleCellTap(item: typeof otherWork[0], i: number) {
+    if (!isMobile) return;
+    if (tappedIndex === i) {
+      setTappedIndex(null);
+      setActiveGrid(null);
+      setHoveredIndex(null);
+    } else {
+      setTappedIndex(i);
+      setActiveGrid(item);
+      setHoveredIndex(i);
+    }
   }
 
   const cols = isMobile ? 2 : (window.innerWidth < 1024 ? 3 : 4);
@@ -232,7 +246,7 @@ export default function Work() {
         <div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: `repeat(${Math.ceil(otherWork.length / cols)}, 1fr)` }}
-          onMouseLeave={() => { setActiveGrid(null); setHoveredIndex(null); }}
+          onMouseLeave={() => { if (!isMobile) { setActiveGrid(null); setHoveredIndex(null); } }}
         >
           {otherWork.map((item, i) => {
             const col = i % cols;
@@ -244,15 +258,16 @@ export default function Work() {
                 key={i}
                 style={{
                   overflow: 'hidden',
-                  cursor: 'crosshair',
+                  cursor: isMobile ? 'pointer' : 'crosshair',
                   position: 'relative',
                   background: '#1e1e1e',
                   minHeight: 0,
                   opacity: activeGrid && activeGrid !== item ? 0.35 : 1,
                   transition: 'opacity 200ms ease',
                 }}
-                onMouseEnter={() => { setActiveGrid(item); setHoveredIndex(i); }}
-                onMouseLeave={() => setHoveredIndex(null)}
+                onMouseEnter={() => { if (!isMobile) { setActiveGrid(item); setHoveredIndex(i); } }}
+                onMouseLeave={() => { if (!isMobile) { setHoveredIndex(null); } }}
+                onClick={() => handleCellTap(item, i)}
               >
                 {/* Cell's own content — fades out on any hover */}
                 {!activeGrid && (
@@ -292,7 +307,7 @@ export default function Work() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    opacity: isHovered ? 1 : 0,
+                    opacity: (isMobile ? tappedIndex === i : isHovered) ? 1 : 0,
                     transition: 'opacity 200ms',
                     pointerEvents: 'none',
                     background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)',
