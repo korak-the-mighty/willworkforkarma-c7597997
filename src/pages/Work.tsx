@@ -230,7 +230,7 @@ export default function Work() {
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-          style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: 'repeat(3, 1fr)' }}
+          style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: `repeat(${Math.ceil(otherWork.length / cols)}, 1fr)` }}
           onMouseLeave={() => { setActiveGrid(null); setHoveredIndex(null); }}
         >
           {otherWork.map((item, i) => {
