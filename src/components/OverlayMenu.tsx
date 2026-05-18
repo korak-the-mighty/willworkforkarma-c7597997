@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { X } from "lucide-react";
 
 interface OverlayMenuProps {
   isOpen: boolean;
@@ -57,7 +56,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#01031A] animate-in fade-in duration-300 overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-transparent animate-in fade-in duration-300 overflow-hidden">
       {/* Background images — one per case, crossfade on hover */}
       {MENU_CASES.map((c, i) =>
         c.heroImage ? (
@@ -72,17 +71,8 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         ) : null
       )}
 
-      {/* Dark overlay sits above images, below content */}
-      <div className="fixed inset-0 z-10 bg-black/85 pointer-events-none" />
-
-      {/* Close button */}
-      <button
-        onClick={onClose}
-        className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-30"
-        aria-label="Close menu"
-      >
-        <X size={40} />
-      </button>
+      {/* Semi-transparent overlay — sits below case images (z-auto < z-0), lets hero bleed through */}
+      <div className="fixed inset-0 bg-black/85" />
 
       {/* ── MOBILE LAYOUT ── */}
       <div

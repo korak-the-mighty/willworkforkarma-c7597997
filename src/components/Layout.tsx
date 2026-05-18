@@ -1,24 +1,39 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import OverlayMenu from "@/components/OverlayMenu";
+import { MenuProvider, useMenu } from "@/context/MenuContext";
 
-const Header = ({ onMenuOpen }: { onMenuOpen: () => void }) => (
-  <header className="fixed top-0 left-0 right-0 z-40">
-    <div className="flex items-center justify-between px-6 py-6">
-      <Link to="/" className="font-heading text-lg tracking-tight">
-        Henrik Lehtikangas
-      </Link>
-      <button
-        onClick={onMenuOpen}
-        className="p-2 text-foreground hover:text-muted-foreground transition-colors"
-        aria-label="Open menu"
-      >
-        <Menu size={40} />
-      </button>
-    </div>
-  </header>
-);
+const Header = () => {
+  const { menuOpen, setMenuOpen } = useMenu();
+  return (
+    <header className="fixed top-0 left-0 right-0 z-60">
+      <div className="flex items-center justify-between px-6 py-6">
+        <Link to="/" className="font-heading text-lg tracking-tight">
+          Henrik Lehtikangas
+        </Link>
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="relative p-2 text-foreground hover:text-muted-foreground transition-colors"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          <span
+            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-150 ${menuOpen ? "opacity-0" : "opacity-100"}`}
+          >
+            <Menu size={40} />
+          </span>
+          <span
+            className={`absolute inset-0 flex items-center justify-center transition-opacity duration-150 ${menuOpen ? "opacity-100" : "opacity-0"}`}
+          >
+            <X size={40} />
+          </span>
+          {/* Invisible spacer keeps button dimensions stable */}
+          <Menu size={40} aria-hidden className="opacity-0" />
+        </button>
+      </div>
+    </header>
+  );
+};
 
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
@@ -50,7 +65,7 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { menuOpen, setMenuOpen } = useMenu();
 
   useEffect(() => {
     if (!theme?.bg) return;
@@ -121,7 +136,7 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
 
   return (
     <div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
-      <Header onMenuOpen={() => setMenuOpen(true)} />
+      <Header />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
         {fullWidth ? children : (
@@ -135,4 +150,10 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   );
 };
 
-export default Layout;
+const LayoutWithProvider = (props: LayoutProps) => (
+  <MenuProvider>
+    <Layout {...props} />
+  </MenuProvider>
+);
+
+export default LayoutWithProvider;
