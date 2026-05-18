@@ -71,24 +71,16 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         ) : null
       )}
 
-      {/* Semi-transparent overlay — sits below case images (z-auto < z-0), lets hero bleed through */}
-      <div className="fixed inset-0 bg-black/85" />
+      {/* Mobile overlay — semi-transparent, lets hero bleed through */}
+      <div className="fixed inset-0 bg-black/90 md:hidden" />
+      {/* Desktop overlay — opaque dark background */}
+      <div className="fixed inset-0 bg-[#01031A] hidden md:block" />
 
       {/* ── MOBILE LAYOUT ── */}
       <div
         className="md:hidden relative z-20 h-full flex flex-col overflow-y-auto overscroll-contain"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
-        {/* Portrait header */}
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10 flex-shrink-0">
-          <img
-            src="/HenrikLehtikangas-profilepicture.webp"
-            alt="Henrik Lehtikangas"
-            className="w-12 h-12 rounded-full object-cover object-top grayscale opacity-75"
-          />
-          <span className="text-white/60 text-xs tracking-wide uppercase font-sans">Henrik Lehtikangas</span>
-        </div>
-
         {/* Case list */}
         <div className="px-6 pt-6 pb-4 w-full">
           <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
