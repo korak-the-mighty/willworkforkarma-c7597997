@@ -65,16 +65,16 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             src={c.heroImage}
             alt=""
             loading="lazy"
-            className="fixed inset-0 z-0 w-full h-full object-cover transition-opacity duration-300 lazy-img"
+            className="fixed inset-0 z-10 w-full h-full object-cover transition-opacity duration-300 lazy-img"
             style={{ opacity: hoveredCase === i ? 1 : 0 }}
           />
         ) : null
       )}
 
       {/* Mobile overlay — semi-transparent, lets hero bleed through */}
-      <div className="fixed inset-0 bg-black/90 md:hidden" />
+      <div className="fixed inset-0 z-0 bg-black/90 md:hidden" />
       {/* Desktop overlay — opaque dark background */}
-      <div className="fixed inset-0 bg-[#01031A] hidden md:block" />
+      <div className="fixed inset-0 z-0 bg-[#01031A] hidden md:block" />
 
       {/* ── MOBILE LAYOUT ── */}
       <div
