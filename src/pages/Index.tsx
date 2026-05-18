@@ -2,6 +2,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMenu } from "@/context/MenuContext";
 import Layout from "@/components/Layout";
+
+const HeroHeadline = ({ text }: { text: string }) => {
+  const { menuOpen } = useMenu();
+  return (
+    <h1 className={`font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`}>
+      {text}
+    </h1>
+  );
+};
 import EditorialCase from "@/components/EditorialCase";
 import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
@@ -26,7 +35,6 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
   const navigate = useNavigate();
-  const { menuOpen } = useMenu();
 
   const hp = useHomepageContent();
   const caseHeroes = useCaseHeroContent();
@@ -50,9 +58,7 @@ const Index = () => {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
-          <h1 className={`font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`}>
-            {hp.hero.headline}
-          </h1>
+          <HeroHeadline text={hp.hero.headline} />
         </div>
       </section>
 

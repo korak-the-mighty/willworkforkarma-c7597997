@@ -78,7 +78,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
 
       {/* ── MOBILE LAYOUT ── */}
       <div
-        className="md:hidden relative z-20 h-full flex flex-col overflow-y-auto overscroll-contain"
+        className="md:hidden relative z-20 h-full flex flex-col overflow-y-auto overscroll-contain pt-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* Case list */}
