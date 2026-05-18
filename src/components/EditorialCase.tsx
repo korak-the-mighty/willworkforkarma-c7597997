@@ -73,7 +73,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
 
       {/* Mobile layout — stacked */}
       <div className="md:hidden">
-        <div className="w-full aspect-[16/10] overflow-hidden bg-muted">
+        <div className="w-full aspect-[4/3] overflow-hidden bg-muted">
           {coverImage && (
             <img
               src={coverImage}

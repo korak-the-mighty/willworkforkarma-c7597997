@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
@@ -25,6 +25,17 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.id = 'snap-rhythm-mobile';
+    style.textContent = '@media (max-width: 767px) { html { scroll-snap-type: y proximity; } }';
+    document.head.appendChild(style);
+    return () => {
+      const el = document.getElementById('snap-rhythm-mobile');
+      if (el) el.remove();
+    };
+  }, []);
   const hp = useHomepageContent();
   const caseHeroes = useCaseHeroContent();
 
@@ -53,79 +64,98 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── 2. HERO PROJECT: ABB ── */}
-      <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
-        <div className="relative min-h-[70vh] overflow-hidden">
-          {abb.coverImage && (
-            <>
-              <img
-                src={abb.coverImage}
-                alt={abb.title}
-                loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover lazy-img"
-                onLoad={(e) => e.currentTarget.classList.add('loaded')}
-              />
-              <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-30 transition-opacity duration-500 delay-75" />
-            </>
-          )}
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
-            <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
-              <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
-                {abbHero?.headline || "Building the digital brand foundation of a global e-mobility leader."}
-              </h2>
-              <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500 text-[#ECA9CC] md:group-hover:text-[#1E1128]">
-                {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
-              </p>
+      {/* ── HIGHLIGHT SEQUENCE: ABB → DRIVELOG (mobile snap rhythm wrapper) ── */}
+      <div>
+
+        {/* ── 2. HERO PROJECT: ABB ── */}
+        <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
+          <div className="relative min-h-[70vh] overflow-hidden">
+            {abb.coverImage && (
+              <>
+                <img
+                  src={abb.coverImage}
+                  alt={abb.title}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover lazy-img"
+                  onLoad={(e) => e.currentTarget.classList.add('loaded')}
+                />
+                <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-30 transition-opacity duration-500 delay-75" />
+              </>
+            )}
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
+              <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
+                <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
+                  {abbHero?.headline || "Building the digital brand foundation of a global e-mobility leader."}
+                </h2>
+                <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500 text-[#ECA9CC] md:group-hover:text-[#1E1128]">
+                  {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
+                </p>
+              </div>
             </div>
           </div>
+          {/* Mobile info */}
+          <div className="md:hidden px-6 py-6 space-y-1">
+            {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
+            <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
+          </div>
+        </Link>
+
+        {/* ── 3. STATEMENT 1 ── */}
+        <Statement>{hp.statements.s1}</Statement>
+
+        {/* ── 4. SHARE ── */}
+        <div className="snap-start md:snap-align-none">
+          <EditorialCase
+            slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
+            heroHeadline={shareHero?.headline || "Making 'helping' the most desirable product on the shelf."}
+            supportingText={shareHero?.subtitle || "SHARE · Brand"}
+          />
         </div>
-        {/* Mobile info */}
-        <div className="md:hidden px-6 py-6 space-y-1">
-          {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
-          <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
+
+        {/* ── 5. STATEMENT 2 ── */}
+        <Statement>{hp.statements.s2}</Statement>
+
+        {/* ── 6. MAN ── */}
+        <div className="snap-start md:snap-align-none">
+          <EditorialCase
+            slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
+            heroHeadline={manHero?.headline || "A focused digital presence for a global transport brand."}
+            supportingText={manHero?.subtitle || "MAN · Brand & Digital"}
+          />
         </div>
-      </Link>
 
-      {/* ── 3. STATEMENT 1 ── */}
-      <Statement>{hp.statements.s1}</Statement>
+        {/* ── 7. STATEMENT 3 ── */}
+        <Statement>{hp.statements.s3}</Statement>
 
-      {/* ── 4. SHARE ── */}
-      <EditorialCase
-        slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
-        heroHeadline={shareHero?.headline || "Making 'helping' the most desirable product on the shelf."}
-        supportingText={shareHero?.subtitle || "SHARE · Brand"}
-      />
+        {/* ── 8. BMW ── */}
+        <div className="snap-start md:snap-align-none">
+          <EditorialCase
+            slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
+            heroHeadline={bmwHero?.headline || "Staying ahead, globally."}
+            supportingText={bmwHero?.subtitle || "BMW · Campaign"}
+          />
+        </div>
 
-      {/* ── 5. STATEMENT 2 ── */}
-      <Statement>{hp.statements.s2}</Statement>
+        {/* ── 9. DRIVELOG ── */}
+        <div className="snap-start md:snap-align-none">
+          <EditorialCase
+            slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
+            heroHeadline={drivelogHero?.headline || "From idea to product — a pragmatic mobility solution."}
+            supportingText={drivelogHero?.subtitle || "DRIVELOG · Product"}
+          />
+        </div>
 
-      {/* ── 6. MAN ── */}
-      <EditorialCase
-        slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
-        heroHeadline={manHero?.headline || "A focused digital presence for a global transport brand."}
-        supportingText={manHero?.subtitle || "MAN · Brand & Digital"}
-      />
-
-      {/* ── 7. STATEMENT 3 ── */}
-      <Statement>{hp.statements.s3}</Statement>
-
-      {/* ── 8. BMW ── */}
-      <EditorialCase
-        slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
-        heroHeadline={bmwHero?.headline || "Staying ahead, globally."}
-        supportingText={bmwHero?.subtitle || "BMW · Campaign"}
-      />
-
-      {/* ── 9. DRIVELOG ── */}
-      <EditorialCase
-        slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
-        heroHeadline={drivelogHero?.headline || "From idea to product — a pragmatic mobility solution."}
-        supportingText={drivelogHero?.subtitle || "DRIVELOG · Product"}
-      />
+      </div>
+      {/* ── END HIGHLIGHT SEQUENCE ── */}
 
       {/* ── 10. SEE ALL ── */}
       <section className="py-16 md:py-24 text-center">
-        <Link to="/work" className="arrow-link hover:text-foreground transition-colors" style={{ fontSize: '2rem', opacity: 1, color: 'inherit' }}>
+        <Link
+          to="/work"
+          className="group relative inline-block hover:text-foreground transition-colors"
+          style={{ fontSize: '2rem', opacity: 1, color: 'inherit' }}
+        >
+          <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" aria-hidden="true">→</span>
           See all of my work
         </Link>
       </section>

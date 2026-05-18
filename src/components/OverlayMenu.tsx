@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
 
@@ -9,8 +9,8 @@ interface OverlayMenuProps {
 
 const MENU_CASES = [
   {
-    client: "ABB E\u2011mobility",
-    tagline: "Building the digital brand foundation of a global e\u2011mobility leader.",
+    client: "ABB E‑mobility",
+    tagline: "Building the digital brand foundation of a global e‑mobility leader.",
     route: "/work/abb-emobility",
     heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-hero.webp",
   },
@@ -36,6 +36,16 @@ const MENU_CASES = [
 
 const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -67,8 +77,70 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         <X size={40} />
       </button>
 
-      {/* Content — two columns */}
-      <div className="relative z-20 h-full flex flex-row px-16 md:px-24 py-8 md:py-12">
+      {/* ── MOBILE LAYOUT ── */}
+      <div
+        className="md:hidden relative z-20 h-full flex flex-col overflow-y-auto overscroll-contain"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+      >
+        {/* Portrait header */}
+        <div className="flex items-center gap-3 px-6 py-5 border-b border-white/10 flex-shrink-0">
+          <img
+            src="/HenrikLehtikangas-profilepicture.webp"
+            alt="Henrik Lehtikangas"
+            className="w-12 h-12 rounded-full object-cover object-top grayscale opacity-75"
+          />
+          <span className="text-white/60 text-xs tracking-wide uppercase font-sans">Henrik Lehtikangas</span>
+        </div>
+
+        {/* Case list */}
+        <div className="px-6 pt-6 pb-4 w-full">
+          <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
+          {MENU_CASES.map((c, i) => (
+            <div key={c.route}>
+              <Link to={c.route} onClick={onClose} className="block">
+                <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{c.tagline}</p>
+              </Link>
+              {i < MENU_CASES.length - 1 && (
+                <div className="border-t border-white/10 my-6" />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Secondary nav */}
+        <div className="flex flex-row gap-8 px-6 py-5 border-t border-white/10 flex-shrink-0">
+          {[
+            { to: "/about", label: "About" },
+            { to: "/work", label: "All Work" },
+            { to: "/contact", label: "Contact" },
+          ].map(({ to, label }) => (
+            <Link
+              key={to}
+              to={to}
+              onClick={onClose}
+              className="text-sm tracking-widest uppercase text-white/50 hover:text-white transition-colors"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="mt-auto px-6 pb-8 pt-4 flex-shrink-0">
+          <a
+            href="https://wa.me/4915141655661"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block w-full text-center py-4 rounded-full border border-white/20 bg-white/5 text-white/80 font-heading tracking-wide"
+          >
+            Whatsapp →
+          </a>
+        </div>
+      </div>
+
+      {/* ── DESKTOP LAYOUT ── */}
+      <div className="hidden md:flex relative z-20 h-full flex-row px-16 md:px-24 py-8 md:py-12">
 
         {/* Left column — case list */}
         <div className="w-[70%] flex flex-col justify-center">
