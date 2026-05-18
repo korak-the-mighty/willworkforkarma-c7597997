@@ -65,7 +65,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             src={c.heroImage}
             alt=""
             loading="lazy"
-            className="fixed inset-0 z-10 w-full h-full object-cover transition-opacity duration-300 lazy-img"
+            className="fixed inset-0 z-[15] w-full h-full object-cover transition-opacity duration-300 lazy-img"
             style={{ opacity: hoveredCase === i ? 1 : 0 }}
           />
         ) : null
@@ -73,12 +73,14 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
 
       {/* Mobile overlay — semi-transparent, lets hero bleed through */}
       <div className="fixed inset-0 z-0 bg-black/90 md:hidden" />
-      {/* Desktop overlay — opaque dark background */}
-      <div className="fixed inset-0 z-0 bg-[#01031A] hidden md:block" />
+      {/* Desktop base — opaque dark background, below case images */}
+      <div className="fixed inset-0 bg-[#01031A] hidden md:block z-10" />
+      {/* Desktop dimming overlay — sits above case images, atmospheric hover effect */}
+      <div className="fixed inset-0 bg-black/80 hidden md:block z-20 pointer-events-none" />
 
       {/* ── MOBILE LAYOUT ── */}
       <div
-        className="md:hidden relative z-20 h-full flex flex-col overflow-y-auto overscroll-contain pt-20"
+        className="md:hidden relative z-30 h-full flex flex-col overflow-y-auto overscroll-contain pt-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
         {/* Case list */}
@@ -135,7 +137,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
       </div>
 
       {/* ── DESKTOP LAYOUT ── */}
-      <div className="hidden md:flex relative z-20 h-full flex-row px-16 md:px-24 py-8 md:py-12">
+      <div className="hidden md:flex relative z-30 h-full flex-row px-16 md:px-24 py-8 md:py-12">
 
         {/* Left column — case list */}
         <div className="w-[70%] flex flex-col justify-center">
