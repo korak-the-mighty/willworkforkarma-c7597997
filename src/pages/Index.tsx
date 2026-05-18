@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import EditorialCase from "@/components/EditorialCase";
@@ -26,16 +26,6 @@ const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.id = 'snap-rhythm-mobile';
-    style.textContent = '@media (max-width: 767px) { html { scroll-snap-type: y proximity; } }';
-    document.head.appendChild(style);
-    return () => {
-      const el = document.getElementById('snap-rhythm-mobile');
-      if (el) el.remove();
-    };
-  }, []);
   const hp = useHomepageContent();
   const caseHeroes = useCaseHeroContent();
 
@@ -65,7 +55,7 @@ const Index = () => {
       </section>
 
       {/* ── HIGHLIGHT SEQUENCE: ABB → DRIVELOG (mobile snap rhythm wrapper) ── */}
-      <div>
+      <div className="[scroll-snap-type:y_proximity] md:[scroll-snap-type:none]">
 
         {/* ── 2. HERO PROJECT: ABB ── */}
         <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
