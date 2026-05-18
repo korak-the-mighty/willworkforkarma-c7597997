@@ -7,7 +7,7 @@ import { MenuProvider, useMenu } from "@/context/MenuContext";
 const Header = () => {
   const { menuOpen, setMenuOpen } = useMenu();
   return (
-    <header className="fixed top-0 left-0 right-0 z-60">
+    <header className="fixed top-0 left-0 right-0 z-[60]">
       <div className="flex items-center justify-between px-6 py-6">
         <Link to="/" className="font-heading text-lg tracking-tight">
           Henrik Lehtikangas
