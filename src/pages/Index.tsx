@@ -54,8 +54,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ── HIGHLIGHT SEQUENCE: ABB → DRIVELOG (mobile snap rhythm wrapper) ── */}
-      <div className="[scroll-snap-type:y_proximity] md:[scroll-snap-type:none]">
+      {/* ── HIGHLIGHT SEQUENCE: ABB → DRIVELOG ── */}
+      <div>
 
         {/* ── 2. HERO PROJECT: ABB ── */}
         <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
@@ -94,7 +94,7 @@ const Index = () => {
         <Statement>{hp.statements.s1}</Statement>
 
         {/* ── 4. SHARE ── */}
-        <div className="snap-start md:snap-align-none">
+        <div>
           <EditorialCase
             slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
             heroHeadline={shareHero?.headline || "Making 'helping' the most desirable product on the shelf."}
@@ -106,7 +106,7 @@ const Index = () => {
         <Statement>{hp.statements.s2}</Statement>
 
         {/* ── 6. MAN ── */}
-        <div className="snap-start md:snap-align-none">
+        <div>
           <EditorialCase
             slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
             heroHeadline={manHero?.headline || "A focused digital presence for a global transport brand."}
@@ -118,7 +118,7 @@ const Index = () => {
         <Statement>{hp.statements.s3}</Statement>
 
         {/* ── 8. BMW ── */}
-        <div className="snap-start md:snap-align-none">
+        <div>
           <EditorialCase
             slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
             heroHeadline={bmwHero?.headline || "Staying ahead, globally."}
@@ -127,7 +127,7 @@ const Index = () => {
         </div>
 
         {/* ── 9. DRIVELOG ── */}
-        <div className="snap-start md:snap-align-none">
+        <div>
           <EditorialCase
             slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
             heroHeadline={drivelogHero?.headline || "From idea to product — a pragmatic mobility solution."}

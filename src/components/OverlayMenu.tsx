@@ -36,6 +36,13 @@ const MENU_CASES = [
 
 const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("henrik.lehtikangas@gmail.com");
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -127,15 +134,21 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-auto px-6 pb-8 pt-4 flex-shrink-0">
+        <div className="mt-auto px-6 pb-8 pt-4 flex-shrink-0 flex flex-row gap-3">
           <a
             href="https://wa.me/4915141655661"
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full text-center py-4 rounded-full border border-white/20 bg-white/5 text-white/80 font-heading tracking-wide"
+            className="flex-1 text-center py-4 rounded-full border border-white/20 bg-white/5 text-white/80 font-heading tracking-wide"
           >
-            Whatsapp →
+            WhatsApp →
           </a>
+          <button
+            onClick={handleCopyEmail}
+            className="flex-1 text-center py-4 rounded-full border border-white/20 bg-white/5 text-white/80 font-heading tracking-wide"
+          >
+            {emailCopied ? "Copied!" : "Copy email"}
+          </button>
         </div>
       </div>
 
