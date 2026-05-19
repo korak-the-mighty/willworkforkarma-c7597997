@@ -92,11 +92,9 @@ label: Impact
 The TGE didn't feel like an experiment.
 It felt like a natural extension of MAN.
 
-statement: |
-  A new interactive global launch.
-  Still the same MAN.
+statement: "A new interactive global launch. Still the same MAN."
 
-tagline: Creative direction • UI/UX design • Interactive product tools • IAA product launch
+tagline: "Creative direction • UI/UX design • Interactive product tools • IAA product launch"
 
 ---
 ## section-closing
