@@ -13,11 +13,9 @@ s2: "I turn complexity into clear direction and action."
 s3: "I inspire and lead creative work with relentless passion."
 
 ## about
-headline1: "A brand from scratch?"
-headline2: "A campaign platform?"
-headline3: "That app idea you've been sitting on?"
+headline1: "I like creating with humans."
 body: |
-  I've been shaping visions into real brands for over twenty years.
+  I help brands, teams and ideas find clarity, direction and reason.
 
-  I'm ready to get excited about yours.
+  For over twenty years, I've helped turn uncertainty into getting right things done.
 cta: "Let's talk."
