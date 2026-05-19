@@ -76,7 +76,7 @@ const Index = () => {
 
         {/* ── 2. HERO PROJECT: ABB ── */}
         <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
-          <div className="relative min-h-[70vh] overflow-hidden">
+          <div className="relative h-[80vh] overflow-hidden">
             {abb.coverImage && (
               <>
                 <img
@@ -86,24 +86,19 @@ const Index = () => {
                   className="absolute inset-0 w-full h-full object-cover lazy-img"
                   onLoad={(e) => e.currentTarget.classList.add('loaded')}
                 />
-                <div className="absolute inset-0 bg-black opacity-60 md:group-hover:opacity-30 transition-opacity duration-500 delay-75" />
+                <div className="absolute inset-0 bg-black opacity-50 md:opacity-60 md:group-hover:opacity-30 transition-opacity duration-500 delay-75" />
               </>
             )}
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
-              <div className="opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out flex flex-col items-center max-w-2xl">
+              <div className="flex flex-col items-center max-w-2xl opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out">
                 <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
                   {abbHero?.headline || "Building the digital brand foundation of a global e-mobility leader."}
                 </h2>
-                <p className="mt-4 text-xs uppercase tracking-widest transition-colors duration-500 text-[#ECA9CC] md:group-hover:text-[#1E1128]">
+                <p className="mt-4 text-xs uppercase tracking-widest text-[#ECA9CC] md:transition-colors md:duration-500 md:group-hover:text-[#1E1128]">
                   {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
                 </p>
               </div>
             </div>
-          </div>
-          {/* Mobile info */}
-          <div className="md:hidden px-6 py-6 space-y-1">
-            {abb.subline && <p className="text-sm text-muted-foreground">{abb.subline}</p>}
-            <p className="text-sm text-muted-foreground">{abb.area} · {abb.year}</p>
           </div>
         </Link>
 
