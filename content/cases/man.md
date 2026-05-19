@@ -68,11 +68,11 @@ The product's versatility becomes understandable without overwhelming the audien
 ## section-execution
 type: text
 label: Execution
-Creative direction across the platform.
-UI and UX for the experience.
-Interactive tools connecting needs to configurations.
-Close collaboration with development teams and internal stakeholders.
-Over a year of work leading to the public launch.
+Understanding the limits of the old system and the need for change.
+Creating a flexible digital brand ecosystem for ABB E-mobility.
+Implementing the design direction across teams, launches and platforms.
+Elevating the desirability, energy and feeling of ABB E-mobility.
+Two years leading the transformation.
 ---
 ## section-scrolly
 type: scrolly
