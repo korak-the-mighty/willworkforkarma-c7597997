@@ -197,8 +197,8 @@ const Index = () => {
                 {para}
               </p>
             ))}
-            <Link to="/contact" className="group relative inline-flex items-center gap-3 font-heading text-2xl md:text-5xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
-              <span className="opacity-0 group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-500 ease-in-out" aria-hidden="true">→</span>
+            <Link to="/contact" className="group relative inline-block font-heading text-2xl md:text-3xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
+              <span className="absolute right-full pr-3 opacity-0 group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-500 ease-in-out" aria-hidden="true">→</span>
               <span>{hp.about.cta}</span>
             </Link>
           </div>
