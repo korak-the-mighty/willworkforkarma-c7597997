@@ -54,7 +54,7 @@ function Inner({ section }: { section: TextSection }) {
       )}
       {section.statement && (
         <div className={`py-20 md:py-28 px-6 ${isCentered ? 'text-center' : 'md:px-8 max-w-4xl mx-auto'}`}>
-          <p className="font-heading text-3xl md:text-5xl tracking-tight text-white max-w-3xl mx-auto leading-[1.15]">
+          <p className="font-heading text-3xl md:text-5xl tracking-tight text-white max-w-3xl mx-auto leading-[1.15] whitespace-pre-line">
             {section.statement}
           </p>
         </div>

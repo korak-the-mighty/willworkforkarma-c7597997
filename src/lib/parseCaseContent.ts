@@ -196,7 +196,7 @@ function parseSection(
         ...base,
         type: 'text',
         label: fields.label ? cleanBody(stripQuotes(fields.label)) : undefined,
-        statement: fields.statement ? cleanBody(stripQuotes(fields.statement)) : undefined,
+        statement: fields.statement ? cleanBody(stripQuotes(fields.statement)).replace(/\\n/g, '\n') : undefined,
         tone: (fields.tone as TextSection['tone']) ?? undefined,
         centered: fields.centered === 'true',
         tagline: fields.tagline ? cleanBody(stripQuotes(fields.tagline)) : undefined,
