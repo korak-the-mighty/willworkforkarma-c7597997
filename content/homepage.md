@@ -6,7 +6,7 @@ title: Homepage
 headline: |
  The brand core is all that matters.
 subheadline: |
-  Without the core, creativity is just a shell. 
+  Without finding the core, creativity becomes just a shell. 
 ## statements
 s1: "I help clients and teams see what actually matters."
 s2: "I turn complexity into clear direction and action."
