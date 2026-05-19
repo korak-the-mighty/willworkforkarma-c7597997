@@ -2,7 +2,7 @@
 slug: man
 route: /work/man
 status: live
-summary: "Launching a global first — a new category for a brand built on trucks."
+summary: "A global launch experience for something totally new."
 ---
 ## Media Inventory
 - id: hero-img
@@ -30,7 +30,7 @@ type: hero
 background-image: hero-img
 title: MAN
 subtitle: "Digital · UX · Product Launch"
-headline: "Launching a global first."
+headline: "A global launch experience for something totally new."
 ---
 ## section-context
 type: text-media
