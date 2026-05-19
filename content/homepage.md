@@ -3,8 +3,8 @@ title: Homepage
 ---
 
 ## hero
-headline: "Your brand is not how visible you are. It's why you deserve the visibility."
-subheadline: "Everyone can generate beautiful noise. Strong brands still need truth, direction and people who care."
+headline: "Your brand is not how visible you are.\nIt's why you deserve the visibility."
+subheadline: "Everyone can generate beautiful noise.\nStrong brands still need truth, direction and people who care."
 
 ## statements
 s1: "I help clients and teams see what actually matters."
