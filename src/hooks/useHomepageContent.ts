@@ -45,11 +45,13 @@ function parseSection(raw: string, sectionName: string): Record<string, string> 
 
   const block = sectionMatch[1];
 
-  // Handle YAML literal block scalars (body: | ...)
-  const literalRegex = /^(\w+):\s*\|\s*\n([\s\S]*?)(?=^\w+:|$)/gm;
+  // Handle YAML literal block scalars (key: | followed by indented lines)
+  const literalRegex = /^(\w+):\s*\|\s*\n((?:[ \t]+[^\n]*\n?)*)/gm;
   let match;
   while ((match = literalRegex.exec(block)) !== null) {
-    result[match[1]] = match[2].trimEnd();
+    const lines = match[2].split('\n').filter((l) => l.trim() !== '');
+    const minIndent = Math.min(...lines.map((l) => l.match(/^[ \t]*/)?.[0].length ?? 0));
+    result[match[1]] = lines.map((l) => l.slice(minIndent)).join('\n').trimEnd();
   }
 
   // Handle simple key: "value" or key: value lines
