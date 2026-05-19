@@ -182,11 +182,11 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
               style={{ width: '360px', display: 'block' }}
               alt="Henrik Lehtikangas"
             />
-            <div style={{ position: 'absolute', bottom: '-50px', left: '50%', transform: 'translateX(-50%)' }}>
-              <div style={{ position: 'relative', width: '160px' }}>
+            <div style={{ position: 'absolute', bottom: '-50px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px' }}>
+              <div style={{ position: 'relative', width: '120px' }}>
                 <img
                   src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
-                  style={{ width: '160px', display: 'block' }}
+                  style={{ width: '120px', display: 'block' }}
                   alt=""
                 />
                 <a
@@ -198,6 +198,20 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                 >
                   Whatsapp →
                 </a>
+              </div>
+              <div style={{ position: 'relative', width: '120px' }}>
+                <img
+                  src="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/Blob4.svg"
+                  style={{ width: '120px', display: 'block' }}
+                  alt=""
+                />
+                <button
+                  onClick={handleCopyEmail}
+                  style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', cursor: 'pointer' }}
+                  className="font-heading text-sm text-black"
+                >
+                  {emailCopied ? 'Copied!' : 'Copy email →'}
+                </button>
               </div>
             </div>
           </div>
