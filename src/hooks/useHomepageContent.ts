@@ -13,13 +13,13 @@ interface HomepageAbout {
 }
 
 interface HomepageContent {
-  hero: { headline: string };
+  hero: { headline: string; subheadline?: string };
   statements: { s1: string; s2: string; s3: string };
   about: HomepageAbout;
 }
 
 const DEFAULTS: HomepageContent = {
-  hero: { headline: "I push vision, clarity and creative confidence." },
+  hero: { headline: "I push vision, clarity and creative confidence.", subheadline: undefined },
   statements: {
     s1: "I help clients and teams see what actually matters.",
     s2: "I turn complexity into clear direction and action.",
@@ -78,6 +78,7 @@ export function useHomepageContent(): HomepageContent {
   return {
     hero: {
       headline: hero.headline ?? DEFAULTS.hero.headline,
+      subheadline: hero.subheadline ?? undefined,
     },
     statements: {
       s1: statements.s1 ?? DEFAULTS.statements.s1,

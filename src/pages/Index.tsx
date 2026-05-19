@@ -3,12 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMenu } from "@/context/MenuContext";
 import Layout from "@/components/Layout";
 
-const HeroHeadline = ({ text }: { text: string }) => {
+const HeroHeadline = ({ text, subheadline }: { text: string; subheadline?: string }) => {
   const { menuOpen } = useMenu();
   return (
-    <h1 className={`font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`}>
-      {text}
-    </h1>
+    <div className={`flex flex-col items-center gap-6 transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`}>
+      <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center">
+        {text}
+      </h1>
+      {subheadline && (
+        <p className="font-heading text-base md:text-xl lg:text-2xl font-light text-white/50 text-center max-w-xl leading-relaxed px-4">
+          {subheadline}
+        </p>
+      )}
+    </div>
   );
 };
 import EditorialCase from "@/components/EditorialCase";
@@ -58,7 +65,7 @@ const Index = () => {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
-          <HeroHeadline text={hp.hero.headline} />
+          <HeroHeadline text={hp.hero.headline} subheadline={hp.hero.subheadline} />
         </div>
       </section>
 
