@@ -189,8 +189,6 @@ const Index = () => {
           <div className="space-y-6">
             <div className="max-w-lg">
               <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline1}</p>
-              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline2}</p>
-              <p className="font-heading text-3xl md:text-4xl tracking-tight text-foreground">{hp.about.headline3}</p>
             </div>
             {hp.about.body.map((para, i) => (
               <p key={i} className="text-lg text-muted-foreground leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
