@@ -120,7 +120,7 @@ subhead: System in practice
 
 body2: The first new charger generation — A400 — became the proving ground for the new ABB E-mobility experience. New visual behavior, interaction principles and product storytelling were built and tested in real launches before scaling globally. Over two years, products evolved, teams shifted and the ambition kept growing. I remained responsible for guiding the transformation across platform, interaction, UX and brand experience — keeping everything coherent, future-facing and ABB — but fresh.
 
-list: BUILT::The digital foundation for ABB E-mobility||ESTABLISHED::A scalable interaction and component system||ALIGNED::Product, interface and brand experience under one direction||SET::A new global digital standard for ABB E-mobility
+list: UNDERSTOOD::The limits of the old system and the need for change||CREATED::A flexible digital brand ecosystem for ABB E-mobility||IMPLEMENTED::The design direction across teams, launches and platforms||ELEVATED::The desirability, energy and feeling of ABB E-mobility||LED::Two years guiding the transformation
 
 ---
 ## section-scrolly
