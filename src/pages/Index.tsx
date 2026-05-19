@@ -170,7 +170,7 @@ const Index = () => {
             <div className="w-[80vw] md:w-[28vw]">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" loading="lazy" className="w-full h-auto lazy-img" onLoad={(e) => e.currentTarget.classList.add('loaded')} />
             </div>
-            <div className="flex flex-row items-end gap-4 -mt-14 ml-8">
+            <div className="flex flex-row items-end gap-4 -mt-14 ml-8 pb-10">
               <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
                 <img src="/blob-brand.svg" alt="" loading="lazy" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Brand</span>
@@ -200,19 +200,6 @@ const Index = () => {
             <p className="font-heading text-lg leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
               <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">{hp.about.cta}</Link>
             </p>
-            <div className="flex gap-8 pt-2">
-              <Link to="/about" className="group relative inline-block text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors">
-                <span className="absolute right-full pr-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200" aria-hidden="true">→</span>
-                <span>More about me</span>
-              </Link>
-              <Link
-                to="/contact"
-                className="arrow-link text-sm text-white [&:visited]:text-white hover:text-muted-foreground transition-colors"
-                style={{ color: blobHovered ? "#ECA9CC" : undefined }}
-              >
-                Contact me
-              </Link>
-            </div>
           </div>
         </div>
       </section>
