@@ -17,5 +17,5 @@ headline1: "I like creating with humans."
 body: |
   I help brands, teams and ideas find clarity, direction and reason.
 
-  For over twenty years, I've helped turn uncertainty into getting right things done.
-cta: "Let's talk."
+  For over twenty years, I've helped turn uncertainty into getting the right things done.
+cta: "Let's go."
