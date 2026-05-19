@@ -4,7 +4,7 @@ title: Homepage
 
 ## hero
 headline: "Understanding the brand core is the key to creativity."
-subheadline: "Finding, protecting and enabling the core."
+subheadline: "Without the core, creativity is just an empty shell."
 
 ## statements
 s1: "I help clients and teams see what actually matters."
