@@ -128,15 +128,16 @@ html, body {
 
 .arrow-link {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
+  display: inline-block;
 }
 
 .arrow-link::before {
   content: '\2192';
+  position: absolute;
+  right: 100%;
+  padding-right: 0.4rem;
   opacity: 0;
-  transform: translateX(-6px);
+  transform: translateX(-4px);
   transition: opacity 260ms ease, transform 260ms ease;
 }
 
