@@ -10,7 +10,7 @@ subheadline: |
 ## statements
 s1: "I help clients and teams see what actually matters."
 s2: "I turn complexity into clear direction and action."
-s3: "I inspire and lead creative work with relentless passion."
+s3: "I'm strong because I listen."
 
 ## about
 headline1: "I like creating with humans."
