@@ -197,9 +197,10 @@ const Index = () => {
                 {para}
               </p>
             ))}
-            <p className="font-heading text-lg leading-relaxed max-w-lg" style={{ fontSize: '1.25rem', lineHeight: '1.65' }}>
-              <Link to="/contact" className="text-foreground hover:text-muted-foreground transition-colors">{hp.about.cta}</Link>
-            </p>
+            <Link to="/contact" className="group relative inline-flex items-center gap-3 font-heading text-2xl md:text-5xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
+              <span className="opacity-0 group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-500 ease-in-out" aria-hidden="true">→</span>
+              <span>{hp.about.cta}</span>
+            </Link>
           </div>
         </div>
       </section>
