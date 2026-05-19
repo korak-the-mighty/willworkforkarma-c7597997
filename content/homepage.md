@@ -3,9 +3,12 @@ title: Homepage
 ---
 
 ## hero
-headline: "Understanding the brand core is the key to creativity."
-subheadline: "Without the core, creativity is just an empty shell."
-
+headline: |
+  Your brand is not how visible you are.
+  It's why you deserve the visibility.
+subheadline: |
+  Everyone can generate beautiful noise.
+  Strong brands still need truth, direction and people who care.
 ## statements
 s1: "I help clients and teams see what actually matters."
 s2: "I turn complexity into clear direction and action."
