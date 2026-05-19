@@ -71,26 +71,29 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
         </div>
       </div>
 
-      {/* Mobile layout — stacked */}
-      <div className="md:hidden">
-        <div className="w-full aspect-[4/3] overflow-hidden bg-muted">
-          {coverImage && (
+      {/* Mobile layout — image with overlaid copy */}
+      <div className="md:hidden relative h-[60vh] overflow-hidden">
+        {coverImage && (
+          <>
             <img
               src={coverImage}
               alt={title}
               loading="lazy"
-              className="w-full h-full object-cover lazy-img"
+              className="absolute inset-0 w-full h-full object-cover lazy-img"
               onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
+            <div className="absolute inset-0 bg-black opacity-50" />
+          </>
+        )}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
+          <h2 className="font-heading text-3xl tracking-tight text-white font-light max-w-md">
+            {heroHeadline || title}
+          </h2>
+          {supportingText && (
+            <p className="mt-4 text-xs uppercase tracking-widest text-[#ECA9CC]">
+              {supportingText}
+            </p>
           )}
-        </div>
-        <div className="px-6 py-8">
-          <h2 className="font-heading text-4xl tracking-tight text-foreground">{title}</h2>
-          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            {subline && <p>{subline}</p>}
-            {area && <span>{area}</span>}
-            <span>{year}</span>
-          </div>
         </div>
       </div>
     </Link>
