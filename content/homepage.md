@@ -3,7 +3,7 @@ title: Homepage
 ---
 
 ## hero
-headline: "The brand core is all that matters."
+headline: "Understanding the brand core is the key to creativity."
 subheadline: "Finding, protecting and enabling the core."
 
 ## statements
