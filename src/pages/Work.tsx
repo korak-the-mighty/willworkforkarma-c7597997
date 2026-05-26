@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import { otherWork } from '../data/otherWork';
+import { useOtherWorkContent } from '@/hooks/useOtherWorkContent';
 import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
 
 const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
@@ -18,6 +18,7 @@ function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
 export default function Work() {
   const caseHeroes = useCaseHeroContent();
+  const otherWork = useOtherWorkContent();
   const hoverWrapRef = useRef<HTMLDivElement>(null);
   const activeKeyRef = useRef<string | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -31,6 +32,8 @@ export default function Work() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [tappedIndex, setTappedIndex] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [slideIdx, setSlideIdx] = useState(0);
+  const slideIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -80,6 +83,24 @@ export default function Work() {
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
+
+  function getImages(item: typeof otherWork[0]): string[] {
+    if (item.images && item.images.length > 0) return item.images;
+    if (item.heroImage) return [item.heroImage];
+    return [];
+  }
+
+  useEffect(() => {
+    if (slideIntervalRef.current) { clearInterval(slideIntervalRef.current); slideIntervalRef.current = null; }
+    setSlideIdx(0);
+    if (!activeGrid) return;
+    const imgs = getImages(activeGrid);
+    if (imgs.length <= 1) return;
+    slideIntervalRef.current = setInterval(() => {
+      setSlideIdx(prev => (prev + 1) % imgs.length);
+    }, 2000);
+    return () => { if (slideIntervalRef.current) { clearInterval(slideIntervalRef.current); slideIntervalRef.current = null; } };
+  }, [activeGrid]);
 
   function startRaf() {
     if (rafRef.current) return;
@@ -281,22 +302,31 @@ export default function Work() {
                     }}
                   />
                 )}
-                {/* Hover image — spans full grid, clipped by this cell's overflow:hidden */}
-                {activeGrid && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      width: `${cols * 100}%`,
-                      height: `${totalRows * 100}%`,
-                      left: `${-col * 100}%`,
-                      top: `${-row * 100}%`,
-                      pointerEvents: 'none',
-                      ...(activeGrid.heroImage
-                        ? { backgroundImage: `url(${activeGrid.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                        : { background: activeGrid.color }),
-                    }}
-                  />
-                )}
+                {/* Hover slideshow — spans full grid, clipped by this cell's overflow:hidden */}
+                {activeGrid && (() => {
+                  const imgs = getImages(activeGrid);
+                  if (imgs.length === 0) return (
+                    <div style={{ position: 'absolute', width: `${cols * 100}%`, height: `${totalRows * 100}%`, left: `${-col * 100}%`, top: `${-row * 100}%`, pointerEvents: 'none', background: activeGrid.color }} />
+                  );
+                  return imgs.map((src, imgIdx) => (
+                    <div
+                      key={imgIdx}
+                      style={{
+                        position: 'absolute',
+                        width: `${cols * 100}%`,
+                        height: `${totalRows * 100}%`,
+                        left: `${-col * 100}%`,
+                        top: `${-row * 100}%`,
+                        pointerEvents: 'none',
+                        backgroundImage: `url(${src})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: imgIdx === slideIdx ? 1 : 0,
+                        transition: 'opacity 600ms ease',
+                      }}
+                    />
+                  ));
+                })()}
                 {/* Per-item text overlay — inside this cell */}
                 <div
                   style={{
