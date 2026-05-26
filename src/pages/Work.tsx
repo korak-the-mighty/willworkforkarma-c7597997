@@ -300,7 +300,7 @@ export default function Work() {
                     }}
                   />
                 )}
-                {/* Dim overlay — always present, clears on hovered cell only */}
+                {/* Dim overlay — visible at rest, gone entirely during any hover */}
                 <div
                   style={{
                     position: 'absolute',
@@ -308,7 +308,7 @@ export default function Work() {
                     background: 'rgba(0,0,0,0.6)',
                     zIndex: 5,
                     transition: 'opacity 200ms ease',
-                    opacity: (isMobile ? tappedIndex === i : isHovered) ? 0 : 1,
+                    opacity: (isMobile ? tappedIndex !== null : activeGrid !== null) ? 0 : 1,
                     pointerEvents: 'none',
                   }}
                 />
