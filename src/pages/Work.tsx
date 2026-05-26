@@ -34,6 +34,9 @@ export default function Work() {
   const [isMobile, setIsMobile] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
   const slideIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [panX, setPanX] = useState(0);
+  const dragStartXRef = useRef<number | null>(null);
+  const dragStartPanRef = useRef<number>(0);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -41,6 +44,34 @@ export default function Work() {
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
+
+  // Preload all other work hero images on mount
+  useEffect(() => {
+    otherWork.forEach(item => {
+      const imgs = item.images && item.images.length > 0 ? item.images : item.heroImage ? [item.heroImage] : [];
+      imgs.forEach(src => { const img = new Image(); img.src = src; });
+    });
+  }, [otherWork]);
+
+  // Mobile drag-to-pan handlers
+  function handleTouchStart(e: React.TouchEvent) {
+    if (!isMobile || tappedIndex === null) return;
+    dragStartXRef.current = e.touches[0].clientX;
+    dragStartPanRef.current = panX;
+  }
+
+  function handleTouchMove(e: React.TouchEvent) {
+    if (!isMobile || tappedIndex === null || dragStartXRef.current === null) return;
+    const delta = e.touches[0].clientX - dragStartXRef.current;
+    const gridW = window.innerWidth - 32; // account for padding
+    const maxPan = gridW * (cols - 1);
+    const clamped = Math.min(0, Math.max(-maxPan, dragStartPanRef.current + delta));
+    setPanX(clamped);
+  }
+
+  function handleTouchEnd() {
+    dragStartXRef.current = null;
+  }
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
@@ -264,10 +295,18 @@ export default function Work() {
 
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        {isMobile && tappedIndex !== null && (
+          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8 }}>
+            Drag to pan
+          </div>
+        )}
         <div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: `repeat(${Math.ceil(otherWork.length / cols)}, 1fr)` }}
           onMouseLeave={() => { if (!isMobile) { setActiveGrid(null); setHoveredIndex(null); } }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {otherWork.map((item, i) => {
             const col = i % cols;
@@ -333,6 +372,7 @@ export default function Work() {
                         backgroundPosition: 'center',
                         opacity: imgIdx === slideIdx ? 1 : 0,
                         transition: 'opacity 600ms ease',
+                        transform: isMobile ? `translateX(${panX}px)` : undefined,
                       }}
                     />
                   ));
