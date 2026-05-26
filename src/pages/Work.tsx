@@ -296,7 +296,7 @@ export default function Work() {
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {isMobile && tappedIndex !== null && (
-          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, marginTop: -5 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, paddingTop: 10 }}>
             Drag to pan
           </div>
         )}
@@ -369,10 +369,11 @@ export default function Work() {
                         pointerEvents: 'none',
                         backgroundImage: `url(${src})`,
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: isMobile && tappedIndex !== null
+                          ? `calc(50% + ${panMap[tappedIndex] ?? 0}px) center`
+                          : 'center',
                         opacity: imgIdx === slideIdx ? 1 : 0,
                         transition: 'opacity 600ms ease',
-                        transform: isMobile ? `translateX(${panMap[tappedIndex ?? -1] ?? 0}px)` : undefined,
                       }}
                     />
                   ));
