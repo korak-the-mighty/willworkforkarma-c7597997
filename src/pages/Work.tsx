@@ -304,13 +304,15 @@ export default function Work() {
         <div style={s.divSub} className="hidden md:block">Quick view — hover to explore</div>
       </div>
 
+      {/* Drag to pan hint — lives outside the overflow:hidden section so it can breathe */}
+      {isMobile && tappedIndex !== null && (
+        <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', paddingBottom: 10 }}>
+          Drag to pan
+        </div>
+      )}
+
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        {isMobile && tappedIndex !== null && (
-          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 6, paddingTop: 4 }}>
-            Drag to pan
-          </div>
-        )}
         <div
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           style={{ gap: 3, background: '#0a0a0a', position: 'relative', flex: 1, gridTemplateRows: `repeat(${Math.ceil(otherWork.length / cols)}, 1fr)` }}
