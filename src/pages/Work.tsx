@@ -290,31 +290,30 @@ export default function Work() {
                 onMouseLeave={() => { if (!isMobile) { setHoveredIndex(null); } }}
                 onClick={() => handleCellTap(item, i)}
               >
-                {/* Cell's own content — thumbnail with dim overlay */}
+                {/* Cell's own content — thumbnail, always rendered */}
                 {!activeGrid && (
-                  <>
-                    <div
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        ...(item.heroImage
-                          ? { backgroundImage: `url(${item.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
-                          : { background: item.color }),
-                      }}
-                    />
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'rgba(0,0,0,0.6)',
-                        zIndex: 5,
-                        transition: 'opacity 200ms ease',
-                        opacity: (isMobile ? tappedIndex === i : isHovered) ? 0 : 1,
-                        pointerEvents: 'none',
-                      }}
-                    />
-                  </>
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      ...(item.heroImage
+                        ? { backgroundImage: `url(${item.heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+                        : { background: item.color }),
+                    }}
+                  />
                 )}
+                {/* Dim overlay — always present, clears on hovered cell only */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'rgba(0,0,0,0.6)',
+                    zIndex: 5,
+                    transition: 'opacity 200ms ease',
+                    opacity: (isMobile ? tappedIndex === i : isHovered) ? 0 : 1,
+                    pointerEvents: 'none',
+                  }}
+                />
                 {/* Hover slideshow — spans full grid, clipped by this cell's overflow:hidden */}
                 {activeGrid && (() => {
                   const imgs = getImages(activeGrid);
