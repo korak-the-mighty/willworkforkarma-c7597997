@@ -37,6 +37,7 @@ export default function Work() {
   const [panMap, setPanMap] = useState<Record<number, number>>({});
   const dragStartXRef = useRef<number | null>(null);
   const dragStartPanRef = useRef<number>(0);
+  const isDraggingRef = useRef(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -56,6 +57,7 @@ export default function Work() {
   // Mobile drag-to-pan handlers
   function handleTouchStart(e: React.TouchEvent) {
     if (!isMobile || tappedIndex === null) return;
+    isDraggingRef.current = true;
     dragStartXRef.current = e.touches[0].clientX;
     dragStartPanRef.current = panMap[tappedIndex] ?? 0;
   }
@@ -70,7 +72,16 @@ export default function Work() {
   }
 
   function handleTouchEnd() {
+    isDraggingRef.current = false;
     dragStartXRef.current = null;
+    // Restart slideshow at 2500ms after pan release
+    if (slideIntervalRef.current) { clearInterval(slideIntervalRef.current); slideIntervalRef.current = null; }
+    if (!activeGrid) return;
+    const imgs = activeGrid.images && activeGrid.images.length > 0 ? activeGrid.images : activeGrid.heroImage ? [activeGrid.heroImage] : [];
+    if (imgs.length <= 1) return;
+    slideIntervalRef.current = setInterval(() => {
+      if (!isDraggingRef.current) setSlideIdx(prev => (prev + 1) % imgs.length);
+    }, 2500);
   }
 
   useEffect(() => {
@@ -128,7 +139,7 @@ export default function Work() {
     const imgs = getImages(activeGrid);
     if (imgs.length <= 1) return;
     slideIntervalRef.current = setInterval(() => {
-      setSlideIdx(prev => (prev + 1) % imgs.length);
+      if (!isDraggingRef.current) setSlideIdx(prev => (prev + 1) % imgs.length);
     }, 2000);
     return () => { if (slideIntervalRef.current) { clearInterval(slideIntervalRef.current); slideIntervalRef.current = null; } };
   }, [activeGrid]);
@@ -296,7 +307,7 @@ export default function Work() {
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {isMobile && tappedIndex !== null && (
-          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, paddingTop: 10 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, paddingTop: 0, marginTop: -20 }}>
             Drag to pan
           </div>
         )}
