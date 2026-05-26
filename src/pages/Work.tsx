@@ -34,7 +34,7 @@ export default function Work() {
   const [isMobile, setIsMobile] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
   const slideIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const [panX, setPanX] = useState(0);
+  const [panMap, setPanMap] = useState<Record<number, number>>({});
   const dragStartXRef = useRef<number | null>(null);
   const dragStartPanRef = useRef<number>(0);
 
@@ -57,16 +57,16 @@ export default function Work() {
   function handleTouchStart(e: React.TouchEvent) {
     if (!isMobile || tappedIndex === null) return;
     dragStartXRef.current = e.touches[0].clientX;
-    dragStartPanRef.current = panX;
+    dragStartPanRef.current = panMap[tappedIndex] ?? 0;
   }
 
   function handleTouchMove(e: React.TouchEvent) {
     if (!isMobile || tappedIndex === null || dragStartXRef.current === null) return;
     const delta = e.touches[0].clientX - dragStartXRef.current;
-    const gridW = window.innerWidth - 32; // account for padding
-    const maxPan = gridW * (cols - 1);
-    const clamped = Math.min(0, Math.max(-maxPan, dragStartPanRef.current + delta));
-    setPanX(clamped);
+    const gridW = window.innerWidth - 32;
+    const maxPan = (gridW * (cols - 1)) / 2;
+    const clamped = Math.min(maxPan, Math.max(-maxPan, dragStartPanRef.current + delta));
+    setPanMap(prev => ({ ...prev, [tappedIndex]: clamped }));
   }
 
   function handleTouchEnd() {
@@ -296,7 +296,7 @@ export default function Work() {
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {isMobile && tappedIndex !== null && (
-          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, marginTop: -5 }}>
             Drag to pan
           </div>
         )}
@@ -372,7 +372,7 @@ export default function Work() {
                         backgroundPosition: 'center',
                         opacity: imgIdx === slideIdx ? 1 : 0,
                         transition: 'opacity 600ms ease',
-                        transform: isMobile ? `translateX(${panX}px)` : undefined,
+                        transform: isMobile ? `translateX(${panMap[tappedIndex ?? -1] ?? 0}px)` : undefined,
                       }}
                     />
                   ));
