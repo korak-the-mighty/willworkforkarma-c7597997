@@ -307,7 +307,7 @@ export default function Work() {
       {/* Other work grid */}
       <section style={{ paddingLeft: isMobile ? 16 : 56, paddingRight: isMobile ? 16 : 56, paddingBottom: 0, position: 'relative', flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
         {isMobile && tappedIndex !== null && (
-          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 8, paddingTop: 0, marginTop: -20 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', marginBottom: 6, paddingTop: 4 }}>
             Drag to pan
           </div>
         )}
