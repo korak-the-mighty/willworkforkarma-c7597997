@@ -283,8 +283,6 @@ export default function Work() {
                   position: 'relative',
                   background: '#1e1e1e',
                   minHeight: 0,
-                  opacity: activeGrid && activeGrid !== item ? 0.35 : 1,
-                  transition: 'opacity 200ms ease',
                 }}
                 onMouseEnter={() => { if (!isMobile) { setActiveGrid(item); setHoveredIndex(i); } }}
                 onMouseLeave={() => { if (!isMobile) { setHoveredIndex(null); } }}
