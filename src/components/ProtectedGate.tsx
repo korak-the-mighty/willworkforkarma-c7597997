@@ -91,11 +91,11 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
               placeholder="PIN"
-              className="flex-1 bg-transparent border border-white/20 text-white placeholder-white/30 px-4 py-3 text-sm outline-none focus:border-white/50 transition-colors"
+              className="flex-1 bg-transparent border border-white/40 text-white placeholder-white/40 px-4 py-3 text-sm outline-none focus:border-white/70 transition-colors rounded-full"
             />
             <button
               onClick={handleSubmit}
-              className="px-6 py-3 bg-white text-[#01031A] text-sm font-medium hover:bg-white/90 transition-colors"
+              className="px-6 py-3 bg-white text-[#01031A] text-sm font-medium hover:bg-white/90 transition-colors rounded-full"
             >
               Enter
             </button>
@@ -113,13 +113,13 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
           <div className="flex gap-3 w-full">
             <button
               onClick={handleWhatsApp}
-              className="flex-1 border border-white/20 text-white/80 text-sm py-4 rounded-full hover:border-white/50 hover:text-white transition-colors"
+              className="flex-1 border border-white/40 text-white/80 text-sm py-4 rounded-full hover:border-white/70 hover:text-white transition-colors"
             >
               WhatsApp
             </button>
             <button
               onClick={handleCopyEmail}
-              className="flex-1 border border-white/20 text-white/80 text-sm py-4 rounded-full hover:border-white/50 hover:text-white transition-colors"
+              className="flex-1 border border-white/40 text-white/80 text-sm py-4 rounded-full hover:border-white/70 hover:text-white transition-colors"
             >
               {copied ? 'Copied ✓' : 'Copy email'}
             </button>
