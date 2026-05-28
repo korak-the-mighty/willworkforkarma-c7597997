@@ -46,6 +46,9 @@ export default function Work() {
   const mobileRafRef = useRef<number | null>(null);
   const mobileCurY = useRef(0);
   const mobileTgtY = useRef(0);
+  const casesSectionRef = useRef<HTMLDivElement>(null);
+  const mobileImgVisibleRef = useRef(true);
+  const activeMobileCaseRef = useRef<string | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -136,33 +139,6 @@ export default function Work() {
 
   useEffect(() => {
     if (!isMobile) return;
-    const observers: IntersectionObserver[] = [];
-    mobileRowRefs.current.forEach((el, i) => {
-      if (!el) return;
-      const slug = selectedCases[i].slug;
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              setActiveMobileCase(slug);
-              // Update lerp target to this row's vertical center
-              const rect = el.getBoundingClientRect();
-              const rowCenter = rect.top + rect.height / 2;
-              const imgH = mobileImgRef.current?.offsetHeight || 180;
-              mobileTgtY.current = Math.max(80, Math.min(rowCenter - imgH / 2, window.innerHeight - imgH - 80));
-            }
-          });
-        },
-        { rootMargin: '-30% 0px -30% 0px', threshold: 0 }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach(o => o.disconnect());
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (!isMobile) return;
     // Set initial position to first row vertical center if available
     const firstEl = mobileRowRefs.current[0];
     if (firstEl) {
@@ -190,10 +166,10 @@ export default function Work() {
   useEffect(() => {
     if (!isMobile) return;
     const onScroll = () => {
-      // Find which row is closest to viewport center
       let closestSlug: string | null = null;
       let closestDist = Infinity;
       let closestEl: HTMLDivElement | null = null;
+
       mobileRowRefs.current.forEach((el, i) => {
         if (!el) return;
         const rect = el.getBoundingClientRect();
@@ -205,16 +181,50 @@ export default function Work() {
           closestEl = el;
         }
       });
-      if (closestSlug) setActiveMobileCase(closestSlug);
+
+      // Only update state when slug actually changes
+      if (closestSlug && closestSlug !== activeMobileCaseRef.current) {
+        activeMobileCaseRef.current = closestSlug;
+        setActiveMobileCase(closestSlug);
+      }
+
+      // Always update lerp target Y
       if (closestEl) {
         const rect = (closestEl as HTMLDivElement).getBoundingClientRect();
         const rowCenter = rect.top + rect.height / 2;
-        const imgH = mobileImgRef.current?.offsetHeight || 180;
-        mobileTgtY.current = Math.max(80, Math.min(rowCenter - imgH / 2, window.innerHeight - imgH - 80));
+        const imgH = mobileImgRef.current?.offsetHeight || 0;
+        const effectiveImgH = imgH > 0 ? imgH : window.innerWidth * 0.52 * 0.75; // 4:3 ratio of 52vw
+        mobileTgtY.current = Math.max(80, Math.min(rowCenter - effectiveImgH / 2, window.innerHeight - effectiveImgH - 80));
       }
     };
+
+    // Run once on mount to set initial state
+    onScroll();
+
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const el = casesSectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          mobileImgVisibleRef.current = entry.isIntersecting;
+          if (mobileImgRef.current) {
+            mobileImgRef.current.style.opacity = entry.isIntersecting ? '1' : '0';
+            mobileImgRef.current.style.transform = entry.isIntersecting
+              ? mobileImgRef.current.style.transform
+              : `translateY(${mobileCurY.current}px) translateX(60px)`;
+          }
+        });
+      },
+      { threshold: 0.01 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
   }, [isMobile]);
 
   function getImages(item: typeof otherWork[0]): string[] {
@@ -321,8 +331,10 @@ export default function Work() {
             aspectRatio: '4/3',
             zIndex: 5,
             pointerEvents: 'none',
-            willChange: 'transform',
+            willChange: 'transform, opacity',
             transform: 'translateY(0px)',
+            opacity: 1,
+            transition: 'opacity 500ms ease',
           }}
         >
           {selectedCases.map(c => (
@@ -393,7 +405,7 @@ export default function Work() {
       </div>
 
       {/* Cases list */}
-      <section style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
+      <section ref={casesSectionRef} style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
         <div style={s.label}>Selected Cases</div>
         {selectedCases.map((c, i) => {
           const isActive = activeMobileCase === c.slug;
