@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useGateContent } from '@/hooks/useGateContent';
+import { X } from 'lucide-react';
 
 const PIN = 'inspire';
 const SESSION_PREFIX = 'gate_auth_';
@@ -64,13 +65,13 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Close — fixed to viewport top-right */}
+      {/* Close — matches header button exactly */}
       <button
         onClick={onClose}
-        className="fixed top-6 right-8 z-[210] text-white/60 hover:text-white transition-colors text-2xl"
+        className="fixed top-0 right-0 z-[210] p-2 m-4 text-foreground hover:text-muted-foreground transition-colors"
         aria-label="Close"
       >
-        ✕
+        <X size={40} />
       </button>
 
       <div className="relative z-10 w-full max-w-lg mx-8 flex flex-col items-center text-center gap-10">
