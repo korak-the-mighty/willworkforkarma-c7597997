@@ -42,6 +42,10 @@ export default function Work() {
   const isDraggingRef = useRef(false);
   const [activeMobileCase, setActiveMobileCase] = useState<string | null>(null);
   const mobileRowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const mobileImgRef = useRef<HTMLDivElement>(null);
+  const mobileRafRef = useRef<number | null>(null);
+  const mobileCurY = useRef(0);
+  const mobileTgtY = useRef(0);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -141,15 +145,76 @@ export default function Work() {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
               setActiveMobileCase(slug);
+              // Update lerp target to this row's vertical center
+              const rect = el.getBoundingClientRect();
+              const rowCenter = rect.top + rect.height / 2;
+              const imgH = mobileImgRef.current?.offsetHeight || 180;
+              mobileTgtY.current = Math.max(80, Math.min(rowCenter - imgH / 2, window.innerHeight - imgH - 80));
             }
           });
         },
-        { rootMargin: '-25% 0px -25% 0px', threshold: 0 }
+        { rootMargin: '-30% 0px -30% 0px', threshold: 0 }
       );
       obs.observe(el);
       observers.push(obs);
     });
     return () => observers.forEach(o => o.disconnect());
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    // Set initial position to first row vertical center if available
+    const firstEl = mobileRowRefs.current[0];
+    if (firstEl) {
+      const rect = firstEl.getBoundingClientRect();
+      const rowCenter = rect.top + rect.height / 2;
+      const imgH = mobileImgRef.current?.offsetHeight || 180;
+      const startY = Math.max(80, Math.min(rowCenter - imgH / 2, window.innerHeight - imgH - 80));
+      mobileCurY.current = startY;
+      mobileTgtY.current = startY;
+    }
+
+    const tick = () => {
+      mobileCurY.current = mobileCurY.current + (mobileTgtY.current - mobileCurY.current) * 0.045;
+      if (mobileImgRef.current) {
+        mobileImgRef.current.style.transform = `translateY(${mobileCurY.current}px)`;
+      }
+      mobileRafRef.current = requestAnimationFrame(tick);
+    };
+    mobileRafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (mobileRafRef.current) cancelAnimationFrame(mobileRafRef.current);
+    };
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const onScroll = () => {
+      // Find which row is closest to viewport center
+      let closestSlug: string | null = null;
+      let closestDist = Infinity;
+      let closestEl: HTMLDivElement | null = null;
+      mobileRowRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const rowCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(rowCenter - window.innerHeight / 2);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestSlug = selectedCases[i].slug;
+          closestEl = el;
+        }
+      });
+      if (closestSlug) setActiveMobileCase(closestSlug);
+      if (closestEl) {
+        const rect = (closestEl as HTMLDivElement).getBoundingClientRect();
+        const rowCenter = rect.top + rect.height / 2;
+        const imgH = mobileImgRef.current?.offsetHeight || 180;
+        mobileTgtY.current = Math.max(80, Math.min(rowCenter - imgH / 2, window.innerHeight - imgH - 80));
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, [isMobile]);
 
   function getImages(item: typeof otherWork[0]): string[] {
@@ -244,6 +309,64 @@ export default function Work() {
   return (
     <Layout fullWidth theme={{ bg: '#0a0a0a' }}>
     <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
+      {/* Fixed floating image — mobile cases list */}
+      {isMobile && (
+        <div
+          ref={mobileImgRef}
+          style={{
+            position: 'fixed',
+            right: '-6vw',
+            top: 0,
+            width: '52vw',
+            aspectRatio: '4/3',
+            zIndex: 5,
+            pointerEvents: 'none',
+            willChange: 'transform',
+            transform: 'translateY(0px)',
+          }}
+        >
+          {selectedCases.map(c => (
+            <div
+              key={c.slug}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: activeMobileCase === c.slug ? 1 : 0,
+                transition: 'opacity 700ms ease',
+              }}
+            >
+              {c.image ? (
+                <>
+                  <img
+                    src={c.image}
+                    alt={c.client}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'center top',
+                      display: 'block',
+                    }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: '#0a0a0a',
+                      opacity: 0.45,
+                      pointerEvents: 'none',
+                    }}
+                  />
+                </>
+              ) : (
+                <div style={{ width: '100%', height: '100%', background: '#1e1e1e' }} />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
       {/* Fixed hover image — cases list (hidden on mobile) */}
       {!isMobile && (
         <div
@@ -278,129 +401,62 @@ export default function Work() {
 
           // ── MOBILE RENDER ──────────────────────────────────
           if (isMobile) {
-            const mobileBlock = (
+            const mobileRow = (
               <div
                 ref={el => { mobileRowRefs.current[i] = el; }}
                 style={{
-                  position: 'relative',
-                  height: '65vh',
-                  overflow: 'hidden',
+                  width: '75%',
+                  padding: '40px 0 40px 20px',
                   borderTop: '1px solid rgba(245,245,240,0.1)',
-                  background: '#0a0a0a',
+                  position: 'relative',
+                  zIndex: 10,
+                  opacity: isActive ? 1 : 0.28,
+                  transition: 'opacity 500ms ease',
                 }}
               >
-                {/* Floating image — right-anchored, bleeds off edge */}
-                {c.image && (
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      right: '-5vw',
-                      width: '82vw',
-                      zIndex: 0,
-                      transition: 'transform 600ms ease, opacity 600ms ease',
-                      transform: isActive ? 'translateY(-6px)' : 'translateY(0px)',
-                    }}
-                  >
-                    <img
-                      src={c.image}
-                      alt={c.client}
-                      loading="lazy"
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center top',
-                        display: 'block',
-                      }}
-                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                    />
-                    {/* Dark overlay — lifts on proximity */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: '#0a0a0a',
-                        opacity: isActive ? 0.52 : 0.72,
-                        transition: 'opacity 600ms ease',
-                        pointerEvents: 'none',
-                      }}
-                    />
-                  </div>
-                )}
-
-                {/* Text block — top-left, always above image */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 36,
-                    left: 20,
-                    right: 20,
-                    zIndex: 10,
-                    opacity: isActive ? 1 : 0.35,
-                    transition: 'opacity 500ms ease',
-                    maxWidth: '72%',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "'Clash Display', sans-serif",
-                      fontSize: 11,
-                      fontWeight: 300,
-                      letterSpacing: '0.16em',
-                      textTransform: 'uppercase',
-                      color: 'rgba(245,245,240,0.5)',
-                      marginBottom: 16,
-                    }}
-                  >
-                    {c.client}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'Clash Display', sans-serif",
-                      fontSize: 'clamp(26px, 7vw, 38px)',
-                      fontWeight: 300,
-                      lineHeight: 1.15,
-                      letterSpacing: '-0.02em',
-                      color: '#f5f5f0',
-                    }}
-                  >
-                    {summary}
-                  </div>
+                <div style={{
+                  fontFamily: "'Clash Display', sans-serif",
+                  fontSize: 11,
+                  fontWeight: 300,
+                  letterSpacing: '0.16em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(245,245,240,0.5)',
+                  marginBottom: 14,
+                }}>
+                  {c.client}
                 </div>
-
-                {/* Year — bottom left */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: 24,
-                    left: 20,
-                    zIndex: 10,
-                    fontSize: 11,
-                    letterSpacing: '0.08em',
-                    color: 'rgba(245,245,240,0.2)',
-                    opacity: isActive ? 1 : 0.35,
-                    transition: 'opacity 500ms ease',
-                  }}
-                >
+                <div style={{
+                  fontFamily: "'Clash Display', sans-serif",
+                  fontSize: 'clamp(24px, 6vw, 34px)',
+                  fontWeight: 300,
+                  lineHeight: 1.15,
+                  letterSpacing: '-0.02em',
+                  color: '#f5f5f0',
+                }}>
+                  {summary}
+                </div>
+                <div style={{
+                  marginTop: 20,
+                  fontSize: 11,
+                  letterSpacing: '0.08em',
+                  color: 'rgba(245,245,240,0.2)',
+                }}>
                   {c.year}
                 </div>
               </div>
             );
 
-            // ABB requires requestAccess, not a Link
             return c.slug === 'abb-emobility' ? (
               <div
                 key={c.slug}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', textDecoration: 'none' }}
                 onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
               >
-                {mobileBlock}
+                {mobileRow}
               </div>
             ) : (
               <Link key={c.slug} to={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
-                {mobileBlock}
+                {mobileRow}
               </Link>
             );
           }
