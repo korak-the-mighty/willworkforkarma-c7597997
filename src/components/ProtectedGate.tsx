@@ -65,14 +65,16 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Close — matches header button exactly */}
-      <button
-        onClick={onClose}
-        className="fixed top-0 right-0 z-[210] p-2 m-4 text-foreground hover:text-muted-foreground transition-colors"
-        aria-label="Close"
-      >
-        <X size={40} />
-      </button>
+      {/* Close — matches header X position exactly */}
+      <div className="fixed top-0 left-0 right-0 z-[210] flex items-center justify-end px-6 py-6 pointer-events-none">
+        <button
+          onClick={onClose}
+          className="relative p-2 text-foreground hover:text-muted-foreground transition-colors pointer-events-auto"
+          aria-label="Close"
+        >
+          <X size={40} />
+        </button>
+      </div>
 
       <div className="relative z-10 w-full max-w-lg mx-8 flex flex-col items-center text-center gap-10">
 
