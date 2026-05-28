@@ -61,20 +61,19 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
   return (
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Close — fixed to viewport top-right */}
+      <button
+        onClick={onClose}
+        className="fixed top-6 right-8 z-[210] text-white/60 hover:text-white transition-colors text-2xl"
+        aria-label="Close"
+      >
+        ✕
+      </button>
 
       <div className="relative z-10 w-full max-w-lg mx-8 flex flex-col items-center text-center gap-10">
-
-        {/* Close */}
-        <button
-          onClick={onClose}
-          className="absolute -top-2 right-0 text-white/30 hover:text-white/60 transition-colors text-sm"
-          aria-label="Close"
-        >
-          ✕
-        </button>
 
         {/* Headline */}
         <h2 className="font-heading text-3xl md:text-5xl font-light tracking-tight text-white leading-tight">
