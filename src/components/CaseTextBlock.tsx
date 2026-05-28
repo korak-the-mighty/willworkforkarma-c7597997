@@ -10,7 +10,7 @@ function Inner({ section }: { section: TextSection }) {
   const isCentered = !!section.centered;
   const outerClass = isCentered
     ? 'max-w-[46rem] mx-auto text-center px-6'
-    : 'px-6 md:px-8 max-w-4xl mx-auto';
+    : 'px-6 md:px-8 max-w-4xl mx-auto w-full overflow-hidden';
   return (
     <section className="py-24 md:py-32">
       <div className={outerClass}>
