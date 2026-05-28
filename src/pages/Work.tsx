@@ -40,6 +40,8 @@ export default function Work() {
   const dragStartXRef = useRef<number | null>(null);
   const dragStartPanRef = useRef<number>(0);
   const isDraggingRef = useRef(false);
+  const [activeMobileCase, setActiveMobileCase] = useState<string | null>(null);
+  const mobileRowRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -127,6 +129,28 @@ export default function Work() {
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const observers: IntersectionObserver[] = [];
+    mobileRowRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const slug = selectedCases[i].slug;
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setActiveMobileCase(slug);
+            }
+          });
+        },
+        { rootMargin: '-25% 0px -25% 0px', threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach(o => o.disconnect());
+  }, [isMobile]);
 
   function getImages(item: typeof otherWork[0]): string[] {
     if (item.images && item.images.length > 0) return item.images;
@@ -248,10 +272,143 @@ export default function Work() {
       {/* Cases list */}
       <section style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
         <div style={s.label}>Selected Cases</div>
-        {selectedCases.map(c => {
+        {selectedCases.map((c, i) => {
+          const isActive = activeMobileCase === c.slug;
+          const summary = caseHeroes[c.slug]?.summary || c.summary;
+
+          // ── MOBILE RENDER ──────────────────────────────────
+          if (isMobile) {
+            const mobileBlock = (
+              <div
+                ref={el => { mobileRowRefs.current[i] = el; }}
+                style={{
+                  position: 'relative',
+                  height: '65vh',
+                  overflow: 'hidden',
+                  borderTop: '1px solid rgba(245,245,240,0.1)',
+                  background: '#0a0a0a',
+                }}
+              >
+                {/* Floating image — right-anchored, bleeds off edge */}
+                {c.image && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      right: '-5vw',
+                      width: '82vw',
+                      zIndex: 0,
+                      transition: 'transform 600ms ease, opacity 600ms ease',
+                      transform: isActive ? 'translateY(-6px)' : 'translateY(0px)',
+                    }}
+                  >
+                    <img
+                      src={c.image}
+                      alt={c.client}
+                      loading="lazy"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center top',
+                        display: 'block',
+                      }}
+                      onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    {/* Dark overlay — lifts on proximity */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: '#0a0a0a',
+                        opacity: isActive ? 0.52 : 0.72,
+                        transition: 'opacity 600ms ease',
+                        pointerEvents: 'none',
+                      }}
+                    />
+                  </div>
+                )}
+
+                {/* Text block — top-left, always above image */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 36,
+                    left: 20,
+                    right: 20,
+                    zIndex: 10,
+                    opacity: isActive ? 1 : 0.35,
+                    transition: 'opacity 500ms ease',
+                    maxWidth: '72%',
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "'Clash Display', sans-serif",
+                      fontSize: 11,
+                      fontWeight: 300,
+                      letterSpacing: '0.16em',
+                      textTransform: 'uppercase',
+                      color: 'rgba(245,245,240,0.5)',
+                      marginBottom: 16,
+                    }}
+                  >
+                    {c.client}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Clash Display', sans-serif",
+                      fontSize: 'clamp(26px, 7vw, 38px)',
+                      fontWeight: 300,
+                      lineHeight: 1.15,
+                      letterSpacing: '-0.02em',
+                      color: '#f5f5f0',
+                    }}
+                  >
+                    {summary}
+                  </div>
+                </div>
+
+                {/* Year — bottom left */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 24,
+                    left: 20,
+                    zIndex: 10,
+                    fontSize: 11,
+                    letterSpacing: '0.08em',
+                    color: 'rgba(245,245,240,0.2)',
+                    opacity: isActive ? 1 : 0.35,
+                    transition: 'opacity 500ms ease',
+                  }}
+                >
+                  {c.year}
+                </div>
+              </div>
+            );
+
+            // ABB requires requestAccess, not a Link
+            return c.slug === 'abb-emobility' ? (
+              <div
+                key={c.slug}
+                style={{ cursor: 'pointer' }}
+                onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
+              >
+                {mobileBlock}
+              </div>
+            ) : (
+              <Link key={c.slug} to={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+                {mobileBlock}
+              </Link>
+            );
+          }
+
+          // ── DESKTOP RENDER (UNCHANGED) ─────────────────────
           const rowStyle = {
             display: 'flex', alignItems: 'center',
-            padding: isMobile ? '20px 16px' : (activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px'),
+            padding: activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px',
             borderTop: '1px solid rgba(245,245,240,0.1)',
             textDecoration: 'none',
             opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
@@ -260,20 +417,12 @@ export default function Work() {
           };
           const rowInner = (
             <>
-              {isMobile && c.image && (
-                <img
-                  src={c.image}
-                  alt={c.client}
-                  style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 4, flexShrink: 0, marginRight: 16 }}
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                />
-              )}
               <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
                 <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 15, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.7)' : 'rgba(245,245,240,0.5)', marginBottom: 6, transition: 'color 200ms ease' }}>
                   {c.client}
                 </div>
                 <div style={{ fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
-                  {caseHeroes[c.slug]?.summary || c.summary}
+                  {summary}
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>
