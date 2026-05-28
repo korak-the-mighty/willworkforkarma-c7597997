@@ -64,19 +64,26 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
-      <div className="relative z-10 w-full max-w-sm mx-6 bg-[#01031A] border border-white/10 p-8 flex flex-col gap-6">
+
+      <div className="relative z-10 w-full max-w-lg mx-8 flex flex-col items-center text-center gap-10">
+
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-white/30 hover:text-white/70 transition-colors text-sm"
+          className="absolute -top-2 right-0 text-white/30 hover:text-white/60 transition-colors text-sm"
           aria-label="Close"
         >
           ✕
         </button>
-        <p className="text-white text-base leading-snug pr-6">
+
+        {/* Headline */}
+        <h2 className="font-heading text-3xl md:text-5xl font-light tracking-tight text-white leading-tight">
           {content.headline}
-        </p>
-        <div className="flex flex-col gap-2">
-          <div className="flex gap-2">
+        </h2>
+
+        {/* PIN input */}
+        <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+          <div className="flex gap-2 w-full">
             <input
               ref={inputRef}
               type="password"
@@ -88,7 +95,7 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
             />
             <button
               onClick={handleSubmit}
-              className="px-5 py-3 bg-white text-[#01031A] text-sm font-medium hover:bg-white/90 transition-colors"
+              className="px-6 py-3 bg-white text-[#01031A] text-sm font-medium hover:bg-white/90 transition-colors"
             >
               Enter
             </button>
@@ -97,25 +104,28 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
             <p className="text-red-400/80 text-xs">Wrong PIN. Try again.</p>
           )}
         </div>
-        <div className="flex flex-col gap-3">
-          <p className="text-white/40 text-xs uppercase tracking-widest">
+
+        {/* Request CTA */}
+        <div className="flex flex-col items-center gap-5 w-full max-w-sm">
+          <p className="text-white text-lg md:text-xl font-heading tracking-wide">
             {content.cta_label}
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-3 w-full">
             <button
               onClick={handleWhatsApp}
-              className="flex-1 border border-white/20 text-white/70 text-sm py-3 hover:border-white/50 hover:text-white transition-colors"
+              className="flex-1 border border-white/20 text-white/80 text-sm py-4 rounded-full hover:border-white/50 hover:text-white transition-colors"
             >
               WhatsApp
             </button>
             <button
               onClick={handleCopyEmail}
-              className="flex-1 border border-white/20 text-white/70 text-sm py-3 hover:border-white/50 hover:text-white transition-colors"
+              className="flex-1 border border-white/20 text-white/80 text-sm py-4 rounded-full hover:border-white/50 hover:text-white transition-colors"
             >
               {copied ? 'Copied ✓' : 'Copy email'}
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );
