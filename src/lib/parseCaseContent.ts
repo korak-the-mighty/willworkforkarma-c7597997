@@ -340,6 +340,7 @@ export function parseCaseContent(raw: string): CaseData {
     slug: frontmatter.slug ?? '',
     route: frontmatter.route ?? '',
     status: frontmatter.status ?? 'draft',
+    protected: frontmatter.protected === 'true',
     mediaInventory,
     sections,
     ...(snapshot ? { snapshot } : {}),

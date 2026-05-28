@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { ProtectedGate } from '@/components/ProtectedGate';
 import { useNavigate } from 'react-router-dom';
+import { getCaseData } from '@/lib/caseRegistry';
 
 interface GateContextType {
   requestAccess: (slug: string, targetPath: string) => void;
@@ -17,6 +18,11 @@ export function GateProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
   function requestAccess(slug: string, targetPath: string) {
+    const caseData = getCaseData(slug);
+    if (!caseData?.protected) {
+      navigate(targetPath);
+      return;
+    }
     if (sessionStorage.getItem(`gate_auth_${slug}`) === 'true') {
       navigate(targetPath);
       return;

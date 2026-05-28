@@ -142,6 +142,7 @@ export interface CaseData {
   slug: string;
   route: string;
   status: 'live' | 'placeholder' | 'draft';
+  protected?: boolean;
   mediaInventory: MediaItem[];
   sections: Section[];
   snapshot?: SnapshotData;
