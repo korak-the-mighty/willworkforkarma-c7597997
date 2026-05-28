@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useGate } from '@/context/GateContext';
 
 interface OverlayMenuProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ const MENU_CASES = [
 const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
   const [emailCopied, setEmailCopied] = useState(false);
+  const { requestAccess } = useGate();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("henrik.lehtikangas@gmail.com");
@@ -88,10 +90,17 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
           <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
           {MENU_CASES.map((c, i) => (
             <div key={c.route}>
+              {c.route === '/work/abb-emobility' ? (
+              <div onClick={() => { requestAccess('abb-emobility', '/work/abb-emobility'); onClose(); }} className="block cursor-pointer">
+                <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{c.tagline}</p>
+              </div>
+            ) : (
               <Link to={c.route} onClick={onClose} className="block">
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
                 <p className="font-heading text-2xl leading-tight text-white/60">{c.tagline}</p>
               </Link>
+            )}
               {i < MENU_CASES.length - 1 && (
                 <div className="border-t border-white/10 my-6" />
               )}
@@ -144,6 +153,28 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
           <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
           {MENU_CASES.map((c, i) => (
             <div key={c.route}>
+            {c.route === '/work/abb-emobility' ? (
+              <div
+                onClick={() => { requestAccess('abb-emobility', '/work/abb-emobility'); onClose(); }}
+                className="block cursor-pointer"
+                onMouseEnter={() => setHoveredCase(i)}
+                onMouseLeave={() => setHoveredCase(null)}
+              >
+                <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
+                <p
+                  className={`font-heading text-3xl md:text-4xl lg:text-5xl leading-tight transition-colors duration-150 ${
+                    hoveredCase === null
+                      ? "text-white/60"
+                      : hoveredCase === i
+                      ? ""
+                      : "text-white/30"
+                  }`}
+                  style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
+                >
+                  {c.tagline}
+                </p>
+              </div>
+            ) : (
               <Link
                 to={c.route}
                 onClick={onClose}
@@ -165,6 +196,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                   {c.tagline}
                 </p>
               </Link>
+            )}
               {i < MENU_CASES.length - 1 && (
                 <div className="border-t border-white/10 my-8" />
               )}

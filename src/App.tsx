@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { GateProvider } from '@/context/GateContext';
 import Index from "./pages/Index";
 import Work from "./pages/Work";
 import CaseABB from "./pages/CaseABB";
@@ -52,6 +53,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <GateProvider>
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
@@ -68,6 +70,7 @@ const App = () => {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </GateProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

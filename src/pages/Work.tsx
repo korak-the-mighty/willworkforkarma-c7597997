@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/Layout';
+import { useGate } from '@/context/GateContext';
 import { useOtherWorkContent } from '@/hooks/useOtherWorkContent';
 import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
 
@@ -17,6 +18,7 @@ const selectedCases = [
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
 export default function Work() {
+  const { requestAccess } = useGate();
   const caseHeroes = useCaseHeroContent();
   const otherWork = useOtherWorkContent();
   const hoverWrapRef = useRef<HTMLDivElement>(null);
@@ -246,43 +248,60 @@ export default function Work() {
       {/* Cases list */}
       <section style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
         <div style={s.label}>Selected Cases</div>
-        {selectedCases.map(c => (
-          <Link
-            key={c.slug}
-            to={`/work/${c.slug}`}
-            style={{
-              display: 'flex', alignItems: 'center',
-              padding: isMobile ? '20px 16px' : (activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px'),
-              borderTop: '1px solid rgba(245,245,240,0.1)',
-              textDecoration: 'none',
-              opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
-              transition: 'opacity 220ms ease, padding-left 220ms ease',
-              position: 'relative',
-            }}
-            onMouseEnter={() => activateCase(c.slug)}
-          >
-            {isMobile && c.image && (
-              <img
-                src={c.image}
-                alt={c.client}
-                style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 4, flexShrink: 0, marginRight: 16 }}
-                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-              />
-            )}
-            <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
-              <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 15, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.7)' : 'rgba(245,245,240,0.5)', marginBottom: 6, transition: 'color 200ms ease' }}>
-                {c.client}
+        {selectedCases.map(c => {
+          const rowStyle = {
+            display: 'flex', alignItems: 'center',
+            padding: isMobile ? '20px 16px' : (activeCase === c.slug ? '22px 56px 22px 72px' : '22px 56px'),
+            borderTop: '1px solid rgba(245,245,240,0.1)',
+            textDecoration: 'none',
+            opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
+            transition: 'opacity 220ms ease, padding-left 220ms ease',
+            position: 'relative' as const,
+          };
+          const rowInner = (
+            <>
+              {isMobile && c.image && (
+                <img
+                  src={c.image}
+                  alt={c.client}
+                  style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 4, flexShrink: 0, marginRight: 16 }}
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                />
+              )}
+              <div style={{ flex: 1, minWidth: 0, position: 'relative', zIndex: 30 }} className="md:max-w-[70%]">
+                <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 15, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.7)' : 'rgba(245,245,240,0.5)', marginBottom: 6, transition: 'color 200ms ease' }}>
+                  {c.client}
+                </div>
+                <div style={{ fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
+                  {caseHeroes[c.slug]?.summary || c.summary}
+                </div>
               </div>
-              <div style={{ fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
-                {caseHeroes[c.slug]?.summary || c.summary}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>
+                <span style={{ fontSize: 11, letterSpacing: '0.08em', color: 'rgba(245,245,240,0.2)' }}>{c.year}</span>
+                <span style={{ fontSize: 18, color: '#f5f5f0', opacity: activeCase === c.slug ? 1 : 0, transform: activeCase === c.slug ? 'translateX(0)' : 'translateX(-8px)', transition: 'opacity 200ms ease, transform 200ms ease' }}>→</span>
               </div>
+            </>
+          );
+          return c.slug === 'abb-emobility' ? (
+            <div
+              key={c.slug}
+              style={{ ...rowStyle, cursor: 'pointer' }}
+              onMouseEnter={() => activateCase(c.slug)}
+              onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
+            >
+              {rowInner}
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>
-              <span style={{ fontSize: 11, letterSpacing: '0.08em', color: 'rgba(245,245,240,0.2)' }}>{c.year}</span>
-              <span style={{ fontSize: 18, color: '#f5f5f0', opacity: activeCase === c.slug ? 1 : 0, transform: activeCase === c.slug ? 'translateX(0)' : 'translateX(-8px)', transition: 'opacity 200ms ease, transform 200ms ease' }}>→</span>
-            </div>
-          </Link>
-        ))}
+          ) : (
+            <Link
+              key={c.slug}
+              to={`/work/${c.slug}`}
+              style={rowStyle}
+              onMouseEnter={() => activateCase(c.slug)}
+            >
+              {rowInner}
+            </Link>
+          );
+        })}
         <div style={{ borderBottom: '1px solid rgba(245,245,240,0.1)' }} />
       </section>
       <div style={{ height: isMobile ? '8vh' : (window.innerWidth < 1024 ? '12vh' : '25vh') }} />

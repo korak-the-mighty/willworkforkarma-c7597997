@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMenu } from "@/context/MenuContext";
+import { useGate } from '@/context/GateContext';
 import Layout from "@/components/Layout";
 
 const HeroHeadline = ({ text, subheadline }: { text: string; subheadline?: string }) => {
@@ -44,6 +45,7 @@ const Statement = ({ children }: { children: React.ReactNode }) => (
 const Index = () => {
   const [blobHovered, setBlobHovered] = useState(false);
   const navigate = useNavigate();
+  const { requestAccess } = useGate();
 
   const hp = useHomepageContent();
   const caseHeroes = useCaseHeroContent();
@@ -75,7 +77,7 @@ const Index = () => {
       <div>
 
         {/* ── 2. HERO PROJECT: ABB ── */}
-        <Link to={`/work/${abb.slug}`} className="group block relative w-full overflow-hidden">
+        <div onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')} className="group block relative w-full overflow-hidden cursor-pointer">
           <div className="relative h-[80vh] overflow-hidden">
             {abb.coverImage && (
               <>
@@ -100,7 +102,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </Link>
+        </div>
 
         {/* ── 3. STATEMENT 1 ── */}
         <Statement>{hp.statements.s1}</Statement>
