@@ -48,6 +48,7 @@ export default function Work() {
   const mobileTgtY = useRef(0);
   const casesSectionRef = useRef<HTMLDivElement>(null);
   const mobileImgVisibleRef = useRef(true);
+  const mobileImgExitedRef = useRef(false);
   const activeMobileCaseRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -119,7 +120,7 @@ export default function Work() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.15 && !hasSnappedRef.current) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.4 && !hasSnappedRef.current) {
             hasSnappedRef.current = true;
             isInSnapZoneRef.current = true;
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -130,7 +131,7 @@ export default function Work() {
           }
         });
       },
-      { threshold: [0, 0.15, 1.0] }
+      { threshold: [0, 0.4, 1.0] }
     );
 
     observer.observe(section);
@@ -153,7 +154,11 @@ export default function Work() {
     const tick = () => {
       mobileCurY.current = mobileCurY.current + (mobileTgtY.current - mobileCurY.current) * 0.045;
       if (mobileImgRef.current) {
-        mobileImgRef.current.style.transform = `translateY(${mobileCurY.current}px)`;
+        if (mobileImgExitedRef.current) {
+          mobileImgRef.current.style.transform = `translateY(${mobileCurY.current}px) translateX(80px)`;
+        } else {
+          mobileImgRef.current.style.transform = `translateY(${mobileCurY.current}px) translateX(0px)`;
+        }
       }
       mobileRafRef.current = requestAnimationFrame(tick);
     };
@@ -213,11 +218,9 @@ export default function Work() {
       (entries) => {
         entries.forEach(entry => {
           mobileImgVisibleRef.current = entry.isIntersecting;
+          mobileImgExitedRef.current = !entry.isIntersecting;
           if (mobileImgRef.current) {
             mobileImgRef.current.style.opacity = entry.isIntersecting ? '1' : '0';
-            mobileImgRef.current.style.transform = entry.isIntersecting
-              ? mobileImgRef.current.style.transform
-              : `translateY(${mobileCurY.current}px) translateX(60px)`;
           }
         });
       },
@@ -521,7 +524,7 @@ export default function Work() {
         })}
         <div style={{ borderBottom: '1px solid rgba(245,245,240,0.1)' }} />
       </section>
-      <div style={{ height: isMobile ? '8vh' : (window.innerWidth < 1024 ? '12vh' : '25vh') }} />
+      <div style={{ height: isMobile ? '35vh' : (window.innerWidth < 1024 ? '12vh' : '25vh') }} />
 
       {/* Other Cases snap wrapper */}
       <div
