@@ -545,7 +545,7 @@ export default function Work() {
 
       {/* Drag to pan hint — lives outside the overflow:hidden section so it can breathe */}
       {isMobile && tappedIndex !== null && (
-        <div style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,0.35)', textAlign: 'center', paddingBottom: 10 }}>
+        <div style={{ fontSize: 13, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,1)', textAlign: 'center', paddingBottom: 10 }}>
           Drag to pan
         </div>
       )}
