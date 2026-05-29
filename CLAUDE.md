@@ -13,9 +13,36 @@ npm run test       # Run tests once (vitest)
 npm run test:watch # Run tests in watch mode
 ```
 
+## What this site is
+
+This is Henrik Lehtikangas's personal portfolio — he is a creative director, not a coder. There is no team, no CMS, no backend, no API. The site is a direct representation of how Henrik thinks and works. Content is his; code serves content, not the other way around.
+
+Start every session by understanding the structure before touching anything.
+
 ## Architecture
 
-This is a personal portfolio site for Henrik Lehtikangas — a creative director. It is a **React + TypeScript SPA** built with Vite, styled with Tailwind CSS v3, and uses shadcn/ui for base UI primitives.
+This is a **React + TypeScript SPA** built with Vite, styled with Tailwind CSS v3, and uses shadcn/ui for base UI primitives.
+
+### The real rendering pipeline — read this first
+
+Every live case study follows this pipeline:
+
+```
+content/cases/<slug>.md
+  → src/lib/parseCaseContent.ts   (parses markdown + frontmatter into typed sections)
+  → src/lib/caseRegistry.ts       (loads all .md files at build time, exposes getCaseData(slug))
+  → src/pages/Case<Name>.tsx      (dedicated page per case, calls getCaseData)
+  → src/components/CaseSection.tsx (renders each section by type)
+  → individual section components  (CaseHeroMedia, CaseTextBlock, CaseTextMedia, CaseMedia, etc.)
+```
+
+Each case has its own dedicated page in `src/pages/`. The markdown file is the single source of truth for that case's content — text, images, section order, everything.
+
+### What is legacy and should not be touched
+
+- **`src/pages/CaseDetail.tsx`** — generic fallback page, not used by any live case. Legacy. Do not refactor or fix.
+- **`src/data/cases.ts`** — old hardcoded TypeScript data. Legacy. Not the source of truth.
+- The components that compose `CaseDetail` (`CaseSpecSheet`, `CaseHook`, `CaseBamStatement`, `CaseModule`, `CaseOutcome`, `CaseWhyMe`, `CaseSectionWrapper`) — legacy, only used by CaseDetail.
 
 ### Routing
 
@@ -25,20 +52,32 @@ This is a personal portfolio site for Henrik Lehtikangas — a creative director
 |---|---|
 | `/` | `Index` — editorial homepage |
 | `/work` | `Work` — case grid |
-| `/work/abb-emobility` | `CaseABB` — hardcoded one-off case page |
-| `/work/:slug` | `CaseDetail` — generic case page driven by data |
+| `/work/abb-emobility` | `CaseABB` — markdown-driven |
+| `/work/share` | `CaseShare` — markdown-driven |
+| `/work/man` | `CaseMAN` — markdown-driven |
+| `/work/wtr` | `CaseWTR` — markdown-driven |
+| `/work/bmw` | `CaseBMW` — markdown-driven |
+| `/work/drivelog` | `CaseDrivelogV2` — markdown-driven |
+| `/work/:slug` | `CaseDetail` — legacy fallback, not used by live cases |
 | `/about` | `About` |
 | `/contact` | `Contact` |
 
 ### Content / Data Layer
 
-All case study content lives in **`src/data/cases.ts`** as a typed `Case[]` array. This is the single source of truth for case metadata, narrative content, modules, themes, and media references. There is no backend or CMS — adding or editing a case means editing this file.
+Case content lives in **`content/cases/<slug>.md`**. Each file has:
+- A frontmatter block (`---`) with `slug`, `route`, `status`, `summary`, and `snapshot` data
+- A `## Media Inventory` block listing all media assets with ids and URLs
+- Named section blocks (`## section-hero`, `## section-context`, etc.) each with a `type` field and content
 
-Each `Case` object has:
-- **`heroMedia`** — type/src for the top-of-page image or video
-- **`modules`** — ordered array of `CaseModule` blocks (`strategy`, `execution`, `break`)
-- **`theme`** — per-case HSL CSS variable overrides (`bg`, `fg`, `muted`, `accent`) that are applied as inline CSS variables to the case page wrapper
-- **`facts`**, **`highlights`**, **`outcomes`**, **`sections`**, **`gallery`** — various structured content blocks
+To edit a case: edit its markdown file. To add a new case: create a new `.md` file and a new dedicated page in `src/pages/`.
+
+### Content files for other pages
+
+- `content/homepage.md` — homepage content
+- `content/about.md` — about page
+- `content/contact.md` — contact page
+- `content/otherwork.md` — the "other cases" grid
+- `content/gate.md` — gated access content
 
 ### Per-Case Theming
 
