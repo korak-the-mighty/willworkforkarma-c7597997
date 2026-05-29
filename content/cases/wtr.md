@@ -31,7 +31,7 @@ summary: "Setting a stage for clarity and design."
 type: hero
 background-image: hero-img
 title: Wörner Traxler Richter
-subtitle: Digital Platform · Creative Direction · 2022
+subtitle: Digital Platform · Creative Direction · 2025
 headline: "Setting a stage for clarity and design."
 ---
 ## section-context
@@ -87,7 +87,7 @@ label: Impact
 statement: Architecture for architecture.
 The practice recognized itself in the work.
 A digital presence they trust and stand behind.
-tagline: Digital Platform · Creative Direction · 2022
+tagline: Digital Platform · Creative Direction · 2025
 ---
 ## section-closing
 type: custom-component
