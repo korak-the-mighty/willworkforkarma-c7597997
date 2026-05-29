@@ -4,6 +4,7 @@ export interface OtherWorkItem {
   what: string;
   year: string;
   heroImage?: string;
+  images?: string[];   // multiple images → slideshow on hover
   color: string;
 }
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { TextMediaSection } from '../types/case';
-const BODY_TEXT = 'text-[1.25rem] leading-[1.65]';
+const BODY_TEXT = 'text-[1rem] md:text-[1.25rem] leading-[1.65]';
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
   <p className="text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8">
     {children}
@@ -21,7 +21,7 @@ export default function CaseTextMedia({ section }: { section: TextMediaSection }
           <MicroLabel>{section.label}</MicroLabel>
         </div>
       )}
-      <div className={`max-w-[72ch] space-y-4 ${BODY_TEXT}`}>
+      <div className={`w-full max-w-[72ch] space-y-4 overflow-hidden ${BODY_TEXT}`}>
         {(section.body ?? '').split('\n').filter(l => l.trim()).map((para, i) => (
           <p key={i}>{para}</p>
         ))}
@@ -57,13 +57,13 @@ export default function CaseTextMedia({ section }: { section: TextMediaSection }
     </div>
   ) : null;
   return (
-    <section className="py-24 md:py-32 overflow-hidden">
+    <section className="py-24 md:py-32 overflow-x-hidden">
       {isLeft && section.label && (
         <div className="px-6 md:hidden mb-6">
           <MicroLabel>{section.label}</MicroLabel>
         </div>
       )}
-      <div className="grid grid-cols-12 gap-16 md:gap-24 items-start">
+      <div className="grid grid-cols-12 gap-x-0 gap-y-12 md:gap-16 lg:gap-24 items-start">
         {isLeft ? <>{mediaCol}{textCol}</> : <>{textCol}{mediaCol}</>}
       </div>
     </section>
