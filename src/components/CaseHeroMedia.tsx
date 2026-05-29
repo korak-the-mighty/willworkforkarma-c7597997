@@ -13,7 +13,7 @@ interface CaseHeroMediaProps {
   loaderDone?: boolean;
 }
 
-const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
+const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
 
 const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, loaderDone }: CaseHeroMediaProps) => {
   // Synthesise a CaseHeroMediaType object when content-system props are provided

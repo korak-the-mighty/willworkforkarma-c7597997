@@ -7,7 +7,7 @@ interface CaseSectionWrapperProps {
   children: React.ReactNode;
 }
 
-const FULL_BLEED = "relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen";
+const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
 
 const toneMap: Record<SectionTone, string> = {
   default: "",
