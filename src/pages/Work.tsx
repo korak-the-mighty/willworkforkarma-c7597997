@@ -330,7 +330,7 @@ export default function Work() {
             position: 'fixed',
             right: '-6vw',
             top: 0,
-            width: '52vw',
+            width: '75vw',
             aspectRatio: '4/3',
             zIndex: 5,
             pointerEvents: 'none',
@@ -546,7 +546,7 @@ export default function Work() {
       {/* Drag to pan hint — lives outside the overflow:hidden section so it can breathe */}
       {isMobile && tappedIndex !== null && (
         <div style={{ fontSize: 13, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(245,245,240,1)', textAlign: 'center', paddingBottom: 10 }}>
-          Drag to pan
+          DRAG TO PAN, CLICK TILE TO VIEW
         </div>
       )}
 
