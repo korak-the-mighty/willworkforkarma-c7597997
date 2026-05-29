@@ -135,7 +135,7 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   }, [theme]);
 
   return (
-    <div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
+    <div className="flex min-h-screen flex-col overflow-x-hidden" style={theme ? { backgroundColor: theme.bg } : undefined}>
       <Header />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
