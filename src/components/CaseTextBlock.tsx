@@ -12,11 +12,11 @@ function Inner({ section }: { section: TextSection }) {
     ? 'max-w-[46rem] mx-auto text-center px-6'
     : 'px-6 md:px-8 max-w-4xl mx-auto w-full overflow-hidden box-border';
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-24 md:py-32 overflow-x-hidden">
       <div className={outerClass}>
         {section.label && <MicroLabel>{section.label}</MicroLabel>}
         {(section.headings?.length || section.body) && (
-          <div className={`max-w-[72ch] ${BODY_TEXT} ${isCentered ? 'space-y-2 mx-auto' : 'space-y-4'}`}>
+          <div className={`w-full max-w-[72ch] ${BODY_TEXT} ${isCentered ? 'space-y-2 mx-auto' : 'space-y-4'}`}>
             {section.headings?.map((h, i) => (
               <p key={`h-${i}`} className="font-heading text-[2rem] leading-[1.4] tracking-tight text-white">{h}</p>
             ))}
@@ -31,7 +31,7 @@ function Inner({ section }: { section: TextSection }) {
           </p>
         )}
         {section.body2 && (
-          <div className={`max-w-[72ch] ${BODY_TEXT} mt-6 ${isCentered ? 'space-y-2 mx-auto' : 'space-y-4'}`}>
+          <div className={`w-full max-w-[72ch] ${BODY_TEXT} mt-6 ${isCentered ? 'space-y-2 mx-auto' : 'space-y-4'}`}>
             {section.body2.split('\n').filter(l => l.trim()).map((para, i) => (
               <p key={i}>{para}</p>
             ))}
