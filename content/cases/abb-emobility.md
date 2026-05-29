@@ -17,7 +17,7 @@ summary: "Building the digital brand foundation of a global e-mobility leader."
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-c50-launch.webm
 - id: decision-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4-2.webp
 - id: wide-dash
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_11.png
@@ -49,7 +49,10 @@ summary: "Building the digital brand foundation of a global e-mobility leader."
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_3.png
 - id: proof-img-03
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4-2.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-E-mobility10.webp
+  - id: proof-img-04
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-E-mobility5.webp
 ---
 ## section-hero
 type: hero
