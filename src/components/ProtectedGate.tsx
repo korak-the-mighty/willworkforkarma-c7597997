@@ -25,7 +25,10 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
     }
     setTimeout(() => inputRef.current?.focus(), 100);
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
   }, [slug, onSuccess]);
 
   useEffect(() => {
@@ -37,6 +40,8 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
   function handleSubmit() {
     if (input.trim().toLowerCase() === PIN) {
       sessionStorage.setItem(`${SESSION_PREFIX}${slug}`, 'true');
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       onSuccess();
     } else {
       setError(true);
@@ -63,7 +68,7 @@ export function ProtectedGate({ slug, onSuccess, onClose }: Props) {
     <div
       className="fixed inset-0 z-[200] flex items-center justify-center"
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => { document.body.style.overflow = ''; document.documentElement.style.overflow = ''; onClose(); }} />
 
       {/* Close — matches header X position exactly */}
       <div className="fixed top-0 left-0 right-0 z-[210] flex items-center justify-end px-6 py-6 pointer-events-none">
