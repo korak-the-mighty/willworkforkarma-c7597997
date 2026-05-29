@@ -416,47 +416,52 @@ export default function Work() {
 
           // ── MOBILE RENDER ──────────────────────────────────
           if (isMobile) {
-            const mobileRow = (
+            const mobileContent = (
               <div
                 ref={el => { mobileRowRefs.current[i] = el; }}
                 style={{
-                  width: '75%',
-                  padding: '40px 0 40px 20px',
                   borderTop: '1px solid rgba(245,245,240,0.1)',
                   position: 'relative',
-                  zIndex: 10,
-                  opacity: isActive ? 1 : 0.28,
-                  transition: 'opacity 500ms ease',
+                  width: '100%',
                 }}
               >
-                <div style={{
-                  fontFamily: "'Clash Display', sans-serif",
-                  fontSize: 11,
-                  fontWeight: 300,
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(245,245,240,0.5)',
-                  marginBottom: 14,
-                }}>
-                  {c.client}
-                </div>
-                <div style={{
-                  fontFamily: "'Clash Display', sans-serif",
-                  fontSize: 'clamp(24px, 6vw, 34px)',
-                  fontWeight: 300,
-                  lineHeight: 1.15,
-                  letterSpacing: '-0.02em',
-                  color: '#f5f5f0',
-                }}>
-                  {summary}
-                </div>
-                <div style={{
-                  marginTop: 20,
-                  fontSize: 11,
-                  letterSpacing: '0.08em',
-                  color: 'rgba(245,245,240,0.2)',
-                }}>
-                  {c.year}
+                <div
+                  style={{
+                    width: '75%',
+                    padding: '40px 0 40px 20px',
+                    opacity: isActive ? 1 : 0.28,
+                    transition: 'opacity 500ms ease',
+                  }}
+                >
+                  <div style={{
+                    fontFamily: "'Clash Display', sans-serif",
+                    fontSize: 11,
+                    fontWeight: 300,
+                    letterSpacing: '0.16em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(245,245,240,0.5)',
+                    marginBottom: 14,
+                  }}>
+                    {c.client}
+                  </div>
+                  <div style={{
+                    fontFamily: "'Clash Display', sans-serif",
+                    fontSize: 'clamp(24px, 6vw, 34px)',
+                    fontWeight: 300,
+                    lineHeight: 1.15,
+                    letterSpacing: '-0.02em',
+                    color: '#f5f5f0',
+                  }}>
+                    {summary}
+                  </div>
+                  <div style={{
+                    marginTop: 20,
+                    fontSize: 11,
+                    letterSpacing: '0.08em',
+                    color: 'rgba(245,245,240,0.2)',
+                  }}>
+                    {c.year}
+                  </div>
                 </div>
               </div>
             );
@@ -464,14 +469,14 @@ export default function Work() {
             return c.slug === 'abb-emobility' ? (
               <div
                 key={c.slug}
-                style={{ cursor: 'pointer', textDecoration: 'none' }}
+                style={{ cursor: 'pointer' }}
                 onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
               >
-                {mobileRow}
+                {mobileContent}
               </div>
             ) : (
               <Link key={c.slug} to={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
-                {mobileRow}
+                {mobileContent}
               </Link>
             );
           }
