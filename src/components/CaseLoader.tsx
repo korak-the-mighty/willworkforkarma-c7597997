@@ -11,6 +11,7 @@ const CaseLoader = ({ role, bg, onDone }: CaseLoaderProps) => {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    document.body.style.overflow = 'hidden';
     const exitTimer = setTimeout(() => setExiting(true), 3000);
     return () => clearTimeout(exitTimer);
   }, []);
@@ -21,6 +22,7 @@ const CaseLoader = ({ role, bg, onDone }: CaseLoaderProps) => {
 
   const handleTransitionEnd = () => {
     if (exiting) {
+      document.body.style.overflow = '';
       setDone(true);
       onDone?.();
     }
