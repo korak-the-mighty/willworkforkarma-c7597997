@@ -40,9 +40,6 @@ summary: "Building the digital brand foundation of a global e-mobility leader."
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_13.png
 - id: gallery-04
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_11.png
-- id: gallery-05
-  type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-media_4-2.webp
 - id: proof-img-01
   type: image
