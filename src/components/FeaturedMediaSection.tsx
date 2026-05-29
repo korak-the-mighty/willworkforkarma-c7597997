@@ -34,9 +34,9 @@ const FeaturedMediaSection = ({ src, alt, className }: FeaturedMediaSectionProps
 
   return (
     <section className={className ?? ""}>
-      {/* Desktop: full-bleed cover image */}
-      <div className="hidden md:block w-full h-[900px] overflow-hidden">
-        <img src={src} alt={alt} className="w-full h-full object-cover" />
+      {/* Desktop: full-bleed image at natural height */}
+      <div className="hidden md:block w-full overflow-hidden">
+        <img src={src} alt={alt} className="w-full h-auto block lazy-img" />
       </div>
 
       {/* Mobile: scroll-driven horizontal pan */}
