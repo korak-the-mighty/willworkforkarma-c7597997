@@ -1,6 +1,6 @@
 import type { TextSection } from '../types/case';
 import CaseSectionWrapper from './CaseSectionWrapper';
-const BODY_TEXT = 'text-[1.25rem] leading-[1.65]';
+const BODY_TEXT = 'text-[1rem] md:text-[1.25rem] leading-[1.65]';
 const MicroLabel = ({ children }: { children: React.ReactNode }) => (
   <p className="text-[13px] uppercase tracking-[0.12em] text-[#ECA9CC] font-heading font-light mb-8">
     {children}
@@ -10,7 +10,7 @@ function Inner({ section }: { section: TextSection }) {
   const isCentered = !!section.centered;
   const outerClass = isCentered
     ? 'max-w-[46rem] mx-auto text-center px-6'
-    : 'px-6 md:px-8 max-w-4xl mx-auto w-full overflow-hidden';
+    : 'px-6 md:px-8 max-w-4xl mx-auto w-full overflow-hidden box-border';
   return (
     <section className="py-24 md:py-32">
       <div className={outerClass}>
