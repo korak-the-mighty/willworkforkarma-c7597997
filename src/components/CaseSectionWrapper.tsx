@@ -21,7 +21,7 @@ const CaseSectionWrapper = ({
   children,
 }: CaseSectionWrapperProps) => (
   <section
-    className={`${fullWidth ? FULL_BLEED : ""} ${toneMap[tone]} ${className}`.trim()}
+    className={`${fullWidth ? "w-full" : ""} ${toneMap[tone]} ${className}`.trim()}
   >
     {children}
   </section>
