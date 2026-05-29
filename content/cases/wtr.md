@@ -26,6 +26,15 @@ summary: "Setting a stage for clarity and design."
 - id: gallery-03
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR8.webp
+- id: gallery-04
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTRwebsite9.webp 
+- id: gallery-05
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTRwebsite5.webp   
+
+
+  WTRwebsite5.webp
 ---
 ## section-hero
 type: hero
