@@ -6,10 +6,12 @@ interface CaseModuleProps {
   index: number;
 }
 
+const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
+
 const CaseModule = ({ module, index }: CaseModuleProps) => {
   if (module.type === "break") {
     return (
-      <div className="w-full my-12">
+      <div className={`${FULL_BLEED} my-12`}>
         <div className="aspect-[16/9] border border-white/[0.06] w-full" />
       </div>
     );
@@ -34,7 +36,7 @@ const CaseModule = ({ module, index }: CaseModuleProps) => {
   );
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16 md:py-20 space-y-12 md:space-y-16">
+    <div className="py-16 md:py-20 space-y-12 md:space-y-16">
       {module.title && (
         <h3 className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
           {module.title}

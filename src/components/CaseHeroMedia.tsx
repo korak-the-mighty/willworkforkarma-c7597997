@@ -13,6 +13,8 @@ interface CaseHeroMediaProps {
   loaderDone?: boolean;
 }
 
+const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
+
 const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, loaderDone }: CaseHeroMediaProps) => {
   // Synthesise a CaseHeroMediaType object when content-system props are provided
   const effectiveHeroMedia: CaseHeroMediaType = backgroundImage
@@ -30,7 +32,7 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
   const hasOverlay = !!(headline || title || subtitle);
 
   return (
-    <div className={`w-full ${hasOverlay ? 'h-screen' : 'h-[55vh] md:h-[80vh] border border-white/[0.06]'} overflow-hidden relative`}>
+    <div className={`${FULL_BLEED} ${hasOverlay ? 'h-screen' : 'h-[55vh] md:h-[80vh] border border-white/[0.06]'} overflow-hidden relative`}>
       {effectiveHeroMedia.src ? (
         effectiveHeroMedia.type === "video" ? (
           <video

@@ -8,6 +8,7 @@ import CaseModule from "@/components/CaseModule";
 import CaseMediaGrid from "@/components/CaseMediaGrid";
 import CaseOutcome from "@/components/CaseOutcome";
 import CaseWhyMe from "@/components/CaseWhyMe";
+import CaseSectionWrapper from "@/components/CaseSectionWrapper";
 import { cases } from "@/data/cases";
 
 const CaseDetail = () => {
@@ -23,7 +24,7 @@ const CaseDetail = () => {
     : null;
 
   return (
-    <Layout fullWidth theme={{ bg: caseData.theme.bg }}>
+    <Layout>
       <div
         style={{
           '--background': caseData.theme.bg,
@@ -33,73 +34,69 @@ const CaseDetail = () => {
         } as React.CSSProperties}
         className="bg-background text-foreground"
       >
-        <article>
-
-          {/* Header — constrained */}
-          <div className="max-w-4xl mx-auto px-6 pt-16 md:pt-24 pb-8">
-            <header className="space-y-4">
-              <div className="flex items-baseline gap-4">
-                <h1 className="font-heading text-5xl md:text-6xl tracking-tight">
-                  {caseData.title}
-                </h1>
-                <span className="text-sm text-muted-foreground">{caseData.year}</span>
-              </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-1">
-                {caseData.tags.map((tag) => (
-                  <span key={tag} className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <h2 className="font-heading text-3xl md:text-4xl tracking-tight mt-6">[CASE HEADLINE]</h2>
-              <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">[CASE INTRO PARAGRAPH]</p>
-            </header>
-          </div>
-
-          {/* Hero — full-bleed */}
-          <CaseHeroMedia heroMedia={caseData.heroMedia} />
-
-          {/* Spec Sheet — constrained */}
-          <div className="max-w-4xl mx-auto px-6 mt-12">
-            <CaseSpecSheet
-              client={caseData.client}
-              year={caseData.year}
-              role={caseData.facts.role}
-              team={caseData.facts.team}
-              timeline={caseData.facts.timeline}
-              output={caseData.facts.output}
-            />
-          </div>
-
-          {/* Hook — constrained */}
-          <div className="max-w-4xl mx-auto px-6">
-            <CaseHook problem={caseData.problem} />
-          </div>
-
-          {/* BAM — constrained */}
-          <div className="max-w-4xl mx-auto px-6">
-            <CaseBamStatement statement={caseData.decision} />
-          </div>
-
-          {/* Modules — each handles its own layout */}
-          {caseData.modules.map((mod, i) => (
-            <CaseModule key={i} module={mod} index={i} />
+      <article>
+        {/* Header */}
+        <header className="space-y-4 mb-8">
+          <div className="flex items-baseline gap-4">
+          <h1 className="font-heading text-5xl md:text-6xl tracking-tight">
+            {caseData.title}
+          </h1>
+          <span className="text-sm text-muted-foreground">{caseData.year}</span>
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {caseData.tags.map((tag) => (
+            <span key={tag} className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+              {tag}
+            </span>
           ))}
+        </div>
+        <h2 className="font-heading text-3xl md:text-4xl tracking-tight mt-6">[CASE HEADLINE]</h2>
+        <p className="text-muted-foreground leading-relaxed mt-4 max-w-2xl">[CASE INTRO PARAGRAPH]</p>
+        </header>
 
-          {/* Output Gallery — constrained */}
-          <div className="max-w-4xl mx-auto px-6 py-12">
-            <CaseMediaGrid count={4} />
-          </div>
+        {/* Hero */}
+        <CaseHeroMedia heroMedia={caseData.heroMedia} />
 
-          {/* Outcomes — constrained */}
-          <div className="max-w-4xl mx-auto px-6">
-            <CaseOutcome outcomes={caseData.outcomes} />
-          </div>
+        {/* Spec Sheet */}
+        <div className="mt-12">
+          <CaseSpecSheet
+            client={caseData.client}
+            year={caseData.year}
+            role={caseData.facts.role}
+            team={caseData.facts.team}
+            timeline={caseData.facts.timeline}
+            output={caseData.facts.output}
+          />
+        </div>
 
-          {/* Why Me — owns its own padding */}
+        {/* Hook */}
+        <CaseSectionWrapper tone="subtle">
+          <CaseHook problem={caseData.problem} />
+        </CaseSectionWrapper>
+
+        {/* BAM */}
+        <CaseBamStatement statement={caseData.decision} />
+
+        {/* Modules */}
+        {caseData.modules.map((mod, i) => (
+          <CaseModule key={i} module={mod} index={i} />
+        ))}
+
+        {/* Output Gallery */}
+        <div className="py-12">
+          <CaseMediaGrid count={4} />
+        </div>
+
+        {/* Outcomes */}
+        <CaseSectionWrapper tone="subtle">
+          <CaseOutcome outcomes={caseData.outcomes} />
+        </CaseSectionWrapper>
+
+        {/* Why Me */}
+        <CaseSectionWrapper tone="emphasis">
           <CaseWhyMe text={caseData.whyMe} nextCase={nextCaseLink} />
-
-        </article>
+        </CaseSectionWrapper>
+      </article>
       </div>
     </Layout>
   );
