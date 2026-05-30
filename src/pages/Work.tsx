@@ -332,7 +332,7 @@ export default function Work() {
             top: 0,
             width: '75vw',
             aspectRatio: '4/3',
-            zIndex: 5,
+            zIndex: 2,
             pointerEvents: 'none',
             willChange: 'transform, opacity',
             transform: 'translateY(0px)',
@@ -640,7 +640,7 @@ export default function Work() {
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    zIndex: 10,
+                    zIndex: 20,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
