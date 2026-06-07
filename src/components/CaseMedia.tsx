@@ -1,8 +1,18 @@
 import type { MediaSection } from '../types/case';
+import FeaturedMediaSection from './FeaturedMediaSection';
 const FULL_BLEED = 'relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen';
 export default function CaseMedia({ section }: { section: MediaSection }) {
   const src = section.imageUrl || section.videoUrl;
   if (!src) return null;
+  if (section.variant === 'full-bleed-pan') {
+    return (
+      <FeaturedMediaSection
+        src={src}
+        alt={section.alt ?? ''}
+        className={`${FULL_BLEED} mt-32 md:mt-40`}
+      />
+    );
+  }
   if (section.variant === 'full-bleed') {
     if (section.videoUrl) {
       return (

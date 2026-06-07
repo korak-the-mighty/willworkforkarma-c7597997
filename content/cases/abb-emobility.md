@@ -110,7 +110,7 @@ It needed grounding in the global ABB brand while opening a completely new world
 ---
 ## section-decision-media
 type: media
-variant: full-bleed
+variant: full-bleed-pan
 image: decision-img
 
 ---
@@ -137,7 +137,7 @@ images: gallery-01, gallery-02, gallery-03, gallery-04, gallery-05
 ---
 ## section-execution-media
 type: media
-variant: full-bleed
+variant: full-bleed-pan
 image: wide-dash
 
 ---
