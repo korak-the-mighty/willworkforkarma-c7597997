@@ -19,6 +19,19 @@ summary: "Making the car understandable."
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog4.webp
 
+- id: tension-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog8.webp
+
+- id: execution-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog-hero3.webp
+
+- id: proof-img-01
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog3.webp
+  
+
 ---
 
 ## section-hero
@@ -44,8 +57,10 @@ Not through dashboards and error codes — but through clear insights about driv
 ---
 
 ## section-tension
-type: text
+type: text-media
+mediaPosition: left
 label: Tension
+image: tension-img
 The technology existed. The data existed.
 
 What didn't exist was a coherent idea of what this thing was — product, app, brand, or service?
@@ -75,6 +90,19 @@ The OBD connector was designed as a physical counterpart to the app icon — a s
 The speech bubble became the central visual element across every surface: product, interface, packaging, communication. One form. One idea. Total consistency.
 
 The mobile app translated vehicle health, driving behaviour, trip history, service reminders, and parking location into plain language — not for technicians, for drivers.
+
+---
+
+## section-execution-media
+type: media
+variant: full-bleed
+image: execution-img
+
+---
+## section-proof
+type: proof
+variant: drift-images
+items: proof-img-01::Drivelog app in practice::pan-x
 
 ---
 
