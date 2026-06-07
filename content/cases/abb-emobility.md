@@ -144,7 +144,7 @@ image: wide-dash
 ## section-proof
 type: proof
 variant: drift-images
-items: proof-img-01::ABB E-mobility modular design system::pan-x||proof-img-02::Component and interface library in practice::static||proof-img-03::Visual language applied across product and platform::static
+items: proof-img-01::ABB E-mobility modular design system::static||proof-img-02::Component and interface library in practice::static||proof-img-03::Visual language applied across product and platform::static
 
 ---
 ## section-outcome
