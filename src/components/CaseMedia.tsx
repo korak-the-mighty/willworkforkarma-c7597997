@@ -5,12 +5,24 @@ export default function CaseMedia({ section }: { section: MediaSection }) {
   const src = section.imageUrl || section.videoUrl;
   if (!src) return null;
   if (section.variant === 'full-bleed') {
+    if (section.videoUrl) {
+      return (
+        <FeaturedMediaSection
+          src={src}
+          alt={section.alt ?? ''}
+          className={`${FULL_BLEED} mt-32 md:mt-40`}
+        />
+      );
+    }
     return (
-      <FeaturedMediaSection
-        src={src}
-        alt={section.alt ?? ''}
-        className={`${FULL_BLEED} mt-32 md:mt-40`}
-      />
+      <div className={`${FULL_BLEED} mt-32 md:mt-40`}>
+        <img
+          src={src}
+          alt={section.alt ?? ''}
+          className="w-full block object-cover lazy-img"
+          onLoad={(e) => e.currentTarget.classList.add('loaded')}
+        />
+      </div>
     );
   }
   if (section.variant === 'play-once') {
