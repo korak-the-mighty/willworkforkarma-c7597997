@@ -9,15 +9,15 @@ summary: "Making the car understandable."
 
 - id: hero-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog-hero3.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog-hero.webp
 
 - id: context-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog2.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog6.webp
 
 - id: decision-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog9.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog4.webp
 
 ---
 
