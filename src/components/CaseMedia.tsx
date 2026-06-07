@@ -1,5 +1,4 @@
 import type { MediaSection } from '../types/case';
-import FeaturedMediaSection from './FeaturedMediaSection';
 const FULL_BLEED = 'relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen';
 export default function CaseMedia({ section }: { section: MediaSection }) {
   const src = section.imageUrl || section.videoUrl;
@@ -7,11 +6,16 @@ export default function CaseMedia({ section }: { section: MediaSection }) {
   if (section.variant === 'full-bleed') {
     if (section.videoUrl) {
       return (
-        <FeaturedMediaSection
-          src={src}
-          alt={section.alt ?? ''}
-          className={`${FULL_BLEED} mt-32 md:mt-40`}
-        />
+        <div className={`${FULL_BLEED} mt-32 md:mt-40`}>
+          <video
+            src={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full block object-cover"
+          />
+        </div>
       );
     }
     return (
