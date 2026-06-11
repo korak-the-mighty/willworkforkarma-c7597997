@@ -115,10 +115,10 @@ type: text
 tone: emphasis
 centered: true
 label: Outcome
-statement: The metaphor held. The system shipped.
-Drivelog launched as a consumer-facing mobility brand inside one of the most complex technology ecosystems in Germany.
+statement: At least that's what the car told me.
+I believed one strong idea could connect brand, product and experience.
 
-It did this years before conversational vehicle interfaces became common.
+It did.
 
 ---
 
