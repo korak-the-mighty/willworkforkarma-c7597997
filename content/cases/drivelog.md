@@ -119,6 +119,7 @@ statement: At least that's what the car told me.
 I believed one strong idea could connect 
 brand, product and experience.
 
+
 It did.
 
 ---
