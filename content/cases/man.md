@@ -2,7 +2,7 @@
 slug: man
 route: /work/man
 status: live
-summary: "A global launch experience for something totally new."
+summary: "A new category. A great product. A bold global online launch."
 ---
 ## Media Inventory
 - id: hero-img
@@ -30,7 +30,8 @@ type: hero
 background-image: hero-img
 title: MAN
 subtitle: "Digital · UX · Product Launch"
-headline: "A global launch experience for something totally new."
+headline: "How to build a global first."
+supporting: "MAN's first van. The way MAN does."
 ---
 ## section-context
 type: text-media
@@ -68,11 +69,8 @@ The product's versatility becomes understandable without overwhelming the audien
 ## section-execution
 type: text
 label: Execution
-Creative direction across the platform.
-UI and UX for the experience.
-Interactive tools connecting needs to configurations.
-Close collaboration with development teams and internal stakeholders.
-Over a year of work leading to the public launch.
+Keeping every discipline — strategy, design, UX, development — locked to the same red thread.
+Over a year of work. One coherent experience at the end.
 ---
 ## section-scrolly
 type: scrolly
@@ -92,8 +90,7 @@ label: Impact
 The TGE didn't feel like an experiment.
 It felt like a natural extension of MAN.
 
-statement: "A new interactive global launch
-Still the same MAN."
+statement: "A new interactive global launch. Still the same MAN."
 
 tagline: "Creative direction • UI/UX design • Interactive product tools • IAA product launch"
 

@@ -30,7 +30,6 @@ summary: "Making the car understandable."
 - id: proof-img-01
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog3.webp
-  
 
 ---
 
@@ -76,20 +75,24 @@ label: Decision
 image: decision-img
 One metaphor locked everything in place: the car talking to you.
 
-Not dashboards. Not diagnostics. A conversation.
+Not dashboards. Not diagnostics.
 
-That single idea defined the product shape, the interface logic, the brand system, and the communication — all at once.
+A conversation.
+
+That single idea defined the product, the interface, the brand and the communication — all at once.
 
 ---
 
 ## section-execution
 type: text
 label: Execution
-The OBD connector was designed as a physical counterpart to the app icon — a square with rounded corners. Half went into the car. The other half stayed as its shell.
+The speech bubble became the foundation for a bold and distinctive visual identity.
 
-The speech bubble became the central visual element across every surface: product, interface, packaging, communication. One form. One idea. Total consistency.
+From the product itself to the app, packaging and communication, every touchpoint spoke the same language.
 
-The mobile app translated vehicle health, driving behaviour, trip history, service reminders, and parking location into plain language — not for technicians, for drivers.
+Every interaction reinforced the same simple promise:
+
+Bring your car to life.
 
 ---
 
@@ -99,6 +102,7 @@ variant: full-bleed
 image: execution-img
 
 ---
+
 ## section-proof
 type: proof
 variant: drift-images

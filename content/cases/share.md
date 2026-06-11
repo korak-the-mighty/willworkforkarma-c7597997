@@ -2,7 +2,7 @@
 slug: share
 route: /work/share
 status: live
-summary: "Making helping the most desirable product on the shelf."
+summary: "Winning by packaging joy, experience and mission."
 snapshot:
   title: Share
   contextLine: A good product with a clear mission — but helping alone wasn't enough to win on shelf.
@@ -35,7 +35,8 @@ type: hero
 background-image: hero-img
 title: Share
 subtitle: Branding · Brand System · Consumer Goods
-headline: "Do good. And enjoy it. Making helping something people choose again."
+headline: "Do good. And enjoy it."
+supporting: "Winning by packaging joy, experience and mission."
 ---
 ## section-context
 type: text-media
@@ -97,7 +98,7 @@ label: Impact
 tone: emphasis
 centered: true
 statement: Doing good was not enough. It had to feel good too.
-tagline: Product redesign · Joyful brand system · Portfolio alignment · Repeat behavior activation
+tagline: Winning by packaging joy, experience and mission.
 From one-time approval to repeat choice.
 From 'I helped.' to 'I like this.'
 ---
