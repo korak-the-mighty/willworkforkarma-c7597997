@@ -58,7 +58,7 @@ In a repeat category, that's goodbye.
 ---
 ## section-bam
 type: text
-statement: If it doesn't win on shelf,\\n it doesn't help anyone.
+statement: "If it doesn't win on shelf,\\n it doesn't help anyone."
 ---
 ## section-decision
 type: text-media
