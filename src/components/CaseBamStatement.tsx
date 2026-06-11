@@ -5,7 +5,12 @@ interface CaseBamStatementProps {
 const CaseBamStatement = ({ statement }: CaseBamStatementProps) => (
   <div className="py-20 md:py-32 text-center">
     <p className="font-heading text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
-      {statement}
+      {statement.split('\n').map((line, i) => (
+        <span key={i}>
+          {line}
+          {i < statement.split('\n').length - 1 && <br />}
+        </span>
+      ))}
     </p>
   </div>
 );
