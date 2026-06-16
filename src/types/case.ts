@@ -50,6 +50,7 @@ export interface HeroSection extends BaseSection {
   isVideo?: boolean;
   title?: string;    // client name line
   subtitle?: string; // discipline · year line
+  supporting?: string; // optional sub-headline, rendered below hero headline
 }
 export interface TextSection extends BaseSection {
   type: 'text';

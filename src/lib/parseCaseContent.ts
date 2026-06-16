@@ -189,6 +189,7 @@ function parseSection(
         isVideo: bgMedia.type === 'video',
         title: fields.title ? stripQuotes(fields.title) : undefined,
         subtitle: fields.subtitle ? stripQuotes(fields.subtitle) : undefined,
+        supporting: fields.supporting ? stripQuotes(fields.supporting) : undefined,
       } as HeroSection;
     }
     case 'text': {

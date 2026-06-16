@@ -98,7 +98,6 @@ label: Impact
 tone: emphasis
 centered: true
 statement: Doing good was not enough. It had to feel good too.
-tagline: Winning by packaging joy, experience and mission.
 From one-time approval to repeat choice.
 From 'I helped.' to 'I like this.'
 ---

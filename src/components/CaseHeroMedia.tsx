@@ -10,12 +10,13 @@ interface CaseHeroMediaProps {
   isVideo?: boolean;
   title?: string;
   subtitle?: string;
+  supporting?: string;
   loaderDone?: boolean;
 }
 
 const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
 
-const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, loaderDone }: CaseHeroMediaProps) => {
+const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, supporting, loaderDone }: CaseHeroMediaProps) => {
   // Synthesise a CaseHeroMediaType object when content-system props are provided
   const effectiveHeroMedia: CaseHeroMediaType = backgroundImage
     ? { type: isVideo ? "video" : "image", src: backgroundImage }
@@ -68,6 +69,11 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
               </h1>
             )}
           </div>
+          {supporting && (
+            <p className="absolute inset-x-0 bottom-8 md:bottom-[50px] z-10 text-center font-heading text-base md:text-lg lg:text-xl text-white px-6">
+              {supporting}
+            </p>
+          )}
         </>
       )}
     </div>

@@ -31,6 +31,7 @@ export function CaseSection({ section, loaderDone }: CaseSectionProps) {
           isVideo={s.isVideo}
           title={s.title}
           subtitle={s.subtitle}
+          supporting={s.supporting}
           loaderDone={loaderDone}
         />
       );
