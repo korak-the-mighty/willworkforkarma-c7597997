@@ -2,7 +2,7 @@
 slug: share
 route: /work/share
 status: live
-summary: "Winning by packaging joy, experience and mission."
+summary: "Winning by packaging Joy, Experience and Mission."
 snapshot:
   title: Share
   contextLine: A good product with a clear mission — but helping alone wasn't enough to win on shelf.
