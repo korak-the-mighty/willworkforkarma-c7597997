@@ -77,7 +77,16 @@ const Index = () => {
       <div>
 
         {/* ── 2. HERO PROJECT: ABB ── */}
-        <div onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')} className="group block relative w-full overflow-hidden cursor-pointer">
+        <Link
+          to="/work/abb-emobility"
+          onClick={(e) => {
+            if (sessionStorage.getItem('gate_auth_abb-emobility') !== 'true') {
+              e.preventDefault();
+              requestAccess('abb-emobility', '/work/abb-emobility');
+            }
+          }}
+          className="group block relative w-full overflow-hidden cursor-pointer"
+        >
           <div className="relative h-[80vh] overflow-hidden">
             {abb.coverImage && (
               <>
@@ -102,7 +111,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* ── 3. STATEMENT 1 ── */}
         <Statement>{hp.statements.s1}</Statement>
@@ -156,10 +165,10 @@ const Index = () => {
       <section className="py-16 md:py-24 text-center">
         <Link
           to="/work"
-          className="group relative inline-block hover:text-foreground transition-colors"
-          style={{ fontSize: '2rem', opacity: 1, color: 'inherit' }}
+          className="group relative inline-block font-heading text-foreground hover:text-[#ECA9CC] transition-colors"
+          style={{ fontSize: '2rem' }}
         >
-          <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200" aria-hidden="true">→</span>
+          <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-200" aria-hidden="true">→</span>
           See all of my work
         </Link>
       </section>

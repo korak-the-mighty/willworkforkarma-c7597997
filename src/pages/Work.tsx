@@ -467,13 +467,19 @@ export default function Work() {
             );
 
             return c.slug === 'abb-emobility' ? (
-              <div
+              <Link
                 key={c.slug}
-                style={{ cursor: 'pointer' }}
-                onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
+                to="/work/abb-emobility"
+                style={{ textDecoration: 'none', display: 'block', cursor: 'pointer' }}
+                onClick={(e) => {
+                  if (sessionStorage.getItem('gate_auth_abb-emobility') !== 'true') {
+                    e.preventDefault();
+                    requestAccess('abb-emobility', '/work/abb-emobility');
+                  }
+                }}
               >
                 {mobileContent}
-              </div>
+              </Link>
             ) : (
               <Link key={c.slug} to={`/work/${c.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
                 {mobileContent}
@@ -508,14 +514,20 @@ export default function Work() {
             </>
           );
           return c.slug === 'abb-emobility' ? (
-            <div
+            <Link
               key={c.slug}
+              to="/work/abb-emobility"
               style={{ ...rowStyle, cursor: 'pointer' }}
               onMouseEnter={() => activateCase(c.slug)}
-              onClick={() => requestAccess('abb-emobility', '/work/abb-emobility')}
+              onClick={(e) => {
+                if (sessionStorage.getItem('gate_auth_abb-emobility') !== 'true') {
+                  e.preventDefault();
+                  requestAccess('abb-emobility', '/work/abb-emobility');
+                }
+              }}
             >
               {rowInner}
-            </div>
+            </Link>
           ) : (
             <Link
               key={c.slug}
@@ -674,8 +686,9 @@ export default function Work() {
         <div className="text-center">
           <Link
             to="/contact"
-            className="font-heading text-2xl md:text-4xl tracking-tight text-white hover:opacity-60 transition-opacity"
+            className="group relative inline-block font-heading text-2xl md:text-4xl tracking-tight text-white hover:text-[#ECA9CC] transition-colors"
           >
+            <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-200" aria-hidden="true">→</span>
             Let's talk.
           </Link>
         </div>
