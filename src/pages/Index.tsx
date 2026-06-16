@@ -168,7 +168,7 @@ const Index = () => {
           className="group relative inline-block font-heading text-foreground hover:text-[#ECA9CC] transition-colors"
           style={{ fontSize: '2rem' }}
         >
-          <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-200" aria-hidden="true">→</span>
+          <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 animate-bounce-x transition-opacity duration-200" aria-hidden="true">→</span>
           See all of my work
         </Link>
       </section>
