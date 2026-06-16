@@ -2,7 +2,7 @@
 slug: abb-emobility
 route: /work/abb-emobility
 status: live
-protected: false
+protected: true
 summary: "Building the digital brand foundation of a global e-mobility leader."
 ---
 ## Media Inventory
