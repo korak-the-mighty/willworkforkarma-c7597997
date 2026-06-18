@@ -1,11 +1,21 @@
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import { useAboutContent } from "@/hooks/useAboutContent";
 import { useContactContent } from "@/hooks/useContactContent";
+
+const Divider = () => (
+  <hr className="border-0 border-t border-white/[0.08]" />
+);
 
 const About = () => {
   const { main, sections, final } = useAboutContent();
   const contact = useContactContent();
   const whatsappHref = `https://wa.me/${contact.phone.replace(/[^\d]/g, '')}`;
+  const [activeSection, setActiveSection] = useState<number | null>(null);
+
+  const toggleSection = (i: number) => {
+    setActiveSection(prev => prev === i ? null : i);
+  };
 
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
@@ -13,7 +23,7 @@ const About = () => {
       {/* ── MOBILE ── */}
       <div className="md:hidden">
 
-        {/* Portrait + headline overlap */}
+        {/* Hero: portrait + headline */}
         <div className="relative">
           <img
             src="/HenrikLehtikangas-profilepicture.webp"
@@ -22,26 +32,77 @@ const About = () => {
             className="w-full h-auto lazy-img"
             onLoad={(e) => e.currentTarget.classList.add('loaded')}
           />
-          <div className="absolute bottom-0 left-0 right-0 px-6 pt-32 pb-8"
-            style={{ background: 'linear-gradient(to top, #08060E 55%, transparent)' }}>
+          <div
+            className="absolute bottom-0 left-0 right-0 px-6 pt-32 pb-8"
+            style={{ background: 'linear-gradient(to top, #08060E 55%, transparent)' }}
+          >
             <p className="font-heading text-4xl font-medium tracking-tight text-foreground leading-[1.1]">
               {main.headline}
             </p>
           </div>
         </div>
 
-        {/* Identity + intro + contact */}
-        <div className="px-6 pt-5 pb-16 space-y-10">
+        {/* Intro */}
+        <div className="px-6 pt-6 pb-10 space-y-4">
+          {main.intro.map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </div>
 
-          <p className="text-sm text-muted-foreground tracking-wide">Creative Director</p>
+        {/* Accordion sections */}
+        <div className="px-6">
+          {sections.map((section, i) => (
+            <div key={i}>
+              <Divider />
+              <button
+                onClick={() => toggleSection(i)}
+                className="w-full flex items-center justify-between py-6 text-left gap-4"
+              >
+                <p className="font-heading text-[1.6rem] leading-[1.35] tracking-tight text-foreground">
+                  {section.headline}
+                </p>
+                <span
+                  className={`flex-shrink-0 text-lg text-muted-foreground transition-transform duration-300 ${activeSection === i ? 'rotate-180' : ''}`}
+                >
+                  ↓
+                </span>
+              </button>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${activeSection === i ? 'max-h-[600px] pb-8' : 'max-h-0'}`}
+              >
+                <div className="space-y-4">
+                  {section.body.map((para, j) => (
+                    <p key={j}>{para}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="space-y-4">
-            {main.intro.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
+        {/* Final section — always visible */}
+        <div className="px-6">
+          <Divider />
+          <section className="py-12 space-y-6">
+            <p className="font-heading text-4xl font-medium tracking-tight text-foreground leading-[1.1]">
+              {final.headline}
+            </p>
+            <div className="space-y-4">
+              {final.body.map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
+          </section>
+        </div>
 
-          <div className="space-y-6">
+        {/* Contact block */}
+        <div className="px-6 pb-16">
+          <Divider />
+          <div className="pt-10 space-y-6">
+            <div className="space-y-1">
+              <p className="font-heading text-xl tracking-tight text-foreground">Henrik Lehtikangas</p>
+              <p className="text-sm text-muted-foreground">Creative Director</p>
+            </div>
             <div className="space-y-2">
               <a
                 href={whatsappHref}
@@ -69,32 +130,6 @@ const About = () => {
             <p className="text-sm text-muted-foreground/50 cursor-default">Download CV</p>
           </div>
         </div>
-
-        {/* Remaining content sections */}
-        <div className="px-6 pb-24">
-          {sections.map((section, i) => (
-            <section key={i} className="py-12 space-y-5">
-              <p className="font-heading text-[1.75rem] leading-[1.4] tracking-tight text-foreground">
-                {section.headline}
-              </p>
-              <div className="space-y-4">
-                {section.body.map((para, j) => (
-                  <p key={j}>{para}</p>
-                ))}
-              </div>
-            </section>
-          ))}
-          <section className="py-12 space-y-6">
-            <p className="font-heading text-4xl font-medium tracking-tight text-foreground leading-[1.1]">
-              {final.headline}
-            </p>
-            <div className="space-y-4">
-              {final.body.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </section>
-        </div>
       </div>
 
       {/* ── DESKTOP ── */}
@@ -115,7 +150,6 @@ const About = () => {
                 <p className="text-sm text-muted-foreground mt-0.5">Creative Director</p>
               </div>
             </div>
-
             <div className="pl-[60px] space-y-6">
               <div className="space-y-2">
                 <a
@@ -168,18 +202,22 @@ const About = () => {
             </section>
 
             {sections.map((section, i) => (
-              <section key={i} className="py-16 md:py-20 space-y-6">
-                <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-foreground max-w-2xl">
-                  {section.headline}
-                </p>
-                <div className="space-y-4 max-w-2xl">
-                  {section.body.map((para, j) => (
-                    <p key={j}>{para}</p>
-                  ))}
-                </div>
-              </section>
+              <div key={i}>
+                <Divider />
+                <section className="py-16 md:py-20 space-y-6">
+                  <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-foreground max-w-2xl">
+                    {section.headline}
+                  </p>
+                  <div className="space-y-4 max-w-2xl">
+                    {section.body.map((para, j) => (
+                      <p key={j}>{para}</p>
+                    ))}
+                  </div>
+                </section>
+              </div>
             ))}
 
+            <Divider />
             <section className="py-16 md:py-20 space-y-10">
               <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
                 {final.headline}
@@ -191,6 +229,7 @@ const About = () => {
               </div>
             </section>
           </div>
+
         </div>
       </div>
 
