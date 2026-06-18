@@ -207,14 +207,9 @@ const Index = () => {
                 {para}
               </p>
             ))}
-            <div className="flex flex-col gap-3">
-              <Link to="/about" className="arrow-link font-heading text-2xl md:text-3xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
-                {hp.about.cta}
-              </Link>
-              <Link to="/about" className="text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors">
-                {hp.about.ctaSecondary}
-              </Link>
-            </div>
+            <Link to="/about" className="arrow-link font-heading text-2xl md:text-3xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
+              {hp.about.cta}
+            </Link>
           </div>
         </div>
       </section>
