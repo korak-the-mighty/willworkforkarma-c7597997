@@ -9,7 +9,7 @@ const About = () => {
 
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
-      <div className="max-w-7xl mx-auto px-6 pt-32 pb-24 md:pt-40 md:pb-32 grid grid-cols-1 md:grid-cols-[minmax(260px,38%)_1fr] gap-12 md:gap-20 items-start">
+      <div className="max-w-7xl mx-auto px-6 pt-28 pb-24 md:pt-28 md:pb-32 grid grid-cols-1 md:grid-cols-[minmax(260px,38%)_1fr] gap-12 md:gap-20 items-start">
 
         <aside className="md:sticky md:top-28 space-y-8">
 
@@ -22,14 +22,14 @@ const About = () => {
               className="w-full h-auto lazy-img"
               onLoad={(e) => e.currentTarget.classList.add('loaded')}
             />
-            <div className="absolute bottom-6 left-0 right-0 px-4">
-              <p className="font-heading text-2xl tracking-tight text-foreground">Henrik Lehtikangas</p>
+            <div className="absolute bottom-6 left-0 right-0 pl-[60px]">
+              <p className="font-heading text-3xl tracking-tight text-foreground">Henrik Lehtikangas</p>
               <p className="text-sm text-muted-foreground mt-0.5">Creative Director</p>
             </div>
           </div>
 
           {/* Contact hierarchy */}
-          <div className="pl-2 space-y-6">
+          <div className="pl-[60px] space-y-6">
             <div className="space-y-2">
               <a
                 href={whatsappHref}
@@ -67,7 +67,7 @@ const About = () => {
         </aside>
 
         <div>
-          <section className="py-12 md:py-16 space-y-10">
+          <section className="pt-16 md:pt-20 pb-12 md:pb-16 space-y-10">
             <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
               {main.headline}
             </p>
