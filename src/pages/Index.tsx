@@ -176,9 +176,9 @@ const Index = () => {
 
       {/* ── 11. ABOUT ── */}
       <section className="py-24 md:py-32 px-6">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-40 items-center">
           {/* Left — Portrait + Blobs */}
-          <div className="relative md:mr-16">
+          <div className="relative">
             <div className="w-[80vw] md:w-[28vw]">
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" loading="lazy" className="w-full h-auto lazy-img" onLoad={(e) => e.currentTarget.classList.add('loaded')} />
             </div>
