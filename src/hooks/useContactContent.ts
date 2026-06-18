@@ -10,6 +10,7 @@ export function useContactContent(): {
   email: string;
   linkedin_url: string;
   linkedin_label: string;
+  phone: string;
 } {
   const raw = modules['/content/contact.md'] as string ?? '';
 
@@ -24,5 +25,6 @@ export function useContactContent(): {
     email: get('email'),
     linkedin_url: get('linkedin_url'),
     linkedin_label: get('linkedin_label'),
+    phone: get('phone'),
   };
 }
