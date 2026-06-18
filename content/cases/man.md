@@ -29,7 +29,7 @@ summary: "A new category. A great product. A bold global online launch."
 type: hero
 background-image: hero-img
 title: MAN
-subtitle: "Digital · UX · Product Launch"
+subtitle: "Creative Direction · Digital  · Product Launch"
 headline: "How to build a global first."
 supporting: "MAN's first van. The way MAN does."
 ---
@@ -55,7 +55,7 @@ The strategy defined three key worlds. But turning that into a coherent experien
 ---
 ## section-bam
 type: text
-statement: "A first van. A global stage. No room for confusion."
+statement: "A first van. A global stage.\nNo room for confusion."
 ---
 ## section-decision
 type: text-media
@@ -90,7 +90,7 @@ label: Impact
 The TGE didn't feel like an experiment.
 It felt like a natural extension of MAN.
 
-statement: "A new interactive global launch. Still the same MAN."
+statement: "A new interactive global launch.\nStill the same MAN."
 
 
 ---

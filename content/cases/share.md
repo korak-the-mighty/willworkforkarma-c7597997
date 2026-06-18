@@ -97,7 +97,7 @@ type: text
 label: Impact
 tone: emphasis
 centered: true
-statement: Doing good was not enough. It had to feel good too.
+statement: Doing good was not enough.\nIt had to feel good too.
 From one-time approval to repeat choice.
 From 'I helped.' to 'I like this.'
 ---

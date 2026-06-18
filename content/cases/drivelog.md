@@ -37,8 +37,9 @@ summary: "Making the car understandable."
 type: hero
 background-image: hero-img
 title: Drivelog
-subtitle: Product · Brand · Digital
-headline: Making the car understandable.
+subtitle: "Product · Brand · Digital"
+headline: "Making the car understandable."
+supporting: "Turning the product idea into a complete brand experience."
 
 ---
 
@@ -115,7 +116,7 @@ type: text
 tone: emphasis
 centered: true
 label: Outcome
-statement: At least that's what the car told me.
+statement: One coherent brand experience. Built from the core up.
 I believed one strong idea could connect 
 brand, product and experience.
 

@@ -28,7 +28,7 @@ summary: "Creative leadership across BMW's global digital ecosystem."
 type: hero
 background-image: hero-img
 title: BMW
-subtitle: Digital · Creative Direction · Global Platform
+subtitle: Creative Direction · Concept
 headline: "Creative leadership across BMW's global digital ecosystem."
 ---
 ## section-context
@@ -55,7 +55,7 @@ At the same time our team developed new concepts, interactive formats and campai
 ---
 ## section-bam
 type: text
-statement: "Inspire the work. Keep it worthy of BMW."
+statement: "Inspire the work.\nKeep it worthy of BMW."
 ---
 ## section-decision
 type: text-media
