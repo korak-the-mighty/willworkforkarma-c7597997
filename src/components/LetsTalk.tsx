@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function LetsTalk() {
   return (
-    <section className="py-16 md:py-20">
+    <section className="py-8 md:py-12">
       <div className="text-center">
         <Link
           to="/about"
