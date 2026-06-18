@@ -4,7 +4,7 @@ import { useAboutContent } from "@/hooks/useAboutContent";
 import { useContactContent } from "@/hooks/useContactContent";
 
 const Divider = () => (
-  <hr className="border-0 border-t border-white/[0.08]" />
+  <hr className="border-0 border-t border-white/[0.18]" />
 );
 
 const About = () => {
