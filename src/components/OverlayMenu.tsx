@@ -113,7 +113,6 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
           {[
             { to: "/about", label: "About" },
             { to: "/work", label: "All Work" },
-            { to: "/contact", label: "Contact" },
           ].map(({ to, label }) => (
             <Link
               key={to}
@@ -252,7 +251,6 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             {[
               { to: "/about", label: "About" },
               { to: "/work", label: "All Work" },
-              { to: "/contact", label: "Contact" },
             ].map(({ to, label }) => (
               <Link
                 key={to}

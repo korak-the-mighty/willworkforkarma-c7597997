@@ -50,7 +50,6 @@ const Footer = ({ theme }: { theme?: { bg: string } }) => (
           <div className="hidden md:flex gap-8 text-sm">
             <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
             <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
-            <Link to="/contact" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Contact</Link>
           </div>
           <div className="flex md:hidden gap-8 text-sm">
             <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>

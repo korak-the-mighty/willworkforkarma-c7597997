@@ -15,7 +15,6 @@ import CaseBMW from "./pages/CaseBMW";
 import CaseDetail from "./pages/CaseDetail";
 import CaseDrivelogV2 from "./pages/CaseDrivelogV2";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 
@@ -66,7 +65,6 @@ const App = () => {
             <Route path="/work/drivelog" element={<CaseDrivelogV2 />} />
             <Route path="/work/:slug" element={<CaseDetail />} />
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

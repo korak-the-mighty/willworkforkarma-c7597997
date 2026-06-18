@@ -20,7 +20,7 @@ const CaseWhyMe = ({ text, nextCase }: CaseWhyMeProps) => (
           </Link>
         )}
         <Link
-          to="/contact"
+          to="/about"
           className="underline underline-offset-4 opacity-80 hover:opacity-100 transition-opacity"
         >
           Get in touch

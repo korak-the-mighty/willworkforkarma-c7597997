@@ -183,15 +183,15 @@ const Index = () => {
               <img src="/HenrikLehtikangas-profilepicture.webp" alt="Henrik Lehtikangas" loading="lazy" className="w-full h-auto lazy-img" onLoad={(e) => e.currentTarget.classList.add('loaded')} />
             </div>
             <div className="flex flex-row items-end gap-4 -mt-14 ml-8 pb-10">
-              <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer -translate-y-5" onClick={() => navigate('/about')}>
                 <img src="/blob-brand.svg" alt="" loading="lazy" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Brand</span>
               </div>
-              <div className="relative cursor-pointer translate-y-11" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer translate-y-11" onClick={() => navigate('/about')}>
                 <img src="/blob-campaign.svg" alt="" loading="lazy" className="w-44 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Campaign</span>
               </div>
-              <div className="relative cursor-pointer -translate-y-10 -ml-2" onClick={() => navigate('/contact')}>
+              <div className="relative cursor-pointer -translate-y-10 -ml-2" onClick={() => navigate('/about')}>
                 <img src="/blob-product.svg" alt="" loading="lazy" className="w-40 h-auto" />
                 <span className="absolute inset-0 flex items-center justify-center text-base font-heading font-semibold tracking-wide text-gray-800">Product</span>
               </div>
@@ -208,7 +208,7 @@ const Index = () => {
               </p>
             ))}
             <div className="flex flex-col gap-3">
-              <Link to="/contact" className="arrow-link font-heading text-2xl md:text-3xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
+              <Link to="/about" className="arrow-link font-heading text-2xl md:text-3xl tracking-tight text-foreground hover:text-muted-foreground transition-colors">
                 {hp.about.cta}
               </Link>
               <Link to="/about" className="text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors">
