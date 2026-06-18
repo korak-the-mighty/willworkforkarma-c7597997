@@ -94,7 +94,6 @@ statement: A digital identity worthy of the work behind it.
 The practice recognized itself in the work.
 A digital presence they trust and stand behind.
 A foundation designed to evolve with the practice for years to come.
-tagline: Digital Platform · Creative Direction · 2025
 ---
 ## section-closing
 type: custom-component

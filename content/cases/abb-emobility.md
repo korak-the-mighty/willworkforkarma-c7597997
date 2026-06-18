@@ -59,7 +59,7 @@ type: hero
 background-image: hero-video
 title: ABB E-mobility
 subtitle: Branding · UI/UX · 2024–2025
-headline: "Evolving ABB E-mobility into a much more digital and future-facing brand world."
+headline: "Evolving ABB E-mobility into a digital, future-facing brand."
 
 ---
 ## section-context
@@ -155,7 +155,6 @@ label: Outcome
 
 statement: For the first time, product, platform and brand moved as one.
 
-tagline: Global ABB E-mobility platform · Product launches · UX systems · Digital brand evolution
 
 ABB E-mobility gained a much more coherent, scalable and future-facing digital experience world.
 

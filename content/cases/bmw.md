@@ -90,7 +90,6 @@ tone: emphasis
 centered: true
 label: Outcome
 statement: "Large platforms need both discipline and imagination."
-tagline: Creative direction · Global platform · Campaign work · Electric mobility concepts
 Some concepts became projects.
 Others pushed the conversation forward.
 The result was a digital ecosystem that continued to evolve while maintaining the quality and clarity expected from BMW.
