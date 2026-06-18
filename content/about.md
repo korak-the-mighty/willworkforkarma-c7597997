@@ -6,7 +6,7 @@ title: About
 headline: |
   I help people see what actually matters.
 intro: |
-  I've spent more than twenty years helping brands, products and teams find clarity.
+  I've spent much of my career leading brands, products, creative teams and digital initiatives through complexity, change and growth.
 
   Sometimes that means defining a brand. Sometimes it means shaping a product, challenging a brief or helping a team align around a shared direction.
 
@@ -28,9 +28,9 @@ body: |
 headline: |
   Someone still needs to decide what matters.
 body: |
-  I've spent more than twenty years working across branding, advertising, digital products and creative leadership.
+  Since co-founding one of Finland's first full-service digital agencies in 2000, I've worked across branding, advertising, digital products and creative leadership.
 
-  I've founded agencies, launched startups, rebranded market leaders, built digital experiences and led multidisciplinary creative teams for both growing companies and global organizations.
+  That journey has taken me from startups and agency building to projects for organizations such as ABB, BMW, Spotify, Deutsche Telekom, Nokia, Bosch, Volvo and WWF.
 
   Different challenges. Different industries. Different scales.
 
