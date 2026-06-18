@@ -20,7 +20,8 @@ s3: "Strong leadership starts with listening."
 ## about
 headline1: "I like creating with humans."
 body: |
-  I help brands, teams and ideas find clarity, direction and reason.
+  I help clients and teams see what actually matters, make sense of complexity and turn ideas into action.
 
-  For over twenty years, I've helped turn uncertainty into getting the right things done.
-cta: "Let's go."
+  For more than twenty years, I've worked across brands, products, digital experiences and creative teams. The challenge is rarely a lack of ideas. It's finding the clarity and confidence to focus on the right ones.
+cta: "Let's talk."
+ctaSecondary: "How I work →"

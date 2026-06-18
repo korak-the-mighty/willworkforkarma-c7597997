@@ -15,6 +15,7 @@ interface HomepageAbout {
   headline3: string;
   body: string[];
   cta: string;
+  ctaSecondary: string;
 }
 
 interface HomepageContent {
@@ -41,6 +42,7 @@ const DEFAULTS: HomepageContent = {
       "I'm ready to get excited about yours.",
     ],
     cta: "Let's talk.",
+    ctaSecondary: "How I work →",
   },
 };
 
@@ -52,12 +54,15 @@ function parseSection(raw: string, sectionName: string): Record<string, string> 
 
   const block = sectionMatch[1];
 
-  const literalRegex = /^(\w+):\s*\|\s*\n((?:[ \t]+[^\n]*\n?)*)/gm;
+  const literalRegex = /^(\w+):\s*\|\s*\n((?:[ \t]+[^\n]*\n|\n)*)/gm;
   let match;
   while ((match = literalRegex.exec(block)) !== null) {
-    const lines = match[2].split('\n').filter((l) => l.trim() !== '');
-    const minIndent = Math.min(...lines.map((l) => l.match(/^[ \t]*/)?.[0].length ?? 0));
-    result[match[1]] = lines.map((l) => l.slice(minIndent)).join('\n').trimEnd();
+    const rawLines = match[2].split('\n');
+    while (rawLines.length && rawLines[rawLines.length - 1] === '') rawLines.pop();
+    const indentedLines = rawLines.filter((l) => l.trim() !== '');
+    const minIndent = Math.min(...indentedLines.map((l) => l.match(/^[ \t]*/)?.[0].length ?? 0));
+    const dedented = rawLines.map((l) => (l.trim() === '' ? '' : l.slice(minIndent)));
+    result[match[1]] = dedented.join('\n').trimEnd();
   }
 
   const simpleRegex = /^(\w+):\s*"?([^"\n]+)"?\s*$/gm;
@@ -110,6 +115,7 @@ export function useHomepageContent(): HomepageContent {
       headline3: about.headline3 ?? DEFAULTS.about.headline3,
       body: bodyParagraphs.length ? bodyParagraphs : DEFAULTS.about.body,
       cta: about.cta ?? DEFAULTS.about.cta,
+      ctaSecondary: about.ctaSecondary ?? DEFAULTS.about.ctaSecondary,
     },
   };
 }
