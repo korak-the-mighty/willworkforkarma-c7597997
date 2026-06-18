@@ -4,6 +4,11 @@ const modules = import.meta.glob('/content/homepage.md', {
   import: 'default',
 });
 
+interface HeroVariant {
+  headline: string;
+  subheadline?: string;
+}
+
 interface HomepageAbout {
   headline1: string;
   headline2: string;
@@ -13,13 +18,15 @@ interface HomepageAbout {
 }
 
 interface HomepageContent {
-  hero: { headline: string; subheadline?: string };
+  heroVariants: HeroVariant[];
   statements: { s1: string; s2: string; s3: string };
   about: HomepageAbout;
 }
 
 const DEFAULTS: HomepageContent = {
-  hero: { headline: "I push vision, clarity and creative confidence.", subheadline: undefined },
+  heroVariants: [
+    { headline: "I push vision, clarity and creative confidence.", subheadline: undefined },
+  ],
   statements: {
     s1: "I help clients and teams see what actually matters.",
     s2: "I turn complexity into clear direction and action.",
@@ -45,7 +52,6 @@ function parseSection(raw: string, sectionName: string): Record<string, string> 
 
   const block = sectionMatch[1];
 
-  // Handle YAML literal block scalars (key: | followed by indented lines)
   const literalRegex = /^(\w+):\s*\|\s*\n((?:[ \t]+[^\n]*\n?)*)/gm;
   let match;
   while ((match = literalRegex.exec(block)) !== null) {
@@ -54,13 +60,25 @@ function parseSection(raw: string, sectionName: string): Record<string, string> 
     result[match[1]] = lines.map((l) => l.slice(minIndent)).join('\n').trimEnd();
   }
 
-  // Handle simple key: "value" or key: value lines
   const simpleRegex = /^(\w+):\s*"?([^"\n]+)"?\s*$/gm;
   while ((match = simpleRegex.exec(block)) !== null) {
     if (!result[match[1]]) result[match[1]] = match[2].trim();
   }
 
   return result;
+}
+
+function extractHeroVariants(hero: Record<string, string>): HeroVariant[] {
+  const variants: HeroVariant[] = [];
+  let i = 1;
+  while (hero[`headline${i}`]) {
+    variants.push({
+      headline: hero[`headline${i}`],
+      subheadline: hero[`subheadline${i}`] || undefined,
+    });
+    i++;
+  }
+  return variants;
 }
 
 export function useHomepageContent(): HomepageContent {
@@ -77,11 +95,10 @@ export function useHomepageContent(): HomepageContent {
     .map((p) => p.trim())
     .filter(Boolean);
 
+  const heroVariants = extractHeroVariants(hero);
+
   return {
-    hero: {
-      headline: hero.headline ?? DEFAULTS.hero.headline,
-      subheadline: hero.subheadline ?? undefined,
-    },
+    heroVariants: heroVariants.length ? heroVariants : DEFAULTS.heroVariants,
     statements: {
       s1: statements.s1 ?? DEFAULTS.statements.s1,
       s2: statements.s2 ?? DEFAULTS.statements.s2,

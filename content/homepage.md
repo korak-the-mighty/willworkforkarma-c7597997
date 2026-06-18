@@ -3,14 +3,19 @@ title: Homepage
 ---
 
 ## hero
-headline: |
- The brand core is all that matters.
-subheadline: |
-  Without finding the core, creativity becomes just a shell. 
+headline1: |
+  The brand core is all that matters.
+subheadline1: |
+  Without finding the core, creativity becomes just a shell.
+headline2: |
+  Most teams don't need more ideas. They need clarity.
+subheadline2: |
+  The real work is deciding what matters and having the courage to focus on it.
+
 ## statements
 s1: "I help clients and teams see what actually matters."
 s2: "I turn complexity into clear direction and action."
-s3: "I'm strong because I listen."
+s3: "Strong leadership starts with listening."
 
 ## about
 headline1: "I like creating with humans."

@@ -48,6 +48,7 @@ const Index = () => {
   const { requestAccess } = useGate();
 
   const hp = useHomepageContent();
+  const [heroVariant] = useState(() => hp.heroVariants[Math.floor(Math.random() * hp.heroVariants.length)]);
   const caseHeroes = useCaseHeroContent();
 
   const abbHero = caseHeroes["abb-emobility"];
@@ -69,7 +70,7 @@ const Index = () => {
         />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
-          <HeroHeadline text={hp.hero.headline} subheadline={hp.hero.subheadline} />
+          <HeroHeadline text={heroVariant.headline} subheadline={heroVariant.subheadline} />
         </div>
       </section>
 
