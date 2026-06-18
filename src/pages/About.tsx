@@ -9,33 +9,45 @@ const About = () => {
 
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
-      <div className="max-w-7xl mx-auto px-6 pt-28 pb-24 md:pt-28 md:pb-32 grid grid-cols-1 md:grid-cols-[minmax(260px,38%)_1fr] gap-12 md:gap-20 items-start">
 
-        <aside className="md:sticky md:top-28 space-y-8">
+      {/* ── MOBILE ── */}
+      <div className="md:hidden">
 
-          {/* Portrait with name overlay */}
-          <div className="relative">
-            <img
-              src="/HenrikLehtikangas-profilepicture.webp"
-              alt="Henrik Lehtikangas"
-              loading="lazy"
-              className="w-full h-auto lazy-img"
-              onLoad={(e) => e.currentTarget.classList.add('loaded')}
-            />
-            <div className="absolute bottom-6 left-0 right-0 pl-[60px]">
-              <p className="font-heading text-3xl tracking-tight text-foreground">Henrik Lehtikangas</p>
-              <p className="text-sm text-muted-foreground mt-0.5">Creative Director</p>
-            </div>
+        {/* Portrait + headline overlap */}
+        <div className="relative">
+          <img
+            src="/HenrikLehtikangas-profilepicture.webp"
+            alt="Henrik Lehtikangas"
+            loading="lazy"
+            className="w-full h-auto lazy-img"
+            onLoad={(e) => e.currentTarget.classList.add('loaded')}
+          />
+          <div className="absolute bottom-0 left-0 right-0 px-6 pt-32 pb-8"
+            style={{ background: 'linear-gradient(to top, #08060E 55%, transparent)' }}>
+            <p className="font-heading text-4xl font-medium tracking-tight text-foreground leading-[1.1]">
+              {main.headline}
+            </p>
+          </div>
+        </div>
+
+        {/* Identity + intro + contact */}
+        <div className="px-6 pt-5 pb-16 space-y-10">
+
+          <p className="text-sm text-muted-foreground tracking-wide">Creative Director</p>
+
+          <div className="space-y-4">
+            {main.intro.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </div>
 
-          {/* Contact hierarchy */}
-          <div className="pl-[60px] space-y-6">
+          <div className="space-y-6">
             <div className="space-y-2">
               <a
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block font-heading text-xl md:text-2xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
               >
                 WhatsApp
               </a>
@@ -43,67 +55,145 @@ const About = () => {
                 href={contact.linkedin_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block font-heading text-xl md:text-2xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
               >
                 {contact.linkedin_label}
               </a>
             </div>
-
-            <div className="space-y-1">
-              <a href={`mailto:${contact.email}`} className="block text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors">
-                {contact.email}
-              </a>
-              {contact.phone && (
-                <a href={`tel:${contact.phone}`} className="block text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors">
-                  {contact.phone}
-                </a>
-              )}
-            </div>
-
-            <p className="text-sm md:text-base text-muted-foreground/50 cursor-default">
-              Download CV
-            </p>
+            <a
+              href={`mailto:${contact.email}`}
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {contact.email}
+            </a>
+            <p className="text-sm text-muted-foreground/50 cursor-default">Download CV</p>
           </div>
-        </aside>
+        </div>
 
-        <div>
-          <section className="pt-16 md:pt-20 pb-12 md:pb-16 space-y-10">
-            <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
-              {main.headline}
-            </p>
-            <div className="space-y-4 max-w-2xl">
-              {main.intro.map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </section>
-
+        {/* Remaining content sections */}
+        <div className="px-6 pb-24">
           {sections.map((section, i) => (
-            <section key={i} className="py-16 md:py-20 space-y-6">
-              <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-foreground max-w-2xl">
+            <section key={i} className="py-12 space-y-5">
+              <p className="font-heading text-[1.75rem] leading-[1.4] tracking-tight text-foreground">
                 {section.headline}
               </p>
-              <div className="space-y-4 max-w-2xl">
+              <div className="space-y-4">
                 {section.body.map((para, j) => (
                   <p key={j}>{para}</p>
                 ))}
               </div>
             </section>
           ))}
-
-          <section className="py-16 md:py-20 space-y-10">
-            <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
+          <section className="py-12 space-y-6">
+            <p className="font-heading text-4xl font-medium tracking-tight text-foreground leading-[1.1]">
               {final.headline}
             </p>
-            <div className="space-y-4 max-w-2xl">
+            <div className="space-y-4">
               {final.body.map((para, i) => (
                 <p key={i}>{para}</p>
               ))}
             </div>
           </section>
         </div>
-
       </div>
+
+      {/* ── DESKTOP ── */}
+      <div className="hidden md:block">
+        <div className="max-w-7xl mx-auto px-6 pt-28 pb-32 grid md:grid-cols-[minmax(260px,38%)_1fr] gap-20 items-start">
+
+          <aside className="md:sticky md:top-28 space-y-8">
+            <div className="relative">
+              <img
+                src="/HenrikLehtikangas-profilepicture.webp"
+                alt="Henrik Lehtikangas"
+                loading="lazy"
+                className="w-full h-auto lazy-img"
+                onLoad={(e) => e.currentTarget.classList.add('loaded')}
+              />
+              <div className="absolute bottom-6 left-0 right-0 pl-[60px]">
+                <p className="font-heading text-3xl tracking-tight text-foreground">Henrik Lehtikangas</p>
+                <p className="text-sm text-muted-foreground mt-0.5">Creative Director</p>
+              </div>
+            </div>
+
+            <div className="pl-[60px] space-y-6">
+              <div className="space-y-2">
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block font-heading text-xl md:text-2xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+                >
+                  WhatsApp
+                </a>
+                <a
+                  href={contact.linkedin_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block font-heading text-xl md:text-2xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+                >
+                  {contact.linkedin_label}
+                </a>
+              </div>
+              <div className="space-y-1">
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="block text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {contact.email}
+                </a>
+                {contact.phone && (
+                  <a
+                    href={`tel:${contact.phone}`}
+                    className="block text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {contact.phone}
+                  </a>
+                )}
+              </div>
+              <p className="text-sm md:text-base text-muted-foreground/50 cursor-default">Download CV</p>
+            </div>
+          </aside>
+
+          <div>
+            <section className="pt-16 md:pt-20 pb-12 md:pb-16 space-y-10">
+              <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
+                {main.headline}
+              </p>
+              <div className="space-y-4 max-w-2xl">
+                {main.intro.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </section>
+
+            {sections.map((section, i) => (
+              <section key={i} className="py-16 md:py-20 space-y-6">
+                <p className="font-heading text-[2rem] leading-[1.4] tracking-tight text-foreground max-w-2xl">
+                  {section.headline}
+                </p>
+                <div className="space-y-4 max-w-2xl">
+                  {section.body.map((para, j) => (
+                    <p key={j}>{para}</p>
+                  ))}
+                </div>
+              </section>
+            ))}
+
+            <section className="py-16 md:py-20 space-y-10">
+              <p className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-foreground leading-[1.1] max-w-3xl">
+                {final.headline}
+              </p>
+              <div className="space-y-4 max-w-2xl">
+                {final.body.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
     </Layout>
   );
 };
