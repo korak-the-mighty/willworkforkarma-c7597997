@@ -611,18 +611,20 @@ export default function Work() {
                     }}
                   />
                 )}
-                {/* Dim overlay — visible at rest, gone entirely during any hover */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'rgba(0,0,0,0.6)',
-                    zIndex: 5,
-                    transition: 'opacity 200ms ease',
-                    opacity: (isMobile ? tappedIndex !== null : activeGrid !== null) ? 0 : 1,
-                    pointerEvents: 'none',
-                  }}
-                />
+                {/* Dim overlay — mobile only, visible at rest, gone during tap */}
+                {isMobile && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(0,0,0,0.6)',
+                      zIndex: 5,
+                      transition: 'opacity 200ms ease',
+                      opacity: tappedIndex !== null ? 0 : 1,
+                      pointerEvents: 'none',
+                    }}
+                  />
+                )}
                 {/* Hover slideshow — spans full grid, clipped by this cell's overflow:hidden */}
                 {activeGrid && (() => {
                   const imgs = getImages(activeGrid);
@@ -650,36 +652,50 @@ export default function Work() {
                     />
                   ));
                 })()}
-                {/* Per-item text overlay — inside this cell */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    zIndex: 20,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    opacity: (isMobile ? tappedIndex === i : isHovered) ? 1 : 0,
-                    transition: 'opacity 200ms',
-                    pointerEvents: 'none',
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)',
-                    padding: '16px',
-                  }}
-                >
-                  <div style={{ fontSize: '13px', letterSpacing: '0.12em', color: 'rgba(245,245,240,0.8)', marginBottom: '8px', textTransform: 'uppercase', fontFamily: "'Clash Display', sans-serif", fontWeight: 300 }}>
-                    {item.client}
+                {/* Client name — mobile only, inside the tapped cell, no gradient/meta */}
+                {isMobile && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      zIndex: 20,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      opacity: tappedIndex === i ? 1 : 0,
+                      transition: 'opacity 200ms',
+                      pointerEvents: 'none',
+                      padding: '16px',
+                    }}
+                  >
+                    <div style={{ fontSize: 'clamp(20px, 5vw, 32px)', fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
+                      {item.client}
+                    </div>
                   </div>
-                  <div style={{ fontSize: 'clamp(18px, 2vw, 28px)', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
-                    {item.title}
-                  </div>
-                  <div style={{ fontSize: '13px', color: 'rgba(245,245,240,0.6)', marginTop: '8px', letterSpacing: '0.05em' }}>
-                    {item.what} · {item.year}
-                  </div>
-                </div>
+                )}
               </div>
             );
           })}
+          {/* Client name — desktop only, fixed position over the whole grid, not tied to any tile */}
+          {!isMobile && activeGrid && (
+            <div
+              style={{
+                position: 'absolute',
+                left: 40,
+                bottom: 40,
+                zIndex: 50,
+                pointerEvents: 'none',
+                fontFamily: "'Clash Display', sans-serif",
+                fontWeight: 700,
+                fontSize: 'clamp(48px, 6vw, 120px)',
+                lineHeight: 1,
+                letterSpacing: '-0.02em',
+                color: 'rgb(250,250,248)',
+              }}
+            >
+              {activeGrid.client}
+            </div>
+          )}
         </div>
       </section>
       </div>
