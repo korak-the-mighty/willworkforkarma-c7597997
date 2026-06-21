@@ -431,6 +431,8 @@ export default function Work() {
                     padding: '40px 0 40px 20px',
                     opacity: isActive ? 1 : 0.28,
                     transition: 'opacity 500ms ease',
+                    position: 'relative',
+                    zIndex: 10,
                   }}
                 >
                   <div style={{
@@ -496,6 +498,7 @@ export default function Work() {
             opacity: activeCase && activeCase !== c.slug ? 0.14 : 1,
             transition: 'opacity 220ms ease, padding-left 220ms ease',
             position: 'relative' as const,
+            zIndex: 30,
           };
           const rowInner = (
             <>
