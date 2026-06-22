@@ -37,25 +37,16 @@ const Header = () => {
 
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
-    <div className="px-6">
-      <div className="pb-8">
-        <div className="flex justify-between items-end">
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <p className={`text-sm ${theme ? "text-white/50" : "text-muted-foreground"}`}>I try to be decent, curious, and honest.</p>
-              <p className="text-sm" style={{ color: '#ECA9CC' }}>That's why I work for karma.</p>
-            </div>
-            <Link to="/privacy-policy" className={`text-sm transition-colors ${theme ? "text-white/30 hover:text-white/60" : "text-muted-foreground hover:text-foreground"}`}>Privacy Policy</Link>
-          </div>
-          <div className="hidden md:flex gap-8 text-sm">
-            <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
-            <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
-          </div>
-          <div className="flex md:hidden gap-8 text-sm">
-            <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
-            <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
-            <a href="https://wa.me/4915141655661" target="_blank" rel="noopener noreferrer" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>WhatsApp</a>
-          </div>
+    <div className="px-6 pb-8 space-y-6">
+      <div>
+        <p className="text-sm" style={{ color: '#ECA9CC' }}>Ready for the next challenge. What do you have in mind?</p>
+      </div>
+      <div className="flex justify-between items-end">
+        <Link to="/privacy-policy" className={`text-sm transition-colors ${theme ? "text-white/30 hover:text-white/60" : "text-muted-foreground hover:text-foreground"}`}>Privacy Policy</Link>
+        <div className="flex gap-8 text-sm">
+          <Link to="/work" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>Work</Link>
+          <Link to="/about" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>About</Link>
+          <a href="https://wa.me/4915141655661" target="_blank" rel="noopener noreferrer" className={`arrow-link transition-colors ${theme ? "text-white/50 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}>WhatsApp</a>
         </div>
       </div>
     </div>
