@@ -37,9 +37,9 @@ const Header = () => {
 
 const Footer = ({ theme }: { theme?: { bg: string } }) => (
   <footer className="bg-transparent">
-    <div className="px-6 pb-8 space-y-6">
+    <div className="px-6 pb-8 space-y-3">
       <div>
-        <p className="text-sm" style={{ color: '#ECA9CC' }}>Ready for the next challenge. What do you have in mind?</p>
+        <p className="text-sm text-white">Ready for the next challenge. What do you have in mind?</p>
       </div>
       <div className="flex justify-between items-end">
         <Link to="/privacy-policy" className={`text-sm transition-colors ${theme ? "text-white/30 hover:text-white/60" : "text-muted-foreground hover:text-foreground"}`}>Privacy Policy</Link>
