@@ -60,7 +60,7 @@ const Index = () => {
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
       {/* ── 1. HERO ── */}
-      <section className="relative min-h-screen w-full">
+      <section className="relative min-h-screen w-full -mb-px">
         <img
           src={heroImg}
           alt=""
