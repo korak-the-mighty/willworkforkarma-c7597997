@@ -87,6 +87,7 @@ const Index = () => {
             }
           }}
           className="group block relative w-full overflow-hidden cursor-pointer"
+          style={{ marginTop: '-2px' }}
         >
           <div className="relative h-[80vh] overflow-hidden">
             {abb.coverImage && (
