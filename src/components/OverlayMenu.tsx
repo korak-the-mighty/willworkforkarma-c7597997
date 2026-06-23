@@ -85,6 +85,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
         className="md:hidden relative z-30 h-full flex flex-col overflow-y-auto overscroll-contain pt-20"
         style={{ WebkitOverflowScrolling: 'touch' }}
       >
+        <div className="fixed top-0 left-0 right-0 h-24 z-40 pointer-events-none" style={{ background: 'linear-gradient(to bottom, #000000 0%, transparent 100%)' }} />
         {/* Case list */}
         <div className="px-6 pt-6 pb-4 w-full">
           <p className="text-white/40 text-xs tracking-widest uppercase mb-6 font-sans">Selected case studies</p>
