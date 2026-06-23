@@ -33,7 +33,7 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
   const hasOverlay = !!(headline || title || subtitle);
 
   return (
-    <div className={`${FULL_BLEED} ${hasOverlay ? 'h-screen' : 'h-[55vh] md:h-[80vh] border border-white/[0.06]'} overflow-hidden relative`}>
+    <div className={`${FULL_BLEED} ${hasOverlay ? 'h-[100dvh]' : 'h-[55dvh] md:h-[80vh] border border-white/[0.06]'} overflow-hidden relative`}>
       {effectiveHeroMedia.src ? (
         effectiveHeroMedia.type === "video" ? (
           <video
