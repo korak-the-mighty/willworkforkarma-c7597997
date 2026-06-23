@@ -42,14 +42,7 @@ const CaseShare = () => {
         )}
       </AnimatePresence>
 
-      {!isSnapshot && caseData.snapshot && (
-        <button
-          onClick={() => setIsSnapshot(true)}
-          className="fixed bottom-6 right-6 z-40 border border-white/20 text-white/40 hover:text-white hover:border-white/40 text-xs tracking-widest uppercase px-5 py-2.5 transition-colors"
-        >
-          One View
-        </button>
-      )}
+      {/* One View button disabled — implementation pending */}
     </Layout>
     </>
   );
