@@ -78,7 +78,7 @@ Helping stepped back. The product stepped forward.
 ---
 ## section-execution-image
 type: media
-variant: full-bleed
+variant: full-bleed-pan
 image: execution-img
 ---
 ## section-statement-interstitial
