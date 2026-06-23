@@ -132,6 +132,7 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
       <Header />
+      <div className="md:hidden fixed top-0 left-0 right-0 h-24 z-[59] pointer-events-none" style={{ background: 'linear-gradient(to bottom, #000000 0%, transparent 100%)' }} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
         {fullWidth ? children : (
