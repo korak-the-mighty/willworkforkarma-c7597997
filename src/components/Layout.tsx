@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import OverlayMenu from "@/components/OverlayMenu";
@@ -129,10 +129,17 @@ const Layout = ({ children, fullWidth = false, theme }: LayoutProps) => {
     };
   }, [theme]);
 
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
     <div className="flex min-h-screen flex-col" style={theme ? { backgroundColor: theme.bg } : undefined}>
       <Header />
-      <div className="md:hidden fixed top-0 left-0 right-0 h-24 z-[59] pointer-events-none" style={{ background: 'linear-gradient(to bottom, #000000 0%, transparent 100%)' }} />
+      <div className="md:hidden fixed top-0 left-0 right-0 h-24 z-[59] pointer-events-none transition-opacity duration-300" style={{ background: 'linear-gradient(to bottom, #000000 0%, transparent 100%)', opacity: scrolled ? 1 : 0 }} />
       <OverlayMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <main className="flex-1">
         {fullWidth ? children : (
