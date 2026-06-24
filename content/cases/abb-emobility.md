@@ -127,12 +127,6 @@ variant: airy
 images: gallery-01, gallery-03, gallery-04, gallery-05
 
 ---
-## section-execution-media
-type: media
-variant: full-bleed-pan
-image: wide-dash
-
----
 ## section-proof
 type: proof
 variant: drift-images
