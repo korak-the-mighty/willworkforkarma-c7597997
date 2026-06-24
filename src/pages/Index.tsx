@@ -60,7 +60,7 @@ const Index = () => {
   return (
     <Layout fullWidth theme={{ bg: "#08060E" }}>
       {/* ── 1. HERO ── */}
-      <section className="relative min-h-screen w-full -mb-px">
+      <section className="relative min-h-screen w-full">
         <img
           src={heroImg}
           alt=""
@@ -69,6 +69,7 @@ const Index = () => {
           className="absolute inset-0 w-full h-full object-cover object-[50%_15%] md:object-[50%_20%] lg:object-[50%_25%]"
         />
         <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent 0%, #08060E 100%)' }} />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
           <HeroHeadline text={heroVariant.headline} subheadline={heroVariant.subheadline} />
         </div>
@@ -87,7 +88,6 @@ const Index = () => {
             }
           }}
           className="group block relative w-full overflow-hidden cursor-pointer"
-          style={{ marginTop: '-2px' }}
         >
           <div className="relative h-[80vh] overflow-hidden">
             {abb.coverImage && (
