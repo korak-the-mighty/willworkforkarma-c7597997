@@ -105,7 +105,7 @@ const Index = () => {
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
               <div className="flex flex-col items-center max-w-2xl opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out">
                 <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
-                  {abbHero?.headline || "Building the digital brand foundation of a global e-mobility leader."}
+                  {abbHero?.headline || "Evolving ABB E-mobility into a digital, future-facing brand."}
                 </h2>
                 <p className="mt-4 text-xs uppercase tracking-widest text-[#ECA9CC] md:transition-colors md:duration-500 md:group-hover:text-[#1E1128]">
                   {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
@@ -122,7 +122,7 @@ const Index = () => {
         <div>
           <EditorialCase
             slug={share.slug} title={share.title} year={share.year} area={share.area} subline={share.subline} imageAlign="right"
-            heroHeadline={shareHero?.headline || "Making 'helping' the most desirable product on the shelf."}
+            heroHeadline={shareHero?.headline || "Do good. And enjoy it."}
             supportingText={shareHero?.subtitle || "SHARE · Brand"}
           />
         </div>
@@ -134,7 +134,7 @@ const Index = () => {
         <div>
           <EditorialCase
             slug={man.slug} title={man.title} year={man.year} area={man.area} subline={man.subline} imageAlign="left"
-            heroHeadline={manHero?.headline || "A focused digital presence for a global transport brand."}
+            heroHeadline={manHero?.headline || "How to build a global first."}
             supportingText={manHero?.subtitle || "MAN · Brand & Digital"}
           />
         </div>
@@ -146,7 +146,7 @@ const Index = () => {
         <div>
           <EditorialCase
             slug={bmw.slug} title={bmw.title} year={bmw.year} area={bmw.area} subline={bmw.subline} imageAlign="right"
-            heroHeadline={bmwHero?.headline || "Staying ahead, globally."}
+            heroHeadline={bmwHero?.headline || "Creative leadership across BMW's global digital ecosystem."}
             supportingText={bmwHero?.subtitle || "BMW · Campaign"}
           />
         </div>
@@ -155,7 +155,7 @@ const Index = () => {
         <div>
           <EditorialCase
             slug={drivelog.slug} title={drivelog.title} year={drivelog.year} area={drivelog.area} subline={drivelog.subline} imageAlign="left"
-            heroHeadline={drivelogHero?.headline || "From idea to product — a pragmatic mobility solution."}
+            heroHeadline={drivelogHero?.headline || "Making the car understandable."}
             supportingText={drivelogHero?.subtitle || "DRIVELOG · Product"}
           />
         </div>

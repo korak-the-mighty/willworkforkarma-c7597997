@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGate } from '@/context/GateContext';
+import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
 
 interface OverlayMenuProps {
   isOpen: boolean;
@@ -10,25 +11,25 @@ interface OverlayMenuProps {
 const MENU_CASES = [
   {
     client: "ABB E‑mobility",
-    tagline: "Building the digital brand foundation of a global e‑mobility leader.",
+    slug: "abb-emobility",
     route: "/work/abb-emobility",
     heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-hero.webp",
   },
   {
     client: "MAN",
-    tagline: "Entering a new category without losing the core.",
+    slug: "man",
     route: "/work/man",
     heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-3.webp",
   },
   {
     client: "Share",
-    tagline: "Do good. And enjoy it. Making helping something people choose again.",
+    slug: "share",
     route: "/work/share",
     heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp",
   },
   {
     client: "BMW",
-    tagline: "Creative leadership across BMW's global digital ecosystem.",
+    slug: "bmw",
     route: "/work/bmw",
     heroImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/BMW-hero.webp",
   },
@@ -38,6 +39,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
   const [emailCopied, setEmailCopied] = useState(false);
   const { requestAccess } = useGate();
+  const caseHeroes = useCaseHeroContent();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText("henrik.lehtikangas@gmail.com");
@@ -94,12 +96,12 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
               {c.route === '/work/abb-emobility' ? (
               <div onClick={() => { requestAccess('abb-emobility', '/work/abb-emobility'); onClose(); }} className="block cursor-pointer">
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
-                <p className="font-heading text-2xl leading-tight text-white/60">{c.tagline}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{caseHeroes[c.slug]?.headline || c.client}</p>
               </div>
             ) : (
               <Link to={c.route} onClick={onClose} className="block">
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
-                <p className="font-heading text-2xl leading-tight text-white/60">{c.tagline}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{caseHeroes[c.slug]?.headline || c.client}</p>
               </Link>
             )}
               {i < MENU_CASES.length - 1 && (
@@ -171,7 +173,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                   }`}
                   style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
                 >
-                  {c.tagline}
+                  {caseHeroes[c.slug]?.headline || c.client}
                 </p>
               </div>
             ) : (
@@ -193,7 +195,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                   }`}
                   style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
                 >
-                  {c.tagline}
+                  {caseHeroes[c.slug]?.headline || c.client}
                 </p>
               </Link>
             )}
