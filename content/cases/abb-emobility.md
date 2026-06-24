@@ -132,7 +132,8 @@ mobileRef: scrolly-01-mobile
 ---
 ## section-gallery
 type: gallery
-images: gallery-01, gallery-02, gallery-03, gallery-04, gallery-05
+variant: airy
+images: gallery-01, gallery-02, gallery-03, gallery-04
 
 ---
 ## section-execution-media

@@ -91,6 +91,7 @@ export interface ScrollySection extends BaseSection {
 }
 export interface GallerySection extends BaseSection {
   type: 'gallery';
+  variant?: 'grid' | 'airy';
   images: string[];      // resolved URLs
 }
 export interface ProofItem {

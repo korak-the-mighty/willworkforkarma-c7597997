@@ -89,6 +89,7 @@ image: execution-img
 ---
 ## section-gallery
 type: gallery
+variant: airy
 images: bar-img, schoko-img
 ---
 ## section-statement-interstitial

@@ -260,7 +260,8 @@ function parseSection(
         const media = resolveMedia(imgId, inventory);
         return media.url ?? '';
       });
-      return { ...base, type: 'gallery', images: urls } as GallerySection;
+      const variant = (fields.variant as 'grid' | 'airy') ?? 'airy';
+      return { ...base, type: 'gallery', variant, images: urls } as GallerySection;
     }
     case 'proof': {
       const variant = fields.variant ?? 'drift-images';
