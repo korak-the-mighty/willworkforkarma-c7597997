@@ -38,11 +38,12 @@ summary: "Building the digital brand foundation of a global e-mobility leader."
 - id: gallery-03
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_13.png
-
-- id: proof-img-01
+- id: gallery-04
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB_E-mobility_11.png
-
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-E-mobility10.webp
+- id: gallery-05
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-E-mobility5.webp
 ---
 ## section-hero
 type: hero
@@ -123,7 +124,7 @@ mobileRef: scrolly-01-mobile
 ## section-gallery
 type: gallery
 variant: airy
-images: gallery-01, gallery-02, gallery-03
+images: gallery-01, gallery-03, gallery-04, gallery-05
 
 ---
 ## section-execution-media
@@ -135,7 +136,7 @@ image: wide-dash
 ## section-proof
 type: proof
 variant: drift-images
-items: proof-img-01::ABB E-mobility modular design system::pan-x
+items: wide-dash::ABB E-mobility modular design system::pan-x
 
 ---
 ## section-outcome
