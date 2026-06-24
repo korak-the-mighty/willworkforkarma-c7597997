@@ -29,6 +29,9 @@ snapshot:
 - id: execution-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share2.webp
+- id: bar-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share_bar.webp
 ---
 ## section-hero
 type: hero
@@ -80,6 +83,11 @@ Helping stepped back. The product stepped forward.
 type: media
 variant: full-bleed-pan
 image: execution-img
+---
+## section-bar-image
+type: media
+variant: full-bleed
+image: bar-img
 ---
 ## section-statement-interstitial
 type: statement-interstitial
