@@ -87,15 +87,9 @@ type: media
 variant: full-bleed-pan
 image: execution-img
 ---
-## section-bar-image
-type: media
-variant: full-bleed
-image: bar-img
----
-## section-schoko-image
-type: media
-variant: full-bleed
-image: schoko-img
+## section-gallery
+type: gallery
+images: bar-img, schoko-img
 ---
 ## section-statement-interstitial
 type: statement-interstitial
