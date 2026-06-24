@@ -32,6 +32,9 @@ snapshot:
 - id: bar-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share_bar.webp
+- id: schoko-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share_schoko-heidelbeere.webp
 ---
 ## section-hero
 type: hero
@@ -88,6 +91,11 @@ image: execution-img
 type: media
 variant: full-bleed
 image: bar-img
+---
+## section-schoko-image
+type: media
+variant: full-bleed
+image: schoko-img
 ---
 ## section-statement-interstitial
 type: statement-interstitial
