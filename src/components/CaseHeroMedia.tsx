@@ -70,7 +70,7 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
             )}
           </div>
           {supporting && (
-            <p className="absolute inset-x-0 bottom-8 md:bottom-[80px] z-10 text-center font-heading text-[1.2rem] md:text-[1.35rem] lg:text-2xl text-white px-6">
+            <p className="absolute inset-x-0 bottom-8 md:bottom-[80px] z-10 text-center font-heading text-[1.2rem] md:text-[1.35rem] lg:text-2xl text-white px-6 leading-tight md:leading-normal">
               {supporting}
             </p>
           )}
