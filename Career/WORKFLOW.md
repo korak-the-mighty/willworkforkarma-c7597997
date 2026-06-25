@@ -25,18 +25,79 @@ Tasks include:
 * Follow-up strategy
 * Deciding what information should become permanent repository knowledge
 
-### Claude Code (CC)
+## Claude Code (CC)
 
-Responsible for repository maintenance.
+Responsible for implementation and production.
 
 Tasks include:
 
-* Creating folders
+* Maintaining the career repository
+* Creating and organising folders
 * Updating markdown files
-* Maintaining consistency
-* Renaming files
+* Maintaining consistency across the repository
 * Searching the repository
 * Git commits and pushes
+* Generating HTML documents from approved markdown
+* Preserving the established visual design language
+* Generating print-ready PDF files
+* Running quality checks before export (layout, overflow, links, dates, recipient, one-page fit)
+* Automating repetitive workflows whenever possible
+
+---
+
+# Application Workflow
+
+## 1. Find an opportunity
+
+Henrik identifies an interesting role.
+
+---
+
+## 2. Strategy & Writing (ChatGPT)
+
+Start a new ChatGPT conversation and attach:
+
+- Relevant master cover letter
+- Latest CV
+- Job posting
+
+Together we:
+
+- Research the company.
+- Evaluate the opportunity.
+- Decide the strongest positioning.
+- Write and refine the cover letter.
+- Produce one approved markdown file:
+
+HenrikLehtikangas_CoverLetter_<Company>.md
+
+---
+
+## 3. Production (Claude Code)
+
+Claude Code reads:
+
+- HenrikLehtikangas_CoverLetter_Master.html
+- HenrikLehtikangas_CoverLetter_<Company>.md
+
+Claude Code:
+
+- Creates or updates the company folder.
+- Generates the HTML cover letter.
+- Generates the PDF cover letter.
+- Preserves the established visual design.
+- Updates recipient, company information and date.
+- Runs quality checks before export.
+
+---
+
+## 4. Review
+
+Henrik reviews the generated PDF.
+
+If approved:
+
+Claude Code commits all generated files to Git.
 
 ---
 
@@ -147,3 +208,74 @@ If not, it remains in chat.
 
 The goal is to keep the repository clean, searchable and valuable over many years.
 
+# Repository Structure
+
+The repository contains permanent assets.
+
+Career/
+
+- WORKFLOW.md
+- README.md
+- People.md
+- Pipeline.md
+
+CV/
+
+- HenrikLehtikangas_CV2026.html (master)
+- HenrikLehtikangas_CV2026.pdf
+
+CoverLetters/
+
+- HenrikLehtikangas_CoverLetters.md (writing system)
+- HenrikLehtikangas_CoverLetter_Master.html (design master)
+
+Companies/
+
+- One folder per company.
+- Each company folder contains the generated cover letter markdown, HTML and PDF.
+
+The HTML files are the visual source of truth.
+
+The markdown files are the writing source of truth.
+
+---
+
+# Naming Convention
+
+Always include Henrik's full name in generated application documents.
+
+## CV
+
+Master:
+
+HenrikLehtikangas_CV2026.html
+
+Output:
+
+HenrikLehtikangas_CV2026.pdf
+
+
+## Cover Letters
+
+Writing system:
+
+HenrikLehtikangas_CoverLetters.md
+
+Design master:
+
+HenrikLehtikangas_CoverLetter_Master.html
+
+Each application uses the same basename:
+
+HenrikLehtikangas_CoverLetter_<Company>.md
+
+HenrikLehtikangas_CoverLetter_<Company>.html
+
+HenrikLehtikangas_CoverLetter_<Company>.pdf
+
+Never use generic names such as:
+
+- CoverLetter.html
+- CoverLetter.pdf
+- output.pdf
+- final.pdf
