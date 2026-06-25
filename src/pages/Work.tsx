@@ -412,7 +412,9 @@ export default function Work() {
         <div style={s.label}>Selected Cases</div>
         {selectedCases.map((c, i) => {
           const isActive = activeMobileCase === c.slug;
-          const summary = caseHeroes[c.slug]?.summary || c.summary;
+          const headline = caseHeroes[c.slug]?.headline || c.summary;
+          const summaryForDesktop = headline.replace(/\\n/g, ' ');
+          const summaryForMobile = headline.split(/\\n/).map((line, i, arr) => i < arr.length - 1 ? [line, <br key={i} />] : line);
 
           // ── MOBILE RENDER ──────────────────────────────────
           if (isMobile) {
@@ -454,7 +456,7 @@ export default function Work() {
                     letterSpacing: '-0.02em',
                     color: '#f5f5f0',
                   }}>
-                    {summary}
+                    {summaryForMobile}
                   </div>
                   <div style={{
                     marginTop: 20,
@@ -507,7 +509,7 @@ export default function Work() {
                   {c.client}
                 </div>
                 <div style={{ fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
-                  {summary}
+                  {summaryForDesktop}
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>
