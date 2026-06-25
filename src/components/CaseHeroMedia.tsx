@@ -65,7 +65,9 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
             {subtitle && <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">{subtitle}</p>}
             {headline && (
               <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-                {headline}
+                {headline.split('\n').map((part, i, arr) => (
+                  <span key={i}>{part}{i < arr.length - 1 && <br className="md:hidden" />}</span>
+                ))}
               </h1>
             )}
           </div>

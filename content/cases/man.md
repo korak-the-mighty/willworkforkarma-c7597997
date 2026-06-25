@@ -30,7 +30,7 @@ type: hero
 background-image: hero-img
 title: MAN
 subtitle: "Creative Direction · Digital  · Product Launch"
-headline: "How to build a global first."
+headline: "How to build\na global first."
 supporting: "MAN's first van. The way MAN does."
 ---
 ## section-context

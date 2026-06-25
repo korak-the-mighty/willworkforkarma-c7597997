@@ -41,7 +41,7 @@ type: hero
 background-image: hero-img
 title: Share
 subtitle: Branding · Brand System · Consumer Goods
-headline: "Do good. And enjoy it."
+headline: "Do good.\nAnd enjoy it."
 supporting: "Winning by packaging joy, experience and mission."
 ---
 ## section-context

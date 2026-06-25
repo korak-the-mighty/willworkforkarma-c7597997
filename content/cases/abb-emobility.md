@@ -50,7 +50,7 @@ type: hero
 background-image: hero-video
 title: ABB E-mobility
 subtitle: Branding · UI/UX · 2024–2025
-headline: "Evolving ABB E-mobility into a digital, future-facing brand."
+headline: "Evolving\nABB E-mobility into a digital, future-facing brand."
 
 ---
 ## section-context
