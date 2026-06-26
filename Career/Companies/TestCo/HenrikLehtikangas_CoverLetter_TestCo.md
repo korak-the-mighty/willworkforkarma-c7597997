@@ -1,7 +1,7 @@
 ---
 company: TestCo
 recipient: Anna Müller
-date: June 2026
+date: 25.06.2026
 role: Creative Director
 ---
 

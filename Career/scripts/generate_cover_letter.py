@@ -96,7 +96,7 @@ def body_to_html(body: str) -> str:
 def build_html(master: str, fm: dict, body_html: str) -> str:
     """Inject company-specific content into the master HTML."""
     company = fm.get("company", "")
-    date_str = fm.get("date", datetime.now().strftime("%B %Y"))
+    date_str = fm.get("date", datetime.now().strftime("%d.%m.%Y"))
 
     # Split body into greeting + rest
     lines = body_html.split("\n      ")
@@ -127,7 +127,7 @@ def build_html(master: str, fm: dict, body_html: str) -> str:
     # Replace date in META bar
     html = re.sub(
         r'(<span[^>]*color:#9a9aa2[^>]*>Berlin\s*·\s*)([^<]*)(</span>)',
-        rf'\g<1>{date_str}\g<3>',
+        rf'\g<1>{date_str}\3',
         html,
     )
 
