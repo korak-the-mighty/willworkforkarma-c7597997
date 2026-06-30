@@ -7,7 +7,7 @@ summary: "Defining the digital identity of a leading European architecture pract
 ## Media Inventory
 - id: hero-img
   type: image
-  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-newhero.webp
 - id: context-img
   type: video
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/wtr-old-website.webm

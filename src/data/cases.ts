@@ -132,7 +132,7 @@ export const cases: Case[] = [
     year: 2022,
     summary: "Building a digital presence for one of Germany's leading architecture practices — precise, thoughtful and earned through trust.",
     tags: ["Digital Platform", "Creative Direction"],
-    coverImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp",
+    coverImage: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-newhero.webp",
     coverVariant: "grid",
     subline: "Digital Platform · Creative Direction · 2022",
     area: "Digital Platform",
@@ -140,7 +140,7 @@ export const cases: Case[] = [
     problem: "Architecture offices rarely believe in websites. Their work lives in buildings, competitions and printed documentation. Digital presence is often an afterthought — or a necessary compromise.",
     decision: "Before any design decision, the practice had to be understood. How architects present work. How they structure information. What actually matters in a project.",
     whyMe: "Digital discipline that follows architectural discipline. Understanding what the work demands before deciding how it should appear.",
-    heroMedia: { type: "image", src: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-hero.webp" },
+    heroMedia: { type: "image", src: "https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-newhero.webp" },
     modules: [
       { type: "strategy", title: "Earn the trust", text: "Architecture offices rarely believe in websites. The challenge was not to modernize them. It was to earn their trust.", media: [] },
       { type: "break", media: [] },
