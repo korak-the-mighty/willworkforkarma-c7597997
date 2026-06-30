@@ -250,7 +250,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             </div>
           </div>
           {/* Bottom: nav links */}
-          <div className="flex flex-col items-end gap-12 mt-16" style={{ marginRight: '40px' }}>
+          <div className="flex flex-col items-end gap-6 mt-16" style={{ marginRight: '85px' }}>
             {[
               { to: "/about", label: "About" },
               { to: "/work", label: "All Work" },
@@ -259,7 +259,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                 key={to}
                 to={to}
                 onClick={onClose}
-                className="group relative inline-block font-heading text-2xl md:text-4xl tracking-tight text-white hover:text-[#ECA9CC] transition-colors"
+                className="group relative inline-block font-heading text-[14.4px] md:text-[21.6px] tracking-tight text-white hover:text-[#ECA9CC] transition-colors"
               >
                 <span className="hidden md:inline absolute right-full pr-2 opacity-0 group-hover:opacity-100 animate-bounce-x transition-opacity duration-200" aria-hidden="true">→</span>
                 {label}
