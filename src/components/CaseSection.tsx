@@ -1,5 +1,5 @@
 import React from 'react';
-import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, ProofSection as ProofSectionType, CustomComponentSection, CampaignSection, StatementInterstitialSection } from '../types/case';
+import { Section, HeroSection, TextSection, TextMediaSection, MediaSection, ScrollySection as ScrollySectionType, GallerySection, ProofSection as ProofSectionType, CustomComponentSection, CampaignSection, StatementInterstitialSection, VisitCtaSection } from '../types/case';
 import CaseHeroMedia from './CaseHeroMedia';
 import CaseTextBlock from './CaseTextBlock';
 import CaseTextMedia from './CaseTextMedia';
@@ -10,6 +10,7 @@ import { ProofSection } from './ProofSection';
 import { LetsTalk } from './LetsTalk';
 import CaseCampaign from './CaseCampaign';
 import CaseStatementInterstitial from './CaseStatementInterstitial';
+import CaseVisitCta from './CaseVisitCta';
 
 const CUSTOM_COMPONENTS: Record<string, React.ComponentType> = {
   LetsTalk,
@@ -74,6 +75,9 @@ export function CaseSection({ section, loaderDone }: CaseSectionProps) {
     }
     case 'statement-interstitial': {
       return <CaseStatementInterstitial section={section as StatementInterstitialSection} />;
+    }
+    case 'visit-cta': {
+      return <CaseVisitCta section={section as VisitCtaSection} />;
     }
     default:
       return null;

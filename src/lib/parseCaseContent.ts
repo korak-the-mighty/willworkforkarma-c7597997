@@ -15,6 +15,7 @@ import {
   CampaignSection,
   CampaignMediaItem,
   StatementInterstitialSection,
+  VisitCtaSection,
   SnapshotData,
 } from '../types/case';
 // ------------------------------------------------------------
@@ -279,6 +280,14 @@ function parseSection(
         type: 'custom-component',
         component: fields.component ?? '',
       } as CustomComponentSection;
+    }
+    case 'visit-cta': {
+      return {
+        ...base,
+        type: 'visit-cta',
+        label: fields.label ? stripQuotes(fields.label) : 'Visit website',
+        link: fields.link ? stripQuotes(fields.link) : '',
+      } as VisitCtaSection;
     }
     case 'campaign': {
       return {

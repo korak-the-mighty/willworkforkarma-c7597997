@@ -95,6 +95,11 @@ The practice recognized itself in the work.
 A digital presence they trust and stand behind.
 A foundation designed to evolve with the practice for years to come.
 ---
+## section-visit
+type: visit-cta
+label: "Visit website"
+link: "https://wtr-architekten.de/"
+---
 ## section-closing
 type: custom-component
 component: LetsTalk

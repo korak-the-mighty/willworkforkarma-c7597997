@@ -33,7 +33,8 @@ export type SectionType =
   | 'proof'
   | 'custom-component'
   | 'campaign'
-  | 'statement-interstitial';
+  | 'statement-interstitial'
+  | 'visit-cta';
 export interface MobileFallback {
   type: 'image';
   url: string;
@@ -126,6 +127,11 @@ export interface StatementInterstitialSection extends BaseSection {
   type: 'statement-interstitial';
   text: string;
 }
+export interface VisitCtaSection extends BaseSection {
+  type: 'visit-cta';
+  label: string;
+  link: string;
+}
 export type Section =
   | HeroSection
   | TextSection
@@ -136,7 +142,8 @@ export type Section =
   | ProofSection
   | CustomComponentSection
   | CampaignSection
-  | StatementInterstitialSection;
+  | StatementInterstitialSection
+  | VisitCtaSection;
 // ------------------------------------------------------------
 // Top-level case data
 // ------------------------------------------------------------
