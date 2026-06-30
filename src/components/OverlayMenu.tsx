@@ -250,7 +250,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
             </div>
           </div>
           {/* Bottom: nav links */}
-          <div className="flex flex-col items-end gap-6 mt-16" style={{ marginRight: '85px' }}>
+          <div className="flex flex-col items-end gap-6" style={{ marginRight: '90px', marginTop: '74px' }}>
             {[
               { to: "/about", label: "About" },
               { to: "/work", label: "All Work" },
