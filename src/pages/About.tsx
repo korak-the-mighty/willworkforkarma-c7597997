@@ -127,7 +127,14 @@ const About = () => {
             >
               {contact.email}
             </a>
-            <p className="text-sm text-muted-foreground/50 cursor-default">Download CV</p>
+            <a
+              href="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/HenrikLehtikangas_CV2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Download CV
+            </a>
           </div>
         </div>
       </div>
@@ -185,7 +192,14 @@ const About = () => {
                   </a>
                 )}
               </div>
-              <p className="text-sm md:text-base text-muted-foreground/50 cursor-default">Download CV</p>
+              <a
+                href="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/HenrikLehtikangas_CV2026.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Download CV
+              </a>
             </div>
           </aside>
 
