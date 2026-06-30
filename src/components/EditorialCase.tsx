@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { cases } from "@/data/cases";
+import { parseBreaks } from "@/lib/textBreaks";
 
 interface EditorialCaseProps {
   slug: string;
@@ -48,7 +49,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
           {heroHeadline ? (
             <>
               <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-foreground font-light max-w-md text-center">
-                {heroHeadline}
+                {parseBreaks(heroHeadline, 'desktop')}
               </h2>
               {supportingText && (
                 <p className="mt-4 text-xs uppercase tracking-widest" style={{ color: '#ECA9CC' }}>
@@ -87,7 +88,7 @@ const EditorialCase = ({ slug, title, year, area, subline, imageAlign, heroHeadl
         )}
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
           <h2 className="font-heading text-3xl tracking-tight text-white font-light max-w-md">
-            {heroHeadline || title}
+            {heroHeadline ? parseBreaks(heroHeadline, 'mobile') : title}
           </h2>
           {supportingText && (
             <p className="mt-4 text-xs uppercase tracking-widest text-[#ECA9CC]">

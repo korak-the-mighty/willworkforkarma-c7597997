@@ -26,6 +26,7 @@ import { cases } from "@/data/cases";
 import heroImg from "@/assets/HenrikLehtikangas-hero2026.webp";
 import { useHomepageContent } from "@/hooks/useHomepageContent";
 import { useCaseHeroContent } from "@/hooks/useCaseHeroContent";
+import { parseBreaks } from "@/lib/textBreaks";
 
 const abb = cases.find((c) => c.slug === "abb-emobility")!;
 const share = cases.find((c) => c.slug === "share")!;
@@ -105,7 +106,15 @@ const Index = () => {
             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
               <div className="flex flex-col items-center max-w-2xl opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-[600ms] ease-in-out">
                 <h2 className="font-heading text-3xl md:text-4xl tracking-tight text-white font-light">
-                  {abbHero?.headline || "Evolving ABB E-mobility into a digital, future-facing brand."}
+                  {(() => {
+                    const abbHeadlineText = abbHero?.headline || "Evolving ABB E-mobility into a digital, future-facing brand.";
+                    return (
+                      <>
+                        <span className="md:hidden">{parseBreaks(abbHeadlineText, 'mobile')}</span>
+                        <span className="hidden md:inline">{parseBreaks(abbHeadlineText, 'desktop')}</span>
+                      </>
+                    );
+                  })()}
                 </h2>
                 <p className="mt-4 text-xs uppercase tracking-widest text-[#ECA9CC] md:transition-colors md:duration-500 md:group-hover:text-[#1E1128]">
                   {abbHero?.subtitle || "ABB E-mobility · Brand & Digital"}
