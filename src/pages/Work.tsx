@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import { useGate } from '@/context/GateContext';
 import { useOtherWorkContent } from '@/hooks/useOtherWorkContent';
 import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
+import { parseBreaks } from '@/lib/textBreaks';
 
 const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
 const selectedCases = [
@@ -413,8 +414,8 @@ export default function Work() {
         {selectedCases.map((c, i) => {
           const isActive = activeMobileCase === c.slug;
           const headline = caseHeroes[c.slug]?.headline || c.summary;
-          const summaryForDesktop = headline.replace(/\\n/g, ' ');
-          const summaryForMobile = headline.split(/\\n/).map((line, i, arr) => i < arr.length - 1 ? [line, <br key={i} />] : line);
+          const summaryForDesktop = parseBreaks(headline, 'desktop');
+          const summaryForMobile = parseBreaks(headline, 'mobile');
 
           // ── MOBILE RENDER ──────────────────────────────────
           if (isMobile) {

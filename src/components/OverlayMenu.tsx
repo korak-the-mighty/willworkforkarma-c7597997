@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useGate } from '@/context/GateContext';
 import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
+import { parseBreaks } from '@/lib/textBreaks';
 
 interface OverlayMenuProps {
   isOpen: boolean;
@@ -96,12 +97,12 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
               {c.route === '/work/abb-emobility' ? (
               <div onClick={() => { requestAccess('abb-emobility', '/work/abb-emobility'); onClose(); }} className="block cursor-pointer">
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
-                <p className="font-heading text-2xl leading-tight text-white/60">{caseHeroes[c.slug]?.headline || c.client}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{parseBreaks(caseHeroes[c.slug]?.headline || c.client, 'mobile')}</p>
               </div>
             ) : (
               <Link to={c.route} onClick={onClose} className="block">
                 <p className="text-xs tracking-widest uppercase text-white/40 mb-2">{c.client}</p>
-                <p className="font-heading text-2xl leading-tight text-white/60">{caseHeroes[c.slug]?.headline || c.client}</p>
+                <p className="font-heading text-2xl leading-tight text-white/60">{parseBreaks(caseHeroes[c.slug]?.headline || c.client, 'mobile')}</p>
               </Link>
             )}
               {i < MENU_CASES.length - 1 && (
@@ -173,7 +174,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                   }`}
                   style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
                 >
-                  {caseHeroes[c.slug]?.headline || c.client}
+                  {parseBreaks(caseHeroes[c.slug]?.headline || c.client, 'desktop')}
                 </p>
               </div>
             ) : (
@@ -195,7 +196,7 @@ const OverlayMenu = ({ isOpen, onClose }: OverlayMenuProps) => {
                   }`}
                   style={{ color: hoveredCase === i ? '#FFFFFF' : undefined }}
                 >
-                  {caseHeroes[c.slug]?.headline || c.client}
+                  {parseBreaks(caseHeroes[c.slug]?.headline || c.client, 'desktop')}
                 </p>
               </Link>
             )}

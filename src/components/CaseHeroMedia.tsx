@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import type { CaseHeroMedia as CaseHeroMediaType } from "@/data/cases";
+import { parseBreaks } from "@/lib/textBreaks";
 
 interface CaseHeroMediaProps {
   // Legacy prop
@@ -65,9 +66,8 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
             {subtitle && <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">{subtitle}</p>}
             {headline && (
               <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl tracking-tight text-white max-w-4xl leading-[1.1] mt-6">
-                {headline.split('\n').map((part, i, arr) => (
-                  <span key={i}>{part}{i < arr.length - 1 && <br className="md:hidden" />}</span>
-                ))}
+                <span className="md:hidden">{parseBreaks(headline, 'mobile')}</span>
+                <span className="hidden md:inline">{parseBreaks(headline, 'desktop')}</span>
               </h1>
             )}
           </div>
