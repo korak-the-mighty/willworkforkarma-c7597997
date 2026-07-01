@@ -33,6 +33,7 @@ export function CaseSection({ section, loaderDone }: CaseSectionProps) {
           title={s.title}
           subtitle={s.subtitle}
           supporting={s.supporting}
+          overlay={s.overlay}
           loaderDone={loaderDone}
         />
       );

@@ -12,12 +12,13 @@ interface CaseHeroMediaProps {
   title?: string;
   subtitle?: string;
   supporting?: string;
+  overlay?: "default" | "strong";
   loaderDone?: boolean;
 }
 
 const FULL_BLEED = "relative w-screen left-1/2 -translate-x-1/2";
 
-const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, supporting, loaderDone }: CaseHeroMediaProps) => {
+const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, subtitle, supporting, overlay, loaderDone }: CaseHeroMediaProps) => {
   // Synthesise a CaseHeroMediaType object when content-system props are provided
   const effectiveHeroMedia: CaseHeroMediaType = backgroundImage
     ? { type: isVideo ? "video" : "image", src: backgroundImage }
@@ -60,7 +61,7 @@ const CaseHeroMedia = ({ heroMedia, headline, backgroundImage, isVideo, title, s
       ) : null}
       {hasOverlay && (
         <>
-          <div className="absolute inset-0 bg-black/35" />
+          <div className={`absolute inset-0 ${overlay === "strong" ? "bg-black/60" : "bg-black/35"}`} />
           <div className="relative z-10 flex h-full flex-col items-center justify-center text-center px-6">
             {title && <p className="text-sm tracking-[0.02em] text-white">{title}</p>}
             {subtitle && <p className="text-sm tracking-[0.02em] text-[#ECA9CC] mt-2">{subtitle}</p>}

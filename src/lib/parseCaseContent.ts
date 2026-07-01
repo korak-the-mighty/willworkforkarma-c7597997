@@ -193,6 +193,7 @@ function parseSection(
         title: fields.title ? stripQuotes(fields.title) : undefined,
         subtitle: fields.subtitle ? stripQuotes(fields.subtitle) : undefined,
         supporting: fields.supporting ? stripQuotes(fields.supporting) : undefined,
+        overlay: fields.overlay === 'strong' ? 'strong' : 'default',
       } as HeroSection;
     }
     case 'text': {

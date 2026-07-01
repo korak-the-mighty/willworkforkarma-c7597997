@@ -43,6 +43,7 @@ title: Share
 subtitle: Branding · Brand System · Consumer Goods
 headline: "Do good.\bmAnd enjoy it."
 supporting: "Winning by packaging joy, experience and mission."
+overlay: strong
 ---
 ## section-context
 type: text-media

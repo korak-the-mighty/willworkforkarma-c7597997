@@ -59,6 +59,7 @@ export interface HeroSection extends BaseSection {
   title?: string;    // client name line
   subtitle?: string; // discipline · year line
   supporting?: string; // optional sub-headline, rendered below hero headline
+  overlay?: 'default' | 'strong'; // darkening strength over hero background
 }
 export interface TextSection extends BaseSection {
   type: 'text';
