@@ -16,9 +16,16 @@ export interface MediaItem {
   id: string;
   type: MediaType;
   url?: string;          // image and video
+  urlFallback?: string;  // mp4 fallback for webm video
   poster?: string;       // video only
   ref?: string;          // scrolly only — points to R2 folder
   frames?: number;       // scrolly only — frame count
+}
+export interface GalleryItem {
+  url: string;
+  type: 'image' | 'video';
+  urlFallback?: string;
+  full?: boolean;
 }
 // ------------------------------------------------------------
 // Section types
@@ -76,9 +83,10 @@ export interface TextMediaSection extends BaseSection {
 
 export interface MediaSection extends BaseSection {
   type: 'media';
-  variant: 'full-bleed' | 'contained' | 'play-once';
+  variant: 'full-bleed' | 'contained' | 'play-once' | 'full-bleed-pan';
   imageUrl?: string;
   videoUrl?: string;
+  videoUrlFallback?: string;
   alt?: string;
 }
 
@@ -93,7 +101,7 @@ export interface ScrollySection extends BaseSection {
 export interface GallerySection extends BaseSection {
   type: 'gallery';
   variant?: 'grid' | 'airy';
-  images: string[];      // resolved URLs
+  items: GalleryItem[];
 }
 export interface ProofItem {
   src: string;

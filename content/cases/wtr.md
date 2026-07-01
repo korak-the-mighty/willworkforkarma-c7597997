@@ -32,6 +32,10 @@ summary: "Defining the digital identity of a leading European architecture pract
 - id: gallery-05
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTRwebsite5.webp
+- id: homepage-scroll-video
+  type: video
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/wtr-homepage-scroll-1.webm
+  urlFallback: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/wtr-homepage-scroll-1.mp4
 ---
 ## section-hero
 type: hero
@@ -76,14 +80,14 @@ Every transition, navigation pattern and interaction refined to feel effortless 
 Not a redesign for the sake of novelty.
 A system that allowed the architecture to remain the focus while giving the practice a clear and scalable digital foundation.
 ---
+## section-gallery
+type: gallery
+images: gallery-01, gallery-02, gallery-03, devices-video:full
+---
 ## section-execution-video
 type: media
 variant: play-once
-video: devices-video
----
-## section-gallery
-type: gallery
-images: gallery-01, gallery-02, gallery-03
+video: homepage-scroll-video
 ---
 ## section-impact
 type: text

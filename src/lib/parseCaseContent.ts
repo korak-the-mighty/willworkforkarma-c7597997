@@ -1,6 +1,7 @@
 import {
   CaseData,
   MediaItem,
+  GalleryItem,
   Section,
   HeroSection,
   TextSection,
@@ -110,6 +111,7 @@ function parseMediaInventory(block: string): MediaItem[] {
       type: fields.type as MediaItem['type'],
     };
     if (fields.url) item.url = fields.url;
+    if (fields.urlFallback) item.urlFallback = fields.urlFallback;
     if (fields.poster) item.poster = fields.poster;
     if (fields.ref) item.ref = fields.ref;
     if (fields.frames) item.frames = parseInt(fields.frames, 10);
@@ -249,20 +251,29 @@ function parseSection(
       return {
         ...base,
         type: 'media',
-        variant: (fields.variant as 'full-bleed' | 'contained') ?? 'full-bleed',
+        variant: (fields.variant as MediaSection['variant']) ?? 'full-bleed',
         imageUrl: imgM?.url,
         videoUrl: vidM?.url,
+        videoUrlFallback: vidM?.urlFallback,
         alt: fields.alt !== undefined ? fields.alt : (imgM || vidM ? '' : undefined),
       } as MediaSection;
     }
     case 'gallery': {
       const imageIds = parseImageList(fields.images ?? '');
-      const urls = imageIds.map((imgId) => {
+      const items: GalleryItem[] = imageIds.map((token) => {
+        const isFull = token.endsWith(':full');
+        const imgId = isFull ? token.slice(0, -5) : token;
         const media = resolveMedia(imgId, inventory);
-        return media.url ?? '';
+        const item: GalleryItem = {
+          url: media.url ?? '',
+          type: media.type === 'video' ? 'video' : 'image',
+        };
+        if (media.urlFallback) item.urlFallback = media.urlFallback;
+        if (isFull) item.full = true;
+        return item;
       });
       const variant = (fields.variant as 'grid' | 'airy') ?? 'airy';
-      return { ...base, type: 'gallery', variant, images: urls } as GallerySection;
+      return { ...base, type: 'gallery', variant, items } as GallerySection;
     }
     case 'proof': {
       const variant = fields.variant ?? 'drift-images';

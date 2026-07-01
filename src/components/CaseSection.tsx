@@ -59,7 +59,7 @@ export function CaseSection({ section, loaderDone }: CaseSectionProps) {
     }
     case 'gallery': {
       const s = section as GallerySection;
-      return <CaseGallery images={s.images} />;
+      return <CaseGallery items={s.items} variant={s.variant} />;
     }
     case 'proof': {
       return <ProofSection section={section as ProofSectionType} />;
