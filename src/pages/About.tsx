@@ -42,6 +42,49 @@ const About = () => {
           </div>
         </div>
 
+        {/* Contact block */}
+        <div className="px-6 pt-10 pb-6">
+          <div className="space-y-6">
+            <div className="space-y-1">
+              <p className="font-heading text-xl tracking-tight text-foreground">Henrik Lehtikangas</p>
+              <p className="text-sm text-muted-foreground">Creative Director</p>
+            </div>
+            <div className="space-y-2">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={contact.linkedin_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
+              >
+                {contact.linkedin_label}
+              </a>
+            </div>
+            <a
+              href={`mailto:${contact.email}`}
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {contact.email}
+            </a>
+            <a
+              href="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/HenrikLehtikangas_CV2026.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Download CV
+            </a>
+          </div>
+          <Divider />
+        </div>
+
         {/* Intro */}
         <div className="px-6 pt-6 pb-10 space-y-4">
           {main.intro.map((para, i) => (
@@ -93,49 +136,6 @@ const About = () => {
               ))}
             </div>
           </section>
-        </div>
-
-        {/* Contact block */}
-        <div className="px-6 pb-16">
-          <Divider />
-          <div className="pt-10 space-y-6">
-            <div className="space-y-1">
-              <p className="font-heading text-xl tracking-tight text-foreground">Henrik Lehtikangas</p>
-              <p className="text-sm text-muted-foreground">Creative Director</p>
-            </div>
-            <div className="space-y-2">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
-              >
-                WhatsApp
-              </a>
-              <a
-                href={contact.linkedin_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block font-heading text-xl tracking-tight text-foreground hover:text-muted-foreground transition-colors"
-              >
-                {contact.linkedin_label}
-              </a>
-            </div>
-            <a
-              href={`mailto:${contact.email}`}
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {contact.email}
-            </a>
-            <a
-              href="https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/HenrikLehtikangas_CV2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Download CV
-            </a>
-          </div>
         </div>
       </div>
 
