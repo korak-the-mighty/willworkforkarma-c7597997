@@ -9,6 +9,8 @@ import { useWorkContent } from '@/hooks/useWorkContent';
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
+const SHOW_YEAR = false;
+
 export default function Work() {
   const { requestAccess } = useGate();
   const caseHeroes = useCaseHeroContent();
@@ -466,14 +468,16 @@ export default function Work() {
                   }}>
                     {summaryForMobile}
                   </div>
-                  <div style={{
-                    marginTop: 20,
-                    fontSize: 11,
-                    letterSpacing: '0.08em',
-                    color: 'rgba(245,245,240,0.2)',
-                  }}>
-                    {c.year}
-                  </div>
+                  {SHOW_YEAR && (
+                    <div style={{
+                      marginTop: 20,
+                      fontSize: 11,
+                      letterSpacing: '0.08em',
+                      color: 'rgba(245,245,240,0.2)',
+                    }}>
+                      {c.year}
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -521,7 +525,9 @@ export default function Work() {
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 32, flexShrink: 0, paddingLeft: 40 }}>
-                <span style={{ fontSize: 11, letterSpacing: '0.08em', color: 'rgba(245,245,240,0.2)' }}>{c.year}</span>
+                {SHOW_YEAR && (
+                  <span style={{ fontSize: 11, letterSpacing: '0.08em', color: 'rgba(245,245,240,0.2)' }}>{c.year}</span>
+                )}
                 <span style={{ fontSize: 18, color: '#f5f5f0', opacity: activeCase === c.slug ? 1 : 0, transform: activeCase === c.slug ? 'translateX(0)' : 'translateX(-8px)', transition: 'opacity 200ms ease, transform 200ms ease' }}>→</span>
               </div>
             </>
