@@ -71,6 +71,11 @@ Before any design decision, the practice had to be understood.
 How architects present work. How information is structured. How projects are evaluated. What actually matters in a profession built on precision and trust.
 Only then could a digital identity emerge that felt true to the practice itself.
 ---
+## section-execution-video
+type: media
+variant: play-once
+video: homepage-scroll-video
+---
 ## section-execution
 type: text
 label: Execution
@@ -83,11 +88,6 @@ A system that allowed the architecture to remain the focus while giving the prac
 ## section-gallery
 type: gallery
 images: gallery-01, gallery-02, gallery-03, devices-video:full
----
-## section-execution-video
-type: media
-variant: play-once
-video: homepage-scroll-video
 ---
 ## section-impact
 type: text
