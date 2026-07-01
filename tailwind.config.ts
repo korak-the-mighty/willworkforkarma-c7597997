@@ -17,6 +17,9 @@ export default {
         heading: ['Clash Display', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
       },
+      letterSpacing: {
+        tight: '-0.01em',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
