@@ -684,7 +684,7 @@ export default function Work() {
                       padding: '16px',
                     }}
                   >
-                    <div style={{ fontSize: 'clamp(20px, 5vw, 32px)', fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
+                    <div style={{ fontSize: 'clamp(20px, 5vw, 32px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, color: 'rgb(245,245,240)', textAlign: 'center', fontFamily: "'Clash Display', sans-serif" }}>
                       {item.client}
                     </div>
                   </div>
@@ -702,7 +702,7 @@ export default function Work() {
                 zIndex: 50,
                 pointerEvents: 'none',
                 fontFamily: "'Clash Display', sans-serif",
-                fontWeight: 600,
+                fontWeight: 500,
                 fontSize: 'clamp(48px, 6vw, 120px)',
                 lineHeight: 1,
                 letterSpacing: '-0.02em',
