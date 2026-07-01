@@ -5,16 +5,7 @@ import { useGate } from '@/context/GateContext';
 import { useOtherWorkContent } from '@/hooks/useOtherWorkContent';
 import { useCaseHeroContent } from '@/hooks/useCaseHeroContent';
 import { parseBreaks } from '@/lib/textBreaks';
-
-const R2 = 'https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev';
-const selectedCases = [
-  { slug: 'abb-emobility', client: 'ABB E-mobility',         image: `${R2}/ABB-hero.webp`,      summary: 'Shaping the brand presence for a global leader in electric vehicle charging infrastructure.',                                                                 year: 2024 },
-  { slug: 'share',         client: 'Share',                  image: `${R2}/share1.webp`,        summary: 'Rethinking how a global team communicates its value — from scattered updates to a single, coherent narrative that leadership actually reads.',                   year: 2023 },
-  { slug: 'wtr',           client: 'Wörner Traxler Richter', image: `${R2}/WTR-newhero.webp`,      summary: "Building a digital presence for one of Germany's leading architecture practices — precise, thoughtful and earned through trust.",                              year: 2022 },
-  { slug: 'man',           client: 'MAN',                    image: `${R2}/MAN-hero.webp`,      summary: 'Designing a brand identity for a craft workshop that needed to feel serious without being corporate, and personal without being precious.',                        year: 2022 },
-  { slug: 'bmw',           client: 'BMW',                    image: `${R2}/BMW-hero.webp`,      summary: 'A campaign that cut through automotive advertising noise by saying less and showing only what matters.',                                                         year: 2021 },
-  { slug: 'drivelog',      client: 'Bosch / Drivelog',       image: `${R2}/drivelog-hero.webp`, summary: 'Building a product experience that turned routine car maintenance into something drivers actually looked forward to opening.',                                   year: 2020 },
-];
+import { useWorkContent } from '@/hooks/useWorkContent';
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 
@@ -22,6 +13,20 @@ export default function Work() {
   const { requestAccess } = useGate();
   const caseHeroes = useCaseHeroContent();
   const otherWork = useOtherWorkContent();
+  const workContent = useWorkContent();
+
+  const CASE_ORDER = ['abb-emobility', 'share', 'wtr', 'man', 'bmw', 'drivelog'];
+  const CLIENT_OVERRIDES: Record<string, string> = { drivelog: 'Bosch / Drivelog' };
+  const selectedCases = CASE_ORDER.map((slug) => {
+    const hero = caseHeroes[slug];
+    return {
+      slug,
+      client: CLIENT_OVERRIDES[slug] || hero?.title || slug,
+      image: hero?.thumbnail || '',
+      summary: hero?.summary || '',
+      year: hero?.year || '',
+    };
+  });
   const hoverWrapRef = useRef<HTMLDivElement>(null);
   const activeKeyRef = useRef<string | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -310,10 +315,10 @@ export default function Work() {
   const hp = isMobile ? '16px' : '56px';
 
   const s: Record<string, React.CSSProperties> = {
-    page:       { background: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' },
+    page:       { background: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: "'Inter', sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' },
     header:     { padding: isMobile ? `80px ${hp} 40px` : `160px ${hp} 80px` },
     headline:   { fontSize: 'clamp(40px,6vw,96px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 32 },
-    context:    { fontSize: 'clamp(16px,1.4vw,20px)', fontWeight: 300, lineHeight: 1.7, color: 'rgba(245,245,240,0.65)', maxWidth: 520 },
+    context:    { fontSize: 'clamp(17px,1.6vw,24px)', fontWeight: 400, lineHeight: 1.625, color: 'rgba(245,245,240,0.78)', maxWidth: 640 },
     label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: `0 ${hp}`, marginBottom: 32 },
     divider:    { padding: `96px ${hp} 72px`, textAlign: 'center' as const },
     divHead:    { fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
@@ -322,7 +327,7 @@ export default function Work() {
 
   return (
     <Layout fullWidth theme={{ bg: '#0a0a0a' }}>
-    <div style={{ color: '#f5f5f0', fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
+    <div style={{ color: '#f5f5f0', fontFamily: "'Inter', sans-serif", WebkitFontSmoothing: 'antialiased', overflowX: 'hidden' }}>
       {/* Fixed floating image — mobile cases list */}
       {isMobile && (
         <div
@@ -404,9 +409,10 @@ export default function Work() {
 
       {/* Page header */}
       <div style={s.header}>
-        <h1 style={s.headline}>Selected Work.</h1>
-        <p style={s.context}>These projects come from different industries, different clients and different challenges. Over the years, I've found that good ideas only work when everyone understands what matters and why.</p>
-        <p style={{ ...s.context, marginTop: 16 }}>This is just a handful of projects from over 25 years of work. If you're curious about something closer to your business or industry, let's talk. I'd love to show you more.</p>
+        <h1 style={s.headline}>{workContent.headline}</h1>
+        {workContent.body.map((para, i) => (
+          <p key={i} style={i === 0 ? s.context : { ...s.context, marginTop: 16 }}>{para}</p>
+        ))}
       </div>
 
       {/* Cases list */}

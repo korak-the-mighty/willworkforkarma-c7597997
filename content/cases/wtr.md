@@ -3,9 +3,13 @@ slug: wtr
 route: /work/wtr
 status: live
 summary: "Defining the digital identity of a leading European architecture practice."
+year: 2022
 ---
 ## Media Inventory
 - id: hero-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-newhero.webp
+- id: thumb-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/WTR-newhero.webp
 - id: context-img

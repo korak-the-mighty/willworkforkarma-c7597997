@@ -3,6 +3,7 @@ slug: share
 route: /work/share
 status: live
 summary: "Winning by packaging Joy, Experience and Mission."
+year: 2023
 snapshot:
   title: Share
   contextLine: A good product with a clear mission — but helping alone wasn't enough to win on shelf.
@@ -15,6 +16,9 @@ snapshot:
 ---
 ## Media Inventory
 - id: hero-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp
+- id: thumb-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/share1.webp
 - id: context-img

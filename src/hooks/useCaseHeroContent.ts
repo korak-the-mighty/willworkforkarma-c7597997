@@ -5,9 +5,12 @@ const modules = import.meta.glob('/content/cases/*.md', {
 });
 
 interface CaseHero {
+  title: string;
   headline: string;
   subtitle: string;
   summary: string;
+  year: string;
+  thumbnail: string;
 }
 
 type CaseHeroMap = Record<string, CaseHero>;
@@ -22,16 +25,26 @@ function parseCaseHero(raw: string): CaseHero {
   const block = blockMatch?.[1] ?? "";
 
   // Match each field independently within the block
+  const titleMatch = block.match(/^title:\s*"?([^\n"]+)"?\s*$/m);
   const headlineMatch = block.match(/^headline:\s*"?([^\n"]+)"?\s*$/m);
   const subtitleMatch = block.match(/^subtitle:\s*"?([^\n"]+)"?\s*$/m);
 
-  // summary lives in frontmatter
+  // summary and year live in frontmatter
   const summaryMatch = frontmatter.match(/^summary:\s*"?([^\n"]+)"?\s*$/m);
+  const yearMatch = frontmatter.match(/^year:\s*"?([^\n"]+)"?\s*$/m);
+
+  // Extract Media Inventory block and resolve thumb-img's url
+  const inventoryMatch = raw.match(/##\s+Media Inventory\s*\n([\s\S]*?)(?=\n##\s|$)/);
+  const inventoryBlock = inventoryMatch?.[1] ?? "";
+  const thumbMatch = inventoryBlock.match(/-\s*id:\s*thumb-img[\s\S]*?url:\s*(\S+)/);
 
   return {
+    title: titleMatch?.[1]?.trim() ?? "",
     headline: headlineMatch?.[1]?.trim() ?? "",
     subtitle: subtitleMatch?.[1]?.trim() ?? "",
     summary: summaryMatch?.[1]?.trim() ?? "",
+    year: yearMatch?.[1]?.trim() ?? "",
+    thumbnail: thumbMatch?.[1]?.trim() ?? "",
   };
 }
 

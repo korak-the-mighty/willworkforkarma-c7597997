@@ -4,11 +4,15 @@ route: /work/abb-emobility
 status: live
 protected: true
 summary: "Building the digital brand foundation of a global e-mobility leader."
+year: 2024
 ---
 ## Media Inventory
 - id: hero-video
   type: video
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/abb-e-mobility-mcs-hero-recut.webm
+- id: thumb-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-hero.webp
 - id: context-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/ABB-emobility-context.webp

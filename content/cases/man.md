@@ -3,9 +3,13 @@ slug: man
 route: /work/man
 status: live
 summary: "A new category. A great product. A bold global online launch."
+year: 2022
 ---
 ## Media Inventory
 - id: hero-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-3.webp
+- id: thumb-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/MAN-image-3.webp
 - id: context-img

@@ -3,11 +3,16 @@ slug: drivelog
 route: /work/drivelog
 status: live
 summary: "Making the car understandable."
+year: 2020
 ---
 
 ## Media Inventory
 
 - id: hero-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog-hero.webp
+
+- id: thumb-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/drivelog-hero.webp
 

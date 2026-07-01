@@ -3,9 +3,13 @@ slug: bmw
 route: /work/bmw
 status: live
 summary: "Creative leadership across BMW's global digital ecosystem."
+year: 2021
 ---
 ## Media Inventory
 - id: hero-img
+  type: image
+  url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/BMW-hero.webp
+- id: thumb-img
   type: image
   url: https://pub-d695aab3039745849234fbcc82eb82bb.r2.dev/BMW-hero.webp
 - id: img-01
