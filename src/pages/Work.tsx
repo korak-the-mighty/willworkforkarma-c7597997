@@ -323,7 +323,7 @@ export default function Work() {
     context:    { fontSize: 'clamp(17px,1.6vw,24px)', fontWeight: 400, lineHeight: 1.625, color: 'rgba(245,245,240,0.78)', maxWidth: 640 },
     label:      { fontFamily: "'Clash Display', sans-serif", fontSize: 13, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', padding: `0 ${hp}`, marginBottom: 32 },
     divider:    { padding: `96px ${hp} 72px`, textAlign: 'center' as const },
-    divHead:    { fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
+    divHead:    { fontFamily: "'Clash Display', sans-serif", fontSize: 'clamp(36px,5vw,80px)', fontWeight: 300, letterSpacing: '-0.025em', lineHeight: 1 },
     divSub:     { fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase' as const, color: 'rgba(245,245,240,0.28)', marginTop: 18 },
   };
 
