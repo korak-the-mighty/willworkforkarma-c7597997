@@ -404,14 +404,14 @@ export default function Work() {
 
       {/* Page header */}
       <div style={s.header}>
-        <h1 style={s.headline}>All Work.</h1>
+        <h1 style={s.headline}>Selected Work.</h1>
         <p style={s.context}>These projects come from different industries, different clients and different challenges. Over the years, I've found that good ideas only work when everyone understands what matters and why.</p>
         <p style={{ ...s.context, marginTop: 16 }}>This is just a handful of projects from over 25 years of work. If you're curious about something closer to your business or industry, let's talk. I'd love to show you more.</p>
       </div>
 
       {/* Cases list */}
       <section ref={casesSectionRef} style={{ padding: '0 0 80px', position: 'relative' }} onMouseLeave={deactivateCase}>
-        <div style={s.label}>Selected Cases</div>
+        <div style={s.label}>Case Studies</div>
         {selectedCases.map((c, i) => {
           const isActive = activeMobileCase === c.slug;
           const headline = caseHeroes[c.slug]?.headline || c.summary;
