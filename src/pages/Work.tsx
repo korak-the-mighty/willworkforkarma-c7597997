@@ -520,7 +520,7 @@ export default function Work() {
                 <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 15, fontWeight: 300, letterSpacing: '0.12em', textTransform: 'uppercase', color: activeCase === c.slug ? 'rgba(245,245,240,0.7)' : 'rgba(245,245,240,0.5)', marginBottom: 6, transition: 'color 200ms ease' }}>
                   {c.client}
                 </div>
-                <div style={{ fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
+                <div style={{ fontFamily: "'Clash Display', sans-serif", fontSize: 'clamp(30px,3.4vw,57px)', fontWeight: 300, lineHeight: 1.15, letterSpacing: '-0.015em', color: activeCase === c.slug ? '#fff' : '#f5f5f0', transition: 'color 200ms ease' }}>
                   {summaryForDesktop}
                 </div>
               </div>
