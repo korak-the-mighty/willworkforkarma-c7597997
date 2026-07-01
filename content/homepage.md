@@ -11,6 +11,7 @@ headline2: |
   Most teams don't need more ideas. They need clarity.
 subheadline2: |
   The real work is deciding what matters and having the courage to focus on it.
+credential: "Creative Director · Berlin · 25+ years experience"
 
 ## statements
 s1: "I help clients and teams see what actually matters."

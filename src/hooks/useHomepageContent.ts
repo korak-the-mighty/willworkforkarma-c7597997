@@ -20,6 +20,7 @@ interface HomepageAbout {
 
 interface HomepageContent {
   heroVariants: HeroVariant[];
+  credential: string;
   statements: { s1: string; s2: string; s3: string };
   about: HomepageAbout;
 }
@@ -28,6 +29,7 @@ const DEFAULTS: HomepageContent = {
   heroVariants: [
     { headline: "I push vision, clarity and creative confidence.", subheadline: undefined },
   ],
+  credential: "Creative Director · Berlin · 25+ years experience",
   statements: {
     s1: "I help clients and teams see what actually matters.",
     s2: "I turn complexity into clear direction and action.",
@@ -104,6 +106,7 @@ export function useHomepageContent(): HomepageContent {
 
   return {
     heroVariants: heroVariants.length ? heroVariants : DEFAULTS.heroVariants,
+    credential: hero.credential ?? DEFAULTS.credential,
     statements: {
       s1: statements.s1 ?? DEFAULTS.statements.s1,
       s2: statements.s2 ?? DEFAULTS.statements.s2,

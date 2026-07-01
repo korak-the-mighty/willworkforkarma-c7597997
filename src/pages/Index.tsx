@@ -73,6 +73,9 @@ const Index = () => {
         <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{ background: 'linear-gradient(to bottom, transparent 0%, #08060E 100%)' }} />
         <div className="relative h-full min-h-screen flex flex-col items-center justify-center px-6">
           <HeroHeadline text={heroVariant.headline} subheadline={heroVariant.subheadline} />
+          <p className="absolute bottom-16 md:bottom-20 inset-x-0 text-center text-sm tracking-[0.02em] text-white/70">
+            {hp.credential}
+          </p>
         </div>
       </section>
 
