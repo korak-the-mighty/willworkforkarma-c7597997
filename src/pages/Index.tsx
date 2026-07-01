@@ -8,7 +8,7 @@ const HeroHeadline = ({ text, subheadline }: { text: string; subheadline?: strin
   const { menuOpen } = useMenu();
   return (
     <div className={`flex flex-col items-center gap-6 transition-opacity duration-200 ${menuOpen ? "opacity-0" : "opacity-100"}`}>
-      <div className="w-[85vw] md:w-[50vw] lg:w-[60vw] mx-auto flex flex-col items-center gap-6">
+      <div className="w-[85vw] md:w-[50vw] lg:w-[75vw] mx-auto flex flex-col items-center gap-6">
         <h1 className="font-heading text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white text-center whitespace-pre-line">
           {text}
         </h1>
