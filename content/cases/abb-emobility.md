@@ -94,7 +94,7 @@ The system to show it didn't.
 ## section-decision
 type: text
 label: Decision
-statement: By not changing anything and changing everything.
+statement: We kept the core. We changed how people experienced it.
 
 It came from finesse.
 
