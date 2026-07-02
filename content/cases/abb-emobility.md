@@ -2,7 +2,7 @@
 slug: abb-emobility
 route: /work/abb-emobility
 status: live
-protected: true
+protected: false
 summary: "Building the digital brand foundation of a global e-mobility leader."
 year: 2024
 ---
